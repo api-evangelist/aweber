@@ -1,0 +1,152 @@
+aid: aweber
+name: AWeber
+description: >-
+  AWeber is an email marketing and automation platform for small businesses,
+  creators, and entrepreneurs providing email broadcasts, drip campaigns,
+  landing pages, sign-up forms, and subscriber management. The AWeber REST API
+  at api.aweber.com offers full programmatic access to lists, subscribers,
+  broadcasts, campaigns, custom fields, segments, and tags using OAuth 2.0
+  authentication.
+type: Index
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Email Marketing
+  - Marketing Automation
+  - Email
+  - Newsletters
+  - Subscribers
+  - Campaigns
+  - Landing Pages
+url: >-
+  https://raw.githubusercontent.com/api-evangelist/aweber/refs/heads/main/apis.yml
+created: '2026-05-11'
+modified: '2026-05-11'
+specificationVersion: '0.19'
+apis:
+  - aid: aweber:rest-api
+    name: AWeber REST API
+    description: >-
+      REST API for managing AWeber accounts, lists, subscribers, broadcasts,
+      campaigns, custom fields, segments, and tags. Authentication uses OAuth
+      2.0 with personal access tokens or the authorization code flow.
+    humanURL: https://developer.aweber.com/docs/v3
+    baseURL: https://api.aweber.com/1.0
+    tags:
+      - Email Marketing
+      - Subscribers
+      - Lists
+      - Broadcasts
+      - Campaigns
+      - Automation
+    properties:
+      - type: Documentation
+        url: https://developer.aweber.com/docs/v3
+      - type: API Reference
+        url: https://api.aweber.com/
+      - type: OpenAPI
+        url: openapi/aweber-openapi.yml
+      - type: Authentication
+        url: https://developer.aweber.com/docs/v3/oauth
+      - type: Getting Started
+        url: https://developer.aweber.com/docs/v3/getting-started
+common:
+  - type: Website
+    url: https://www.aweber.com
+  - type: Documentation
+    url: https://developer.aweber.com/docs/v3
+  - type: Developer Portal
+    url: https://developer.aweber.com
+  - type: Sign Up
+    url: https://www.aweber.com/signup.htm
+  - type: Login
+    url: https://auth.aweber.com/1.0/oauth2/authorize
+  - type: Pricing
+    url: https://www.aweber.com/pricing.htm
+  - type: Support
+    url: https://help.aweber.com
+  - type: Blog
+    url: https://blog.aweber.com
+  - type: Status
+    url: https://status.aweber.com
+  - type: Terms of Service
+    url: https://www.aweber.com/tos.htm
+  - type: Privacy Policy
+    url: https://www.aweber.com/privacy.htm
+  - type: GitHub Organization
+    url: https://github.com/aweber
+  - type: Python SDK
+    url: https://github.com/aweber/AWeber-API-Python-Library
+  - type: PHP SDK
+    url: https://github.com/aweber/AWeber-API-PHP-Library
+  - type: Ruby SDK
+    url: https://github.com/aweber/AWeber-API-Ruby-Library
+  - type: Postman
+    url: https://www.postman.com/aweber-api
+  - type: X (Twitter)
+    url: https://x.com/aweber
+  - type: Facebook
+    url: https://www.facebook.com/AWeber
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/aweber
+  - type: YouTube
+    url: https://www.youtube.com/user/AWeber
+features:
+  - name: Email Broadcasts
+    description: >-
+      Create, schedule, and send broadcast emails to lists or segments with
+      drag-and-drop editor and HTML support.
+  - name: Drip Campaigns
+    description: >-
+      Build automated drip campaigns and follow-up sequences triggered by
+      subscriber activity and tags.
+  - name: Subscriber Management
+    description: >-
+      Add, update, segment, and tag subscribers across multiple lists with
+      custom fields and activity history.
+  - name: Landing Pages
+    description: >-
+      Build mobile-responsive landing pages with templates, A/B testing, and
+      built-in lead capture forms.
+  - name: Sign-Up Forms
+    description: >-
+      Embed customizable sign-up forms and pop-ups on any website to grow
+      mailing lists.
+  - name: Analytics and Reporting
+    description: >-
+      Track opens, clicks, deliverability, and subscriber growth with detailed
+      reporting per campaign.
+  - name: Webhooks
+    description: >-
+      Subscribe to subscriber, campaign, and broadcast events via webhooks for
+      real-time integrations.
+useCases:
+  - name: Newsletter Publishing
+    description: >-
+      Publish recurring newsletters to engaged subscribers with template
+      reuse and segmentation.
+  - name: Lead Nurturing
+    description: >-
+      Run automated email sequences to nurture leads from sign-up through
+      conversion using drip campaigns.
+  - name: E-commerce Email Marketing
+    description: >-
+      Send promotional broadcasts, cart-abandonment sequences, and product
+      recommendations integrated with stores.
+  - name: Audience Growth
+    description: >-
+      Capture leads via landing pages and embedded sign-up forms with
+      double opt-in workflows.
+integrations:
+  - name: WordPress
+    description: Sync sign-up forms and subscribers between WordPress and AWeber
+  - name: Shopify
+    description: Sync e-commerce customers and trigger automations
+  - name: Zapier
+    description: Connect AWeber to thousands of apps via Zapier triggers and actions
+  - name: PayPal
+    description: Add buyers to lists and trigger campaigns from PayPal events
+  - name: Facebook
+    description: Sync Facebook Lead Ads with AWeber lists
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
