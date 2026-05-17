@@ -41,13 +41,13 @@ apis:
     properties:
       - type: Documentation
         url: https://developer.aweber.com/docs/v3
-      - type: API Reference
+      - type: APIReference
         url: https://api.aweber.com/
       - type: OpenAPI
         url: openapi/aweber-openapi.yml
       - type: Authentication
         url: https://developer.aweber.com/docs/v3/oauth
-      - type: Getting Started
+      - type: GettingStarted
         url: https://developer.aweber.com/docs/v3/getting-started
 common:
   - type: Website
@@ -56,7 +56,7 @@ common:
     url: https://developer.aweber.com/docs/v3
   - type: Developer Portal
     url: https://developer.aweber.com
-  - type: Sign Up
+  - type: SignUp
     url: https://www.aweber.com/signup.htm
   - type: Login
     url: https://auth.aweber.com/1.0/oauth2/authorize
@@ -66,13 +66,13 @@ common:
     url: https://help.aweber.com
   - type: Blog
     url: https://blog.aweber.com
-  - type: Status
+  - type: StatusPage
     url: https://status.aweber.com
-  - type: Terms of Service
+  - type: TermsOfService
     url: https://www.aweber.com/tos.htm
-  - type: Privacy Policy
+  - type: PrivacyPolicy
     url: https://www.aweber.com/privacy.htm
-  - type: GitHub Organization
+  - type: GitHubOrganization
     url: https://github.com/aweber
   - type: Python SDK
     url: https://github.com/aweber/AWeber-API-Python-Library
