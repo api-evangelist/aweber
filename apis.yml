@@ -20,7 +20,7 @@ tags:
 url: >-
   https://raw.githubusercontent.com/api-evangelist/aweber/refs/heads/main/apis.yml
 created: '2026-05-11'
-modified: '2026-05-11'
+modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
   - aid: aweber:rest-api
@@ -90,6 +90,9 @@ common:
     url: https://www.linkedin.com/company/aweber
   - type: YouTube
     url: https://www.youtube.com/user/AWeber
+  - name: MCP Server
+    url: https://github.com/aweber/aweber-mcp
+    type: MCPServer
 features:
   - name: Email Broadcasts
     description: >-
