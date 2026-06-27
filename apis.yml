@@ -54,9 +54,9 @@ common:
     url: https://www.aweber.com
   - type: Documentation
     url: https://developer.aweber.com/docs/v3
-  - type: Developer Portal
+  - type: DeveloperPortal
     url: https://developer.aweber.com
-  - type: SignUp
+  - type: Signup
     url: https://www.aweber.com/signup.htm
   - type: Login
     url: https://auth.aweber.com/1.0/oauth2/authorize
