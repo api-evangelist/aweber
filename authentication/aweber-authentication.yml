@@ -1,0 +1,18 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/aweber-openapi.yml
+summary:
+  types:
+  - oauth2
+  oauth2_flows:
+  - authorizationCode
+schemes:
+- name: OAuth2
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://auth.aweber.com/oauth2/authorize
+    tokenUrl: https://auth.aweber.com/oauth2/token
+    scopes: 9
+  sources:
+  - openapi/aweber-openapi.yml

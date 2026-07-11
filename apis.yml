@@ -50,6 +50,12 @@ apis:
       - type: GettingStarted
         url: https://developer.aweber.com/docs/v3/getting-started
 common:
+  - type: TrustCenter
+    url: security/aweber-trust-center.yml
+  - type: DomainSecurity
+    url: security/aweber-domain-security.yml
+  - type: Authentication
+    url: authentication/aweber-authentication.yml
   - type: OAuthScopes
     url: scopes/aweber-scopes.yml
   - type: Website

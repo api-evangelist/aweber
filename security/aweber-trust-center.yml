@@ -1,0 +1,13 @@
+generated: '2026-07-11'
+method: searched
+probe: true
+source: https://www.aweber.com/
+url: https://www.aweber.com/
+certifications:
+- PCI DSS
+- GDPR
+evidence:
+- source: https://www.aweber.com/
+  keywords:
+  - pci-dss
+  - gdpr
