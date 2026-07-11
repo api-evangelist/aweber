@@ -50,6 +50,8 @@ apis:
       - type: GettingStarted
         url: https://developer.aweber.com/docs/v3/getting-started
 common:
+  - type: OAuthScopes
+    url: scopes/aweber-scopes.yml
   - type: Website
     url: https://www.aweber.com
   - type: Documentation

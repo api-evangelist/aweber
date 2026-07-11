@@ -1,0 +1,65 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/aweber-openapi.yml
+schemes:
+- name: OAuth2
+  source: openapi/aweber-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://auth.aweber.com/oauth2/authorize
+    tokenUrl: https://auth.aweber.com/oauth2/token
+scopes:
+- scope: account.read
+  description: Read account information
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aweber-openapi.yml
+- scope: email.read
+  description: Read broadcasts and campaigns
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aweber-openapi.yml
+- scope: email.write
+  description: Manage broadcasts and campaigns
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aweber-openapi.yml
+- scope: landing-page.read
+  description: Read landing pages
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aweber-openapi.yml
+- scope: landing-page.write
+  description: Manage landing pages
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aweber-openapi.yml
+- scope: list.read
+  description: Read lists
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aweber-openapi.yml
+- scope: list.write
+  description: Manage lists
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aweber-openapi.yml
+- scope: subscriber.read
+  description: Read subscribers
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aweber-openapi.yml
+- scope: subscriber.write
+  description: Manage subscribers
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aweber-openapi.yml
