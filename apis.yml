@@ -50,6 +50,8 @@ apis:
       - type: GettingStarted
         url: https://developer.aweber.com/docs/v3/getting-started
 common:
+  - type: AgenticAccess
+    url: agentic-access/aweber-agentic-access.yml
   - type: TrustCenter
     url: security/aweber-trust-center.yml
   - type: DomainSecurity
