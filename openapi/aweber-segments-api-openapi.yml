@@ -1,0 +1,89 @@
+openapi: 3.1.0
+info:
+  title: AWeber REST Accounts Segments API
+  version: '1.0'
+  description: 'The AWeber REST API provides programmatic access to lists, subscribers,
+
+    broadcasts, campaigns, custom fields, segments, and tags. The API is
+
+    organized around the authenticated account and uses OAuth 2.0 for
+
+    authentication. All requests are made over HTTPS to api.aweber.com and
+
+    return JSON.
+
+
+    See https://developer.aweber.com/docs/v3 for full reference.
+
+    '
+  contact:
+    name: AWeber Developer
+    url: https://developer.aweber.com/
+servers:
+- url: https://api.aweber.com/1.0
+  description: AWeber REST API v1.0
+security:
+- OAuth2: []
+tags:
+- name: Segments
+paths:
+  /accounts/{accountId}/lists/{listId}/segments:
+    get:
+      tags:
+      - Segments
+      summary: List saved searches/segments
+      operationId: listSegments
+      parameters:
+      - $ref: '#/components/parameters/AccountId'
+      - $ref: '#/components/parameters/ListId'
+      responses:
+        '200':
+          description: Collection of segments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collection'
+components:
+  parameters:
+    ListId:
+      name: listId
+      in: path
+      required: true
+      schema:
+        type: integer
+    AccountId:
+      name: accountId
+      in: path
+      required: true
+      schema:
+        type: integer
+  schemas:
+    Collection:
+      type: object
+      properties:
+        entries:
+          type: array
+          items:
+            type: object
+        total_size:
+          type: integer
+        next_collection_link:
+          type: string
+          format: uri
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.aweber.com/oauth2/authorize
+          tokenUrl: https://auth.aweber.com/oauth2/token
+          scopes:
+            account.read: Read account information
+            list.read: Read lists
+            list.write: Manage lists
+            subscriber.read: Read subscribers
+            subscriber.write: Manage subscribers
+            email.read: Read broadcasts and campaigns
+            email.write: Manage broadcasts and campaigns
+            landing-page.read: Read landing pages
+            landing-page.write: Manage landing pages

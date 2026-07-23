@@ -1,0 +1,217 @@
+openapi: 3.1.0
+info:
+  title: AWeber REST Accounts Subscribers API
+  version: '1.0'
+  description: 'The AWeber REST API provides programmatic access to lists, subscribers,
+
+    broadcasts, campaigns, custom fields, segments, and tags. The API is
+
+    organized around the authenticated account and uses OAuth 2.0 for
+
+    authentication. All requests are made over HTTPS to api.aweber.com and
+
+    return JSON.
+
+
+    See https://developer.aweber.com/docs/v3 for full reference.
+
+    '
+  contact:
+    name: AWeber Developer
+    url: https://developer.aweber.com/
+servers:
+- url: https://api.aweber.com/1.0
+  description: AWeber REST API v1.0
+security:
+- OAuth2: []
+tags:
+- name: Subscribers
+paths:
+  /accounts/{accountId}/lists/{listId}/subscribers:
+    get:
+      tags:
+      - Subscribers
+      summary: List subscribers on a list
+      operationId: listSubscribers
+      parameters:
+      - $ref: '#/components/parameters/AccountId'
+      - $ref: '#/components/parameters/ListId'
+      - name: ws.size
+        in: query
+        schema:
+          type: integer
+      - name: ws.start
+        in: query
+        schema:
+          type: integer
+      - name: status
+        in: query
+        schema:
+          type: string
+          enum:
+          - subscribed
+          - unsubscribed
+          - unconfirmed
+      responses:
+        '200':
+          description: Collection of subscribers
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collection'
+    post:
+      tags:
+      - Subscribers
+      summary: Add a subscriber to a list
+      operationId: createSubscriber
+      parameters:
+      - $ref: '#/components/parameters/AccountId'
+      - $ref: '#/components/parameters/ListId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriberInput'
+      responses:
+        '201':
+          description: Subscriber created
+  /accounts/{accountId}/lists/{listId}/subscribers/{subscriberId}:
+    get:
+      tags:
+      - Subscribers
+      summary: Get a subscriber
+      operationId: getSubscriber
+      parameters:
+      - $ref: '#/components/parameters/AccountId'
+      - $ref: '#/components/parameters/ListId'
+      - $ref: '#/components/parameters/SubscriberId'
+      responses:
+        '200':
+          description: Subscriber
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscriber'
+    patch:
+      tags:
+      - Subscribers
+      summary: Update a subscriber
+      operationId: updateSubscriber
+      parameters:
+      - $ref: '#/components/parameters/AccountId'
+      - $ref: '#/components/parameters/ListId'
+      - $ref: '#/components/parameters/SubscriberId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriberInput'
+      responses:
+        '200':
+          description: Updated
+    delete:
+      tags:
+      - Subscribers
+      summary: Delete a subscriber
+      operationId: deleteSubscriber
+      parameters:
+      - $ref: '#/components/parameters/AccountId'
+      - $ref: '#/components/parameters/ListId'
+      - $ref: '#/components/parameters/SubscriberId'
+      responses:
+        '204':
+          description: Deleted
+components:
+  parameters:
+    ListId:
+      name: listId
+      in: path
+      required: true
+      schema:
+        type: integer
+    SubscriberId:
+      name: subscriberId
+      in: path
+      required: true
+      schema:
+        type: integer
+    AccountId:
+      name: accountId
+      in: path
+      required: true
+      schema:
+        type: integer
+  schemas:
+    Collection:
+      type: object
+      properties:
+        entries:
+          type: array
+          items:
+            type: object
+        total_size:
+          type: integer
+        next_collection_link:
+          type: string
+          format: uri
+    Subscriber:
+      type: object
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        status:
+          type: string
+          enum:
+          - subscribed
+          - unsubscribed
+          - unconfirmed
+        tags:
+          type: array
+          items:
+            type: string
+        custom_fields:
+          type: object
+          additionalProperties: true
+    SubscriberInput:
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        ad_tracking:
+          type: string
+        custom_fields:
+          type: object
+          additionalProperties: true
+        tags:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.aweber.com/oauth2/authorize
+          tokenUrl: https://auth.aweber.com/oauth2/token
+          scopes:
+            account.read: Read account information
+            list.read: Read lists
+            list.write: Manage lists
+            subscriber.read: Read subscribers
+            subscriber.write: Manage subscribers
+            email.read: Read broadcasts and campaigns
+            email.write: Manage broadcasts and campaigns
+            landing-page.read: Read landing pages
+            landing-page.write: Manage landing pages
