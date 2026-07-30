@@ -8,7 +8,19 @@ description: >-
   broadcasts, campaigns, custom fields, segments, and tags using OAuth 2.0
   authentication.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/aweber.png
 tags:
   - Email Marketing
   - Marketing Automation
@@ -23,32 +35,168 @@ created: '2026-05-11'
 modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-  - aid: aweber:rest-api
-    name: AWeber REST API
-    description: >-
-      REST API for managing AWeber accounts, lists, subscribers, broadcasts,
-      campaigns, custom fields, segments, and tags. Authentication uses OAuth
-      2.0 with personal access tokens or the authorization code flow.
-    humanURL: https://developer.aweber.com/docs/v3
-    baseURL: https://api.aweber.com/1.0
-    tags:
-      - Email Marketing
-      - Subscribers
-      - Lists
-      - Broadcasts
-      - Campaigns
-      - Automation
-    properties:
-      - type: Documentation
-        url: https://developer.aweber.com/docs/v3
-      - type: APIReference
-        url: https://api.aweber.com/
-      - type: OpenAPI
-        url: openapi/aweber-openapi.yml
-      - type: Authentication
-        url: https://developer.aweber.com/docs/v3/oauth
-      - type: GettingStarted
-        url: https://developer.aweber.com/docs/v3/getting-started
+- aid: aweber:aweber-accounts-api
+  name: AWeber Accounts API
+  description: The Accounts API from AWeber — 2 operation(s) for accounts.
+  humanURL: https://developer.aweber.com/docs/v3
+  baseURL: https://api.aweber.com/1.0
+  tags:
+  - Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/aweber-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://developer.aweber.com/docs/v3
+  - type: APIReference
+    url: https://api.aweber.com/
+  - type: Authentication
+    url: https://developer.aweber.com/docs/v3/oauth
+  - type: GettingStarted
+    url: https://developer.aweber.com/docs/v3/getting-started
+- aid: aweber:aweber-broadcasts-api
+  name: AWeber Broadcasts API
+  description: The Broadcasts API from AWeber — 2 operation(s) for broadcasts.
+  humanURL: https://developer.aweber.com/docs/v3
+  baseURL: https://api.aweber.com/1.0
+  tags:
+  - Broadcasts
+  properties:
+  - type: OpenAPI
+    url: openapi/aweber-broadcasts-api-openapi.yml
+  - type: Documentation
+    url: https://developer.aweber.com/docs/v3
+  - type: APIReference
+    url: https://api.aweber.com/
+  - type: Authentication
+    url: https://developer.aweber.com/docs/v3/oauth
+  - type: GettingStarted
+    url: https://developer.aweber.com/docs/v3/getting-started
+- aid: aweber:aweber-campaigns-api
+  name: AWeber Campaigns API
+  description: The Campaigns API from AWeber — 1 operation(s) for campaigns.
+  humanURL: https://developer.aweber.com/docs/v3
+  baseURL: https://api.aweber.com/1.0
+  tags:
+  - Campaigns
+  properties:
+  - type: OpenAPI
+    url: openapi/aweber-campaigns-api-openapi.yml
+  - type: Documentation
+    url: https://developer.aweber.com/docs/v3
+  - type: APIReference
+    url: https://api.aweber.com/
+  - type: Authentication
+    url: https://developer.aweber.com/docs/v3/oauth
+  - type: GettingStarted
+    url: https://developer.aweber.com/docs/v3/getting-started
+- aid: aweber:aweber-custom-fields-api
+  name: AWeber Custom Fields API
+  description: The Custom Fields API from AWeber — 1 operation(s) for custom fields.
+  humanURL: https://developer.aweber.com/docs/v3
+  baseURL: https://api.aweber.com/1.0
+  tags:
+  - Custom Fields
+  properties:
+  - type: OpenAPI
+    url: openapi/aweber-custom-fields-api-openapi.yml
+  - type: Documentation
+    url: https://developer.aweber.com/docs/v3
+  - type: APIReference
+    url: https://api.aweber.com/
+  - type: Authentication
+    url: https://developer.aweber.com/docs/v3/oauth
+  - type: GettingStarted
+    url: https://developer.aweber.com/docs/v3/getting-started
+- aid: aweber:aweber-landing-pages-api
+  name: AWeber Landing Pages API
+  description: The Landing Pages API from AWeber — 1 operation(s) for landing pages.
+  humanURL: https://developer.aweber.com/docs/v3
+  baseURL: https://api.aweber.com/1.0
+  tags:
+  - Landing Pages
+  properties:
+  - type: OpenAPI
+    url: openapi/aweber-landing-pages-api-openapi.yml
+  - type: Documentation
+    url: https://developer.aweber.com/docs/v3
+  - type: APIReference
+    url: https://api.aweber.com/
+  - type: Authentication
+    url: https://developer.aweber.com/docs/v3/oauth
+  - type: GettingStarted
+    url: https://developer.aweber.com/docs/v3/getting-started
+- aid: aweber:aweber-lists-api
+  name: AWeber Lists API
+  description: The Lists API from AWeber — 2 operation(s) for lists.
+  humanURL: https://developer.aweber.com/docs/v3
+  baseURL: https://api.aweber.com/1.0
+  tags:
+  - Lists
+  properties:
+  - type: OpenAPI
+    url: openapi/aweber-lists-api-openapi.yml
+  - type: Documentation
+    url: https://developer.aweber.com/docs/v3
+  - type: APIReference
+    url: https://api.aweber.com/
+  - type: Authentication
+    url: https://developer.aweber.com/docs/v3/oauth
+  - type: GettingStarted
+    url: https://developer.aweber.com/docs/v3/getting-started
+- aid: aweber:aweber-segments-api
+  name: AWeber Segments API
+  description: The Segments API from AWeber — 1 operation(s) for segments.
+  humanURL: https://developer.aweber.com/docs/v3
+  baseURL: https://api.aweber.com/1.0
+  tags:
+  - Segments
+  properties:
+  - type: OpenAPI
+    url: openapi/aweber-segments-api-openapi.yml
+  - type: Documentation
+    url: https://developer.aweber.com/docs/v3
+  - type: APIReference
+    url: https://api.aweber.com/
+  - type: Authentication
+    url: https://developer.aweber.com/docs/v3/oauth
+  - type: GettingStarted
+    url: https://developer.aweber.com/docs/v3/getting-started
+- aid: aweber:aweber-subscribers-api
+  name: AWeber Subscribers API
+  description: The Subscribers API from AWeber — 2 operation(s) for subscribers.
+  humanURL: https://developer.aweber.com/docs/v3
+  baseURL: https://api.aweber.com/1.0
+  tags:
+  - Subscribers
+  properties:
+  - type: OpenAPI
+    url: openapi/aweber-subscribers-api-openapi.yml
+  - type: Documentation
+    url: https://developer.aweber.com/docs/v3
+  - type: APIReference
+    url: https://api.aweber.com/
+  - type: Authentication
+    url: https://developer.aweber.com/docs/v3/oauth
+  - type: GettingStarted
+    url: https://developer.aweber.com/docs/v3/getting-started
+- aid: aweber:aweber-web-forms-api
+  name: AWeber Web Forms API
+  description: The Web Forms API from AWeber — 1 operation(s) for web forms.
+  humanURL: https://developer.aweber.com/docs/v3
+  baseURL: https://api.aweber.com/1.0
+  tags:
+  - Web Forms
+  properties:
+  - type: OpenAPI
+    url: openapi/aweber-web-forms-api-openapi.yml
+  - type: Documentation
+    url: https://developer.aweber.com/docs/v3
+  - type: APIReference
+    url: https://api.aweber.com/
+  - type: Authentication
+    url: https://developer.aweber.com/docs/v3/oauth
+  - type: GettingStarted
+    url: https://developer.aweber.com/docs/v3/getting-started
 common:
   - type: AgenticAccess
     url: agentic-access/aweber-agentic-access.yml
