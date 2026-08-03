@@ -1,0 +1,30 @@
+{
+  "provider": "aweber",
+  "sources": [
+    "aweber-accounts-api-openapi.yml",
+    "aweber-broadcasts-api-openapi.yml",
+    "aweber-campaigns-api-openapi.yml",
+    "aweber-custom-fields-api-openapi.yml",
+    "aweber-landing-pages-api-openapi.yml",
+    "aweber-lists-api-openapi.yml",
+    "aweber-segments-api-openapi.yml",
+    "aweber-subscribers-api-openapi.yml",
+    "aweber-web-forms-api-openapi.yml"
+  ],
+  "outputs": [
+    "aweber-accounts-api-openapi.yml",
+    "aweber-broadcasts-api-openapi.yml",
+    "aweber-campaigns-api-openapi.yml",
+    "aweber-custom-fields-api-openapi.yml",
+    "aweber-landing-pages-api-openapi.yml",
+    "aweber-lists-api-openapi.yml",
+    "aweber-segments-api-openapi.yml",
+    "aweber-subscribers-api-openapi.yml",
+    "aweber-web-forms-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
