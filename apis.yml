@@ -9,17 +9,24 @@ description: >-
   authentication.
 type: Index
 accessModel:
-  pricing: unknown
+  pricing: paid
   onboarding: self-serve
-  trial: false
+  trial: true
+  trial_days: 14
   try_now: false
   public: false
-  label: Self-serve signup
-  confidence: medium
+  label: Self-serve signup, free developer account, paid customer account
+  confidence: high
   source:
+  - https://www.aweber.com/pricing.htm
+  - https://labs.aweber.com
   - authentication
-  generated: '2026-07-22'
-  method: derived
+  note: >-
+    Two separate registrations. The developer account at labs.aweber.com is free and issues the
+    OAuth client credentials; the data belongs to a paid AWeber customer account (Lite $15/mo,
+    Plus $30/mo, 14-day trial). API access itself is not priced or gated by tier.
+  generated: '2026-08-13'
+  method: searched
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/aweber.png
 tags:
   - Email Marketing
@@ -29,16 +36,22 @@ tags:
   - Subscribers
   - Campaigns
   - Landing Pages
+  - Web Forms
+  - Segments
+  - Webhooks
+  - OAuth 2.0
+  - Small Business
 url: >-
   https://raw.githubusercontent.com/api-evangelist/aweber/refs/heads/main/apis.yml
 created: '2026-05-11'
-modified: '2026-05-19'
+modified: '2026-08-13'
 specificationVersion: '0.19'
 apis:
 - aid: aweber:aweber-accounts-api
   name: AWeber Accounts API
-  description: The Accounts API from AWeber — 2 operation(s) for accounts.
-  humanURL: https://developer.aweber.com/docs/v3
+  description: >-
+    The Accounts API from AWeber — 2 operations for listing the accounts an access token can reach and reading a single account, the root of the AWeber resource hierarchy.
+  humanURL: https://api.aweber.com/
   baseURL: https://api.aweber.com/1.0
   tags:
   - Accounts
@@ -46,17 +59,18 @@ apis:
   - type: OpenAPI
     url: openapi/aweber-accounts-api-openapi.yml
   - type: Documentation
-    url: https://developer.aweber.com/docs/v3
+    url: https://api.aweber.com/
   - type: APIReference
     url: https://api.aweber.com/
   - type: Authentication
-    url: https://developer.aweber.com/docs/v3/oauth
+    url: https://api.aweber.com/#tag/OAuth-2.0-Overview
   - type: GettingStarted
-    url: https://developer.aweber.com/docs/v3/getting-started
+    url: https://api.aweber.com/#tag/Getting-Started
 - aid: aweber:aweber-broadcasts-api
   name: AWeber Broadcasts API
-  description: The Broadcasts API from AWeber — 2 operation(s) for broadcasts.
-  humanURL: https://developer.aweber.com/docs/v3
+  description: >-
+    The Broadcasts API from AWeber — 10 operations for creating, updating, scheduling, cancelling and deleting broadcast emails on a list, plus reading opens and clicks.
+  humanURL: https://api.aweber.com/
   baseURL: https://api.aweber.com/1.0
   tags:
   - Broadcasts
@@ -64,17 +78,18 @@ apis:
   - type: OpenAPI
     url: openapi/aweber-broadcasts-api-openapi.yml
   - type: Documentation
-    url: https://developer.aweber.com/docs/v3
+    url: https://api.aweber.com/
   - type: APIReference
     url: https://api.aweber.com/
   - type: Authentication
-    url: https://developer.aweber.com/docs/v3/oauth
+    url: https://api.aweber.com/#tag/OAuth-2.0-Overview
   - type: GettingStarted
-    url: https://developer.aweber.com/docs/v3/getting-started
+    url: https://api.aweber.com/#tag/Getting-Started
 - aid: aweber:aweber-campaigns-api
   name: AWeber Campaigns API
-  description: The Campaigns API from AWeber — 1 operation(s) for campaigns.
-  humanURL: https://developer.aweber.com/docs/v3
+  description: >-
+    The Campaigns API from AWeber — 5 operations for reading follow-up and broadcast campaigns on a list and their aggregate statistics.
+  humanURL: https://api.aweber.com/
   baseURL: https://api.aweber.com/1.0
   tags:
   - Campaigns
@@ -82,17 +97,18 @@ apis:
   - type: OpenAPI
     url: openapi/aweber-campaigns-api-openapi.yml
   - type: Documentation
-    url: https://developer.aweber.com/docs/v3
+    url: https://api.aweber.com/
   - type: APIReference
     url: https://api.aweber.com/
   - type: Authentication
-    url: https://developer.aweber.com/docs/v3/oauth
+    url: https://api.aweber.com/#tag/OAuth-2.0-Overview
   - type: GettingStarted
-    url: https://developer.aweber.com/docs/v3/getting-started
+    url: https://api.aweber.com/#tag/Getting-Started
 - aid: aweber:aweber-custom-fields-api
   name: AWeber Custom Fields API
-  description: The Custom Fields API from AWeber — 1 operation(s) for custom fields.
-  humanURL: https://developer.aweber.com/docs/v3
+  description: >-
+    The Custom Fields API from AWeber — 5 operations for creating, reading, renaming and deleting the custom subscriber fields defined on a list.
+  humanURL: https://api.aweber.com/
   baseURL: https://api.aweber.com/1.0
   tags:
   - Custom Fields
@@ -100,17 +116,18 @@ apis:
   - type: OpenAPI
     url: openapi/aweber-custom-fields-api-openapi.yml
   - type: Documentation
-    url: https://developer.aweber.com/docs/v3
+    url: https://api.aweber.com/
   - type: APIReference
     url: https://api.aweber.com/
   - type: Authentication
-    url: https://developer.aweber.com/docs/v3/oauth
+    url: https://api.aweber.com/#tag/OAuth-2.0-Overview
   - type: GettingStarted
-    url: https://developer.aweber.com/docs/v3/getting-started
+    url: https://api.aweber.com/#tag/Getting-Started
 - aid: aweber:aweber-landing-pages-api
   name: AWeber Landing Pages API
-  description: The Landing Pages API from AWeber — 1 operation(s) for landing pages.
-  humanURL: https://developer.aweber.com/docs/v3
+  description: >-
+    The Landing Pages API from AWeber — 2 operations for reading the landing pages attached to a list.
+  humanURL: https://api.aweber.com/
   baseURL: https://api.aweber.com/1.0
   tags:
   - Landing Pages
@@ -118,17 +135,18 @@ apis:
   - type: OpenAPI
     url: openapi/aweber-landing-pages-api-openapi.yml
   - type: Documentation
-    url: https://developer.aweber.com/docs/v3
+    url: https://api.aweber.com/
   - type: APIReference
     url: https://api.aweber.com/
   - type: Authentication
-    url: https://developer.aweber.com/docs/v3/oauth
+    url: https://api.aweber.com/#tag/OAuth-2.0-Overview
   - type: GettingStarted
-    url: https://developer.aweber.com/docs/v3/getting-started
+    url: https://api.aweber.com/#tag/Getting-Started
 - aid: aweber:aweber-lists-api
   name: AWeber Lists API
-  description: The Lists API from AWeber — 2 operation(s) for lists.
-  humanURL: https://developer.aweber.com/docs/v3
+  description: >-
+    The Lists API from AWeber — 4 operations for listing and finding the email lists on an account and reading the tags applied on a list.
+  humanURL: https://api.aweber.com/
   baseURL: https://api.aweber.com/1.0
   tags:
   - Lists
@@ -136,17 +154,18 @@ apis:
   - type: OpenAPI
     url: openapi/aweber-lists-api-openapi.yml
   - type: Documentation
-    url: https://developer.aweber.com/docs/v3
+    url: https://api.aweber.com/
   - type: APIReference
     url: https://api.aweber.com/
   - type: Authentication
-    url: https://developer.aweber.com/docs/v3/oauth
+    url: https://api.aweber.com/#tag/OAuth-2.0-Overview
   - type: GettingStarted
-    url: https://developer.aweber.com/docs/v3/getting-started
+    url: https://api.aweber.com/#tag/Getting-Started
 - aid: aweber:aweber-segments-api
   name: AWeber Segments API
-  description: The Segments API from AWeber — 1 operation(s) for segments.
-  humanURL: https://developer.aweber.com/docs/v3
+  description: >-
+    The Segments API from AWeber — 2 operations for reading the saved segments defined on a list.
+  humanURL: https://api.aweber.com/
   baseURL: https://api.aweber.com/1.0
   tags:
   - Segments
@@ -154,17 +173,18 @@ apis:
   - type: OpenAPI
     url: openapi/aweber-segments-api-openapi.yml
   - type: Documentation
-    url: https://developer.aweber.com/docs/v3
+    url: https://api.aweber.com/
   - type: APIReference
     url: https://api.aweber.com/
   - type: Authentication
-    url: https://developer.aweber.com/docs/v3/oauth
+    url: https://api.aweber.com/#tag/OAuth-2.0-Overview
   - type: GettingStarted
-    url: https://developer.aweber.com/docs/v3/getting-started
+    url: https://api.aweber.com/#tag/Getting-Started
 - aid: aweber:aweber-subscribers-api
   name: AWeber Subscribers API
-  description: The Subscribers API from AWeber — 2 operation(s) for subscribers.
-  humanURL: https://developer.aweber.com/docs/v3
+  description: >-
+    The Subscribers API from AWeber — 12 operations for adding, reading, updating, moving, searching and deleting subscribers on a list, reading subscriber activity, and recording tracked purchases.
+  humanURL: https://api.aweber.com/
   baseURL: https://api.aweber.com/1.0
   tags:
   - Subscribers
@@ -172,17 +192,18 @@ apis:
   - type: OpenAPI
     url: openapi/aweber-subscribers-api-openapi.yml
   - type: Documentation
-    url: https://developer.aweber.com/docs/v3
+    url: https://api.aweber.com/
   - type: APIReference
     url: https://api.aweber.com/
   - type: Authentication
-    url: https://developer.aweber.com/docs/v3/oauth
+    url: https://api.aweber.com/#tag/OAuth-2.0-Overview
   - type: GettingStarted
-    url: https://developer.aweber.com/docs/v3/getting-started
+    url: https://api.aweber.com/#tag/Getting-Started
 - aid: aweber:aweber-web-forms-api
   name: AWeber Web Forms API
-  description: The Web Forms API from AWeber — 1 operation(s) for web forms.
-  humanURL: https://developer.aweber.com/docs/v3
+  description: >-
+    The Web Forms API from AWeber — 8 operations for reading the sign-up forms on a list or account and their split tests and split-test components.
+  humanURL: https://api.aweber.com/
   baseURL: https://api.aweber.com/1.0
   tags:
   - Web Forms
@@ -190,13 +211,82 @@ apis:
   - type: OpenAPI
     url: openapi/aweber-web-forms-api-openapi.yml
   - type: Documentation
-    url: https://developer.aweber.com/docs/v3
+    url: https://api.aweber.com/
   - type: APIReference
     url: https://api.aweber.com/
   - type: Authentication
-    url: https://developer.aweber.com/docs/v3/oauth
+    url: https://api.aweber.com/#tag/OAuth-2.0-Overview
   - type: GettingStarted
-    url: https://developer.aweber.com/docs/v3/getting-started
+    url: https://api.aweber.com/#tag/Getting-Started
+- aid: aweber:aweber-integrations-api
+  name: AWeber Integrations API
+  description: >-
+    The Integrations API from AWeber — 2 operations for reading the third-party integrations
+    (PayPal, Shopify, WordPress, Facebook and the rest of the 750+ app catalog) connected to an
+    AWeber account and used for email sharing.
+  humanURL: https://api.aweber.com/
+  baseURL: https://api.aweber.com/1.0
+  tags:
+  - Integrations
+  properties:
+  - type: OpenAPI
+    url: openapi/aweber-integrations-api-openapi.yml
+  - type: Documentation
+    url: https://api.aweber.com/
+  - type: APIReference
+    url: https://api.aweber.com/#tag/Integrations
+  - type: Authentication
+    url: https://api.aweber.com/#tag/OAuth-2.0-Overview
+  - type: GettingStarted
+    url: https://api.aweber.com/#tag/Getting-Started
+- aid: aweber:aweber-authentication-api
+  name: AWeber Authentication API
+  description: >-
+    The Authentication API from AWeber — 4 operations covering the OAuth 2.0 token and revoke
+    endpoints on auth.aweber.com plus the legacy OAuth 1.0a request-token and access-token
+    endpoints that remain published and live. OAuth 2.0 authorization code, with PKCE required
+    for public clients, is the only supported model for new applications.
+  humanURL: https://api.aweber.com/#tag/OAuth-2.0-Overview
+  baseURL: https://api.aweber.com/1.0
+  tags:
+  - Authentication
+  - OAuth
+  properties:
+  - type: OpenAPI
+    url: openapi/aweber-authentication-api-openapi.yml
+  - type: Documentation
+    url: https://api.aweber.com/#tag/OAuth-2.0-Overview
+  - type: APIReference
+    url: https://api.aweber.com/#tag/OAuth-2.0-Reference
+  - type: Authentication
+    url: authentication/aweber-authentication.yml
+  - type: OAuthScopes
+    url: scopes/aweber-scopes.yml
+  - type: GettingStarted
+    url: https://api.aweber.com/#tag/Getting-Started
+- aid: aweber:aweber-beta-api
+  name: AWeber Beta API
+  description: >-
+    The Beta API from AWeber — early-access endpoints served at https://api.aweber.com/2.0-beta/,
+    announced in API 1.4.0 on 2025-09-05 as a preview of the upcoming v2 API, primarily replacing
+    numeric ids with UUIDs. Currently one documented operation, broadcast links analytics. No
+    compatibility commitment is published; treat as unstable.
+  humanURL: https://api.aweber.com/#tag/Beta-Endpoints
+  baseURL: https://api.aweber.com/2.0-beta
+  tags:
+  - Beta
+  - Analytics
+  properties:
+  - type: OpenAPI
+    url: openapi/aweber-beta-api-openapi.yml
+  - type: Documentation
+    url: https://api.aweber.com/#tag/Beta-Endpoints
+  - type: APIReference
+    url: https://api.aweber.com/#tag/Beta-Endpoints
+  - type: Authentication
+    url: https://api.aweber.com/#tag/OAuth-2.0-Overview
+  - type: ChangeLog
+    url: https://api.aweber.com/#tag/Developer-Changelog
 common:
   - type: AgenticAccess
     url: agentic-access/aweber-agentic-access.yml
@@ -211,13 +301,13 @@ common:
   - type: Website
     url: https://www.aweber.com
   - type: Documentation
-    url: https://developer.aweber.com/docs/v3
+    url: https://api.aweber.com/
   - type: DeveloperPortal
-    url: https://developer.aweber.com
-  - type: Signup
+    url: https://labs.aweber.com
+  - type: SignUp
     url: https://www.aweber.com/signup.htm
   - type: Login
-    url: https://auth.aweber.com/1.0/oauth2/authorize
+    url: https://www.aweber.com/login.htm
   - type: Pricing
     url: https://www.aweber.com/pricing.htm
   - type: Support
@@ -227,7 +317,7 @@ common:
   - type: StatusPage
     url: https://status.aweber.com
   - type: TermsOfService
-    url: https://www.aweber.com/tos.htm
+    url: https://www.aweber.com/service-agreement.htm
   - type: PrivacyPolicy
     url: https://www.aweber.com/privacy.htm
   - type: GitHubOrganization
@@ -248,9 +338,62 @@ common:
     url: https://www.linkedin.com/company/aweber
   - type: YouTube
     url: https://www.youtube.com/user/AWeber
-  - name: MCP Server
-    url: https://github.com/aweber/aweber-mcp
+  - name: MCP Server (candidate — no server is published)
+    url: mcp/aweber-mcp.yml
     type: MCPServer
+  - type: Packages
+    url: packages/aweber-packages.yml
+  - type: SDKs
+    url: packages/aweber-packages.yml
+  - type: LLMsTxt
+    url: llms/aweber-llms.txt
+  - type: Overlay
+    url: overlays/aweber-api-overlay.yaml
+  - type: Conformance
+    url: conformance/aweber-conformance.yml
+  - type: Compliance
+    url: https://www.aweber.com/dpst.htm
+  - type: ErrorCatalog
+    url: errors/aweber-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/aweber-lifecycle.yml
+  - type: Conventions
+    url: conventions/aweber-conventions.yml
+  - type: ChangeLog
+    url: changelog/aweber-changelog.yml
+  - type: DataModel
+    url: data-model/aweber-data-model.yml
+  - type: Webhooks
+    url: asyncapi/aweber-webhooks.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: Plans
+    url: plans/aweber-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/aweber-rate-limits.yml
+  - type: VulnerabilityDisclosure
+    url: security/aweber-vulnerability-disclosure.yml
+  - name: Developer Terms of Service
+    url: https://labs.aweber.com/docs/tos
+    type: TermsOfService
+  - name: Legal
+    url: https://www.aweber.com/legal.htm
+    type: Legal
+  - name: Anti-Spam Policy
+    url: https://www.aweber.com/antispam.htm
+    type: AcceptableUsePolicy
+  - name: Knowledge Base
+    url: https://docs.aweber.com/api
+    type: HelpCenter
+  - name: AWeber Community
+    url: https://community.aweber.com/
+    type: Community
+  - name: Developer Newsletter Archive
+    url: https://archive.aweber.com/awlabs
+    type: Newsletter
+  - name: Code Samples
+    url: https://github.com/aweber/public-api-examples
+    type: Examples
 features:
   - name: Email Broadcasts
     description: >-
@@ -311,3 +454,12 @@ integrations:
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-13'
+  status: enriched
+  artifacts_added: 17
+  pass: local-v1
+  note: >-
+    Contract discovery replaced a scaffolded, partly-wrong OpenAPI with AWeber's real published
+    spec: OpenAPI 3.0.2 harvested from https://api.aweber.com/swagger.yaml and its 33 $ref files,
+    45 paths / 57 operations, bundled into openapi/_original/aweber-api-openapi.yml.
