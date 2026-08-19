@@ -1,0 +1,390 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AWeber Web Forms API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+      "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Webforms",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get webforms for account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId?ws.op=getWebForms",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "ws.op",
+                "value": "",
+                "type": "query",
+                "description": "The method name - expecting \"getWebForms\""
+              },
+              {
+                "name": "ws.size",
+                "value": "",
+                "type": "query",
+                "description": "The pagination total entries to retrieve"
+              },
+              {
+                "name": "ws.start",
+                "value": "",
+                "type": "query",
+                "description": "The pagination starting offset"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to retrieve webforms for all lists on an account.\n\nCheck out related examples:\n\n  * Get Webforms Detail (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-webforms-detail\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-webforms-detail\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Webforms%20Detail.postman_collection."
+        },
+        {
+          "info": {
+            "name": "Get split tests for account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId?ws.op=getWebFormSplitTests",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "ws.op",
+                "value": "",
+                "type": "query",
+                "description": "The method name - expecting \"getWebFormSplitTests\""
+              },
+              {
+                "name": "ws.size",
+                "value": "",
+                "type": "query",
+                "description": "The pagination total entries to retrieve"
+              },
+              {
+                "name": "ws.start",
+                "value": "",
+                "type": "query",
+                "description": "The pagination starting offset"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to retrieve webform split tests for all lists on an account.\n\nCheck out related examples:\n\n  * Get Webforms Detail (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-webforms-detail\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-webforms-detail\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Webforms%20Detail.postman_"
+        },
+        {
+          "info": {
+            "name": "Get webforms for list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/web_forms",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "ws.start",
+                "value": "",
+                "type": "query",
+                "description": "The pagination starting offset"
+              },
+              {
+                "name": "ws.size",
+                "value": "",
+                "type": "query",
+                "description": "The pagination total entries to retrieve"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to retrieve a collection of webforms for a list\n\nCheck out related examples:\n\n  * Get Webforms Detail (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-webforms-detail\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-webforms-detail\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Webforms%20Detail.postman_collection.js"
+        },
+        {
+          "info": {
+            "name": "Get webform for list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/web_forms/:webformId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "webformId",
+                "value": "",
+                "type": "path",
+                "description": "The webform ID"
+              }
+            ]
+          },
+          "docs": "This endpoint is used to retrieve single webform for a list\n\nCheck out related examples:\n\n  * Get Webforms Detail (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-webforms-detail\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-webforms-detail\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Webforms%20Detail.postman_collection.json\" target"
+        },
+        {
+          "info": {
+            "name": "Get split tests for list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/web_form_split_tests",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "ws.start",
+                "value": "",
+                "type": "query",
+                "description": "The pagination starting offset"
+              },
+              {
+                "name": "ws.size",
+                "value": "",
+                "type": "query",
+                "description": "The pagination total entries to retrieve"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to retrieve webform split tests for a list.\n\nCheck out related examples:\n\n  * Get Webforms Detail (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-webforms-detail\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-webforms-detail\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Webforms%20Detail.postman_collection.json\" "
+        },
+        {
+          "info": {
+            "name": "Get split test for list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/web_form_split_tests/:splitTestId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "splitTestId",
+                "value": "",
+                "type": "path",
+                "description": "The webform split test ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to retrieve a specific webform split test.\n\nCheck out related examples:\n\n  * Get Webforms Detail (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-webforms-detail\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-webforms-detail\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Webforms%20Detail.postman_collection.json\" t"
+        },
+        {
+          "info": {
+            "name": "Get split test components",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/web_form_split_tests/:splitTestId/components",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "splitTestId",
+                "value": "",
+                "type": "path",
+                "description": "The webform split test ID"
+              },
+              {
+                "name": "ws.start",
+                "value": "",
+                "type": "query",
+                "description": "The pagination starting offset"
+              },
+              {
+                "name": "ws.size",
+                "value": "",
+                "type": "query",
+                "description": "The pagination total entries to retrieve"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to retrieve a collection of webform split test components.\n\nCheck out related examples:\n\n  * Get Webforms Detail (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-webforms-detail\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-webforms-detail\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Webforms%20Detail.postman_co"
+        },
+        {
+          "info": {
+            "name": "Get split test component",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/web_form_split_tests/:splitTestId/components/:splitTestComponentId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "splitTestId",
+                "value": "",
+                "type": "path",
+                "description": "The webform split test ID"
+              },
+              {
+                "name": "splitTestComponentId",
+                "value": "",
+                "type": "path",
+                "description": "The webform split test component ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to retrieve a collection of webform split test components.\n\nCheck out related examples:\n\n  * Get Webforms Detail (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-webforms-detail\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-webforms-detail\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Webforms%20Detail.postman_co"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

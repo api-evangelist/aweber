@@ -1,26 +1,34 @@
-generated: '2026-07-15'
+generated: '2026-08-13'
 method: generated
-source: openapi/aweber-openapi.yml
+source: openapi/aweber-accounts-api-openapi.yml, openapi/aweber-authentication-api-openapi.yml,
+  openapi/aweber-beta-api-openapi.yml, openapi/aweber-broadcasts-api-openapi.yml, openapi/aweber-campaigns-api-openapi.yml,
+  openapi/aweber-custom-fields-api-openapi.yml, openapi/aweber-integrations-api-openapi.yml,
+  openapi/aweber-landing-pages-api-openapi.yml, openapi/aweber-lists-api-openapi.yml, openapi/aweber-segments-api-openapi.yml,
+  openapi/aweber-subscribers-api-openapi.yml, openapi/aweber-web-forms-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
-  operations: 18
+  operations: 57
   by_action_class:
-    connected: 13
-    acting: 5
+    connected: 38
+    acting: 19
   by_consequence:
-    read: 13
-    write: 5
-  human_in_the_loop_required: 0
+    read: 38
+    write: 17
+    safety-critical: 1
+    physical: 1
+  human_in_the_loop_required: 1
 operations:
 - path: /accounts
   method: get
-  operationId: listAccounts
+  operationId: getAccounts
   x-agentic-access:
     action-class: connected
     consequence: read
     subject: optional
+    scope:
+    - account.read
     token:
       max-ttl: 3600
     audit: none
@@ -31,42 +39,14 @@ operations:
     action-class: connected
     consequence: read
     subject: optional
+    scope:
+    - account.read
     token:
       max-ttl: 3600
     audit: none
-- path: /accounts/{accountId}/lists
-  method: get
-  operationId: listLists
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /accounts/{accountId}/lists/{listId}
-  method: get
-  operationId: getList
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /accounts/{accountId}/lists/{listId}/subscribers
-  method: get
-  operationId: listSubscribers
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /accounts/{accountId}/lists/{listId}/subscribers
+- path: /oauth/request_token
   method: post
-  operationId: createSubscriber
+  operationId: getARequestToken
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -80,55 +60,75 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /accounts/{accountId}/lists/{listId}/subscribers/{subscriberId}
+- path: /oauth/access_token
+  method: post
+  operationId: getAnAccessToken
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /oauth2/token
+  method: post
+  operationId: getAToken
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /oauth2/revoke
+  method: post
+  operationId: revokeAToken
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /analytics/reports/broadcasts-links
   method: get
-  operationId: getSubscriber
+  operationId: getBroadcastLinksAnalytics
   x-agentic-access:
     action-class: connected
     consequence: read
     subject: optional
+    scope:
+    - email.read
     token:
       max-ttl: 3600
     audit: none
-- path: /accounts/{accountId}/lists/{listId}/subscribers/{subscriberId}
-  method: patch
-  operationId: updateSubscriber
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /accounts/{accountId}/lists/{listId}/subscribers/{subscriberId}
-  method: delete
-  operationId: deleteSubscriber
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
 - path: /accounts/{accountId}/lists/{listId}/broadcasts
   method: get
-  operationId: listBroadcasts
+  operationId: getBroadcasts
   x-agentic-access:
     action-class: connected
     consequence: read
     subject: optional
+    scope:
+    - email.read
     token:
       max-ttl: 3600
     audit: none
@@ -139,6 +139,8 @@ operations:
     action-class: acting
     consequence: write
     subject: required
+    scope:
+    - email.write
     audience: null
     token:
       max-ttl: 900
@@ -155,36 +157,20 @@ operations:
     action-class: connected
     consequence: read
     subject: optional
+    scope:
+    - email.read
     token:
       max-ttl: 3600
     audit: none
-- path: /accounts/{accountId}/lists/{listId}/campaigns
-  method: get
-  operationId: listCampaigns
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /accounts/{accountId}/lists/{listId}/custom_fields
-  method: get
-  operationId: listCustomFields
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /accounts/{accountId}/lists/{listId}/custom_fields
-  method: post
-  operationId: createCustomField
+- path: /accounts/{accountId}/lists/{listId}/broadcasts/{broadcastId}
+  method: put
+  operationId: updateBroadcast
   x-agentic-access:
     action-class: acting
     consequence: write
     subject: required
+    scope:
+    - email.write
     audience: null
     token:
       max-ttl: 900
@@ -194,19 +180,582 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /accounts/{accountId}/lists/{listId}/segments
+- path: /accounts/{accountId}/lists/{listId}/broadcasts/{broadcastId}
+  method: delete
+  operationId: deleteBroadcast
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - email.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /accounts/{accountId}/lists/{listId}/broadcasts/{broadcastId}/cancel
+  method: post
+  operationId: cancelScheduledBroadcast
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - email.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /accounts/{accountId}/lists/{listId}/broadcasts/total
   method: get
-  operationId: listSegments
+  operationId: getTotalBroadcasts
   x-agentic-access:
     action-class: connected
     consequence: read
     subject: optional
+    scope:
+    - email.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists/{listId}/broadcasts/{broadcastId}/schedule
+  method: post
+  operationId: scheduleBroadcast
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - email.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /accounts/{accountId}/lists/{listId}/broadcasts/{broadcastId}/opens
+  method: get
+  operationId: getBroadcastOpens
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - email.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists/{listId}/broadcasts/{broadcastId}/clicks
+  method: get
+  operationId: getBroadcastClicks
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - email.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists/{listId}/campaigns
+  method: get
+  operationId: getCampaigns
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - email.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists/{listId}/campaigns/{campaignType}{campaignId}
+  method: get
+  operationId: getCampaign
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - email.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists/{listId}/campaigns?ws.op=find
+  method: get
+  operationId: findCampaigns
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - email.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists/{listId}/campaigns/b{campaignId}/stats
+  method: get
+  operationId: getBroadcastStatistics
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - email.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists/{listId}/campaigns/b{campaignId}/stats/{statsId}
+  method: get
+  operationId: getBroadcastStatistic
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - email.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists/{listId}/custom_fields
+  method: get
+  operationId: getCustomFields
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - list.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists/{listId}/custom_fields
+  method: post
+  operationId: addCustomField
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - list.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /accounts/{accountId}/lists/{listId}/custom_fields/{customFieldId}
+  method: get
+  operationId: getCustomField
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - list.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists/{listId}/custom_fields/{customFieldId}
+  method: delete
+  operationId: deleteCustomField
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - list.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /accounts/{accountId}/lists/{listId}/custom_fields/{customFieldId}
+  method: patch
+  operationId: updateCustomField
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - list.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /accounts/{accountId}/integrations
+  method: get
+  operationId: getIntegrations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - account.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/integrations/{integrationId}
+  method: get
+  operationId: getIntegration
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - account.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists/{listId}/landing_pages
+  method: get
+  operationId: getLandingPages
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - landing-page.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists/{listId}/landing_pages/{landingPageId}
+  method: get
+  operationId: getLandingPage
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - list.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists
+  method: get
+  operationId: getLists
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - list.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists/{listId}
+  method: get
+  operationId: getList
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - list.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists?ws.op=find
+  method: get
+  operationId: findLists
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - list.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists/{listId}/tags
+  method: get
+  operationId: getTagsForList
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - list.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists/{listId}/segments
+  method: get
+  operationId: getSegments
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - list.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists/{listId}/segments/{segmentId}
+  method: get
+  operationId: getSegment
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - list.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists/{listId}/subscribers
+  method: get
+  operationId: getSubscribers
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - subscriber.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists/{listId}/subscribers
+  method: post
+  operationId: addSubscriber
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - subscriber.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /accounts/{accountId}/lists/{listId}/subscribers
+  method: delete
+  operationId: deleteSubscriberByEmail
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - subscriber.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /accounts/{accountId}/lists/{listId}/subscribers
+  method: patch
+  operationId: updateSubscriberByEmail
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - subscriber.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /accounts/{accountId}/lists/{listId}/subscribers/{subscriberId}
+  method: get
+  operationId: getSubscriber
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - subscriber.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists/{listId}/subscribers/{subscriberId}
+  method: post
+  operationId: moveSubscriber
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - subscriber.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /accounts/{accountId}/lists/{listId}/subscribers/{subscriberId}
+  method: delete
+  operationId: deleteSubscriberByID
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - subscriber.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /accounts/{accountId}/lists/{listId}/subscribers/{subscriberId}
+  method: patch
+  operationId: updateSubscriberByID
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - subscriber.write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /accounts/{accountId}/lists/{listId}/subscribers?ws.op=find
+  method: get
+  operationId: findSubscribersForList
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - subscriber.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}?ws.op=findSubscribers
+  method: get
+  operationId: findSubscribersForAccount
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - subscriber.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists/{listId}/subscribers/{subscriberId}?ws.op=getActivity
+  method: get
+  operationId: getSubscriberActivity
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - subscriber.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists/{listId}/purchases
+  method: post
+  operationId: createAPurchase
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - subscriber.read
+    - subscriber.write
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /accounts/{accountId}?ws.op=getWebForms
+  method: get
+  operationId: getWebformsForAccount
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - list.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}?ws.op=getWebFormSplitTests
+  method: get
+  operationId: getSplitTestsForAccount
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - list.read
     token:
       max-ttl: 3600
     audit: none
 - path: /accounts/{accountId}/lists/{listId}/web_forms
   method: get
-  operationId: listWebForms
+  operationId: getWebformsForList
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - list.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists/{listId}/web_forms/{webformId}
+  method: get
+  operationId: getWebformForList
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -214,13 +763,51 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /accounts/{accountId}/landing_pages
+- path: /accounts/{accountId}/lists/{listId}/web_form_split_tests
   method: get
-  operationId: listLandingPages
+  operationId: getSplitTestsForList
   x-agentic-access:
     action-class: connected
     consequence: read
     subject: optional
+    scope:
+    - list.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists/{listId}/web_form_split_tests/{splitTestId}
+  method: get
+  operationId: getSplitTestForList
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - list.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists/{listId}/web_form_split_tests/{splitTestId}/components
+  method: get
+  operationId: getSplitTestComponents
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - list.read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /accounts/{accountId}/lists/{listId}/web_form_split_tests/{splitTestId}/components/{splitTestComponentId}
+  method: get
+  operationId: getSplitTestComponent
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - list.read
     token:
       max-ttl: 3600
     audit: none

@@ -1,18 +1,83 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/aweber-openapi.yml
+generated: '2026-08-13'
+method: searched
+source: openapi/_original/aweber-api-openapi.yml
+docs: https://api.aweber.com/#tag/OAuth-2.0-Overview
+docs_troubleshooting: https://api.aweber.com/#tag/Troubleshooting
 summary:
-  types:
-  - oauth2
-  oauth2_flows:
-  - authorizationCode
+  types: [oauth2]
+  oauth2_flows: [authorizationCode]
+  api_key: false
+  basic: false
+  mtls: false
+  oidc: false
+note: >-
+  OAuth 2.0 authorization code is the only supported model for new applications — there is no API
+  key, no basic auth and no service-to-service credential. That makes AWeber unusable for
+  unattended automation without a stored per-customer refresh token, and it is why an MCP server
+  for AWeber would need OAuth rather than a key. Registration is split across two account types:
+  a free DEVELOPER account at labs.aweber.com issues the client_id/client_secret and the OAuth
+  Redirect URL, while the data belongs to a separate AWeber CUSTOMER account that grants access.
 schemes:
-- name: OAuth2
-  type: oauth2
-  flows:
-  - flow: authorizationCode
-    authorizationUrl: https://auth.aweber.com/oauth2/authorize
-    tokenUrl: https://auth.aweber.com/oauth2/token
-    scopes: 9
-  sources:
-  - openapi/aweber-openapi.yml
+  - name: OAuth 2.0
+    type: oauth2
+    sources: [openapi/_original/aweber-api-openapi.yml]
+    description: The following endpoints and scopes are used to authenticate.
+    flows:
+      - flow: authorizationCode
+        authorizationUrl: https://auth.aweber.com/oauth2/authorize
+        tokenUrl: https://auth.aweber.com/oauth2/token
+        refreshUrl: https://auth.aweber.com/oauth2/token
+        revokeUrl: https://auth.aweber.com/oauth2/revoke
+        scopes: 9
+    token_transport: 'Authorization: Bearer <access_token>'
+client_types:
+  - type: confidential
+    holds_secret: true
+    pkce: forbidden
+    error_if_wrong: 'Confidential Client MUST NOT Use PKCE / code_challenge and code_challenge_method are disallowed for confidential clients'
+  - type: public
+    holds_secret: false
+    pkce: required
+    examples: [mobile applications, WordPress plugins]
+    error_if_wrong: 'Public Client MUST Use PKCE / code_challenge is required for public client'
+registration:
+  developer_portal: https://labs.aweber.com
+  create_app: https://labs.aweber.com/apps
+  login: https://labs.aweber.com/auth/login
+  cost: free
+  note: >-
+    The developer account is unrelated to a customer account. A one-month free customer trial is
+    the documented way to get test data.
+redirect_uri:
+  requirement: >-
+    Must match the OAuth Redirect URL registered for the application EXACTLY. A character
+    difference produces the documented "Invalid redirect URI" failure.
+authorize_url_params: [response_type=code, client_id, redirect_uri, scope, state]
+tokens:
+  refresh_supported: true
+  revocation_supported: true
+  revoke_endpoint: https://auth.aweber.com/oauth2/revoke
+  expiry_documented: >-
+    The token response carries expires_in; a fixed lifetime is not published in the reference.
+discovery:
+  rfc8414: false
+  oidc: false
+  note: >-
+    /.well-known/oauth-authorization-server and /.well-known/openid-configuration both return 404
+    on auth.aweber.com — endpoints and scopes are discoverable only from the documentation. See
+    well-known/aweber-well-known.yml.
+legacy:
+  oauth1a:
+    status: legacy-still-live
+    endpoints: [POST /oauth/request_token, POST /oauth/access_token]
+    evidence: >-
+      An unauthenticated GET https://api.aweber.com/1.0/accounts returns 400 "Missing oauth
+      parameters: oauth_consumer_key" (probed 2026-08-13), and the OAuth 1.0a reference is still
+      published.
+    guidance: AWeber requires OAuth 2.0 for all new applications.
+scopes_detail: scopes/aweber-scopes.yml
+errors:
+  - {message: Invalid Token, status: 401, cause: Token expired, revoked by the customer, or mistyped}
+  - {message: Invalid Account, status: 401, cause: The AWeber customer account is no longer active}
+  - {message: Invalid Request, status: 401, cause: The request did not use OAuth 2.0}
+  - {message: Consumer key is invalid., status: 401, cause: Bad client credentials}

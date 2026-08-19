@@ -1,0 +1,515 @@
+{
+  "item": [
+    {
+      "id": "cd03a219-d6a8-4a8d-9b17-243d5917ad0c",
+      "name": "Beta Endpoints",
+      "description": {
+        "content": "### What is it?\n\nBeta endpoints are early-access versions of the upcoming v2 API that provide developers with a preview of new features and changes before the official v2 release. These endpoints are accessible at `api.aweber.com/2.0-beta/` and include **new functionality not available in v1**.\n\nBeta endpoints are previews of v2 functionality and do not replace v1 endpoints. The stable v1 API remains the recommended choice for production applications.\n\n### Important Notice\n\n**Beta endpoints are experimental and subject to change without notice.** As beta endpoints, developers should expect:\n\n- **Contracts may change** at any time without backward compatibility\n- **Endpoints may not follow** previously established patterns from v1 endpoints\n- **Current Documentation may be inaccurate** or incomplete\n- **Limited support** compared to stable v1 endpoints\n- **No guarantee of stability** until official v2 release\n\n**Use beta endpoints only for testing and development purposes.** Do not rely on beta endpoints for production applications.\n\n### Key Differences from v1 API\n\nBeta endpoints introduce several changes that preview the upcoming v2 API:\n\n- **UUID Identifiers**: Resources use UUIDs instead of numeric IDs\n- **New Functionality**: Access to capabilities and data not available through v1 endpoints\n- **Different Base URL**: Beta endpoints are accessible at `api.aweber.com/2.0-beta/` instead of `api.aweber.com/1.0/`\n\n### Authentication\n\nBeta endpoints use the same OAuth 2.0 authentication as v1 endpoints. Your existing access tokens and authentication flow will work with beta endpoints.\n\n### Base URL\n\n```\nhttps://api.aweber.com/2.0-beta/\n```\n\n### Support\n\nFor questions about beta endpoints:\n- Email: [api@aweber.com](mailto:api@aweber.com?subject=Beta%20Endpoints)\n- Include \"Beta Endpoints\" in your subject line\n- Provide specific details about the endpoint and issue encountered\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "04840031-f0d1-4abc-b67e-78286a3b1218",
+          "name": "Broadcast Links Analytics",
+          "request": {
+            "name": "Broadcast Links Analytics",
+            "description": {
+              "content": "Returns links data for clicks or pageviews in a broadcast. The data can be filtered by minimum and maximum unique counts.\nThis endpoint is part of the beta 2.0 API and uses UUID identifiers.\n**This is a beta endpoint and is subject to change without notice.** Use only for testing and development purposes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "2.0-beta",
+                "analytics",
+                "reports",
+                "broadcasts-links"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "account_id",
+                  "value": "<string>",
+                  "description": "(Required) Account UUID. Can be found using the [Get accounts](#tag/Accounts/paths/~1accounts/get) endpoint."
+                },
+                {
+                  "disabled": false,
+                  "key": "broadcast_id",
+                  "value": "<string>",
+                  "description": "(Required) Broadcast UUID. Can be found using the [Get broadcasts](#tag/Broadcasts/paths/~1accounts~1{accountId}~1lists~1{listId}~1broadcasts/get) endpoint."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>",
+                  "description": "(Required) Type of link data to retrieve"
+                },
+                {
+                  "disabled": false,
+                  "key": "min_count",
+                  "value": "1",
+                  "description": "Minimum count threshold for unique links"
+                },
+                {
+                  "disabled": false,
+                  "key": "max_count",
+                  "value": "<integer>",
+                  "description": "Maximum count threshold for unique links"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_by",
+                  "value": "unique",
+                  "description": "Field to sort the results by"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_asc",
+                  "value": "true",
+                  "description": "Whether to sort in ascending order (true) or descending order (false)"
+                },
+                {
+                  "disabled": false,
+                  "key": "before",
+                  "value": "<integer>",
+                  "description": "specifies the IDs for pagination, for results from before onward"
+                },
+                {
+                  "disabled": false,
+                  "key": "after",
+                  "value": "<string>",
+                  "description": "specifies the IDs for pagination, for results from after onward"
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "specifies the max number of items in a single page"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "account.read landing-page.read list.read list.write subscriber.read subscriber.write subscriber.read-extended email.read email.write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://auth.aweber.com/oauth2/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://auth.aweber.com/oauth2/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://auth.aweber.com/oauth2/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0d92fd04-409a-47ae-96f9-0c73a8ff8e87",
+              "name": "Successfully retrieved link analytics data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "2.0-beta",
+                    "analytics",
+                    "reports",
+                    "broadcasts-links"
+                  ],
+                  "query": [
+                    {
+                      "key": "account_id",
+                      "value": "18b02362-8eaf-477c-9917-d447bbe618d5"
+                    },
+                    {
+                      "key": "broadcast_id",
+                      "value": "78746ae5-b9bb-4faa-ac91-e8971fa878ae"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "clicks"
+                    },
+                    {
+                      "key": "min_count",
+                      "value": "1"
+                    },
+                    {
+                      "key": "max_count",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "unique"
+                    },
+                    {
+                      "key": "sort_asc",
+                      "value": "true"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "[RFC-8288](https://tools.ietf.org/html/rfc8288) Link header",
+                  "key": "Link",
+                  "value": "<https://api.aweber.com/v1/accounts/1234567890/broadcasts/1234567890/links?before=1717000000&after=1717000000&page_size=100>; rel=next"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"url\": \"http://aweber.com\",\n    \"unique\": 2,\n    \"total\": 2,\n    \"type\": \"click\"\n  },\n  {\n    \"url\": \"https://api.aweber.com\",\n    \"unique\": 1,\n    \"total\": 2,\n    \"type\": \"click\"\n  },\n  {\n    \"url\": \"https://google.com\",\n    \"unique\": 1,\n    \"total\": 1,\n    \"type\": \"click\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dab3a995-52d3-4b29-920c-5e0e88a2ccc1",
+              "name": "The request contained an error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "2.0-beta",
+                    "analytics",
+                    "reports",
+                    "broadcasts-links"
+                  ],
+                  "query": [
+                    {
+                      "key": "account_id",
+                      "value": "18b02362-8eaf-477c-9917-d447bbe618d5"
+                    },
+                    {
+                      "key": "broadcast_id",
+                      "value": "78746ae5-b9bb-4faa-ac91-e8971fa878ae"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "clicks"
+                    },
+                    {
+                      "key": "min_count",
+                      "value": "1"
+                    },
+                    {
+                      "key": "max_count",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "unique"
+                    },
+                    {
+                      "key": "sort_asc",
+                      "value": "true"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Request Error\",\n  \"status\": 400,\n  \"detail\": \"'account' is not of type 'integer'\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "805a4cbe-d3d6-4c3a-b6c3-ae07350e8ee8",
+              "name": "Database Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "2.0-beta",
+                    "analytics",
+                    "reports",
+                    "broadcasts-links"
+                  ],
+                  "query": [
+                    {
+                      "key": "account_id",
+                      "value": "18b02362-8eaf-477c-9917-d447bbe618d5"
+                    },
+                    {
+                      "key": "broadcast_id",
+                      "value": "78746ae5-b9bb-4faa-ac91-e8971fa878ae"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "clicks"
+                    },
+                    {
+                      "key": "min_count",
+                      "value": "1"
+                    },
+                    {
+                      "key": "max_count",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "unique"
+                    },
+                    {
+                      "key": "sort_asc",
+                      "value": "true"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Not Found\",\n  \"status\": 404,\n  \"detail\": \"The requested account could not be found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "480b1652-8255-4622-b01c-7a6b377d812f",
+              "name": "Service cannot process requests at this time",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "2.0-beta",
+                    "analytics",
+                    "reports",
+                    "broadcasts-links"
+                  ],
+                  "query": [
+                    {
+                      "key": "account_id",
+                      "value": "18b02362-8eaf-477c-9917-d447bbe618d5"
+                    },
+                    {
+                      "key": "broadcast_id",
+                      "value": "78746ae5-b9bb-4faa-ac91-e8971fa878ae"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "clicks"
+                    },
+                    {
+                      "key": "min_count",
+                      "value": "1"
+                    },
+                    {
+                      "key": "max_count",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "unique"
+                    },
+                    {
+                      "key": "sort_asc",
+                      "value": "true"
+                    },
+                    {
+                      "key": "before",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "after",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.aweber.com/1.0",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "account.read landing-page.read list.read list.write subscriber.read subscriber.write subscriber.read-extended email.read email.write"
+      },
+      {
+        "key": "redirect_uri",
+        "value": "https://auth.aweber.com/oauth2/token"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://auth.aweber.com/oauth2/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://auth.aweber.com/oauth2/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "46a60fa0-36dd-4360-a56d-1fff49d26bad",
+    "name": "AWeber Beta API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "We are constantly working to improve this documentation. If you have\nfeedback and questions, please contact the AWeber API team at\napi@aweber.com.\n\nThe AWeber API is a REST API that uses the OAuth 2.0 authentication model. We also offer webhooks.\n\nPlease see the below resources for further information:\n- <a href=\"https://labs.aweber.com/docs/tos\" target=\"_blank\">Terms of Service</a>\n- <a href=\"https://help.aweber.com/hc/en-us/articles/204031776\" target=\"_blank\">Showcasing an Integration</a>\n- <a href=\"https://help.aweber.com/hc/en-us/sections/360000617213-API\" target=\"_blank\">Knowledge Base</a>\n- <a href=\"https://status.aweber.com\" target=\"_blank\">API Status Page</a>\n\n\nContact Support:\n Name: AWeber API Team\n Email: api@aweber.com",
+      "type": "text/plain"
+    }
+  }
+}

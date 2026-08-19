@@ -1,13 +1,45 @@
-generated: '2026-07-11'
+generated: '2026-08-13'
 method: searched
 probe: true
-source: https://www.aweber.com/
-url: https://www.aweber.com/
+source: https://www.aweber.com/dpst.htm
+url: https://www.aweber.com/dpst.htm
+name: Data Processing & Security Terms
+note: >-
+  AWeber has no dedicated trust center (trust.aweber.com and /trust both miss). Its compliance
+  posture is published as prose on the GDPR Data Processing & Security Terms page, reachable from
+  the Legal index at https://www.aweber.com/legal.htm. Two certifications are named with an
+  audit cadence; there is no SOC 2 report, ISO 27001 certificate, HIPAA or FedRAMP claim, and no
+  downloadable evidence or subprocessor list behind an NDA portal.
 certifications:
-- PCI DSS
-- GDPR
+  - name: PCI Security certification
+    evidence: '"Maintaining Payment Card Industry (PCI) Security certification by completing an annual compliance review"'
+    source: https://www.aweber.com/dpst.htm
+  - name: Privacy Shield certification
+    evidence: '"Maintaining Privacy-Shield certification by completing an annual third-party review"'
+    source: https://www.aweber.com/dpst.htm
+  - name: GDPR
+    evidence: Data Processing and Security Terms published as the customer-facing DPA.
+    source: https://www.aweber.com/dpst.htm
+memberships:
+  - {name: M3AAWG, evidence: '"AWeber is a proud member of M3AAWG"', source: 'https://www.aweber.com/dpst.htm'}
+practices:
+  - Encryption of data in transit and at rest in AWeber data centers.
+  - Continual automated and manual monitoring of confidentiality and integrity.
+data_rights:
+  documented: true
+  rights: [right to be informed, access, rectification, erasure, restriction, portability, objection]
+  source: https://www.aweber.com/dpst.htm
+related_policies:
+  - {name: Legal index, url: 'https://www.aweber.com/legal.htm'}
+  - {name: Privacy Policy, url: 'https://www.aweber.com/privacy.htm'}
+  - {name: Anti-Spam Policy, url: 'https://www.aweber.com/antispam.htm'}
+  - {name: Service Agreement, url: 'https://www.aweber.com/service-agreement.htm'}
+  - {name: Developer Terms of Service, url: 'https://labs.aweber.com/docs/tos'}
+absent:
+  - {item: trust.aweber.com, status: 'no such host / no trust portal'}
+  - {item: 'https://www.aweber.com/security', http_status: 404, checked: '2026-08-13'}
+  - {item: SOC 2, status: not published}
+  - {item: ISO 27001, status: not published}
 evidence:
-- source: https://www.aweber.com/
-  keywords:
-  - pci-dss
-  - gdpr
+  - {source: 'https://www.aweber.com/dpst.htm', http_status: 200, keywords: [pci, privacy shield, gdpr, m3aawg, encryption]}
+  - {source: 'https://www.aweber.com/legal.htm', http_status: 200, keywords: [privacy, anti-spam, data processing, service agreement]}

@@ -1,0 +1,926 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AWeber Subscribers API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+      "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Subscribers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get subscribers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/subscribers",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "ws.start",
+                "value": "",
+                "type": "query",
+                "description": "The pagination starting offset"
+              },
+              {
+                "name": "ws.size",
+                "value": "",
+                "type": "query",
+                "description": "The pagination total entries to retrieve"
+              },
+              {
+                "name": "sort_order",
+                "value": "",
+                "type": "query",
+                "description": "The collection will be sorted by the order in which the subscribers were added to the list. To specify the order, use the value `asc` for ascending or `desc` for descending."
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to get a paginated collection of subscribers under the specified account and list.  The subscribers are returned in the order that they were added to the list starting with the oldest subscriber. The order can be changed using the `sort_order` query parameter.\nCheck out related examples:\n\n  * Find Subscribers Across Lists (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/find-subscribers-across-lists\" target=\"_blank\">Python</a> |\n    <a href=\"h"
+        },
+        {
+          "info": {
+            "name": "Add subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/subscribers",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to add subscribers to the specified account and list. Before adding a subscriber to a list, read <a href=\"https://help.aweber.com/entries/21729456-can-i-use-this-list\" target=\"_blank\">Can I use this list?</a> to understand the ramifications. If you have a large list of subscribers, please use our <a href=\"https://help.aweber.com/hc/en-us/articles/204028626-How-do-I-import-a-list-of-subscribers-\" target=\"_blank\">list importer</a>. Attempting to use the endpoint to bulk add s"
+        },
+        {
+          "info": {
+            "name": "Update subscriber by email",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/subscribers",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "subscriber_email",
+                "value": "",
+                "type": "query",
+                "description": "The subscriber's email address"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to update the information for the specified subscriber by email.\n\nCheck out related examples:\n\n  * Find Subscribers Across Lists (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/find-subscribers-across-lists\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/find-subscribers-across-lists\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postma"
+        },
+        {
+          "info": {
+            "name": "Delete subscriber by email",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/subscribers",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "subscriber_email",
+                "value": "",
+                "type": "query",
+                "description": "The subscriber's email address"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to delete a subscriber and related information by the subscriber's email.\n\nIf you just want to unsubscribe the subscriber, then make a\n[PATCH request](#tag/Subscribers/paths/~1accounts~1{accountId}~1lists~1{listId}~1subscribers~1{subscriberId}/patch)\nto set the status to \"unsubscribed\" instead.  When a subscriber is *DELETED*,\nthe subscriber is unsubscribed from the list and all related analytics activity\nis removed from the customer account for the subscriber.  Any referen"
+        },
+        {
+          "info": {
+            "name": "Get subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/subscribers/:subscriberId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "path",
+                "description": "The subscriber ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to retrieve the information for the specified subscriber.\nCheck out related examples:\n\n  * Find Subscribers Across Lists (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/find-subscribers-across-lists\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/find-subscribers-across-lists\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Find%2"
+        },
+        {
+          "info": {
+            "name": "Move subscriber",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/subscribers/:subscriberId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "path",
+                "description": "The subscriber ID"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to move a subscriber from one list to another on\nthe specified account.  The subscriber will be unsubscribed from the original\nlist and subscribed to the destination list without sending a verification\nmessage.  By default, the subscriber will be set to the beginning of the\nfollowup sequence on the destination list.  You can explicitly set the\nposition in the followup list by specifying the `last_followup_message_number_sent`\nbody parameter.\n\nIf either the source or destina"
+        },
+        {
+          "info": {
+            "name": "Update subscriber by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/subscribers/:subscriberId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "path",
+                "description": "The subscriber ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to update the information for the specified subscriber by ID\n\nCheck out related examples:\n\n  * Find Subscribers Across Lists (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/find-subscribers-across-lists\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/find-subscribers-across-lists\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Fi"
+        },
+        {
+          "info": {
+            "name": "Delete subscriber by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/subscribers/:subscriberId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "path",
+                "description": "The subscriber ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to delete a subscriber and related information by the subscriber's ID.\n\nIf you just want to unsubscribe the subscriber, then make a\n[PATCH request](#tag/Subscribers/paths/~1accounts~1{accountId}~1lists~1{listId}~1subscribers~1{subscriberId}/patch)\nto set the status to \"unsubscribed\" instead.  When a subscriber is *DELETED*,\nthe subscriber is unsubscribed from the list and all related analytics activity\nis removed from the customer account for the subscriber.  Any references"
+        },
+        {
+          "info": {
+            "name": "Find subscribers for list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/subscribers?ws.op=find",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "ws.op",
+                "value": "",
+                "type": "query",
+                "description": "The method name - expecting \"find\""
+              },
+              {
+                "name": "ws.start",
+                "value": "",
+                "type": "query",
+                "description": "The pagination starting offset"
+              },
+              {
+                "name": "ws.size",
+                "value": "",
+                "type": "query",
+                "description": "The pagination total entries to retrieve"
+              },
+              {
+                "name": "ws.show",
+                "value": "",
+                "type": "query",
+                "description": "A flag to show the total size only - expecting \\\"total_size\\\", when added the response will be an integer"
+              },
+              {
+                "name": "sort_key",
+                "value": "",
+                "type": "query",
+                "description": "The collection will be sorted by the field key specified. If no key is spcified the search will default to the order in which the subscribers were added to the list."
+              },
+              {
+                "name": "sort_order",
+                "value": "",
+                "type": "query",
+                "description": "The collection will be sorted in the order specified by the key entered for `sort_key`. To specify the order, use the value `asc` for ascending or `desc` for descending."
+              },
+              {
+                "name": "ad_tracking",
+                "value": "",
+                "type": "query",
+                "description": "The customer ad tracking field"
+              },
+              {
+                "name": "area_code",
+                "value": "",
+                "type": "query",
+                "description": "The subscriber's area code"
+              },
+              {
+                "name": "city",
+                "value": "",
+                "type": "query",
+                "description": "The subscriber's city"
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "The subscriber's country"
+              },
+              {
+                "name": "custom_fields",
+                "value": "",
+                "type": "query",
+                "description": "The JSON encoded custom field key value pairs"
+              },
+              {
+                "name": "dma_code",
+                "value": "",
+                "type": "query",
+                "description": "The subscriber's designated market area code (usa and canada only)"
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "The subscriber's email address"
+              },
+              {
+                "name": "last_followup_message_number_sent",
+                "value": "",
+                "type": "query",
+                "description": "The sequence number of the last followup message sent to the subscriber"
+              },
+              {
+                "name": "last_followup_message_sent_at",
+                "value": "",
+                "type": "query",
+                "description": "The day when the last followup message was sent to the subscriber"
+              },
+              {
+                "name": "latitude",
+                "value": "",
+                "type": "query",
+                "description": "The subscriber's geographical latitude"
+              },
+              {
+                "name": "longitude",
+                "value": "",
+                "type": "query",
+                "description": "The subscriber's geographical longitude"
+              },
+              {
+                "name": "misc_notes",
+                "value": "",
+                "type": "query",
+                "description": "Miscellaneous notes"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "The subscriber's name"
+              },
+              {
+                "name": "postal_code",
+                "value": "",
+                "type": "query",
+                "description": "The subscriber's postal or zip code"
+              },
+              {
+                "name": "region",
+                "value": "",
+                "type": "query",
+                "description": "The subscriber's state or region abbreviation"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "The subscriber's status"
+              },
+              {
+                "name": "subscribed_before",
+                "value": "",
+                "type": "query",
+                "description": "The day on or before the subscriber subscribed"
+              },
+              {
+                "name": "subscribed_after",
+                "value": "",
+                "type": "query",
+                "description": "The day on or after the subscriber subscribed"
+              },
+              {
+                "name": "subscribed_at",
+                "value": "",
+                "type": "query",
+                "description": "The day in which the subscriber subscribed"
+              },
+              {
+                "name": "subscription_method",
+                "value": "",
+                "type": "query",
+                "description": "How the subscriber was subscribed"
+              },
+              {
+                "name": "tags",
+                "value": "",
+                "type": "query",
+                "description": "A string containing a JSON-formatted array of tags. All tags must match for the subscriber to match."
+              },
+              {
+                "name": "tags_not_in",
+                "value": "",
+                "type": "query",
+                "description": "A string containing a JSON-formatted array of tags. Checks that all tags are not matched to a subscriber."
+              },
+              {
+                "name": "unsubscribe_method",
+                "value": "",
+                "type": "query",
+                "description": "How the subscriber unsubscribed"
+              },
+              {
+                "name": "unsubscribed_before",
+                "value": "",
+                "type": "query",
+                "description": "The day on or before the subscriber unsubscribed"
+              },
+              {
+                "name": "unsubscribed_after",
+                "value": "",
+                "type": "query",
+                "description": "The day on or after the subscriber unsubscribed"
+              },
+              {
+                "name": "unsubscribed_at",
+                "value": "",
+                "type": "query",
+                "description": "The day in which the subscriber unsubscribed"
+              },
+              {
+                "name": "verified_at",
+                "value": "",
+                "type": "query",
+                "description": "The day in which the subscriber confirmed their email address"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to find the collection of subscribers that match a search criteria for the specified account and list.\n* All parameters match on the full value and are case sensitive. (Partial\n  matches are NOT supported)\n\n* For Date parameters, include the date as 'YYYY-MM-DD' or 'MM-DD-YYYY'\n  and any subscriber matching the query will be returned.\n\n* Date parameters are entered as single days, but may search multiple days\n  depending on the parameter. For example: `subscribed_at=2017-07"
+        },
+        {
+          "info": {
+            "name": "Find subscribers for account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId?ws.op=findSubscribers",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "ws.op",
+                "value": "",
+                "type": "query",
+                "description": "The method name - expecting \"findSubscribers\""
+              },
+              {
+                "name": "ad_tracking",
+                "value": "",
+                "type": "query",
+                "description": "The customer ad tracking field"
+              },
+              {
+                "name": "area_code",
+                "value": "",
+                "type": "query",
+                "description": "The subscriber's area code"
+              },
+              {
+                "name": "city",
+                "value": "",
+                "type": "query",
+                "description": "The subscriber's city"
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "The subscriber's country"
+              },
+              {
+                "name": "custom_fields",
+                "value": "",
+                "type": "query",
+                "description": "The JSON encoded custom field key value pairs"
+              },
+              {
+                "name": "dma_code",
+                "value": "",
+                "type": "query",
+                "description": "The subscriber's designated market area code (usa and canada only)"
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "The subscriber's email address"
+              },
+              {
+                "name": "last_followup_message_number_sent",
+                "value": "",
+                "type": "query",
+                "description": "The sequence number of the last followup message sent to the subscriber"
+              },
+              {
+                "name": "last_followup_message_sent_at",
+                "value": "",
+                "type": "query",
+                "description": "The day when the last followup message was sent to the subscriber"
+              },
+              {
+                "name": "latitude",
+                "value": "",
+                "type": "query",
+                "description": "The subscriber's geographical latitude"
+              },
+              {
+                "name": "longitude",
+                "value": "",
+                "type": "query",
+                "description": "The subscriber's geographical longitude"
+              },
+              {
+                "name": "misc_notes",
+                "value": "",
+                "type": "query",
+                "description": "Miscellaneous notes"
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "The subscriber's name"
+              },
+              {
+                "name": "postal_code",
+                "value": "",
+                "type": "query",
+                "description": "The subscriber's postal or zip code"
+              },
+              {
+                "name": "region",
+                "value": "",
+                "type": "query",
+                "description": "The subscriber's state or region abbreviation"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "The subscriber's status"
+              },
+              {
+                "name": "subscribed_before",
+                "value": "",
+                "type": "query",
+                "description": "The day on or before the subscriber subscribed"
+              },
+              {
+                "name": "subscribed_after",
+                "value": "",
+                "type": "query",
+                "description": "The day on or after the subscriber subscribed"
+              },
+              {
+                "name": "subscribed_at",
+                "value": "",
+                "type": "query",
+                "description": "The day in which the subscriber subscribed"
+              },
+              {
+                "name": "subscription_method",
+                "value": "",
+                "type": "query",
+                "description": "How the subscriber was subscribed"
+              },
+              {
+                "name": "tags",
+                "value": "",
+                "type": "query",
+                "description": "A string containing a JSON-formatted array of tags. All tags must match for the subscriber to match."
+              },
+              {
+                "name": "tags_not_in",
+                "value": "",
+                "type": "query",
+                "description": "A string containing a JSON-formatted array of tags. Checks that all tags are not matched to a subscriber."
+              },
+              {
+                "name": "unsubscribe_method",
+                "value": "",
+                "type": "query",
+                "description": "How the subscriber unsubscribed"
+              },
+              {
+                "name": "unsubscribed_before",
+                "value": "",
+                "type": "query",
+                "description": "The day on or before the subscriber unsubscribed"
+              },
+              {
+                "name": "unsubscribed_after",
+                "value": "",
+                "type": "query",
+                "description": "The day on or after the subscriber unsubscribed"
+              },
+              {
+                "name": "unsubscribed_at",
+                "value": "",
+                "type": "query",
+                "description": "The day in which the subscriber unsubscribed"
+              },
+              {
+                "name": "verified_at",
+                "value": "",
+                "type": "query",
+                "description": "The day in which the subscriber confirmed their email address"
+              },
+              {
+                "name": "ws.start",
+                "value": "",
+                "type": "query",
+                "description": "The pagination starting offset"
+              },
+              {
+                "name": "ws.size",
+                "value": "",
+                "type": "query",
+                "description": "The pagination total entries to retrieve"
+              },
+              {
+                "name": "ws.show",
+                "value": "",
+                "type": "query",
+                "description": "A flag to show the total size only - expecting \\\"total_size\\\", when added the response will be an integer"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to find the collection of subscribers that\nmatch a search criteria for the specified account across all lists.\n\n* All parameters match on the full value and are case sensitive.\n(No partial matches are accepted)\n\n* For Date parameters, include the date as 'YYYY-MM-DD' or 'MM-DD-YYYY'\nand any subscriber matching the query will be returned.\n\n* Date parameters are entered as single days, but may search multiple days\ndepending on the parameter. For example: `subscribed_at=2017-0"
+        },
+        {
+          "info": {
+            "name": "Get subscriber activity",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/subscribers/:subscriberId?ws.op=getActivity",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "subscriberId",
+                "value": "",
+                "type": "path",
+                "description": "The subscriber ID"
+              },
+              {
+                "name": "ws.op",
+                "value": "",
+                "type": "query",
+                "description": "The method name - expecting \"getActivity\""
+              },
+              {
+                "name": "ws.start",
+                "value": "",
+                "type": "query",
+                "description": "The pagination starting offset"
+              },
+              {
+                "name": "ws.size",
+                "value": "",
+                "type": "query",
+                "description": "The pagination total entries to retrieve"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to retrieve the analytics activity for a subscriber. The activity is returned as a chronological list of events and includes:\nWhen they subscribed to the list. When they verified their subscription. What messages were sent to them. When sent messages were opened. When links were clicked (if click tracking was enabled). When a subscriber made a sale or other TrackedEvent.\nCheck out related examples:\n\n  * Find Subscribers Across Lists (\n    <a href=\"https://github.com/aweber/"
+        },
+        {
+          "info": {
+            "name": "Create a purchase",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/purchases",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint creates a purchase (a pageview tracked event) for a\nsubscriber. If the subscriber does not exist, it is created. If the\nsubscriber exists, then it will be updated. This endpoint combines 3\napi calls into one, which will account toward the rate limit.\n\n\nCheck out related examples:\n\n  * Create a Purchase (\n    <a href=\"https://github.com/aweber/public-api-examples/tree/master/php/create-purchase\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/tre"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

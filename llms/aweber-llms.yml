@@ -1,0 +1,27 @@
+generated: '2026-08-13'
+method: searched
+source: https://www.aweber.com/llms.txt
+file: aweber-llms.txt
+http_status: 200
+content_type: text/plain; charset=utf-8
+also_served_at:
+  - https://developer.aweber.com/llms.txt   # same document; developer.aweber.com 301s to www
+note: >-
+  AWeber publishes a real, hand-curated llms.txt at the apex host and serves the identical
+  document on the developer subdomain. It is a MARKETING map, not a developer map: 40 curated
+  links covering company, product features, pricing, use cases, competitor comparisons, support
+  and legal — with no section for the REST API, no link to api.aweber.com, and no link to the
+  OpenAPI at https://api.aweber.com/swagger.yaml. An agent that reads only this file will not
+  find the API. Saved verbatim; the gap is recorded rather than patched.
+sections:
+  - About AWeber
+  - Core Product & Features
+  - Pricing
+  - Solutions by Use Case
+  - Competitor Comparisons
+  - Support & Resources
+  - Legal, Privacy & Compliance
+  - Blog & Learning
+  - Optional
+link_count: 40
+api_links: 0

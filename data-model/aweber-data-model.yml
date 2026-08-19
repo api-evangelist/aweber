@@ -1,0 +1,116 @@
+generated: '2026-08-13'
+method: derived
+source: >-
+  openapi/_original/aweber-api-openapi.yml (components.schemas + the *_collection_link /
+  *_link reference fields the provider defines on each entry), cross-checked against the
+  resource-map narrative at https://api.aweber.com/#tag/Getting-Started
+model: hypermedia-entry-collection
+note: >-
+  AWeber's object graph is explicitly hypermedia: every Entry carries self_link plus a
+  *_collection_link for each child collection and a *_link for each single related entry, and
+  the documentation instructs clients to traverse those links rather than construct paths. The
+  relationships below are read straight off those link fields, so this ERD is the provider's own
+  wiring, not an inference from naming. There is no id-prefix scheme (ids are bare integers;
+  Account, List and Subscriber additionally carry a uuid).
+root: Account
+entities:
+  - name: Account
+    id: integer (plus uuid since 2021-02-18)
+    fields: [id, uuid, company, analytics_src, http_etag, self_link, resource_type_link]
+    operations: [getAccounts, getAccount]
+  - name: List
+    id: integer (plus uuid and unique_list_id)
+    fields: [id, uuid, name, unique_list_id, vapid_public_key, total_subscribers, total_subscribed_subscribers, total_unconfirmed_subscribers, total_unsubscribed_subscribers, total_subscribers_subscribed_today, total_subscribers_subscribed_yesterday]
+    operations: [getLists, getList, findLists]
+  - name: Subscriber
+    id: integer (plus uuid since 2021-11-17)
+    fields: [id, email, name, status, is_verified, custom_fields, tags, ad_tracking, misc_notes, ip_address, city, region, country, postal_code, area_code, dma_code, latitude, longitude, last_followup_message_number_sent, last_followup_sent_at]
+    operations: [getSubscribers, getSubscriber, addSubscriber, updateSubscriberByID, updateSubscriberByEmail, deleteSubscriberByID, deleteSubscriberByEmail, moveSubscriber, findSubscribersForList, findSubscribersForAccount]
+    status_enum: [subscribed, unconfirmed, unsubscribed]
+  - name: Broadcast
+    id: broadcast_id
+    fields: [broadcast_id, subject, body_html, body_text, body_amp, is_archived, archive_url, click_tracking_enabled, include_lists, exclude_lists, segment_link, segment_name, scheduled_for, sent_at, created_at, notify_on_send, stats, facebook_integration, twitter_integration]
+    operations: [getBroadcasts, getBroadcast, createBroadcast, updateBroadcast, deleteBroadcast, scheduleBroadcast, cancelScheduledBroadcast, getTotalBroadcasts, getBroadcastOpens, getBroadcastClicks]
+  - name: Campaign
+    id: integer (addressed as {campaignType}{campaignId}, e.g. b123 for broadcast, f123 for follow-up)
+    fields: [id, campaign_type, subject, content_type, message_number, message_interval, scheduled_at, sent_at, is_archived, spam_assassin_score, total_sent, total_opens, total_clicks, total_undelivered, total_unsubscribes, total_spam_complaints]
+    operations: [getCampaigns, getCampaign, findCampaigns, getBroadcastStatistics, getBroadcastStatistic]
+  - name: CustomField
+    id: integer
+    fields: [id, name, is_subscriber_updateable]
+    operations: [getCustomFields, getCustomField, addCustomField, updateCustomField, deleteCustomField]
+  - name: Segment
+    id: integer
+    operations: [getSegments, getSegment]
+  - name: WebForm
+    id: integer
+    operations: [getWebformsForList, getWebformForList, getWebformsForAccount]
+  - name: WebFormSplitTest
+    id: integer
+    operations: [getSplitTestsForList, getSplitTestForList, getSplitTestsForAccount]
+  - name: WebFormSplitTestComponent
+    id: integer
+    operations: [getSplitTestComponents, getSplitTestComponent]
+  - name: LandingPage
+    id: integer
+    operations: [getLandingPages, getLandingPage]
+  - name: Integration
+    id: integer
+    fields: [id, login, service_name]
+    operations: [getIntegrations, getIntegration]
+  - name: Message
+    id: integer
+    fields: [id, type, event_time, last_opened, total_opens]
+  - name: Open
+    id: integer
+  - name: Click
+    id: integer
+    fields: [id, type, event_time, is_earliest]
+  - name: Link
+    id: integer
+    fields: [id, url, total_clicks, total_unique_clicks]
+  - name: TrackedEvent
+    id: integer
+  - name: Activity
+    id: integer
+    note: Polymorphic union of SentMessageActivity, OpenActivity, ClickActivity, LinkActivity, SubscribedActivity, TrackedEventActivity.
+  - name: Purchase
+    id: null
+    fields: [event_time, product_name, value, currency, vendor, url, event_note, email, name, ip_address, ad_tracking, misc_notes, custom_fields, tags]
+    operations: [createAPurchase]
+    note: Write-only tracked event; creates the subscriber if absent.
+  - name: Stat
+    id: integer
+    fields: [id, description, value]
+relationships:
+  - {from: Account, to: List, type: has_many, via: lists_collection_link}
+  - {from: Account, to: Integration, type: has_many, via: integrations_collection_link}
+  - {from: List, to: Account, type: belongs_to, via: 'URL hierarchy /accounts/{accountId}/lists/{listId}'}
+  - {from: List, to: Subscriber, type: has_many, via: subscribers_collection_link}
+  - {from: List, to: CustomField, type: has_many, via: custom_fields_collection_link}
+  - {from: List, to: Campaign, type: has_many, via: campaigns_collection_link}
+  - {from: List, to: Segment, type: has_many, via: segments_collection_link}
+  - {from: List, to: LandingPage, type: has_many, via: landing_pages_collection_link}
+  - {from: List, to: Broadcast, type: has_many, via: 'draft_broadcasts_link / scheduled_broadcasts_link / sent_broadcasts_link'}
+  - {from: Subscriber, to: List, type: belongs_to, via: list_link}
+  - {from: Subscriber, to: Message, type: has_one, via: last_followup_sent_link}
+  - {from: Subscriber, to: Activity, type: has_many, via: 'getSubscriberActivity (?ws.op=getActivity)'}
+  - {from: Broadcast, to: Open, type: has_many, via: opens_collection_link}
+  - {from: Broadcast, to: Click, type: has_many, via: clicks_collection_link}
+  - {from: Broadcast, to: Segment, type: has_one, via: segment_link}
+  - {from: Campaign, to: Stat, type: has_many, via: stats_collection_link}
+  - {from: Campaign, to: Link, type: has_many, via: links_collection_link}
+  - {from: Link, to: Click, type: has_many, via: clicks_collection_link}
+  - {from: Message, to: Open, type: has_many, via: opens_collection_link}
+  - {from: Message, to: TrackedEvent, type: has_many, via: tracked_events_collection_link}
+  - {from: Message, to: Subscriber, type: belongs_to, via: subscriber_link}
+  - {from: Open, to: Subscriber, type: belongs_to, via: subscriber_link}
+  - {from: Click, to: Subscriber, type: belongs_to, via: subscriber_link}
+  - {from: TrackedEvent, to: Subscriber, type: belongs_to, via: subscriber_link}
+  - {from: WebForm, to: List, type: belongs_to, via: 'URL hierarchy'}
+  - {from: WebFormSplitTest, to: WebFormSplitTestComponent, type: has_many, via: 'URL hierarchy /web_form_split_tests/{splitTestId}/components'}
+collection_envelope:
+  fields: [entries, start, total_size, next_collection_link, prev_collection_link, resource_type_link]
+  note: >-
+    Some collections expose total_size_link (a link that resolves to the count) instead of an
+    inline total_size — notably the find* operations. Clients must handle both.

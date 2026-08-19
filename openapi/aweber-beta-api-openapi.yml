@@ -1,0 +1,414 @@
+openapi: 3.0.2
+info:
+  title: AWeber Beta API
+  version: '1.0'
+  description: 'We are constantly working to improve this documentation. If you have
+
+    feedback and questions, please contact the AWeber API team at
+
+    api@aweber.com.
+
+
+    The AWeber API is a REST API that uses the OAuth 2.0 authentication model. We also offer webhooks.
+
+
+    Please see the below resources for further information:
+
+    - <a href="https://labs.aweber.com/docs/tos" target="_blank">Terms of Service</a>
+
+    - <a href="https://help.aweber.com/hc/en-us/articles/204031776" target="_blank">Showcasing an Integration</a>
+
+    - <a href="https://help.aweber.com/hc/en-us/sections/360000617213-API" target="_blank">Knowledge Base</a>
+
+    - <a href="https://status.aweber.com" target="_blank">API Status Page</a>
+
+    '
+  contact:
+    name: AWeber API Team
+    email: api@aweber.com
+    url: https://api.aweber.com/
+servers:
+- url: https://api.aweber.com/1.0
+  description: v1 API endpoints
+tags:
+- name: Beta Endpoints
+  description: '### What is it?
+
+
+    Beta endpoints are early-access versions of the upcoming v2 API that provide developers with a preview
+    of new features and changes before the official v2 release. These endpoints are accessible at `api.aweber.com/2.0-beta/`
+    and include **new functionality not available in v1**.
+
+
+    Beta endpoints are previews of v2 functionality and do not replace v1 endpoints. The stable v1 API
+    remains the recommended choice for production applications.
+
+
+    ### Important Notice
+
+
+    **Beta endpoints are experimental and subject to change without notice.** As beta endpoints, developers
+    should expect:
+
+
+    - **Contracts may change** at any time without backward compatibility
+
+    - **Endpoints may not follow** previously established patterns from v1 endpoints
+
+    - **Current Documentation may be inaccurate** or incomplete
+
+    - **Limited support** compared to stable v1 endpoints
+
+    - **No guarantee of stability** until official v2 release
+
+
+    **Use beta endpoints only for testing and development purposes.** Do not rely on beta endpoints for
+    production applications.
+
+
+    ### Key Differences from v1 API
+
+
+    Beta endpoints introduce several changes that preview the upcoming v2 API:
+
+
+    - **UUID Identifiers**: Resources use UUIDs instead of numeric IDs
+
+    - **New Functionality**: Access to capabilities and data not available through v1 endpoints
+
+    - **Different Base URL**: Beta endpoints are accessible at `api.aweber.com/2.0-beta/` instead of `api.aweber.com/1.0/`
+
+
+    ### Authentication
+
+
+    Beta endpoints use the same OAuth 2.0 authentication as v1 endpoints. Your existing access tokens
+    and authentication flow will work with beta endpoints.
+
+
+    ### Base URL
+
+
+    ```
+
+    https://api.aweber.com/2.0-beta/
+
+    ```
+
+
+    ### Support
+
+
+    For questions about beta endpoints:
+
+    - Email: [api@aweber.com](mailto:api@aweber.com?subject=Beta%20Endpoints)
+
+    - Include "Beta Endpoints" in your subject line
+
+    - Provide specific details about the endpoint and issue encountered
+
+    '
+security:
+- OAuth 2.0: []
+paths:
+  /analytics/reports/broadcasts-links:
+    get:
+      summary: Broadcast Links Analytics
+      description: 'Returns links data for clicks or pageviews in a broadcast. The data can be filtered
+        by minimum and maximum unique counts.
+
+        This endpoint is part of the beta 2.0 API and uses UUID identifiers.
+
+        **This is a beta endpoint and is subject to change without notice.** Use only for testing and
+        development purposes.'
+      operationId: getBroadcastLinksAnalytics
+      servers:
+      - url: /2.0-beta
+        description: Beta v2 API endpoints
+      tags:
+      - Beta Endpoints
+      parameters:
+      - name: account_id
+        in: query
+        schema:
+          description: Account ID
+          type: string
+          pattern: '[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}'
+          example: 18b02362-8eaf-477c-9917-d447bbe618d5
+        required: true
+        description: Account UUID. Can be found using the [Get accounts](#tag/Accounts/paths/~1accounts/get)
+          endpoint.
+      - name: broadcast_id
+        in: query
+        schema:
+          description: Message/Broadcast ID
+          type: string
+          pattern: '[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}'
+          example: 78746ae5-b9bb-4faa-ac91-e8971fa878ae
+        required: true
+        description: Broadcast UUID. Can be found using the [Get broadcasts](#tag/Broadcasts/paths/~1accounts~1{accountId}~1lists~1{listId}~1broadcasts/get)
+          endpoint.
+      - name: filter
+        in: query
+        schema:
+          type: string
+          enum:
+          - clicks
+          - pageviews
+          example: clicks
+        required: true
+        description: Type of link data to retrieve
+      - name: min_count
+        in: query
+        schema:
+          type: integer
+          minimum: 0
+          default: 1
+        description: Minimum count threshold for unique links
+      - name: max_count
+        in: query
+        schema:
+          type: integer
+          minimum: 0
+        description: Maximum count threshold for unique links
+      - name: sort_by
+        in: query
+        schema:
+          type: string
+          enum:
+          - unique
+          - total
+          default: unique
+        description: Field to sort the results by
+      - name: sort_asc
+        in: query
+        schema:
+          type: boolean
+          default: true
+        description: Whether to sort in ascending order (true) or descending order (false)
+      - name: before
+        in: query
+        description: specifies the IDs for pagination, for results from before onward
+        schema:
+          type: integer
+      - name: after
+        in: query
+        description: specifies the IDs for pagination, for results from after onward
+        schema:
+          type: string
+      - name: page_size
+        in: query
+        description: specifies the max number of items in a single page
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+      responses:
+        '200':
+          description: Successfully retrieved link analytics data
+          headers:
+            Link:
+              description: '[RFC-8288](https://tools.ietf.org/html/rfc8288) Link header'
+              schema:
+                type: string
+                example: <https://api.aweber.com/v1/accounts/1234567890/broadcasts/1234567890/links?before=1717000000&after=1717000000&page_size=100>;
+                  rel=next
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                  - url
+                  - unique
+                  - total
+                  - type
+                  properties:
+                    url:
+                      type: string
+                      format: uri
+                      description: The URL of the link
+                      example: http://aweber.com
+                    unique:
+                      type: integer
+                      description: Number of unique interactions with the link
+                      example: 2
+                    total:
+                      type: integer
+                      description: Total number of interactions with the link
+                      example: 2
+                    type:
+                      type: string
+                      enum:
+                      - click
+                      - pageview
+                      description: Type of interaction (click or pageview)
+                      example: click
+              example:
+              - url: http://aweber.com
+                unique: 2
+                total: 2
+                type: click
+              - url: https://api.aweber.com
+                unique: 1
+                total: 2
+                type: click
+              - url: https://google.com
+                unique: 1
+                total: 1
+                type: click
+        '400':
+          description: The request contained an error
+          content:
+            application/problem+json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    description: A URI reference that identifies the problem type
+                    type: string
+                    example: https://tools.ietf.org/html/rfc7231#section-6.6.1
+                  title:
+                    description: A short, human-readable summary of the problem type
+                    type: string
+                    example: Request Error
+                  status:
+                    description: The HTTP status code generated by the origin server for this occurrence
+                      of the problem
+                    type: integer
+                    example: 400
+                  instance:
+                    description: A URI reference that identifies the specific occurrence of the problem
+                    type: string
+                  detail:
+                    description: A human-readable explanation specific to this occurrence of the problem
+                    type: string
+                    example: '''account'' is not of type ''integer'''
+              example:
+                title: Request Error
+                status: 400
+                detail: '''account'' is not of type ''integer'''
+        '404':
+          description: Database Not Found
+          content:
+            application/problem+json:
+              schema:
+                type: object
+                properties:
+                  type:
+                    description: A URI reference that identifies the problem type
+                    type: string
+                    example: https://tools.ietf.org/html/rfc7231#section-6.6.1
+                  title:
+                    description: A short, human-readable summary of the problem type
+                    type: string
+                    example: Not Found
+                  status:
+                    description: The HTTP status code generated by the origin server for this occurrence
+                      of the problem
+                    type: integer
+                    example: 404
+                  instance:
+                    description: A URI reference that identifies the specific occurrence of the problem
+                    type: string
+                  detail:
+                    description: A human-readable explanation specific to this occurrence of the problem
+                    type: string
+                    example: The requested account could not be found
+              example:
+                title: Not Found
+                status: 404
+                detail: The requested account could not be found
+        '503':
+          description: Service cannot process requests at this time
+      security:
+      - OAuth 2.0:
+        - email.read
+components:
+  securitySchemes:
+    OAuth 2.0:
+      description: 'The following endpoints and scopes are used to authenticate.
+
+        '
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.aweber.com/oauth2/authorize
+          tokenUrl: https://auth.aweber.com/oauth2/token
+          refreshUrl: https://auth.aweber.com/oauth2/token
+          scopes:
+            account.read: '<br>
+
+              Access account information and associated integrations. <br>
+
+              <b>Required for the following endpoints:</b> get accounts, get account, get integrations,
+              get integration
+
+              '
+            landing-page.read: '<br>
+
+              Retrieve landing pages <br>
+
+              <b>Required for the following endpoints:</b> get landing pages, get landing page
+
+              '
+            list.read: '<br>
+
+              Retrieve lists, custom fields, tags, and sign up forms <br>
+
+              <b>Required for the following endpoints:</b> get list, get lists, find lists, get tags for
+              list, get custom fields, get custom field, get webforms for list, get split tests for list,
+              get split test components, get split test component, get webforms for account, get split
+              tests for account
+
+              '
+            list.write: '<br>
+
+              Create, edit, and delete custom fields <br>
+
+              <b>Required for the following endpoints:</b> add custom field, update custom field, delete
+              custom field
+
+              '
+            subscriber.read: '<br>
+
+              Retrieve subscribers and their activity <br>
+
+              <b>Required for the following endpoints:</b> get subscribers, get subscriber, get subscriber
+              activity, get subscribers for message, find subscribers for account, find subscribers for
+              list
+
+              '
+            subscriber.write: '<br>
+
+              Create, edit, delete, retrieve, search for, and move subscribers <br>
+
+              <b>Required for the following endpoints:</b> add subscriber, move subscriber, update subscriber,
+              delete subscriber
+
+              '
+            subscriber.read-extended: '<br>
+
+              Previously required to retrieve subscriber PII such as name, email, IP address, etc.  This
+              functionality was moved to the "subscriber.read" scope
+
+              '
+            email.read: '<br>
+
+              Retrieve email activity related to broadcasts and follow-ups <br>
+
+              <b>Required for the following endpoints:</b> get messages, get message, get broadcasts,
+              get broadcast, get message opens, get message open, get message tracked events, get message
+              tracked event, get total broadcasts, get campaigns, get campaign, find campaigns, get broadcast
+              statistics, get broadcast statistic
+
+              '
+            email.write: '<br>
+
+              Create and send email broadcasts <br>
+
+              <b>Required for the following endpoints:</b> create broadcast, update broadcast, delete
+              broadcast, cancel broadcast, schedule broadcast
+
+              '

@@ -1,0 +1,106 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AWeber Integrations API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+      "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Integrations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get integrations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/integrations",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "ws.start",
+                "value": "",
+                "type": "query",
+                "description": "The pagination starting offset"
+              },
+              {
+                "name": "ws.size",
+                "value": "",
+                "type": "query",
+                "description": "The pagination total entries to retrieve"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to get a paginated collection of integrations. The integrations returned include Facebook, Twitter, PayPal and Shopify, if connected. The integrations are typically used when [creating a broadcast](#tag/Broadcasts/paths/~1accounts~1{accountId}~1lists~1{listId}~1broadcasts/post) and cross-posting the broadcast to Twitter or Facebook, the integration `self_link` is needed in this case.\n\nCheck out related examples:\n\n  * Get Integrations (\n    <a href=\"https://github.com/aweber"
+        },
+        {
+          "info": {
+            "name": "Get integration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/integrations/:integrationId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "integrationId",
+                "value": "",
+                "type": "path",
+                "description": "The integration ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to retrieve the information for a specific connected integration. A specific integration will be Facebook, Twitter, PayPal or Shopify. The integration is typically used when [creating a broadcast](#tag/Broadcasts/paths/~1accounts~1{accountId}~1lists~1{listId}~1broadcasts/post) and cross-posting the broadcast to Twitter or Facebook, the integration `self_link` is needed in this case.\n\nCheck out related examples:\n\n  * Get Integrations (\n    <a href=\"https://github.com/aweber/"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

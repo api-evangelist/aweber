@@ -1,0 +1,69 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://api.aweber.com/#tag/Developer-Changelog, https://api.aweber.com/#tag/Getting-Started,
+  https://status.aweber.com and openapi/_original/aweber-api-openapi.yml
+versioning:
+  scheme: uri-path
+  current: '1.0'
+  doc_version: 1.4.0
+  base: https://api.aweber.com/1.0
+  docs: https://api.aweber.com/#tag/Getting-Started
+  note: >-
+    The URI segment (1.0) is the API contract version and has never moved; the semver number in
+    the changelog (1.4.0) versions the DOCUMENTED SURFACE within it. Both are published, which is
+    a common source of confusion when reading AWeber's own release notes.
+next_version:
+  label: 2.0-beta
+  base: https://api.aweber.com/2.0-beta/
+  announced: '2025-09-05'
+  status: early-access
+  probe: {url: 'https://api.aweber.com/2.0-beta/', http_status: 401, checked: '2026-08-13'}
+  scope: >-
+    Preview of the upcoming v2 API, primarily replacing numeric ids with UUIDs. Currently one
+    documented endpoint (GET /analytics/reports/broadcasts-links) under the Beta Endpoints tag.
+  stability: unstable — no compatibility commitment published
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    AWeber publishes NO deprecation policy: no notice period, no Sunset/Deprecation header
+    support (RFC 8594), no deprecated flag on any operation in the OpenAPI. Removals are
+    announced only as changelog entries, sometimes after the fact — API 1.3.0 (2025-05-06)
+    "Removes legacy campaign link and click endpoints" with no prior deprecation entry, and API
+    1.0.66 (2021-02-19) made two account-level webform endpoints mandatorily paginated, changing
+    their response bodies. Because there is no published policy, this pipeline emits NO
+    Deprecation pointer in apis.yml.
+  observed_deprecations:
+    - item: subscriber.read-extended OAuth scope
+      announced: '2021-06-16'
+      state: superseded-but-still-accepted
+      replacement: subscriber.read
+      source: https://api.aweber.com/#tag/Developer-Changelog
+    - item: Legacy campaign link and click endpoints
+      removed: '2025-05-06'
+      state: removed
+      source: https://api.aweber.com/#tag/Developer-Changelog
+    - item: OAuth 1.0a request-token / access-token endpoints
+      state: legacy — still documented and still live, but AWeber requires OAuth 2.0 for all new applications
+      source: https://api.aweber.com/#tag/OAuth-1.0a-Reference
+    - item: First-party Python, PHP and Ruby client libraries
+      state: deprecated — all three GitHub repositories archived, titles begin "DEPRECATED"
+      source: packages/aweber-packages.yml
+deprecated_operations: []
+sla:
+  url: null
+  uptime_target: null
+  note: No published SLA or uptime commitment for the API.
+status_page:
+  url: https://status.aweber.com
+  http_status: 200
+  checked: '2026-08-13'
+  scope: AWeber platform status including API
+support:
+  api_contact: api@aweber.com
+  developer_portal: https://labs.aweber.com
+  knowledge_base: https://docs.aweber.com/api
+  changelog: changelog/aweber-changelog.yml

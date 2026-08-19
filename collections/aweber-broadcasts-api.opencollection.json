@@ -1,0 +1,500 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AWeber Broadcasts API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+      "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Broadcasts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get broadcasts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/broadcasts",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "The status of the broadcasts to retrieve. **(Please be aware that `draft` only returns API created Broadcast drafts)**"
+              },
+              {
+                "name": "ws.start",
+                "value": "",
+                "type": "query",
+                "description": "The pagination starting offset"
+              },
+              {
+                "name": "ws.size",
+                "value": "",
+                "type": "query",
+                "description": "The pagination total entries to retrieve"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to get a paginated collection of broadcasts under the specified account and list.  The sort order is dependent on the requested status.\n\n  * *draft* messages are sorted by `broadcast_id` **and** only include API created broadcast drafts\n  * *scheduled* messages are sorted by `scheduled_for`\n  * *sent* messages are sorted by `sent_at`\n\n\nCheck out related examples:\n\n  * Create and Schedule Broadcast (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/pyth"
+        },
+        {
+          "info": {
+            "name": "Create broadcast",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/broadcasts",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to create a broadcast message draft.\n**This POST request is limited to 1 million bytes.**\n\nCheck out related examples:\n\n  * Create and Schedule Broadcast (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/create-schedule-broadcast\" target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/create-schedule-broadcast\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/"
+        },
+        {
+          "info": {
+            "name": "Get broadcast",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/broadcasts/:broadcastId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "broadcastId",
+                "value": "",
+                "type": "path",
+                "description": "The broadcast ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to retrieve a broadcast message.\n\nCheck out related examples:\n\n  * Create and Schedule Broadcast (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/create-schedule-broadcast\" target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/create-schedule-broadcast\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Create%20and%20Schedule%20Boadcast.po"
+        },
+        {
+          "info": {
+            "name": "Update broadcast",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/broadcasts/:broadcastId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "broadcastId",
+                "value": "",
+                "type": "path",
+                "description": "The broadcast ID"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to replace existing details of a broadcast message in a draft state. **(Please be aware that only broadcast drafts created by the API are available to update)**\n\nCheck out related examples:\n\n  * Create and Schedule Broadcast (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/create-schedule-broadcast\" target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/create-schedule-broadcast\" target=\"_blank"
+        },
+        {
+          "info": {
+            "name": "Delete broadcast",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/broadcasts/:broadcastId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "broadcastId",
+                "value": "",
+                "type": "path",
+                "description": "The broadcast ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to delete a broadcast message draft. **(Please be aware that only drafts created the API are able to be deleted)**\n\nCheck out related examples:\n\n  * Create and Schedule Broadcast (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/create-schedule-broadcast\" target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/create-schedule-broadcast\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aw"
+        },
+        {
+          "info": {
+            "name": "Cancel scheduled broadcast",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/broadcasts/:broadcastId/cancel",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "broadcastId",
+                "value": "",
+                "type": "path",
+                "description": "The broadcast ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to cancel a currently scheduled broadcast.\n\nCheck out related examples:\n\n  * Create and Schedule Broadcast (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/create-schedule-broadcast\" target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/create-schedule-broadcast\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Create%20and%20Schedule%20B"
+        },
+        {
+          "info": {
+            "name": "Get total broadcasts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/broadcasts/total",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "The status of the broadcasts to retrieve. **(Please be aware that `draft` only returns API created Broadcast drafts)**"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to get the total number of broadcasts in a particular state.\n\nCheck out related examples:\n\n  * Create and Schedule Broadcast (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/create-schedule-broadcast\" target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/create-schedule-broadcast\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Create%20"
+        },
+        {
+          "info": {
+            "name": "Schedule broadcast",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/broadcasts/:broadcastId/schedule",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "broadcastId",
+                "value": "",
+                "type": "path",
+                "description": "The broadcast ID"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to schedule a broadcast.\n\nCheck out related examples:\n\n  * Create and Schedule Broadcast (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/create-schedule-broadcast\" target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/create-schedule-broadcast\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Create%20and%20Schedule%20Boadcast.postman_co"
+        },
+        {
+          "info": {
+            "name": "Get broadcast opens",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/broadcasts/:broadcastId/opens",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "broadcastId",
+                "value": "",
+                "type": "path",
+                "description": "The broadcast ID"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The pagination key when paging in reverse. Cannot be combined with `after`."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The pagination key when paging forward. Cannot be combined with `before`."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The pagination total entries to retrieve"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to retrieve a broadcast message's unique opens. If a subscriber has opened several times, the first open record will be returned for the subscriber.\nResults are returned in most recent order by event_time.\nThe subscriber's email address will only be returned if the token has the `subscriber.read` scope."
+        },
+        {
+          "info": {
+            "name": "Get broadcast clicks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/broadcasts/:broadcastId/clicks",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "broadcastId",
+                "value": "",
+                "type": "path",
+                "description": "The broadcast ID"
+              },
+              {
+                "name": "before",
+                "value": "",
+                "type": "query",
+                "description": "The pagination key when paging in reverse. Cannot be combined with `after`."
+              },
+              {
+                "name": "after",
+                "value": "",
+                "type": "query",
+                "description": "The pagination key when paging forward. Cannot be combined with `before`."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The pagination total entries to retrieve"
+              },
+              {
+                "name": "detailed",
+                "value": "",
+                "type": "query",
+                "description": "When true, returns individual click events with URLs instead of aggregated click data per subscriber"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to retrieve a broadcast message's clicks.\nBy default, returns aggregated click data showing the first click per subscriber along with click statistics. When detailed=true, returns individual click events including the specific URLs that were clicked.\nResults are returned in most recent order by event_time.\nThe subscriber's email address will only be returned if the token has the `subscriber.read` scope."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

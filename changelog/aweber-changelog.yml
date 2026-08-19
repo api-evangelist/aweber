@@ -1,0 +1,129 @@
+generated: '2026-08-13'
+method: searched
+source: https://api.aweber.com/#tag/Developer-Changelog
+docs: https://api.aweber.com/#tag/Developer-Changelog
+newsletter:
+  name: AWeber Developer Newsletter
+  archive: https://archive.aweber.com/awlabs
+  signup: https://forms.aweber.com/form/70/958429970.htm
+  note: Developer-account holders are subscribed automatically; the archive is public.
+scheme: semver
+tracks:
+  - name: API
+    current: 1.4.0
+    current_date: '2025-09-05'
+  - name: Webhooks
+    current: 1.3.0
+    current_date: '2022-06-21'
+note: >-
+  AWeber keeps two independently versioned changelogs — one for the REST API and one for
+  Webhooks — inside the API reference itself. The API track is still shipping (three releases in
+  2025) but the cadence is slow and the entries are almost entirely additive field/parameter
+  changes. Recent window captured below; the live page is the source of truth.
+entries:
+  - version: 1.4.0
+    track: API
+    date: '2025-09-05'
+    breaking: false
+    additions:
+      - >-
+        Introduces beta endpoints at https://api.aweber.com/2.0-beta/ — early-access versions of
+        the upcoming v2 API, primarily replacing numeric ids with UUIDs.
+  - version: 1.3.1
+    track: API
+    date: '2025-08-22'
+    breaking: false
+    additions:
+      - Adds detailed=true query parameter to the broadcast clicks endpoint for detailed click data.
+  - version: 1.3.0
+    track: API
+    date: '2025-05-06'
+    breaking: true
+    removals:
+      - Removes the legacy campaign link and click endpoints.
+  - version: 1.2.3
+    track: API
+    date: '2023-12-27'
+    breaking: false
+    additions:
+      - Adds the 410 error response to the list of possible API responses.
+      - Moves documentation links in code examples from labs.aweber.com/docs/troubleshooting to api.aweber.com.
+  - version: 1.2.2
+    track: API
+    date: '2023-10-12'
+    breaking: false
+    additions:
+      - Adds an additional 403 error response to the Add Subscriber endpoint.
+  - version: 1.2.1
+    track: API
+    date: '2022-12-14'
+    breaking: false
+    additions:
+      - Adds a company field to the Account endpoints.
+  - version: 1.2.0
+    track: API
+    date: '2021-12-15'
+    breaking: false
+    additions:
+      - Adds the Purchase creation endpoint, creating a tracked purchase event and a subscriber.
+  - version: 1.1.1
+    track: API
+    date: '2021-11-17'
+    breaking: false
+    additions:
+      - Adds a uuid field to the Subscriber entry endpoint response.
+  - version: 1.1.0
+    track: API
+    date: '2021-06-16'
+    breaking: false
+    deprecations:
+      - >-
+        Replaces use of the subscriber.read-extended scope with subscriber.read. Existing tokens
+        holding subscriber.read-extended were implicitly granted subscriber.read;
+        subscriber.read-extended can still be requested but is now equivalent.
+  - version: 1.0.67
+    track: API
+    date: '2021-03-03'
+    breaking: false
+    changes:
+      - Removes the http_etag field from the Campaigns endpoints.
+      - Adds a vapid_public_key field to the Lists endpoints.
+  - version: 1.0.66
+    track: API
+    date: '2021-02-19'
+    breaking: true
+    changes:
+      - Requires pagination on Get webforms for account — changes the response body.
+      - Requires pagination on Get split tests for account — changes the response body.
+  - version: 1.0.65
+    track: API
+    date: '2021-02-18'
+    breaking: false
+    additions:
+      - Adds a uuid field to the Accounts endpoints.
+  - version: 1.3.0
+    track: Webhooks
+    date: '2022-06-21'
+    breaking: false
+    changes:
+      - >-
+        Webhook support no longer requires a request to the API team; it can be enabled for any
+        OAuth 2 application on labs.aweber.com.
+  - version: 1.2.0
+    track: Webhooks
+    date: '2020-04-14'
+    breaking: false
+    additions:
+      - Adds support for imports and large batches.
+  - version: 1.1.0
+    track: Webhooks
+    date: '2020-01-03'
+    breaking: false
+    additions:
+      - Adds webhooks for subscriber.subscribed and subscriber.unsubscribed events.
+  - version: 1.0.0
+    track: Webhooks
+    date: '2019-11-26'
+    breaking: false
+    additions:
+      - Adds webhooks support; the first webhook offered is subscriber.added.

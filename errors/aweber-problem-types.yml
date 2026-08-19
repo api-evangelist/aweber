@@ -1,0 +1,129 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  openapi/_original/aweber-api-openapi.yml (components.responses, harvested from
+  https://api.aweber.com/_responses.yaml) enriched from the published error reference at
+  https://api.aweber.com/#tag/Troubleshooting
+docs: https://api.aweber.com/#tag/Troubleshooting
+format: custom-json-envelope
+rfc9457: false
+note: >-
+  AWeber does NOT use RFC 9457 problem+json. Every error is returned as application/json with a
+  single top-level "error" object carrying status, message, type and documentation_url. The
+  "type" value is a CamelCase error-class name (BadRequestError, UnauthorizedError,
+  ForbiddenError, ListNotFoundError, ...), and documentation_url deep-links into the anchor on
+  the reference page that explains the class — a genuinely agent-useful convention, just not the
+  standard one. There is no error-code registry beyond these classes.
+envelope:
+  content_type: application/json
+  shape: |
+    {"error": {"status": 401,
+               "message": "Consumer key is invalid.",
+               "type": "UnauthorizedError",
+               "documentation_url": "https://api.aweber.com"}}
+  fields:
+    - {name: status, type: integer, description: HTTP status, mirrors the response status line}
+    - {name: message, type: string, description: Human-readable summary of what went wrong}
+    - {name: type, type: string, description: CamelCase error-class name}
+    - {name: documentation_url, type: string, description: Anchor link into the error reference}
+problems:
+  - status: 400
+    type: BadRequestError
+    title: Bad request
+    documentation_url: https://api.aweber.com#badrequest
+    remediation: >-
+      Raised on a properly authenticated request to a valid resource with incorrect parameters.
+      Documented causes: modifying a read-only field; calling find() on a subscriber entry with
+      no email address; calling move() with no list; non-UTF-8 character encodings; missing
+      required parameters (creating a broadcast requires body_text or body_html); a private or
+      reserved IP address in signup_ip; ws.size outside 1-100 or ws.start below 0.
+    source_operations: [addSubscriber, updateSubscriberByID, createBroadcast, findSubscribersForList]
+  - status: 401
+    type: UnauthorizedError
+    title: Unauthorized
+    documentation_url: https://api.aweber.com#unauthorized
+    variants:
+      - {message: Invalid Token, cause: Access token expired, revoked by the AWeber customer, or mistyped, remediation: Obtain a new access token with the refresh token or re-authorize}
+      - {message: Invalid Account, cause: The AWeber customer account is no longer active, remediation: Customer must contact AWeber support to reactivate}
+      - {message: Invalid Request, cause: The request did not use the OAuth 2.0 protocol at all, remediation: Implement the OAuth 2.0 authorization-code flow}
+    source_operations: [getAccounts, getLists, getSubscribers]
+  - status: 403
+    type: ForbiddenError
+    title: Forbidden
+    documentation_url: https://api.aweber.com#forbidden
+    remediation: >-
+      Overloaded status. It is returned for RATE LIMIT EXHAUSTION (message "Rate Limit Error"),
+      for a suspended or on-hold customer account, and for missing application permissions
+      ("Application not authorized to manage email", missing Request Subscriber Data permission).
+      An agent must read `message` to tell a retryable throttle from a permanent permission
+      failure — the status alone does not distinguish them.
+    variants:
+      - {message: Rate Limit Error, retryable: true}
+      - {message: Account Temporarily Suspended, retryable: false}
+      - {message: Adding subscribers is not available while the account is on hold., retryable: false}
+      - {message: Application not authorized to manage email., retryable: false}
+    source_operations: [addSubscriber, createBroadcast, scheduleBroadcast, getSubscribers]
+  - status: 404
+    type: NotFoundError
+    title: Not found
+    documentation_url: https://api.aweber.com#notfound
+    variants:
+      - {type: ListNotFoundError, message: 'List with given id not found'}
+      - {message: "Object: None, name: 'subscribers'"}
+    source_operations: [getSubscriber, getList, getBroadcast, getCustomField]
+  - status: 405
+    type: MethodNotAllowedError
+    title: Method not allowed
+    documentation_url: https://api.aweber.com#methodnotallowed
+    remediation: >-
+      Raised when modifying a read-only resource with PUT/PATCH, or calling move() on a
+      subscriber whose status is 'unconfirmed'.
+  - status: 409
+    type: ConflictError
+    title: Conflict
+    documentation_url: https://api.aweber.com#conflict
+    remediation: >-
+      Raised when scheduling a broadcast that has already been queued or sent, or when the
+      account is locked.
+    source_operations: [scheduleBroadcast]
+  - status: 410
+    type: BlockedError
+    title: Blocked
+    documentation_url: https://api.aweber.com/#blocked
+    remediation: >-
+      The request has been blocked. Added to the documented response set in API 1.2.3
+      (2023-12-27).
+  - status: 415
+    type: InvalidContentType
+    title: Unsupported media type
+    documentation_url: https://api.aweber.com#invalidcontent
+    remediation: >-
+      Send application/x-www-form-urlencoded (or application/json where the endpoint documents
+      it). POSTing any other Content-Type raises this.
+  - status: 500
+    type: InternalServerError
+    title: Internal server error
+    documentation_url: https://api.aweber.com#internalerror
+    remediation: Retry the request; contact api@aweber.com if it persists.
+    retryable: true
+  - status: 503
+    type: ServiceUnavailableError
+    title: Service unavailable
+    documentation_url: https://api.aweber.com#serviceunavailable
+    remediation: Retry the request; contact api@aweber.com if it persists.
+    retryable: true
+oauth_errors:
+  format: rfc6749
+  note: >-
+    The token and revoke endpoints return the RFC 6749 OAuth 2.0 error shape (invalid_client,
+    invalid_request, server_error) rather than the AWeber error envelope.
+  source_operations: [getAToken, revokeAToken]
+non_error_responses:
+  - {status: 204, name: NoContent, note: Successful DELETE returns no body}
+  - {status: 209, name: ContentModified, note: Non-standard status AWeber returns when the submitted content was modified server-side}
+authentication_errors:
+  docs: https://api.aweber.com/#tag/Troubleshooting
+  cases:
+    - {name: Invalid redirect URI, cause: 'redirect_uri does not exactly match the OAuth Redirect URL registered for the app on labs.aweber.com'}
+    - {name: Public Client MUST Use PKCE, cause: 'A public client omitted code_challenge'}
+    - {name: Confidential Client MUST NOT Use PKCE, cause: 'A confidential client sent code_verifier/code_challenge/code_challenge_method'}

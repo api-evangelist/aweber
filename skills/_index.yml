@@ -1,0 +1,31 @@
+generated: '2026-08-13'
+method: generated
+source: >-
+  openapi/_original/aweber-api-openapi.yml (harvested verbatim from
+  https://api.aweber.com/swagger.yaml) plus the published reference at https://api.aweber.com/.
+  Every operationId referenced below exists in the refined specs under openapi/; none was
+  invented. AWeber publishes no AGENTS.md or provider-authored skill files.
+note: >-
+  Four skills covering AWeber's marquee flows: authorization (the gate everything else is behind),
+  subscriber lifecycle, broadcast send, and ecommerce purchase tracking.
+skills:
+  - file: aweber-authorize-an-integration.md
+    name: Authorize an AWeber integration
+    api: openapi/aweber-authentication-api-openapi.yml
+    operations: [getAToken, revokeAToken, getAccounts]
+  - file: aweber-manage-subscriber.md
+    name: Manage an AWeber subscriber
+    api: openapi/aweber-subscribers-api-openapi.yml
+    operations: [getAccounts, getLists, findSubscribersForList, addSubscriber, getSubscriber,
+                 updateSubscriberByID, getSubscriberActivity, deleteSubscriberByID]
+  - file: aweber-create-and-schedule-broadcast.md
+    name: Create and schedule an AWeber broadcast
+    api: openapi/aweber-broadcasts-api-openapi.yml
+    operations: [getAccounts, getLists, getSegments, createBroadcast, getBroadcast,
+                 updateBroadcast, scheduleBroadcast, cancelScheduledBroadcast,
+                 getTotalBroadcasts, deleteBroadcast]
+  - file: aweber-track-a-purchase.md
+    name: Track a purchase in AWeber
+    api: openapi/aweber-subscribers-api-openapi.yml
+    operations: [getAccounts, getLists, createAPurchase, findSubscribersForList,
+                 getSubscriberActivity, getTagsForList]

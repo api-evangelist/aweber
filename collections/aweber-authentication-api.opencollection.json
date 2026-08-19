@@ -1,0 +1,168 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AWeber Authentication API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+      "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OAuth 1.0a Reference",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a request token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aweber.com/1.0/oauth/request_token",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "oauth_consumer_key",
+                  "value": ""
+                },
+                {
+                  "name": "oauth_callback",
+                  "value": ""
+                },
+                {
+                  "name": "oauth_nonce",
+                  "value": ""
+                },
+                {
+                  "name": "oauth_signature",
+                  "value": ""
+                },
+                {
+                  "name": "oauth_signature_method",
+                  "value": ""
+                },
+                {
+                  "name": "oauth_timestamp",
+                  "value": ""
+                },
+                {
+                  "name": "oauth_token",
+                  "value": ""
+                },
+                {
+                  "name": "oauth_version",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "This endpoint is used to get a request token."
+        },
+        {
+          "info": {
+            "name": "Get an access token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aweber.com/1.0/oauth/access_token",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "oauth_consumer_key",
+                  "value": ""
+                },
+                {
+                  "name": "oauth_callback",
+                  "value": ""
+                },
+                {
+                  "name": "oauth_nonce",
+                  "value": ""
+                },
+                {
+                  "name": "oauth_signature",
+                  "value": ""
+                },
+                {
+                  "name": "oauth_signature_method",
+                  "value": ""
+                },
+                {
+                  "name": "oauth_timestamp",
+                  "value": ""
+                },
+                {
+                  "name": "oauth_token",
+                  "value": ""
+                },
+                {
+                  "name": "oauth_version",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "This endpoint is used to get an access token."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "OAuth 2.0 Reference",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aweber.com/1.0/oauth2/token",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "This endpoint is used to get an access token. This endpoint can obtain an access point from one of two\ngrant types.\n\nIn the initial authorization, a `grant_type` of `authorization_code` is used with the `authorization_code`\nreceived from the URL the user is redirected to after authorizing the integration to their account.\n\nIf an access token is expired this endpoint can be used with a `grant_type` of `refresh_token` and the `refresh_token`\nstored for the user's access token.\n\nThis endpoint must "
+        },
+        {
+          "info": {
+            "name": "Revoke a token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.aweber.com/1.0/oauth2/revoke",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "This endpoint is used to revoke an access or refresh token.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,106 @@
+generated: '2026-08-13'
+method: searched
+source: https://www.aweber.com/pricing.htm
+docs: https://www.aweber.com/pricing.htm
+machine_readable: >-
+  The pricing page embeds schema.org SoftwareApplication offers as application/ld+json, so the
+  headline monthly prices below are read from a machine-readable source on AWeber's own page,
+  not scraped from rendered copy. The annual-billing figures are from the rendered plan cards.
+currency: USD
+plan_count: 3
+billing_periods: [monthly, annual]
+trial:
+  days: 14
+  credit_card_required: true
+  note: >-
+    "Try AWeber free with a 14-day trial." The page also carries a "Get AWeber Free" CTA in the
+    site header; the pricing table itself lists no perpetual free tier, so a free plan is NOT
+    recorded here.
+api_access:
+  gated: false
+  note: >-
+    The REST API is not sold as a plan add-on and is not listed as a plan feature. API access
+    requires a free AWeber Labs developer account (https://labs.aweber.com) plus an AWeber
+    customer account whose data the application is authorized against. No plan tier or price is
+    attached to API calls, and the 120 req/min limit is per customer account regardless of tier.
+plans:
+  - name: Lite
+    price: 15.00
+    price_annual_monthly: 12.49
+    currency: USD
+    period: month
+    source: 'schema.org Offer name="Lite" price="15.00"'
+    tagline: Time to upgrade your email game.
+    included:
+      subscribers: unlimited
+      email_sends: 10x subscriber volume per month
+      lists: 1
+      landing_pages: 3
+      email_automations: 3
+      users: 3
+      saved_segments: 1
+    features:
+      - 24/7 support
+      - Advanced message analytics
+      - Advanced landing page features
+      - Sales tracking and low transaction fees
+      - Remove AWeber branding
+  - name: Plus
+    price: 30.00
+    price_annual_monthly: 19.99
+    currency: USD
+    period: month
+    source: 'schema.org Offer name="Plus" price="30.00"'
+    tagline: Creators - take your business to the next level.
+    included:
+      subscribers: unlimited
+      email_sends: 12x subscriber volume per month
+      lists: unlimited
+      landing_pages: unlimited
+      email_automations: unlimited
+      users: unlimited
+      saved_segments: unlimited
+    features:
+      - Priority 24/7 support
+      - Advanced reporting and analytics
+      - Advanced landing page features
+      - Sales tracking and low transaction fees
+      - Remove AWeber branding
+  - name: Done For You
+    price: 30.00
+    price_annual_monthly: 20.00
+    setup_fee: 79.00
+    setup_fee_list_price: 599.00
+    currency: USD
+    period: month
+    source: 'schema.org Offer @id="#offer-done-for-you" price="30.00" + one-time $79 setup fee'
+    tagline: Full email marketing setup done in 7 days.
+    included: Everything in Plus, plus a managed setup engagement
+    features:
+      - List details and branding setup
+      - 1 branded email template created
+      - 1 professional landing page created
+      - 1 branded thank you page
+      - 1 signup form created
+      - Newsletter drafts delivered weekly
+      - 1:1 setup call
+      - 30 days unlimited edits
+enterprise:
+  name: High volume
+  price: contact-sales
+  url: https://www.aweber.com/pricing.htm
+  threshold: 100,000+ subscribers
+  contact: '+1 877-293-2371'
+overage:
+  documented: false
+  note: >-
+    No overage rate is published. Sends are capped as a multiple of subscriber volume (10x on
+    Lite, 12x on Plus/Done For You) rather than billed per message.
+caveats:
+  - >-
+    The page carries a live promotional overlay ("87% off ends soon! $599 -> $79 to launch")
+    attached to the Done For You setup fee; both list and promotional figures are recorded.
+  - >-
+    Displayed prices scale with a subscriber-count slider (0-500 subscribers is the default
+    position). The values recorded here are the default-position prices, which are also the ones
+    in the schema.org offers.

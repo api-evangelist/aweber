@@ -1,0 +1,52 @@
+generated: '2026-08-13'
+method: searched
+source: https://api.aweber.com/#tag/FAQ
+docs: https://api.aweber.com/#tag/FAQ
+limit_count: 1
+note: >-
+  AWeber publishes exactly one rate limit, in the FAQ section of the API reference: "AWeber API
+  requests are limited to 120 requests per minute, per customer account." There is NO documented
+  RateLimit-* / X-RateLimit-* response header, no Retry-After, and no documented reset time — so
+  an agent cannot see how close it is to the ceiling, and cannot compute a correct backoff. On
+  exhaustion the API returns 403 ForbiddenError with the body message "Rate Limit Error", which
+  is the SAME status used for suspended accounts and missing app permissions; the message string
+  is the only discriminator. Additionally the collection endpoints cap page size at 100
+  (ws.size), enforced with a 400 BadRequestError.
+limits:
+  - scope: per-customer-account
+    limit: 120
+    window: 1m
+    burst: null
+    applies_to: All AWeber REST API 1.0 endpoints
+    source: https://api.aweber.com/#tag/FAQ
+    note: >-
+      Per AWeber CUSTOMER account, not per application and not per OAuth client — an integration
+      serving many AWeber customers gets 120/min for each of them, but two integrations serving
+      the same customer share one budget.
+pagination_limits:
+  - parameter: ws.size
+    max: 100
+    min: 1
+    enforcement: 400 BadRequestError ('Maximum for "ws.size" parameter is 100.')
+    since: '2020-05-08'
+  - parameter: ws.start
+    min: 0
+    enforcement: 400 BadRequestError
+    since: '2020-05-08'
+response_headers:
+  documented: false
+  observed: []
+  note: >-
+    No rate-limit signalling headers are documented anywhere in the reference, and none were
+    observed on an unauthenticated probe of https://api.aweber.com/1.0/accounts (which returns
+    400 before any limiter is consulted). This is the single largest agent-readiness gap in
+    AWeber's runtime contract.
+exhaustion:
+  status: 403
+  type: ForbiddenError
+  body_message: Rate Limit Error
+  retry_after_header: false
+  retryable: true
+  disambiguation: >-
+    403 is also returned for "Account Temporarily Suspended", account-on-hold and missing
+    application permissions. Match on the body message before retrying.

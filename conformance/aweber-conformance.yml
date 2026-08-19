@@ -1,0 +1,104 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  openapi/_original/aweber-api-openapi.yml, https://api.aweber.com/#tag/OAuth-2.0-Overview,
+  https://api.aweber.com/#tag/Webhooks, https://api.aweber.com/#tag/Troubleshooting and
+  https://www.aweber.com/dpst.htm
+standards:
+  - id: openapi-3.0
+    conforms: true
+    evidence: >-
+      AWeber publishes a real multi-file OpenAPI 3.0.2 at https://api.aweber.com/swagger.yaml
+      (rendered by Redocly at https://api.aweber.com/). 45 paths / 57 operations, full component
+      schemas, parameters and responses, and x-codeSamples in six languages.
+  - id: oauth2
+    conforms: true
+    evidence: >-
+      securitySchemes declares an oauth2 authorizationCode flow with authorize, token and refresh
+      URLs on auth.aweber.com and nine named scopes.
+  - id: rfc6749-oauth2-authorization-code
+    conforms: true
+    evidence: Documented authorization-code flow with state, refresh tokens and a revoke endpoint.
+  - id: rfc7636-pkce
+    conforms: true
+    evidence: >-
+      PKCE is REQUIRED for public clients and forbidden for confidential clients; both violations
+      are named error cases in the troubleshooting reference.
+  - id: rfc7009-token-revocation
+    conforms: true
+    evidence: POST /oauth2/revoke is published as a first-class operation.
+  - id: rfc8414-authorization-server-metadata
+    conforms: false
+    evidence: >-
+      /.well-known/oauth-authorization-server returns 404 on auth.aweber.com and on every other
+      AWeber host (see well-known/aweber-well-known.yml). Endpoint discovery is documentation-only.
+  - id: oidc
+    conforms: false
+    evidence: No OpenID Connect discovery document and no id_token; OAuth 2.0 is used for API authorization only.
+  - id: oauth1a
+    conforms: true
+    evidence: >-
+      Legacy OAuth 1.0a request-token and access-token endpoints remain published and live, though
+      AWeber requires OAuth 2.0 for all new applications.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      Errors use a custom {"error": {status, message, type, documentation_url}} envelope with
+      Content-Type application/json, not application/problem+json.
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: No Sunset or Deprecation header support and no published deprecation policy.
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: /.well-known/security.txt returns 404 on all four AWeber hosts.
+  - id: idempotency-key
+    conforms: false
+    evidence: No idempotency key header or request-deduplication contract is published.
+  - id: rfc2104-hmac
+    conforms: true
+    evidence: >-
+      Webhook callbacks are signed with HMAC-SHA256 and delivered in the AWeber-Signature header
+      as "sha256=<digest>"; AWeber cites RFC 2104 directly.
+  - id: asyncapi
+    conforms: false
+    evidence: A documented webhook surface exists but no AsyncAPI document is published.
+  - id: json-api
+    conforms: false
+    evidence: >-
+      Custom collection representation (entries/start/total_size/next_collection_link) inherited
+      from lazr.restful, not JSON:API.
+  - id: rate-limit-headers
+    conforms: false
+    evidence: >-
+      A 120 req/min limit is documented in prose but no RateLimit-*, X-RateLimit-* or Retry-After
+      header is published or observed.
+  - id: mcp
+    conforms: false
+    evidence: >-
+      No MCP server. github.com/aweber/aweber-mcp exists but contains only .gitignore, LICENSE and
+      a 62-byte README.
+  - id: a2a
+    conforms: false
+    evidence: /.well-known/agent-card.json and /.well-known/agent.json return 404 on all hosts.
+  - id: llms-txt
+    conforms: true
+    evidence: >-
+      https://www.aweber.com/llms.txt returns 200 with a curated llms.txt (also served on
+      developer.aweber.com) — though it contains no API links.
+compliance:
+  published: true
+  url: https://www.aweber.com/dpst.htm
+  programs:
+    - {name: PCI Security certification, evidence: 'Maintained via annual compliance review (dpst.htm)'}
+    - {name: Privacy Shield certification, evidence: 'Maintained via annual third-party review (dpst.htm)'}
+    - {name: GDPR Data Processing and Security Terms, url: 'https://www.aweber.com/dpst.htm'}
+    - {name: M3AAWG membership, evidence: 'Stated on dpst.htm'}
+    - {name: Anti-Spam Policy, url: 'https://www.aweber.com/antispam.htm'}
+  absent:
+    - SOC 2 (no report or attestation published)
+    - ISO 27001
+    - HIPAA
+    - FedRAMP
+  note: >-
+    Encryption in transit and at rest, plus continual automated and manual monitoring, are
+    described on dpst.htm in prose without an accompanying audit report.

@@ -1,0 +1,289 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AWeber Campaigns API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+      "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Campaigns",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get campaigns",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/campaigns",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "ws.start",
+                "value": "",
+                "type": "query",
+                "description": "The pagination starting offset"
+              },
+              {
+                "name": "ws.size",
+                "value": "",
+                "type": "query",
+                "description": "The pagination total entries to retrieve"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "The collection of followup (\"f\") or broadcast (\"b\") campaigns for the list. The collection is ordered with followups messages followed by broadcast messages.  The followup messages are sorted by `id` ascending and the broadcast messages are sorted by `sent_at` descending.\n\nCheck out related examples:\n\n  * Get Clicks (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-clicks\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/bl"
+        },
+        {
+          "info": {
+            "name": "Get campaign",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/campaigns/:campaignType:campaignId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "campaignType",
+                "value": "",
+                "type": "path",
+                "description": "The campaign type (b - broadcast, f - followup)"
+              },
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "The campaign ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "A followup or broadcast campaign\n\nCheck out related examples:\n\n  * Get Clicks (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-clicks\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-clicks\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Clicks.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/pu"
+        },
+        {
+          "info": {
+            "name": "Find campaigns",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/campaigns?ws.op=find",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "ws.op",
+                "value": "",
+                "type": "query",
+                "description": "The method name - expecting \"find\""
+              },
+              {
+                "name": "campaign_type",
+                "value": "",
+                "type": "query",
+                "description": "The campaign type (b - broadcast, f - followup)"
+              },
+              {
+                "name": "ws.start",
+                "value": "",
+                "type": "query",
+                "description": "The pagination starting offset"
+              },
+              {
+                "name": "ws.size",
+                "value": "",
+                "type": "query",
+                "description": "The pagination total entries to retrieve"
+              },
+              {
+                "name": "ws.show",
+                "value": "",
+                "type": "query",
+                "description": "A flag to show the total size only - expecting \\\"total_size\\\", when added the response will be an integer"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Find a collection of either followup(\"f\") or broadcast(\"b\") Campaigns. The collection is ordered with followups messages followed by broadcast messages.  The followup messages are sorted by `id` ascending and the broadcast messages are sorted by `sent_at` descending.\n\nCheck out related examples:\n\n  * Get Clicks (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-clicks\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/ma"
+        },
+        {
+          "info": {
+            "name": "Get broadcast statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/campaigns/b:campaignId/stats",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "The campaign ID"
+              },
+              {
+                "name": "ws.start",
+                "value": "",
+                "type": "query",
+                "description": "The pagination starting offset"
+              },
+              {
+                "name": "ws.size",
+                "value": "",
+                "type": "query",
+                "description": "The pagination total entries to retrieve"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "A paginated collection of statistics for a broadcast campaign message\nsorted by \"statistics ID\"\n\n\nCheck out related examples:\n\n  * Get Clicks (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-clicks\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-clicks\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Clicks.postman_collection.json\" target="
+        },
+        {
+          "info": {
+            "name": "Get broadcast statistic",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/campaigns/b:campaignId/stats/:statsId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              },
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "The campaign ID"
+              },
+              {
+                "name": "statsId",
+                "value": "",
+                "type": "path",
+                "description": "<br>\n\n>The statistic's ID.\n>\n>The datatype of the ID may be different for each Stat.\n>\n>Below is a list of the statistic IDs that can be passed in.\n>\n>__Aggregate Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| total_clicks | Total number of times a subscriber clicked any link appearing in your campaign except the unsubscribe link (includes multiple clicks of the same link) |\n>| unique_clicks | Total number of subscribers who clicked any link in your campaign |\n>| total_opens | Total number of times your campaign was opened by any subscriber your campaign was sent to (including multiple opens by the same subscriber) |\n>| unique_opens | Total number of subscribers who opened your campaign |\n>| total_sales | Total number of sales made by subscribers who received your campaign |\n>| total_sales_dollars | Total monetary value of sales made by subscribers who received your campaign |\n>| total_unsubscribed | Total number of subscribers who unsubscribed by clicking the unsubscribe link in your campaign |\n>\n>__Time Related Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| hourly_clicks | Hourly breakdown of unique and total clicks for the first 24 hours after a campaign was sent |\n>| hourly_opens | Hourly breakdown of unique and total opens for the first 24 hours after a campaign was sent |\n>| hourly_sales | Hourly breakdown of sales for the first 24 hours after a campaign was sent |\n>| hourly_unsubscribed | Hourly breakdown of subscribers who unsubscribed by clicking the unsubscribed link for the first 24 hours after a campaign was sent |\n>| hourly_webhits | Hourly breakdown of webhits to your website from subscribers sent this message for the first 24 hours after a campaign was sent |\n>| daily_clicks | Daily breakdown of unique and total clicks for the first 14 days after a campaign was sent |\n>| daily_opens | Daily breakdown of unique and total opens for the first 14 days after a campaign was sent |\n>| daily_sales | Daily breakdown of sales for the first 14 days after a campaign was sent |\n>| daily_unsubscribed | Daily breakdown of subscribers who unsuscribed by clicking the unsubscribed link for the first 14 days after a campaign was sent |\n>| daily_webhits | Daily breakdown of webhits to your website from subscribers sent this message for the first 14 days after a campaign was sent |\n>\n>__Top 10 URL Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| clicks_by_link | Top 10 links that were clicked (ranked by total_clicked) |\n>| webhits_by_link | Top 10 webhits by click (ranked by total clicks) |\n>\n>__Top 10 Subscriber Statistics__\n>(Requires access to subscriber data)\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| opens_by_subscriber | Top 10 subscribers that opened your message (ranked by total opens) |\n>| sales_by_subscriber | Top 10 subscribers that made a sale from your message (ranked by total sales dollars) |\n"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "A statistic for a broadcast campaign message\n\nCheck out related examples:\n\n  * Get Clicks (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-clicks\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-clicks\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Clicks.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.c"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

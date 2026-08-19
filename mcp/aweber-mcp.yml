@@ -1,0 +1,146 @@
+generated: '2026-08-13'
+method: derived
+status: candidate
+source: openapi/_original/aweber-api-openapi.yml
+docs_checked:
+  - https://api.aweber.com/            # full API + webhook reference, no MCP section
+  - https://labs.aweber.com/docs       # developer portal, no MCP section
+  - https://www.aweber.com/llms.txt    # curated agent map, no MCP entry
+  - https://github.com/aweber/aweber-mcp
+note: >-
+  AWeber ships NO usable MCP server. The aweber GitHub organization does contain a repository
+  named aweber-mcp, described "A MCP for interacting with the AWeber Public API" (last push
+  2025-03-12, public, not archived) — but it is an EMPTY PLACEHOLDER: the repository contains
+  only .gitignore, LICENSE and a 62-byte README. There is no server implementation, no package,
+  no manifest and no endpoint. A pointer at that repository would credit AWeber with an agent
+  surface that does not exist, so the tools below are recorded as a DERIVED CANDIDATE from
+  AWeber's own OpenAPI, not as a published server.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: oauth
+  verified: probed
+  note: >-
+    mode=none: nobody ships a server. auth records what a server WOULD need — the AWeber REST
+    API is OAuth 2.0 authorization-code only (PKCE for public clients), so any MCP server would
+    have to carry a per-AWeber-customer token; there is no API-key path.
+server:
+  name: aweber
+  transport: null
+  url: null
+upstream_repo:
+  url: https://github.com/aweber/aweber-mcp
+  description: A MCP for interacting with the AWeber Public API
+  last_push: '2025-03-12'
+  archived: false
+  contents: [.gitignore, LICENSE, README.md]
+  implementation: absent
+tools:
+  - name: list_lists
+    description: List the email lists on an AWeber account.
+    source_operation: openapi/aweber-lists-api-openapi.yml#getLists
+  - name: get_list
+    description: Get a single list by id.
+    source_operation: openapi/aweber-lists-api-openapi.yml#getList
+  - name: find_lists
+    description: Find lists on an account by name.
+    source_operation: openapi/aweber-lists-api-openapi.yml#findLists
+  - name: get_list_tags
+    description: Get every tag applied to subscribers on a list.
+    source_operation: openapi/aweber-lists-api-openapi.yml#getTagsForList
+  - name: list_subscribers
+    description: List the subscribers on a list.
+    source_operation: openapi/aweber-subscribers-api-openapi.yml#getSubscribers
+  - name: add_subscriber
+    description: Add a subscriber to a list, with tags, custom fields and ad tracking.
+    source_operation: openapi/aweber-subscribers-api-openapi.yml#addSubscriber
+  - name: get_subscriber
+    description: Get one subscriber by id.
+    source_operation: openapi/aweber-subscribers-api-openapi.yml#getSubscriber
+  - name: update_subscriber
+    description: Update a subscriber by id (status, tags, custom fields).
+    source_operation: openapi/aweber-subscribers-api-openapi.yml#updateSubscriberByID
+  - name: update_subscriber_by_email
+    description: Update a subscriber addressed by email rather than id.
+    source_operation: openapi/aweber-subscribers-api-openapi.yml#updateSubscriberByEmail
+  - name: delete_subscriber
+    description: Delete a subscriber by id.
+    source_operation: openapi/aweber-subscribers-api-openapi.yml#deleteSubscriberByID
+  - name: find_subscribers_on_list
+    description: Search a list for subscribers by email or other attributes.
+    source_operation: openapi/aweber-subscribers-api-openapi.yml#findSubscribersForList
+  - name: find_subscribers_on_account
+    description: Search every list on an account for a subscriber.
+    source_operation: openapi/aweber-subscribers-api-openapi.yml#findSubscribersForAccount
+  - name: get_subscriber_activity
+    description: Get the activity history for one subscriber.
+    source_operation: openapi/aweber-subscribers-api-openapi.yml#getSubscriberActivity
+  - name: move_subscriber
+    description: Move a subscriber to another list.
+    source_operation: openapi/aweber-subscribers-api-openapi.yml#moveSubscriber
+  - name: create_purchase
+    description: Record a tracked purchase event for a subscriber.
+    source_operation: openapi/aweber-subscribers-api-openapi.yml#createAPurchase
+  - name: list_broadcasts
+    description: List broadcasts on a list by state (draft, scheduled, sent).
+    source_operation: openapi/aweber-broadcasts-api-openapi.yml#getBroadcasts
+  - name: create_broadcast
+    description: Create a broadcast email on a list.
+    source_operation: openapi/aweber-broadcasts-api-openapi.yml#createBroadcast
+  - name: get_broadcast
+    description: Get one broadcast.
+    source_operation: openapi/aweber-broadcasts-api-openapi.yml#getBroadcast
+  - name: update_broadcast
+    description: Update a draft broadcast.
+    source_operation: openapi/aweber-broadcasts-api-openapi.yml#updateBroadcast
+  - name: schedule_broadcast
+    description: Schedule a draft broadcast to send.
+    source_operation: openapi/aweber-broadcasts-api-openapi.yml#scheduleBroadcast
+  - name: cancel_broadcast
+    description: Cancel a scheduled broadcast.
+    source_operation: openapi/aweber-broadcasts-api-openapi.yml#cancelScheduledBroadcast
+  - name: delete_broadcast
+    description: Delete a broadcast.
+    source_operation: openapi/aweber-broadcasts-api-openapi.yml#deleteBroadcast
+  - name: get_broadcast_opens
+    description: Get the subscribers who opened a broadcast.
+    source_operation: openapi/aweber-broadcasts-api-openapi.yml#getBroadcastOpens
+  - name: get_broadcast_clicks
+    description: Get the subscribers who clicked a broadcast.
+    source_operation: openapi/aweber-broadcasts-api-openapi.yml#getBroadcastClicks
+  - name: get_broadcast_stats
+    description: Get aggregate statistics for a sent broadcast.
+    source_operation: openapi/aweber-campaigns-api-openapi.yml#getBroadcastStatistics
+  - name: list_campaigns
+    description: List follow-up and broadcast campaigns on a list.
+    source_operation: openapi/aweber-campaigns-api-openapi.yml#getCampaigns
+  - name: list_custom_fields
+    description: List the custom fields defined on a list.
+    source_operation: openapi/aweber-custom-fields-api-openapi.yml#getCustomFields
+  - name: add_custom_field
+    description: Add a custom field to a list.
+    source_operation: openapi/aweber-custom-fields-api-openapi.yml#addCustomField
+  - name: update_custom_field
+    description: Rename a custom field.
+    source_operation: openapi/aweber-custom-fields-api-openapi.yml#updateCustomField
+  - name: delete_custom_field
+    description: Delete a custom field from a list.
+    source_operation: openapi/aweber-custom-fields-api-openapi.yml#deleteCustomField
+  - name: list_segments
+    description: List saved segments on a list.
+    source_operation: openapi/aweber-segments-api-openapi.yml#getSegments
+  - name: list_landing_pages
+    description: List the landing pages attached to a list.
+    source_operation: openapi/aweber-landing-pages-api-openapi.yml#getLandingPages
+  - name: list_web_forms
+    description: List the sign-up forms on a list.
+    source_operation: openapi/aweber-web-forms-api-openapi.yml#getWebformsForList
+  - name: list_integrations
+    description: List the third-party integrations connected to an account.
+    source_operation: openapi/aweber-integrations-api-openapi.yml#getIntegrations
+  - name: list_accounts
+    description: List the AWeber accounts the access token can reach.
+    source_operation: openapi/aweber-accounts-api-openapi.yml#getAccounts
+tool_count: 35

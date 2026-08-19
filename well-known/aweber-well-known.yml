@@ -1,0 +1,58 @@
+generated: '2026-08-13'
+method: probed
+source: live HTTPS GETs against every AWeber host in apis.yml and the OpenAPI servers[] block
+result: none
+note: >-
+  Every /.well-known/ path returned 404 on every AWeber host. No security.txt (RFC 9116), no
+  OIDC discovery document, no RFC 8414 authorization-server metadata (even on auth.aweber.com,
+  which is the live OAuth 2.0 authorize/token host), no api-catalog, no ai-plugin. Two hosts
+  answer 404 with an HTML shell (www.aweber.com, labs.aweber.com) and one answers 404 with the
+  API's own JSON error envelope (api.aweber.com); none of them served a document. Because
+  nothing returned a real document, this probe intentionally emits NO WellKnown or SecurityTxt
+  pointer in apis.yml — the file records a measured absence, not a published surface.
+hosts:
+  - host: https://www.aweber.com
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/oauth-protected-resource, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+      - {path: /.well-known/agent-card.json, status: 404}
+      - {path: /.well-known/agent.json, status: 404}
+  - host: https://api.aweber.com
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/oauth-protected-resource, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+      - {path: /.well-known/agent-card.json, status: 404}
+      - {path: /.well-known/agent.json, status: 404}
+  - host: https://auth.aweber.com
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/oauth-protected-resource, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+      - {path: /.well-known/agent-card.json, status: 404}
+      - {path: /.well-known/agent.json, status: 404}
+  - host: https://labs.aweber.com
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/oauth-protected-resource, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+      - {path: /.well-known/agent-card.json, status: 404}
+      - {path: /.well-known/agent.json, status: 404}
+gap:
+  - >-
+    auth.aweber.com serves a working OAuth 2.0 authorization-code flow with PKCE but publishes
+    no RFC 8414 metadata document, so a client cannot discover the authorize/token/revoke
+    endpoints or the supported scopes without reading the human documentation.

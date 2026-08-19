@@ -1,0 +1,114 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  https://api.aweber.com/#tag/Getting-Started, https://api.aweber.com/#tag/FAQ,
+  https://api.aweber.com/#tag/Troubleshooting and openapi/_original/aweber-api-openapi.yml
+docs: https://api.aweber.com/
+api_style: rest-json
+base_url: https://api.aweber.com/1.0
+media_type:
+  responses: application/json
+  requests: application/x-www-form-urlencoded
+  note: >-
+    Unusual for a modern JSON API: most write endpoints expect a FORM-ENCODED request body and
+    return JSON. Some endpoints additionally accept application/json; sending the wrong one
+    raises 415 InvalidContentType. Character encoding is UTF-8 throughout; non-UTF-8 input
+    raises 400 with 'Invalid Character Encoding'.
+authentication:
+  style: oauth2-authorization-code
+  header: 'Authorization: Bearer <access_token>'
+  authorize_url: https://auth.aweber.com/oauth2/authorize
+  token_url: https://auth.aweber.com/oauth2/token
+  revoke_url: https://auth.aweber.com/oauth2/revoke
+  pkce: required-for-public-clients
+  pkce_note: >-
+    Public clients (mobile apps, WordPress plugins — anything that cannot hold a secret) MUST
+    send code_challenge; confidential clients MUST NOT send code_verifier/code_challenge. Sending
+    the wrong one for your client type is a documented, named failure.
+  legacy: >-
+    OAuth 1.0a request-token/access-token endpoints are still published and still live (an
+    unauthenticated GET to /1.0/accounts answers "Missing oauth parameters: oauth_consumer_key"),
+    but AWeber requires all NEW applications to use OAuth 2.0.
+  detail: authentication/aweber-authentication.yml
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    AWeber publishes NO idempotency key, no request-deduplication window and no safe-retry
+    contract. This matters most on addSubscriber (POST) and createAPurchase (POST): a retried
+    call after a timeout can double-add. The nearest thing to an idempotent write is the
+    update_existing parameter on addSubscriber (added 2020-01-17), which turns a duplicate add
+    into an update instead of an error — a per-endpoint convenience, not an idempotency
+    contract. NO Idempotency pointer is emitted in apis.yml for this reason.
+pagination:
+  style: offset
+  params:
+    - {name: ws.size, in: query, default: 100, min: 1, max: 100, description: Maximum entries to return}
+    - {name: ws.start, in: query, default: 0, min: 0, description: Zero-based index of the first entry on the page}
+    - {name: ws.show, in: query, enum: [total_size], description: 'Return only the collection total as an integer'}
+    - {name: page_size, in: query, default: 100, min: 1, max: 100, description: 'Page size on the 2.0-beta analytics endpoint'}
+  response_fields:
+    - {name: entries, description: The array of entries on this page}
+    - {name: total_size, description: Total number of entries in the collection}
+    - {name: start, description: Zero-based index of this page}
+    - {name: next_collection_link, description: Absolute URL of the next page (absent on the last page)}
+    - {name: prev_collection_link, description: Absolute URL of the previous page (absent on the first page)}
+  note: >-
+    Follow next_collection_link rather than incrementing ws.start yourself. Out-of-range values
+    raise 400 rather than clamping (since 2020-05-08). Two account-level webform endpoints
+    (getWebformsForAccount, getSplitTestsForAccount) became mandatorily paginated in 2021-02-19,
+    which was a breaking response-shape change.
+filtering_and_search:
+  style: named-operations
+  note: >-
+    AWeber inherits a Launchpad/lazr.restful heritage: searches are invoked as a query-string
+    OPERATION on a collection URL — ?ws.op=find, ?ws.op=findSubscribers, ?ws.op=getActivity,
+    ?ws.op=getWebForms. The operation name is part of the path in the published OpenAPI, which
+    is why several path keys in the spec carry a query string. Clients must send them literally.
+resource_model:
+  hierarchy: account -> list -> {subscriber, broadcast, campaign, custom_field, segment, web_form, landing_page}
+  entry_vs_collection: >-
+    Every resource is either an Entry (single object) or a Collection (paginated sequence of
+    entries). Entries carry a self_link and *_collection_link fields pointing at their children;
+    following links is the documented navigation model.
+  ids: >-
+    Numeric ids in the 1.0 API. A uuid field was added to Subscriber (2021-11-17) and Account
+    (2021-02-18) entries. The 2.0-beta endpoints move to UUIDs as the primary identifier.
+field_expansion:
+  supported: false
+metadata:
+  supported: partial
+  note: >-
+    Subscribers carry arbitrary customer-defined custom_fields plus misc_notes and ad_tracking.
+    There is no generic metadata bag on other resources.
+request_tracing:
+  request_id_header: null
+  note: >-
+    The REST API documents no request-id/correlation header. Webhook callbacks DO carry
+    AWeber-Delivery-ID, which support asks for — so tracing exists on the outbound event side
+    only.
+versioning:
+  scheme: uri-path
+  current: '1.0'
+  path_segment: /1.0
+  next: 2.0-beta
+  next_base: https://api.aweber.com/2.0-beta/
+  next_note: >-
+    Early-access v2 endpoints announced in API 1.4.0 (2025-09-05), primarily moving from numeric
+    ids to UUIDs. The host answers 401 to an unauthenticated request, confirming it is live.
+    Documented under the "Beta Endpoints" tag; treated as unstable.
+  detail: lifecycle/aweber-lifecycle.yml
+error_envelope:
+  format: custom-json-envelope
+  rfc9457: false
+  shape: '{"error": {"status": 401, "message": "...", "type": "UnauthorizedError", "documentation_url": "https://api.aweber.com"}}'
+  detail: errors/aweber-problem-types.yml
+rate_limits:
+  limit: 120 requests per minute per customer account
+  headers: none-documented
+  exhaustion: 403 ForbiddenError with body message "Rate Limit Error"
+  detail: rate-limits/aweber-rate-limits.yml
+events:
+  webhooks: true
+  signature: HMAC-SHA256 in the AWeber-Signature header
+  detail: asyncapi/aweber-webhooks.yml

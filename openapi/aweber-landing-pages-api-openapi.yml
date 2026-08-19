@@ -1,82 +1,770 @@
-openapi: 3.1.0
+openapi: 3.0.2
 info:
-  title: AWeber REST Accounts Landing Pages API
+  title: AWeber Landing Pages API
   version: '1.0'
-  description: 'The AWeber REST API provides programmatic access to lists, subscribers,
+  description: 'We are constantly working to improve this documentation. If you have
 
-    broadcasts, campaigns, custom fields, segments, and tags. The API is
+    feedback and questions, please contact the AWeber API team at
 
-    organized around the authenticated account and uses OAuth 2.0 for
-
-    authentication. All requests are made over HTTPS to api.aweber.com and
-
-    return JSON.
+    api@aweber.com.
 
 
-    See https://developer.aweber.com/docs/v3 for full reference.
+    The AWeber API is a REST API that uses the OAuth 2.0 authentication model. We also offer webhooks.
+
+
+    Please see the below resources for further information:
+
+    - <a href="https://labs.aweber.com/docs/tos" target="_blank">Terms of Service</a>
+
+    - <a href="https://help.aweber.com/hc/en-us/articles/204031776" target="_blank">Showcasing an Integration</a>
+
+    - <a href="https://help.aweber.com/hc/en-us/sections/360000617213-API" target="_blank">Knowledge Base</a>
+
+    - <a href="https://status.aweber.com" target="_blank">API Status Page</a>
 
     '
   contact:
-    name: AWeber Developer
-    url: https://developer.aweber.com/
+    name: AWeber API Team
+    email: api@aweber.com
+    url: https://api.aweber.com/
 servers:
 - url: https://api.aweber.com/1.0
-  description: AWeber REST API v1.0
-security:
-- OAuth2: []
+  description: v1 API endpoints
 tags:
 - name: Landing Pages
+  description: '### What is it?
+
+
+    Represents the landing pages associated with a list.
+
+
+    Use this resource to retrieve the landing pages that are defined for the list.  The single collection
+
+    response is sorted by the generated landing page `id` and paginated using `next_collection_link` and
+
+    `prev_collection_link` properties.  See
+
+    [How Collections are Represented](#collection-representation) for details on collection traversal.
+
+
+    ### Related endpoints
+
+
+    * [Landing Pages](#tag/Landing-Pages)
+
+
+    ### Related code examples
+
+
+    * [Get Landing Pages](#tag/Get-Landing-Pages)
+
+    '
+security:
+- OAuth 2.0: []
 paths:
-  /accounts/{accountId}/landing_pages:
+  /accounts/{accountId}/lists/{listId}/landing_pages:
     get:
+      summary: Get landing pages
+      description: This endpoint is used to get a paginated collection of list landing pages.
       tags:
       - Landing Pages
-      summary: List landing pages
-      operationId: listLandingPages
       parameters:
-      - $ref: '#/components/parameters/AccountId'
+      - $ref: '#/components/parameters/accountId'
+      - $ref: '#/components/parameters/listId'
+      - $ref: '#/components/parameters/wsStart'
+      - $ref: '#/components/parameters/wsSize'
+      security:
+      - OAuth 2.0:
+        - landing-page.read
+      x-code-samples:
+      - lang: Shell
+        source: "curl -G \\\n  https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/landing_pages\
+          \ \\\n  -H 'Authorization: Bearer {YOUR_ACCESS_TOKEN}'\n"
+      - lang: Python
+        source: "headers = {'Accept': 'application/json',\n           'User-Agent': 'AWeber-Python-code-sample/1.0',\n\
+          \           'Authorization': f'Bearer {access_token}'}\nurl = (f'https://api.aweber.com/1.0/accounts/{account_id}'\n\
+          \       f'/lists/{list_id}/landing_pages')\nresponse = requests.get(url, headers=headers)\n\
+          print(response.json())\n"
+      - lang: PHP
+        source: "$headers = [\n    'User-Agent' => 'AWeber-PHP-code-sample/1.0',\n    'Accept' => 'application/json',\n\
+          \    'Authorization' => 'Bearer $token',\n];\n$url = \"https://api.aweber.com/1.0/accounts/{$accountId}/lists/{$listId}/landing_pages\"\
+          ;\n$response = $client->get($url, ['headers' => $headers]);\n$body = json_decode($response->getBody(),\
+          \ true);\nprint_r($body);\n"
+      - lang: C#
+        source: 'const string url = "https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/landing_pages";
+
+          var request = new HttpRequestMessage(HttpMethod.Get, url);
+
+          request.Headers.Add("Accept","application/json");
+
+          request.Headers.Add("User-Agent","AWeber-CSharp-code-sample/1.0");
+
+          request.Headers.Add("Authorization", $"Bearer {Token}");
+
+          var response = await Client.SendAsync(request);
+
+          Console.Write(response.Content.ReadAsStringAsync());
+
+          '
+      - lang: JavaScript
+        label: Node.js
+        source: "const headers = {\n  \"Accept\": \"application/json\",\n  \"User-Agent\": \"AWeber-Node-code-sample/1.0\"\
+          ,\n  \"Authorization\": `Bearer ${accessToken}`\n};\nconst url = `https://api.aweber.com/1.0/accounts/${accountId}/lists/${listId}/landing_pages`;\n\
+          fetch(url, { headers: headers })\n  .then(response => response.json())\n  .then(data => {\n\
+          \    console.log(data)\n})\n"
+      - lang: Ruby
+        source: "headers = {\n  'Accept': 'application/json',\n  'User-Agent': 'AWeber-Ruby-code-sample/1.0',\n\
+          \  'Authorization': \"Bearer #{access_token}\"\n}\nresponse = Faraday.get(\n  \"https://api.aweber.com/1.0/accounts/#{account_id}/\"\
+          \ \\\n  \"lists/#{list_id}/landing_pages\"\n) do |req|\n  req.headers = headers\nend\nputs response.body\n"
       responses:
         '200':
-          description: Collection of landing pages
+          description: The request completed successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Collection'
+                $ref: '#/components/schemas/LandingPages'
+        '400':
+          description: The server cannot or will not process the request due to a client error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    description: 'An error object.
+
+                      One of the following errors may be received:
+
+
+                      | Error Type           | Explanation                              |
+
+                      |----------------------|------------------------------------------|
+
+                      | WebServiceError      | `ws.start` or `ws.size` values are invalid |
+
+                      | MissingOAuthParametersError | An OAuth parameter is missing in the request |
+
+                      | UnsupportedOAuthVersionError | Unsupported OAuth 1 version |
+
+                      | UnsupportedOAuthSignatureMethodError | Unsupported OAuth 1 signature method |
+
+
+                      Please see the message body for more details.
+
+                      '
+                    type: object
+                    properties:
+                      documentation_url:
+                        description: A link to the documentation that describes the error
+                        type: string
+                        example: https://api.aweber.com#badrequest
+                      message:
+                        description: A human friendly description of the error
+                        type: string
+                        example: Maximum for "ws.size" parameter is 100.
+                      status:
+                        description: The HTTP status code
+                        type: integer
+                        example: 400
+                      type:
+                        description: The API error type
+                        type: string
+                        example: WebServiceError
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '410':
+          $ref: '#/components/responses/BlockedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      operationId: getLandingPages
+  /accounts/{accountId}/lists/{listId}/landing_pages/{landingPageId}:
+    get:
+      summary: Get landing page
+      description: 'This endpoint is used to retrieve the information for the specified landing page.
+
+        '
+      tags:
+      - Landing Pages
+      parameters:
+      - $ref: '#/components/parameters/accountId'
+      - $ref: '#/components/parameters/listId'
+      - $ref: '#/components/parameters/landingPageId'
+      security:
+      - OAuth 2.0:
+        - list.read
+      x-code-samples:
+      - lang: Shell
+        source: "curl -G \\\n  https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/landing_pages/{landingPageId}\
+          \ \\\n  -H 'Authorization: Bearer {YOUR_ACCESS_TOKEN}'\n"
+      - lang: Python
+        source: "headers = {'Accept': 'application/json',\n           'User-Agent': 'AWeber-Python-code-sample/1.0',\n\
+          \           'Authorization': f'Bearer {access_token}'}\nurl = (f'https://api.aweber.com/1.0/accounts/{account_id}'\n\
+          \       f'/lists/{list_id}/landing_pages/{landing_page_id}')\nresponse = requests.get(url, headers=headers)\n\
+          print(response.json())\n"
+      - lang: PHP
+        source: "$headers = [\n    'User-Agent' => 'AWeber-PHP-code-sample/1.0',\n    'Accept' => 'application/json',\n\
+          \    'Authorization' => 'Bearer $token',\n];\n$url = \"https://api.aweber.com/1.0/accounts/{$accountId}/lists/{$listId}/landing_pages/{$landingPageId}\"\
+          ;\n$response = $client->get($url, ['headers' => $headers]);\n$body = json_decode($response->getBody(),\
+          \ true);\nprint_r($body);\n"
+      - lang: C#
+        source: 'const string url = "https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/landing_pages/{landingPageId}";
+
+          var request = new HttpRequestMessage(HttpMethod.Get, url);
+
+          request.Headers.Add("Accept","application/json");
+
+          request.Headers.Add("User-Agent","AWeber-CSharp-code-sample/1.0");
+
+          request.Headers.Add("Authorization", $"Bearer {Token}");
+
+          var response = await Client.SendAsync(request);
+
+          Console.Write(response.Content.ReadAsStringAsync());
+
+          '
+      - lang: JavaScript
+        label: Node.js
+        source: "const headers = {\n  \"Accept\": \"application/json\",\n  \"User-Agent\": \"AWeber-Node-code-sample/1.0\"\
+          ,\n  \"Authorization\": `Bearer ${accessToken}`\n};\nconst url = `https://api.aweber.com/1.0/accounts/${accountId}/lists/${listId}/landing_pages/${landingPageId}`;\n\
+          fetch(url, { headers: headers })\n  .then(response => response.json())\n  .then(data => {\n\
+          \    console.log(data)\n})\n"
+      - lang: Ruby
+        source: "headers = {\n  'Accept': 'application/json',\n  'User-Agent': 'AWeber-Ruby-code-sample/1.0',\n\
+          \  'Authorization': \"Bearer #{access_token}\"\n}\nresponse = Faraday.get(\n  \"https://api.aweber.com/1.0/accounts/#{account_id}/\"\
+          \ \\\n  \"lists/#{list_id}/landing_pages/#{landing_page_id}\"\n) do |req|\n  req.headers = headers\n\
+          end\nputs response.body\n"
+      responses:
+        '200':
+          description: The request completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LandingPage'
+        '400':
+          $ref: '#/components/responses/BadOAuth1'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '410':
+          $ref: '#/components/responses/BlockedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      operationId: getLandingPage
 components:
+  parameters:
+    accountId:
+      name: accountId
+      in: path
+      description: The account ID
+      required: true
+      schema:
+        type: integer
+        format: int32
+    landingPageId:
+      name: landingPageId
+      in: path
+      description: The landing page ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    listId:
+      name: listId
+      in: path
+      description: The list ID
+      required: true
+      schema:
+        type: integer
+        format: int32
+    wsSize:
+      name: ws.size
+      in: query
+      description: The pagination total entries to retrieve
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 100
+        default: 100
+    wsStart:
+      name: ws.start
+      in: query
+      description: The pagination starting offset
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        default: 0
+  responses:
+    BadOAuth1:
+      description: The server cannot or will not process the request due to a client error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  One of the following errors may be received:
+
+
+                  | Error Type                           | Explanation                              |
+
+                  |--------------------------------------|------------------------------------------|
+
+                  | BadRequestError                      | There was an error decoding query parameters
+                  |
+
+                  | MissingOAuthParametersError          | An OAuth parameter is missing in the request
+                  |
+
+                  | UnsupportedOAuthSignatureMethodError | The provided OAuth 1 signature method is unsupported.
+                  Only HMAC-SHA1 is supported. |
+
+                  | UnsupportedOAuthVersionError         | The provided OAuth 1 version is unsupported.
+                  |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#badrequest
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: 'Missing oauth parameters: oauth_consumer_key'
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 400
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - MissingOAuthParametersError
+    BlockedError:
+      description: The request has been blocked
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | BlockedError         | This Request has been blocked            |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com/#blocked
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Blocked Error
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 410
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BlockedError
+    ForbiddenError:
+      description: The request could not be completed due to a rate limit error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | ForbiddenError       | Rate limit may be reached or account may be suspended |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#forbidden
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Rate Limit Error
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 403
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - ForbiddenError
+    InternalServerError:
+      description: The request failed due to an internal error in the code or because of an external dependency
+        failure
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | InternalServerError    | The request failed due to an internal error |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#internalerror
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Something went wrong.
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 500
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - InternalServerError
+    NotFound:
+      description: The requested resource could not be found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | NotFoundError        | The requested resource could not be found |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#notfound
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: 'Object: None, name: '''''
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 404
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - NotFoundError
+    ServiceUnavailable:
+      description: The server is currently unavailable
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | ServiceUnavailableError | The server is unavailable |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#serviceunavailable
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Failed to communicate with endpoint
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 503
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - ServiceUnavailableError
+    UnauthorizedError:
+      description: The request could not be completed due to an authentication error
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/schemas/Endpoint Error'
+            - $ref: '#/schemas/Auth Error'
   schemas:
-    Collection:
+    LandingPage:
+      allOf:
+      - type: object
+        properties:
+          content_html:
+            description: The draft HTML of the landing page
+            type: string
+            example: <html><h1>Title</h1><body>Landing Page Text</body></html>
+          published_html:
+            description: The published HTML of the landing page
+            type: string
+            nullable: true
+            example: <html><h1>Title</h1><body>Landing Page Text</body></html>
+      - $ref: '#/components/schemas/LandingPageNoContent'
+    LandingPageNoContent:
+      type: object
+      properties:
+        created_at:
+          description: When the landing page was created
+          type: string
+          format: date-time
+          example: 2017-07-18 16:53:02-04:00
+        id:
+          description: The unique ID for the landing page
+          type: string
+          format: uuid
+          example: 48b38cd9-a5df-4297-8987-ed31b3093b39
+        modified_at:
+          description: When the landing page was last modified
+          type: string
+          format: date-time
+          example: 2017-07-18 16:53:02-04:00
+        name:
+          description: The landing page name
+          type: string
+          example: My Awesome Landing Page
+        published_at:
+          description: When the landing page was published
+          type: string
+          format: date-time
+          nullable: true
+          example: 2017-07-18 16:53:02-04:00
+        published_url:
+          description: The URL for the landing page
+          type: string
+          format: uri
+          nullable: true
+          example: https://awd415f.aweberpages.com/awesomepage
+        resource_type_link:
+          description: The link to the landing page type
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/#landing_page
+        self_link:
+          description: The link to this resource
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/landing_pages/48b38cd9-a5df-4297-8987-ed31b3093b39
+        status:
+          description: The status of the landing page
+          type: string
+          enum:
+          - published
+          - unpublished
+    LandingPages:
       type: object
       properties:
         entries:
           type: array
           items:
-            type: object
-        total_size:
-          type: integer
+            $ref: '#/components/schemas/LandingPageNoContent'
         next_collection_link:
+          description: A link to the next page of entries if more entries exist. This attribute is omitted
+            from the collection if there are no more entries.
           type: string
           format: uri
-  parameters:
-    AccountId:
-      name: accountId
-      in: path
-      required: true
-      schema:
-        type: integer
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/landing_pages/48b38cd9-a5df-4297-8987-ed31b3093b39?ws.start=10&ws.size=10
+        prev_collection_link:
+          description: A link to the previous page of entries if any exist. This attribute is omitted
+            from the collection if ws.start is 0.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/landing_pages/48b38cd9-a5df-4297-8987-ed31b3093b39?ws.start=0
+        resource_type_link:
+          description: The link to the landing page page type
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/#landing_page-page-resource
+        start:
+          description: The starting offset for the page of entries to retrieve
+          type: integer
+          minimum: 0
+        total_size:
+          description: The total number of entries
+          type: integer
+          minimum: 0
+          example: 100
   securitySchemes:
-    OAuth2:
+    OAuth 2.0:
+      description: 'The following endpoints and scopes are used to authenticate.
+
+        '
       type: oauth2
       flows:
         authorizationCode:
           authorizationUrl: https://auth.aweber.com/oauth2/authorize
           tokenUrl: https://auth.aweber.com/oauth2/token
+          refreshUrl: https://auth.aweber.com/oauth2/token
           scopes:
-            account.read: Read account information
-            list.read: Read lists
-            list.write: Manage lists
-            subscriber.read: Read subscribers
-            subscriber.write: Manage subscribers
-            email.read: Read broadcasts and campaigns
-            email.write: Manage broadcasts and campaigns
-            landing-page.read: Read landing pages
-            landing-page.write: Manage landing pages
+            account.read: '<br>
+
+              Access account information and associated integrations. <br>
+
+              <b>Required for the following endpoints:</b> get accounts, get account, get integrations,
+              get integration
+
+              '
+            landing-page.read: '<br>
+
+              Retrieve landing pages <br>
+
+              <b>Required for the following endpoints:</b> get landing pages, get landing page
+
+              '
+            list.read: '<br>
+
+              Retrieve lists, custom fields, tags, and sign up forms <br>
+
+              <b>Required for the following endpoints:</b> get list, get lists, find lists, get tags for
+              list, get custom fields, get custom field, get webforms for list, get split tests for list,
+              get split test components, get split test component, get webforms for account, get split
+              tests for account
+
+              '
+            list.write: '<br>
+
+              Create, edit, and delete custom fields <br>
+
+              <b>Required for the following endpoints:</b> add custom field, update custom field, delete
+              custom field
+
+              '
+            subscriber.read: '<br>
+
+              Retrieve subscribers and their activity <br>
+
+              <b>Required for the following endpoints:</b> get subscribers, get subscriber, get subscriber
+              activity, get subscribers for message, find subscribers for account, find subscribers for
+              list
+
+              '
+            subscriber.write: '<br>
+
+              Create, edit, delete, retrieve, search for, and move subscribers <br>
+
+              <b>Required for the following endpoints:</b> add subscriber, move subscriber, update subscriber,
+              delete subscriber
+
+              '
+            subscriber.read-extended: '<br>
+
+              Previously required to retrieve subscriber PII such as name, email, IP address, etc.  This
+              functionality was moved to the "subscriber.read" scope
+
+              '
+            email.read: '<br>
+
+              Retrieve email activity related to broadcasts and follow-ups <br>
+
+              <b>Required for the following endpoints:</b> get messages, get message, get broadcasts,
+              get broadcast, get message opens, get message open, get message tracked events, get message
+              tracked event, get total broadcasts, get campaigns, get campaign, find campaigns, get broadcast
+              statistics, get broadcast statistic
+
+              '
+            email.write: '<br>
+
+              Create and send email broadcasts <br>
+
+              <b>Required for the following endpoints:</b> create broadcast, update broadcast, delete
+              broadcast, cancel broadcast, schedule broadcast
+
+              '

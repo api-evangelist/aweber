@@ -1,0 +1,692 @@
+openapi: 3.0.2
+info:
+  title: AWeber Integrations API
+  version: '1.0'
+  description: 'We are constantly working to improve this documentation. If you have
+
+    feedback and questions, please contact the AWeber API team at
+
+    api@aweber.com.
+
+
+    The AWeber API is a REST API that uses the OAuth 2.0 authentication model. We also offer webhooks.
+
+
+    Please see the below resources for further information:
+
+    - <a href="https://labs.aweber.com/docs/tos" target="_blank">Terms of Service</a>
+
+    - <a href="https://help.aweber.com/hc/en-us/articles/204031776" target="_blank">Showcasing an Integration</a>
+
+    - <a href="https://help.aweber.com/hc/en-us/sections/360000617213-API" target="_blank">Knowledge Base</a>
+
+    - <a href="https://status.aweber.com" target="_blank">API Status Page</a>
+
+    '
+  contact:
+    name: AWeber API Team
+    email: api@aweber.com
+    url: https://api.aweber.com/
+servers:
+- url: https://api.aweber.com/1.0
+  description: v1 API endpoints
+tags:
+- name: Integrations
+  description: '### What is it?
+
+
+    Represents the 3rd Party Services that are integrated with the AWeber Customer Account.
+
+
+    Use this set of resources to retrieve the integrations that are available for
+
+    use when creating broadcasts.  For example, use the integration `self_link`
+
+    as a parameter when [creating a broadcast](#tag/Broadcasts/paths/~1accounts~1{accountId}~1lists~1{listId}~1broadcasts/post)
+    to cross-post to Twitter and Facebook
+
+    when a broadcast is sent. The integrations returned include Facebook, Twitter,
+
+    PayPal and Shopify, if connected.
+
+
+    The collection response is sorted by the generated integration `id` and paginated using `next_collection_link`
+    and `prev_collection_link` properties.  See
+
+    [How Collections are Represented](#collection-representation) for details on collection
+
+    traversal.
+
+
+    ### Related endpoints
+
+
+    * [Integrations](#tag/Integrations)
+
+
+    ### Related code examples
+
+
+    * [Create and Schedule a Broadcast](#tag/Create-and-Schedule-a-Broadcast)
+
+    * [Get Integrations List](#tag/Get-Integrations-List)
+
+    '
+security:
+- OAuth 2.0: []
+paths:
+  /accounts/{accountId}/integrations:
+    get:
+      summary: Get integrations
+      description: "This endpoint is used to get a paginated collection of integrations. The integrations\
+        \ returned include Facebook, Twitter, PayPal and Shopify, if connected. The integrations are typically\
+        \ used when [creating a broadcast](#tag/Broadcasts/paths/~1accounts~1{accountId}~1lists~1{listId}~1broadcasts/post)\
+        \ and cross-posting the broadcast to Twitter or Facebook, the integration `self_link` is needed\
+        \ in this case.\n\nCheck out related examples:\n\n  * Get Integrations (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-integrations\"\
+        \ target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-integrations\"\
+        \ target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Integrations.postman_collection.json\"\
+        \ target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetIntegrations\"\
+        \ target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_integration.rb\"\
+        \ target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-integrations.js\"\
+        \ target=\"_blank\">Node.js</a> )"
+      tags:
+      - Integrations
+      parameters:
+      - $ref: '#/components/parameters/accountId'
+      - $ref: '#/components/parameters/wsStart'
+      - $ref: '#/components/parameters/wsSize'
+      security:
+      - OAuth 2.0:
+        - account.read
+      x-code-samples:
+      - lang: Shell
+        source: "curl -G \\\n  https://api.aweber.com/1.0/accounts/{accountId}/integrations \\\n  -H 'Authorization:\
+          \ Bearer {YOUR_ACCESS_TOKEN}'\n"
+      - lang: Python
+        source: "headers = {'Accept': 'application/json',\n           'User-Agent': 'AWeber-Python-code-sample/1.0',\n\
+          \           'Authorization': f'Bearer {access_token}'}\nurl = f'https://api.aweber.com/1.0/accounts/{account_id}/integrations'\n\
+          response = requests.get(url, headers=headers)\nprint(response.json())\n"
+      - lang: PHP
+        source: "$headers = [\n    'User-Agent' => 'AWeber-PHP-code-sample/1.0',\n    'Accept' => 'application/json',\n\
+          \    'Authorization' => 'Bearer $token',\n];\n$url = \"https://api.aweber.com/1.0/accounts/{$accountId}/integrations\"\
+          ;\n$response = $client->get($url, ['headers' => $headers]);\n$body = json_decode($response->getBody(),\
+          \ true);\nprint_r($body);\n"
+      - lang: C#
+        source: 'const string url = "https://api.aweber.com/1.0/accounts/{accountId}/integrations";
+
+          var request = new HttpRequestMessage(HttpMethod.Get, url);
+
+          request.Headers.Add("Accept","application/json");
+
+          request.Headers.Add("User-Agent","AWeber-CSharp-code-sample/1.0");
+
+          request.Headers.Add("Authorization", $"Bearer {Token}");
+
+          var response = await Client.SendAsync(request);
+
+          Console.Write(response.Content.ReadAsStringAsync());
+
+          '
+      - lang: JavaScript
+        label: Node.js
+        source: "const headers = {\n  \"Accept\": \"application/json\",\n  \"User-Agent\": \"AWeber-Node-code-sample/1.0\"\
+          ,\n  \"Authorization\": `Bearer ${accessToken}`\n};\nconst url = `https://api.aweber.com/1.0/accounts/${accountId}/integrations`;\n\
+          fetch(url, { headers: headers })\n  .then(response => response.json())\n  .then(data => {\n\
+          \    console.log(data)\n})\n"
+      - lang: Ruby
+        source: "headers = {\n  'Accept': 'application/json',\n  'User-Agent': 'AWeber-Ruby-code-sample/1.0',\n\
+          \  'Authorization': \"Bearer #{access_token}\"\n}\nresponse = Faraday.get(\n  \"https://api.aweber.com/1.0/accounts/#{account_id}/integrations\"\
+          ,\n) do |req|\n  req.headers = headers\nend\nputs response.body\n"
+      responses:
+        '200':
+          description: The request completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integrations'
+        '400':
+          description: The server cannot or will not process the request due to a client error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    description: 'An error object.
+
+                      The following error may be received:
+
+
+                      | Error Type           | Explanation                              |
+
+                      |----------------------|------------------------------------------|
+
+                      | WebServiceError      | `ws.start` or `ws.size` values are invalid |
+
+
+                      Please see the message body for more details.
+
+                      '
+                    type: object
+                    properties:
+                      documentation_url:
+                        description: A link to the documentation that describes the error
+                        type: string
+                        example: https://api.aweber.com#badrequest
+                      message:
+                        description: A human friendly description of the error
+                        type: string
+                        example: Maximum for "ws.size" parameter is 100.
+                      status:
+                        description: The HTTP status code
+                        type: integer
+                        example: 400
+                      type:
+                        description: The API error type
+                        type: string
+                        example: WebServiceError
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '410':
+          $ref: '#/components/responses/BlockedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      operationId: getIntegrations
+  /accounts/{accountId}/integrations/{integrationId}:
+    get:
+      summary: Get integration
+      description: "This endpoint is used to retrieve the information for a specific connected integration.\
+        \ A specific integration will be Facebook, Twitter, PayPal or Shopify. The integration is typically\
+        \ used when [creating a broadcast](#tag/Broadcasts/paths/~1accounts~1{accountId}~1lists~1{listId}~1broadcasts/post)\
+        \ and cross-posting the broadcast to Twitter or Facebook, the integration `self_link` is needed\
+        \ in this case.\n\nCheck out related examples:\n\n  * Get Integrations (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-integrations\"\
+        \ target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-integrations\"\
+        \ target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Integrations.postman_collection.json\"\
+        \ target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetIntegrations\"\
+        \ target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_integration.rb\"\
+        \ target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-integrations.js\"\
+        \ target=\"_blank\">Node.js</a> )"
+      tags:
+      - Integrations
+      parameters:
+      - $ref: '#/components/parameters/accountId'
+      - $ref: '#/components/parameters/integrationId'
+      security:
+      - OAuth 2.0:
+        - account.read
+      x-code-samples:
+      - lang: Shell
+        source: "curl -G \\\n  https://api.aweber.com/1.0/accounts/{accountId}/integrations/{integrationId}\
+          \ \\\n  -H 'Authorization: Bearer {YOUR_ACCESS_TOKEN}'\n"
+      - lang: Python
+        source: "headers = {'Accept': 'application/json',\n           'User-Agent': 'AWeber-Python-code-sample/1.0',\n\
+          \           'Authorization': f'Bearer {access_token}'}\nurl = f'https://api.aweber.com/1.0/accounts/{account_id}/integrations/{integration_id}'\n\
+          response = requests.get(url, headers=headers)\nprint(response.json())\n"
+      - lang: PHP
+        source: "$headers = [\n    'User-Agent' => 'AWeber-PHP-code-sample/1.0',\n    'Accept' => 'application/json',\n\
+          \    'Authorization' => 'Bearer $token',\n];\n$url = \"https://api.aweber.com/1.0/accounts/{$accountId}/integrations/{$integrationId}\"\
+          ;\n$response = $client->get($url, ['headers' => $headers]);\n$body = json_decode($response->getBody(),\
+          \ true);\nprint_r($body);\n"
+      - lang: C#
+        source: 'const string url = "https://api.aweber.com/1.0/accounts/{accountId}/integrations/{integrationsId}";
+
+          var request = new HttpRequestMessage(HttpMethod.Get, url);
+
+          request.Headers.Add("Accept","application/json");
+
+          request.Headers.Add("User-Agent","AWeber-CSharp-code-sample/1.0");
+
+          request.Headers.Add("Authorization", $"Bearer {Token}");
+
+          var response = await Client.SendAsync(request);
+
+          Console.Write(response.Content.ReadAsStringAsync());
+
+          '
+      - lang: JavaScript
+        label: Node.js
+        source: "const headers = {\n  \"Accept\": \"application/json\",\n  \"User-Agent\": \"AWeber-Node-code-sample/1.0\"\
+          ,\n  \"Authorization\": `Bearer ${accessToken}`\n};\nconst url = `https://api.aweber.com/1.0/accounts/${accountId}/integrations/${integrationId}`;\n\
+          fetch(url, { headers: headers })\n  .then(response => response.json())\n  .then(data => {\n\
+          \    console.log(data)\n})\n"
+      - lang: Ruby
+        source: "headers = {\n  'Accept': 'application/json',\n  'User-Agent': 'AWeber-Ruby-code-sample/1.0',\n\
+          \  'Authorization': \"Bearer #{access_token}\"\n}\nresponse = Faraday.get(\n  \"https://api.aweber.com/1.0/accounts/#{account_id}/\"\
+          \ \\\n  \"integrations/#{integration_id}\",\n) do |req|\n  req.headers = headers\nend\nputs\
+          \ response.body\n"
+      responses:
+        '200':
+          description: The request completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '410':
+          $ref: '#/components/responses/BlockedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      operationId: getIntegration
+components:
+  parameters:
+    accountId:
+      name: accountId
+      in: path
+      description: The account ID
+      required: true
+      schema:
+        type: integer
+        format: int32
+    integrationId:
+      name: integrationId
+      in: path
+      description: The integration ID
+      required: true
+      schema:
+        type: integer
+        format: int32
+    wsSize:
+      name: ws.size
+      in: query
+      description: The pagination total entries to retrieve
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 100
+        default: 100
+    wsStart:
+      name: ws.start
+      in: query
+      description: The pagination starting offset
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        default: 0
+  responses:
+    BlockedError:
+      description: The request has been blocked
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | BlockedError         | This Request has been blocked            |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com/#blocked
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Blocked Error
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 410
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BlockedError
+    ForbiddenError:
+      description: The request could not be completed due to a rate limit error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | ForbiddenError       | Rate limit may be reached or account may be suspended |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#forbidden
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Rate Limit Error
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 403
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - ForbiddenError
+    InternalServerError:
+      description: The request failed due to an internal error in the code or because of an external dependency
+        failure
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | InternalServerError    | The request failed due to an internal error |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#internalerror
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Something went wrong.
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 500
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - InternalServerError
+    NotFound:
+      description: The requested resource could not be found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | NotFoundError        | The requested resource could not be found |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#notfound
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: 'Object: None, name: '''''
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 404
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - NotFoundError
+    ServiceUnavailable:
+      description: The server is currently unavailable
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | ServiceUnavailableError | The server is unavailable |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#serviceunavailable
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Failed to communicate with endpoint
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 503
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - ServiceUnavailableError
+    UnauthorizedError:
+      description: The request could not be completed due to an authentication error
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/schemas/Endpoint Error'
+            - $ref: '#/schemas/Auth Error'
+  schemas:
+    Integration:
+      type: object
+      properties:
+        http_etag:
+          description: The ETag HTTP header
+          type: string
+          example: 902ba3cda1883801594b6e1b452790cc53948fda-f83cb0ac22a8d5f792417f9b3dc0e9dc7558aa32
+        id:
+          description: The unique ID for the integration
+          type: integer
+          example: 123
+        login:
+          description: The integration user name
+          type: string
+          example: twitter
+        service_name:
+          description: The integration name
+          type: string
+          example: facebook
+        resource_type_link:
+          description: The link to the integration type
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/#integration
+        self_link:
+          description: The link to this resource
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/account/123/integrations/456
+    Integrations:
+      type: object
+      properties:
+        entries:
+          description: A list of integration entries
+          type: array
+          items:
+            $ref: '#/definitions/Integration'
+        next_collection_link:
+          description: A link to the next page of entries if more entries exist. This attribute is omitted
+            from the collection if there are no more entries.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/custom_fields?ws.start=0&ws.size=10
+        prev_collection_link:
+          description: A link to the previous page of entries if any exist. This attribute is omitted
+            from the collection if ws.start is 0.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/custom_fields?ws.start=0
+        resource_type_link:
+          description: A link that identifies the type of resource that this collection represents
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/#integrations-page-resource
+        start:
+          description: The starting offset for the page of entries to retrieve
+          type: integer
+          minimum: 0
+        total_size:
+          description: The total number of entries
+          type: integer
+          minimum: 0
+          example: 100
+  securitySchemes:
+    OAuth 2.0:
+      description: 'The following endpoints and scopes are used to authenticate.
+
+        '
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.aweber.com/oauth2/authorize
+          tokenUrl: https://auth.aweber.com/oauth2/token
+          refreshUrl: https://auth.aweber.com/oauth2/token
+          scopes:
+            account.read: '<br>
+
+              Access account information and associated integrations. <br>
+
+              <b>Required for the following endpoints:</b> get accounts, get account, get integrations,
+              get integration
+
+              '
+            landing-page.read: '<br>
+
+              Retrieve landing pages <br>
+
+              <b>Required for the following endpoints:</b> get landing pages, get landing page
+
+              '
+            list.read: '<br>
+
+              Retrieve lists, custom fields, tags, and sign up forms <br>
+
+              <b>Required for the following endpoints:</b> get list, get lists, find lists, get tags for
+              list, get custom fields, get custom field, get webforms for list, get split tests for list,
+              get split test components, get split test component, get webforms for account, get split
+              tests for account
+
+              '
+            list.write: '<br>
+
+              Create, edit, and delete custom fields <br>
+
+              <b>Required for the following endpoints:</b> add custom field, update custom field, delete
+              custom field
+
+              '
+            subscriber.read: '<br>
+
+              Retrieve subscribers and their activity <br>
+
+              <b>Required for the following endpoints:</b> get subscribers, get subscriber, get subscriber
+              activity, get subscribers for message, find subscribers for account, find subscribers for
+              list
+
+              '
+            subscriber.write: '<br>
+
+              Create, edit, delete, retrieve, search for, and move subscribers <br>
+
+              <b>Required for the following endpoints:</b> add subscriber, move subscriber, update subscriber,
+              delete subscriber
+
+              '
+            subscriber.read-extended: '<br>
+
+              Previously required to retrieve subscriber PII such as name, email, IP address, etc.  This
+              functionality was moved to the "subscriber.read" scope
+
+              '
+            email.read: '<br>
+
+              Retrieve email activity related to broadcasts and follow-ups <br>
+
+              <b>Required for the following endpoints:</b> get messages, get message, get broadcasts,
+              get broadcast, get message opens, get message open, get message tracked events, get message
+              tracked event, get total broadcasts, get campaigns, get campaign, find campaigns, get broadcast
+              statistics, get broadcast statistic
+
+              '
+            email.write: '<br>
+
+              Create and send email broadcasts <br>
+
+              <b>Required for the following endpoints:</b> create broadcast, update broadcast, delete
+              broadcast, cancel broadcast, schedule broadcast
+
+              '

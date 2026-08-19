@@ -1,0 +1,200 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AWeber Lists API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+      "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Lists",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get lists",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "ws.start",
+                "value": "",
+                "type": "query",
+                "description": "The pagination starting offset"
+              },
+              {
+                "name": "ws.size",
+                "value": "",
+                "type": "query",
+                "description": "The pagination total entries to retrieve"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to get a paginated collection of subscriber lists.\n\nCheck out related examples:\n\n  * Get Tags (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-tags\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-tags\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Tags.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a hr"
+        },
+        {
+          "info": {
+            "name": "Get list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to retrieve the information for a specific subscriber list.\n\nCheck out related examples:\n\n  * Get Tags (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-tags\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-tags\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Tags.postman_collection.json\" target=\"_blank\">Postman</a> |\n"
+        },
+        {
+          "info": {
+            "name": "Find lists",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists?ws.op=find",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "ws.op",
+                "value": "",
+                "type": "query",
+                "description": "The method name - expecting \"find\""
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Name or unique list ID of the list"
+              },
+              {
+                "name": "ws.start",
+                "value": "",
+                "type": "query",
+                "description": "The pagination starting offset"
+              },
+              {
+                "name": "ws.size",
+                "value": "",
+                "type": "query",
+                "description": "The pagination total entries to retrieve"
+              },
+              {
+                "name": "ws.show",
+                "value": "",
+                "type": "query",
+                "description": "A flag to show the total size only - expecting \\\"total_size\\\", when added the response will be an integer"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "This endpoint is used to search for lists when you do not have a link nor know the list ID.\n\nCheck out related examples:\n\n  * Get Tags (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-tags\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-tags\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Tags.postman_collection.json\" target=\"_blank\">Post"
+        },
+        {
+          "info": {
+            "name": "Get tags for list",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.aweber.com/1.0/accounts/:accountId/lists/:listId/tags",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The account ID"
+              },
+              {
+                "name": "listId",
+                "value": "",
+                "type": "path",
+                "description": "The list ID"
+              }
+            ],
+            "auth": {
+              "type": "oauth2",
+              "flow": "authorization_code",
+              "authorizationUrl": "https://auth.aweber.com/oauth2/authorize",
+              "accessTokenUrl": "https://auth.aweber.com/oauth2/token",
+              "credentials": {
+                "clientId": "{{clientId}}",
+                "clientSecret": "{{clientSecret}}"
+              }
+            }
+          },
+          "docs": "Get the most popular tags for a list.  This will return an array containing up to 500 tags sorted by descending popularity.\n\nCheck out related examples:\n\n  * Get Tags (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-tags\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-tags\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Tags.postman_colle"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

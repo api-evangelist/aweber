@@ -1,0 +1,246 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the AWeber API
+  version: 1.0.0
+extends: openapi/_original/aweber-api-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-note: AWeber publishes its OpenAPI 3.0.2 across 34 files at api.aweber.com; the bundled copy in openapi/_original/
+  is that spec with every external $ref resolved and nothing else changed. The published spec assigns
+  an operationId to exactly ONE of its 57 operations (getBroadcastLinksAnalytics), which leaves 56 operations
+  unaddressable by name — no SDK generator, MCP tool binding or Arazzo workflow can reference them. This
+  overlay records the operationIds API Evangelist derived deterministically from AWeber's own operation
+  summaries (e.g. summary "Get subscribers" -> getSubscribers) and applied to the refined per-tag specs
+  in openapi/. It is the complete diff between what AWeber ships and what this repo serves; reversing
+  it returns the provider document exactly. It also carries the catalog metadata added at info level.
+actions:
+- target: $.info
+  description: Record API Evangelist catalog provenance
+  update:
+    x-apievangelist-slug: aweber
+    x-apievangelist-source: https://api.aweber.com/swagger.yaml
+    x-apievangelist-harvested: '2026-08-13'
+- target: $.paths['/accounts/{accountId}?ws.op=getWebForms'].get
+  description: 'Add an operationId derived from the provider summary: Get webforms for account'
+  update:
+    operationId: getWebformsForAccount
+- target: $.paths['/accounts/{accountId}?ws.op=getWebFormSplitTests'].get
+  description: 'Add an operationId derived from the provider summary: Get split tests for account'
+  update:
+    operationId: getSplitTestsForAccount
+- target: $.paths['/accounts/{accountId}/lists/{listId}/web_forms'].get
+  description: 'Add an operationId derived from the provider summary: Get webforms for list'
+  update:
+    operationId: getWebformsForList
+- target: $.paths['/accounts/{accountId}/lists/{listId}/web_forms/{webformId}'].get
+  description: 'Add an operationId derived from the provider summary: Get webform for list'
+  update:
+    operationId: getWebformForList
+- target: $.paths['/accounts/{accountId}/lists/{listId}/web_form_split_tests'].get
+  description: 'Add an operationId derived from the provider summary: Get split tests for list'
+  update:
+    operationId: getSplitTestsForList
+- target: $.paths['/accounts/{accountId}/lists/{listId}/web_form_split_tests/{splitTestId}'].get
+  description: 'Add an operationId derived from the provider summary: Get split test for list'
+  update:
+    operationId: getSplitTestForList
+- target: $.paths['/accounts/{accountId}/lists/{listId}/web_form_split_tests/{splitTestId}/components'].get
+  description: 'Add an operationId derived from the provider summary: Get split test components'
+  update:
+    operationId: getSplitTestComponents
+- target: $.paths['/accounts/{accountId}/lists/{listId}/web_form_split_tests/{splitTestId}/components/{splitTestComponentId}'].get
+  description: 'Add an operationId derived from the provider summary: Get split test component'
+  update:
+    operationId: getSplitTestComponent
+- target: $.paths['/accounts/{accountId}/lists/{listId}/subscribers'].get
+  description: 'Add an operationId derived from the provider summary: Get subscribers'
+  update:
+    operationId: getSubscribers
+- target: $.paths['/accounts/{accountId}/lists/{listId}/subscribers'].post
+  description: 'Add an operationId derived from the provider summary: Add subscriber'
+  update:
+    operationId: addSubscriber
+- target: $.paths['/accounts/{accountId}/lists/{listId}/subscribers'].delete
+  description: 'Add an operationId derived from the provider summary: Delete subscriber by email'
+  update:
+    operationId: deleteSubscriberByEmail
+- target: $.paths['/accounts/{accountId}/lists/{listId}/subscribers'].patch
+  description: 'Add an operationId derived from the provider summary: Update subscriber by email'
+  update:
+    operationId: updateSubscriberByEmail
+- target: $.paths['/accounts/{accountId}/lists/{listId}/subscribers/{subscriberId}'].get
+  description: 'Add an operationId derived from the provider summary: Get subscriber'
+  update:
+    operationId: getSubscriber
+- target: $.paths['/accounts/{accountId}/lists/{listId}/subscribers/{subscriberId}'].post
+  description: 'Add an operationId derived from the provider summary: Move subscriber'
+  update:
+    operationId: moveSubscriber
+- target: $.paths['/accounts/{accountId}/lists/{listId}/subscribers/{subscriberId}'].delete
+  description: 'Add an operationId derived from the provider summary: Delete subscriber by ID'
+  update:
+    operationId: deleteSubscriberByID
+- target: $.paths['/accounts/{accountId}/lists/{listId}/subscribers/{subscriberId}'].patch
+  description: 'Add an operationId derived from the provider summary: Update subscriber by ID'
+  update:
+    operationId: updateSubscriberByID
+- target: $.paths['/accounts/{accountId}/lists/{listId}/subscribers?ws.op=find'].get
+  description: 'Add an operationId derived from the provider summary: Find subscribers for list'
+  update:
+    operationId: findSubscribersForList
+- target: $.paths['/accounts/{accountId}?ws.op=findSubscribers'].get
+  description: 'Add an operationId derived from the provider summary: Find subscribers for account'
+  update:
+    operationId: findSubscribersForAccount
+- target: $.paths['/accounts/{accountId}/lists/{listId}/subscribers/{subscriberId}?ws.op=getActivity'].get
+  description: 'Add an operationId derived from the provider summary: Get subscriber activity'
+  update:
+    operationId: getSubscriberActivity
+- target: $.paths['/accounts/{accountId}/lists/{listId}/purchases'].post
+  description: 'Add an operationId derived from the provider summary: Create a purchase'
+  update:
+    operationId: createAPurchase
+- target: $.paths['/accounts/{accountId}/integrations'].get
+  description: 'Add an operationId derived from the provider summary: Get integrations'
+  update:
+    operationId: getIntegrations
+- target: $.paths['/accounts/{accountId}/integrations/{integrationId}'].get
+  description: 'Add an operationId derived from the provider summary: Get integration'
+  update:
+    operationId: getIntegration
+- target: $.paths['/accounts/{accountId}/lists/{listId}/campaigns'].get
+  description: 'Add an operationId derived from the provider summary: Get campaigns'
+  update:
+    operationId: getCampaigns
+- target: $.paths['/accounts/{accountId}/lists/{listId}/campaigns/{campaignType}{campaignId}'].get
+  description: 'Add an operationId derived from the provider summary: Get campaign'
+  update:
+    operationId: getCampaign
+- target: $.paths['/accounts/{accountId}/lists/{listId}/campaigns?ws.op=find'].get
+  description: 'Add an operationId derived from the provider summary: Find campaigns'
+  update:
+    operationId: findCampaigns
+- target: $.paths['/accounts/{accountId}/lists/{listId}/campaigns/b{campaignId}/stats'].get
+  description: 'Add an operationId derived from the provider summary: Get broadcast statistics'
+  update:
+    operationId: getBroadcastStatistics
+- target: $.paths['/accounts/{accountId}/lists/{listId}/campaigns/b{campaignId}/stats/{statsId}'].get
+  description: 'Add an operationId derived from the provider summary: Get broadcast statistic'
+  update:
+    operationId: getBroadcastStatistic
+- target: $.paths['/accounts/{accountId}/lists/{listId}/segments'].get
+  description: 'Add an operationId derived from the provider summary: Get segments'
+  update:
+    operationId: getSegments
+- target: $.paths['/accounts/{accountId}/lists/{listId}/segments/{segmentId}'].get
+  description: 'Add an operationId derived from the provider summary: Get segment'
+  update:
+    operationId: getSegment
+- target: $.paths['/oauth/request_token'].post
+  description: 'Add an operationId derived from the provider summary: Get a request token'
+  update:
+    operationId: getARequestToken
+- target: $.paths['/oauth/access_token'].post
+  description: 'Add an operationId derived from the provider summary: Get an access token'
+  update:
+    operationId: getAnAccessToken
+- target: $.paths['/oauth2/token'].post
+  description: 'Add an operationId derived from the provider summary: Get a token'
+  update:
+    operationId: getAToken
+- target: $.paths['/oauth2/revoke'].post
+  description: 'Add an operationId derived from the provider summary: Revoke a token'
+  update:
+    operationId: revokeAToken
+- target: $.paths['/accounts/{accountId}/lists/{listId}/broadcasts'].get
+  description: 'Add an operationId derived from the provider summary: Get broadcasts'
+  update:
+    operationId: getBroadcasts
+- target: $.paths['/accounts/{accountId}/lists/{listId}/broadcasts'].post
+  description: 'Add an operationId derived from the provider summary: Create broadcast'
+  update:
+    operationId: createBroadcast
+- target: $.paths['/accounts/{accountId}/lists/{listId}/broadcasts/{broadcastId}'].get
+  description: 'Add an operationId derived from the provider summary: Get broadcast'
+  update:
+    operationId: getBroadcast
+- target: $.paths['/accounts/{accountId}/lists/{listId}/broadcasts/{broadcastId}'].put
+  description: 'Add an operationId derived from the provider summary: Update broadcast'
+  update:
+    operationId: updateBroadcast
+- target: $.paths['/accounts/{accountId}/lists/{listId}/broadcasts/{broadcastId}'].delete
+  description: 'Add an operationId derived from the provider summary: Delete broadcast'
+  update:
+    operationId: deleteBroadcast
+- target: $.paths['/accounts/{accountId}/lists/{listId}/broadcasts/{broadcastId}/cancel'].post
+  description: 'Add an operationId derived from the provider summary: Cancel scheduled broadcast'
+  update:
+    operationId: cancelScheduledBroadcast
+- target: $.paths['/accounts/{accountId}/lists/{listId}/broadcasts/total'].get
+  description: 'Add an operationId derived from the provider summary: Get total broadcasts'
+  update:
+    operationId: getTotalBroadcasts
+- target: $.paths['/accounts/{accountId}/lists/{listId}/broadcasts/{broadcastId}/schedule'].post
+  description: 'Add an operationId derived from the provider summary: Schedule broadcast'
+  update:
+    operationId: scheduleBroadcast
+- target: $.paths['/accounts/{accountId}/lists/{listId}/broadcasts/{broadcastId}/opens'].get
+  description: 'Add an operationId derived from the provider summary: Get broadcast opens'
+  update:
+    operationId: getBroadcastOpens
+- target: $.paths['/accounts/{accountId}/lists/{listId}/broadcasts/{broadcastId}/clicks'].get
+  description: 'Add an operationId derived from the provider summary: Get broadcast clicks'
+  update:
+    operationId: getBroadcastClicks
+- target: $.paths['/accounts/{accountId}/lists'].get
+  description: 'Add an operationId derived from the provider summary: Get lists'
+  update:
+    operationId: getLists
+- target: $.paths['/accounts/{accountId}/lists/{listId}'].get
+  description: 'Add an operationId derived from the provider summary: Get list'
+  update:
+    operationId: getList
+- target: $.paths['/accounts/{accountId}/lists?ws.op=find'].get
+  description: 'Add an operationId derived from the provider summary: Find lists'
+  update:
+    operationId: findLists
+- target: $.paths['/accounts/{accountId}/lists/{listId}/tags'].get
+  description: 'Add an operationId derived from the provider summary: Get tags for list'
+  update:
+    operationId: getTagsForList
+- target: $.paths['/accounts/{accountId}/lists/{listId}/custom_fields'].get
+  description: 'Add an operationId derived from the provider summary: Get custom fields'
+  update:
+    operationId: getCustomFields
+- target: $.paths['/accounts/{accountId}/lists/{listId}/custom_fields'].post
+  description: 'Add an operationId derived from the provider summary: Add custom field'
+  update:
+    operationId: addCustomField
+- target: $.paths['/accounts/{accountId}/lists/{listId}/custom_fields/{customFieldId}'].get
+  description: 'Add an operationId derived from the provider summary: Get custom field'
+  update:
+    operationId: getCustomField
+- target: $.paths['/accounts/{accountId}/lists/{listId}/custom_fields/{customFieldId}'].delete
+  description: 'Add an operationId derived from the provider summary: Delete custom field'
+  update:
+    operationId: deleteCustomField
+- target: $.paths['/accounts/{accountId}/lists/{listId}/custom_fields/{customFieldId}'].patch
+  description: 'Add an operationId derived from the provider summary: Update custom field'
+  update:
+    operationId: updateCustomField
+- target: $.paths['/accounts'].get
+  description: 'Add an operationId derived from the provider summary: Get accounts'
+  update:
+    operationId: getAccounts
+- target: $.paths['/accounts/{accountId}'].get
+  description: 'Add an operationId derived from the provider summary: Get account'
+  update:
+    operationId: getAccount
+- target: $.paths['/accounts/{accountId}/lists/{listId}/landing_pages'].get
+  description: 'Add an operationId derived from the provider summary: Get landing pages'
+  update:
+    operationId: getLandingPages
+- target: $.paths['/accounts/{accountId}/lists/{listId}/landing_pages/{landingPageId}'].get
+  description: 'Add an operationId derived from the provider summary: Get landing page'
+  update:
+    operationId: getLandingPage

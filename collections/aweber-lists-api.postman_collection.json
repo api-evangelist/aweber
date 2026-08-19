@@ -1,0 +1,2470 @@
+{
+  "item": [
+    {
+      "id": "e1bd5ada-255c-4d3e-9b62-3db3a0adb5fe",
+      "name": "Lists",
+      "description": {
+        "content": "### What is it?\n\nRepresents the individual subscriber lists within the AWeber Customer Account.\n\nUse this set of resources to retrieve the available lists and information about each list.  The\nlist collection response is sorted by the generated list `id` and paginated using `next_collection_link`\nand `prev_collection_link` properties. See [How Collections are Represented](#collection-representation)\nfor details on collection traversal.\n\n### Related endpoints\n\n* [Lists](#tag/Lists)\n* [Get custom fields for a list](#tag/Custom-Fields/paths/~1accounts~1{accountId}~1lists~1{listId}~1custom_fields/get)\n* [Add a custom field to a list](#tag/Custom-Fields/paths/~1accounts~1{accountId}~1lists~1{listId}~1custom_fields/post)\n* [Update a custom field on a list](#tag/Custom-Fields/paths/~1accounts~1{accountId}~1lists~1{listId}~1custom_fields~1{customFieldId}/patch)\n* [Remove a custom field from a list](#tag/Custom-Fields/paths/~1accounts~1{accountId}~1lists~1{listId}~1custom_fields~1{customFieldId}/delete)\n* [Get subscribers on a list](#tag/Subscribers/paths/~1accounts~1{accountId}~1lists~1{listId}~1subscribers/get)\n* [Add a subscriber to a list](#tag/Subscribers/paths/~1accounts~1{accountId}~1lists~1{listId}~1subscribers/post)\n* [Find subscribers on a list](#tag/Subscribers/paths/~1accounts~1{accountId}~1lists~1{listId}~1subscribers?ws.op=find/get)\n* [Get broadcasts on a list](#tag/Broadcasts/paths/~1accounts~1{accountId}~1lists~1{listId}~1broadcasts/get)\n\n### Related code examples\n\n* [Find a List and Get Tags](#tag/Find-a-List-and-Get-Tags)\n* [Manage a Subscriber on a List](#tag/Manage-a-Subscriber)\n* [Find Subscribers Across Lists](#tag/Find-Subscribers-Across-Lists)\n* [Move Subscriber to Another List](#tag/Move-Subscriber-to-Another-List)\n* [Get Webforms for a list](#tag/Get-Webforms-Detail)\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5e7e9859-0976-4445-aa32-1929374c3af1",
+          "name": "Get lists",
+          "request": {
+            "name": "Get lists",
+            "description": {
+              "content": "This endpoint is used to get a paginated collection of subscriber lists.\n\nCheck out related examples:\n\n  * Get Tags (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-tags\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-tags\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Tags.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetTags/\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_tags.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-tags.js\" target=\"_blank\">Node.js</a> )",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounts",
+                ":accountId",
+                "lists"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "ws.start",
+                  "value": "0",
+                  "description": "The pagination starting offset"
+                },
+                {
+                  "disabled": false,
+                  "key": "ws.size",
+                  "value": "100",
+                  "description": "The pagination total entries to retrieve"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "accountId",
+                  "description": "(Required) The account ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "account.read landing-page.read list.read list.write subscriber.read subscriber.write subscriber.read-extended email.read email.write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://auth.aweber.com/oauth2/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://auth.aweber.com/oauth2/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://auth.aweber.com/oauth2/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "93cee75f-5a73-4dd5-a037-a649013c00a0",
+              "name": "The request completed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entries\": [\n    {\n      \"value\": \"reference #/definitions/List not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/definitions/List not found in the OpenAPI spec\"\n    }\n  ],\n  \"next_collection_link\": \"https://api.aweber.com/1.0/accounts/123/lists?ws.start=0&ws.size=10\",\n  \"prev_collection_link\": \"https://api.aweber.com/1.0/accounts/123/lists?ws.start=0\",\n  \"resource_type_link\": \"https://api.aweber.com/1.0/#list-page-resource\",\n  \"start\": 8186,\n  \"total_size\": 100\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec5e013b-4457-4cdd-b9c9-a961d1806a9a",
+              "name": "The server cannot or will not process the request due to a client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#badrequest\",\n    \"message\": \"Maximum for \\\"ws.size\\\" parameter is 100.\",\n    \"status\": 400,\n    \"type\": \"WebServiceError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1c1e0d8f-51e4-4fc1-b4e9-6bb722b6b4e2",
+              "name": "The request could not be completed due to an authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"value\": \"reference #/schemas/Endpoint Error not found in the OpenAPI spec\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c768af2d-c56d-4e94-af88-6aa441c9c610",
+              "name": "The request could not be completed due to a rate limit error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#forbidden\",\n    \"message\": \"Rate Limit Error\",\n    \"status\": 403,\n    \"type\": \"ForbiddenError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0628747b-59e9-4895-832b-3d44e1e253b0",
+              "name": "The requested resource could not be found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#notfound\",\n    \"message\": \"Object: None, name: ''\",\n    \"status\": 404,\n    \"type\": \"NotFoundError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f6befcf-f378-434a-8c6a-bd01ac54fecf",
+              "name": "The request has been blocked",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com/#blocked\",\n    \"message\": \"Blocked Error\",\n    \"status\": 410,\n    \"type\": \"BlockedError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "59eb1b18-394e-4653-a7eb-c6399a25e148",
+              "name": "The request failed due to an internal error in the code or because of an external dependency failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#internalerror\",\n    \"message\": \"Something went wrong.\",\n    \"status\": 500,\n    \"type\": \"InternalServerError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "901222f7-cfe2-403d-a64a-92bcfdd0617d",
+              "name": "The server is currently unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#serviceunavailable\",\n    \"message\": \"Failed to communicate with endpoint\",\n    \"status\": 503,\n    \"type\": \"ServiceUnavailableError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0df70362-a557-4b75-b047-41f87331da75",
+          "name": "Get list",
+          "request": {
+            "name": "Get list",
+            "description": {
+              "content": "This endpoint is used to retrieve the information for a specific subscriber list.\n\nCheck out related examples:\n\n  * Get Tags (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-tags\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-tags\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Tags.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetTags/\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_tags.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-tags.js\" target=\"_blank\">Node.js</a> )",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounts",
+                ":accountId",
+                "lists",
+                ":listId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "accountId",
+                  "description": "(Required) The account ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "listId",
+                  "description": "(Required) The list ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "account.read landing-page.read list.read list.write subscriber.read subscriber.write subscriber.read-extended email.read email.write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://auth.aweber.com/oauth2/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://auth.aweber.com/oauth2/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://auth.aweber.com/oauth2/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4dba4e26-fa2d-4c08-a6fb-7380733af0a6",
+              "name": "The request completed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"campaigns_collection_link\": \"https://api.aweber.com/1.0/accounts/123/lists/456/campaigns\",\n  \"custom_fields_collection_link\": \"https://api.aweber.com/1.0/accounts/123/lists/456/custom_fields\",\n  \"draft_broadcasts_link\": \"https://api.aweber.com/1.0/accounts/123/lists/456/broadcasts?status=draft\",\n  \"scheduled_broadcasts_link\": \"https://api.aweber.com/1.0/accounts/123/lists/456/broadcasts?status=scheduled\",\n  \"sent_broadcasts_link\": \"https://api.aweber.com/1.0/accounts/123/lists/456/broadcasts?status=sent\",\n  \"http_etag\": \"\\\\\\\"902ba3cda1883801594b6e1b452790cc53948fda-f83cb0ac22a8d5f792417f9b3dc0e9dc7558aa32\\\\\\\"\",\n  \"id\": 456,\n  \"landing_pages_collection_link\": \"https://api.aweber.com/1.0/accounts/123/lists/456/landing_pages\",\n  \"name\": \"Weekly Newsletter\",\n  \"resource_type_link\": \"https://api.aweber.com/1.0/#list\",\n  \"segments_collection_link\": \"https://api.aweber.com/1.0/accounts/123/lists/456/segments\",\n  \"self_link\": \"https://api.aweber.com/1.0/accounts/123/lists/456\",\n  \"subscribers_collection_link\": \"https://api.aweber.com/1.0/accounts/123/lists/456/subscribers\",\n  \"total_subscribed_subscribers\": 250,\n  \"total_subscribers\": 275,\n  \"total_subscribers_subscribed_today\": 4,\n  \"total_subscribers_subscribed_yesterday\": 3,\n  \"total_unconfirmed_subscribers\": 10,\n  \"total_unsubscribed_subscribers\": 5,\n  \"unique_list_id\": \"awlist456\",\n  \"uuid\": \"123e4567-e89b-12d3-a456-426655440000\",\n  \"vapid_public_key\": \"BEJSWW8eHj_XKHt5AHpaL3tw0gee8NI2j06xyEIDmOfRGbHmqZVlwsvMO0yISFe834TaBEZRkbdHyTvSXhYCW6E\",\n  \"web_form_split_tests_collection_link\": \"https://api.aweber.com/1.0/accounts/123/lists/456/web_form_split_tests\",\n  \"web_forms_collection_link\": \"https://api.aweber.com/1.0/accounts/123/lists/456/web_forms\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0155672e-d991-45fc-a323-479c998b946d",
+              "name": "The server cannot or will not process the request due to a client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#badrequest\",\n    \"message\": \"Missing oauth parameters: oauth_consumer_key\",\n    \"status\": 400,\n    \"type\": \"MissingOAuthParametersError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb318fb2-cc50-424c-b4d5-82eb82defb8d",
+              "name": "The request could not be completed due to an authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"value\": \"reference #/schemas/Endpoint Error not found in the OpenAPI spec\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e64ca3e1-aedc-4ce4-bcd3-18b92ecfafd8",
+              "name": "The request could not be completed due to a rate limit error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#forbidden\",\n    \"message\": \"Rate Limit Error\",\n    \"status\": 403,\n    \"type\": \"ForbiddenError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f61e2d36-632f-4c62-b940-07b0a480789b",
+              "name": "The requested resource could not be found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#notfound\",\n    \"message\": \"Object: None, name: ''\",\n    \"status\": 404,\n    \"type\": \"NotFoundError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1680ae66-53c0-44be-adb7-32999c92938f",
+              "name": "The request has been blocked",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com/#blocked\",\n    \"message\": \"Blocked Error\",\n    \"status\": 410,\n    \"type\": \"BlockedError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e2b2b8e-e587-4764-8049-15709bca23e3",
+              "name": "The request failed due to an internal error in the code or because of an external dependency failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#internalerror\",\n    \"message\": \"Something went wrong.\",\n    \"status\": 500,\n    \"type\": \"InternalServerError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e28641f-ef1a-44c1-8c40-cd5d918c8098",
+              "name": "The server is currently unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#serviceunavailable\",\n    \"message\": \"Failed to communicate with endpoint\",\n    \"status\": 503,\n    \"type\": \"ServiceUnavailableError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5524b15c-e4fc-44b8-bc8c-2146f49dd87b",
+          "name": "Find lists",
+          "request": {
+            "name": "Find lists",
+            "description": {
+              "content": "This endpoint is used to search for lists when you do not have a link nor know the list ID.\n\nCheck out related examples:\n\n  * Get Tags (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-tags\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-tags\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Tags.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetTags/\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_tags.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-tags.js\" target=\"_blank\">Node.js</a> )",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounts",
+                ":accountId",
+                "lists"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "ws.op",
+                  "value": "find"
+                },
+                {
+                  "disabled": false,
+                  "key": "ws.op",
+                  "value": "<string>",
+                  "description": "(Required) The method name - expecting \"find\""
+                },
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "Name or unique list ID of the list"
+                },
+                {
+                  "disabled": false,
+                  "key": "ws.start",
+                  "value": "0",
+                  "description": "The pagination starting offset"
+                },
+                {
+                  "disabled": false,
+                  "key": "ws.size",
+                  "value": "100",
+                  "description": "The pagination total entries to retrieve"
+                },
+                {
+                  "disabled": false,
+                  "key": "ws.show",
+                  "value": "<string>",
+                  "description": "A flag to show the total size only - expecting \\\"total_size\\\", when added the response will be an integer"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "accountId",
+                  "description": "(Required) The account ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "account.read landing-page.read list.read list.write subscriber.read subscriber.write subscriber.read-extended email.read email.write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://auth.aweber.com/oauth2/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://auth.aweber.com/oauth2/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://auth.aweber.com/oauth2/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fc6b087a-a428-47a1-b422-bb55c035b3b8",
+              "name": "The request completed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.op",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "ws.show",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entries\": [\n    {\n      \"value\": \"reference #/definitions/List not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/definitions/List not found in the OpenAPI spec\"\n    }\n  ],\n  \"start\": 9861,\n  \"total_size_link\": \"https://api.aweber.com/1.0/accounts/123/lists?name=List+Name&ws.op=find&ws.show=total_size\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ae09145e-a5a3-42c1-864b-3650ce3fc64d",
+              "name": "The server cannot or will not process the request due to a client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.op",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "ws.show",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#badrequest\",\n    \"message\": \"Maximum for \\\"ws.size\\\" parameter is 100.\",\n    \"status\": 400,\n    \"type\": \"WebServiceError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a7ebffa-5aad-4e05-986e-b8fe095411ea",
+              "name": "The request could not be completed due to an authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.op",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "ws.show",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"value\": \"reference #/schemas/Endpoint Error not found in the OpenAPI spec\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e42e0300-2fa6-4f34-88c8-8ed9261048a3",
+              "name": "The request could not be completed due to a rate limit error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.op",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "ws.show",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#forbidden\",\n    \"message\": \"Rate Limit Error\",\n    \"status\": 403,\n    \"type\": \"ForbiddenError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c40dc86c-1cc2-4c1f-9334-c8d71a4b201d",
+              "name": "The requested resource could not be found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.op",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "ws.show",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#notfound\",\n    \"message\": \"Object: None, name: ''\",\n    \"status\": 404,\n    \"type\": \"NotFoundError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "58a9ee58-a983-4964-b6ea-f70fd366bc1d",
+              "name": "The request has been blocked",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.op",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "ws.show",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com/#blocked\",\n    \"message\": \"Blocked Error\",\n    \"status\": 410,\n    \"type\": \"BlockedError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e8e43e8-df12-48a9-ab26-1c6e25dae05c",
+              "name": "The request failed due to an internal error in the code or because of an external dependency failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.op",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "ws.show",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#internalerror\",\n    \"message\": \"Something went wrong.\",\n    \"status\": 500,\n    \"type\": \"InternalServerError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e7cda026-d744-4a66-a71a-f6435f8cfb41",
+              "name": "The server is currently unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.op",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "ws.show",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#serviceunavailable\",\n    \"message\": \"Failed to communicate with endpoint\",\n    \"status\": 503,\n    \"type\": \"ServiceUnavailableError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "55c50bf7-e3a7-46ed-b11f-7894fcb2de01",
+          "name": "Get tags for list",
+          "request": {
+            "name": "Get tags for list",
+            "description": {
+              "content": "Get the most popular tags for a list.  This will return an array containing up to 500 tags sorted by descending popularity.\n\nCheck out related examples:\n\n  * Get Tags (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-tags\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-tags\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Tags.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetTags/\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_tags.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-tags.js\" target=\"_blank\">Node.js</a> )",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounts",
+                ":accountId",
+                "lists",
+                ":listId",
+                "tags"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "accountId",
+                  "description": "(Required) The account ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "listId",
+                  "description": "(Required) The list ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "account.read landing-page.read list.read list.write subscriber.read subscriber.write subscriber.read-extended email.read email.write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://auth.aweber.com/oauth2/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://auth.aweber.com/oauth2/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://auth.aweber.com/oauth2/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "099971d8-888e-4fd4-82be-75f4b5b19c90",
+              "name": "The request completed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  \"alpha\",\n  \"beta\",\n  \"gamma\"\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a69a702e-cdc0-40cd-94df-2eb9ec9a83e1",
+              "name": "The server cannot or will not process the request due to a client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#badrequest\",\n    \"message\": \"Maximum for \\\"ws.size\\\" parameter is 100.\",\n    \"status\": 400,\n    \"type\": \"WebServiceError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf47bce5-c75c-4255-b024-2e02dc367ce3",
+              "name": "The request could not be completed due to an authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"value\": \"reference #/schemas/Endpoint Error not found in the OpenAPI spec\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b76e3d75-1fb4-4188-8768-97c8118d47b5",
+              "name": "The request could not be completed due to a rate limit error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#forbidden\",\n    \"message\": \"Rate Limit Error\",\n    \"status\": 403,\n    \"type\": \"ForbiddenError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "27cb1c1c-c6b3-4e55-852f-a3baf0cc3aa9",
+              "name": "The requested resource could not be found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#notfound\",\n    \"message\": \"Object: None, name: ''\",\n    \"status\": 404,\n    \"type\": \"NotFoundError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6c28d3ce-3da4-4c13-a22e-105968f64ee3",
+              "name": "The request has been blocked",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com/#blocked\",\n    \"message\": \"Blocked Error\",\n    \"status\": 410,\n    \"type\": \"BlockedError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d5939403-72ad-416d-afac-1fe67f46ac8f",
+              "name": "The request failed due to an internal error in the code or because of an external dependency failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#internalerror\",\n    \"message\": \"Something went wrong.\",\n    \"status\": 500,\n    \"type\": \"InternalServerError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b4f18cd1-d70a-451b-a443-e90a205c8f0c",
+              "name": "The server is currently unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "tags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#serviceunavailable\",\n    \"message\": \"Failed to communicate with endpoint\",\n    \"status\": 503,\n    \"type\": \"ServiceUnavailableError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.aweber.com/1.0",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "account.read landing-page.read list.read list.write subscriber.read subscriber.write subscriber.read-extended email.read email.write"
+      },
+      {
+        "key": "redirect_uri",
+        "value": "https://auth.aweber.com/oauth2/token"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://auth.aweber.com/oauth2/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://auth.aweber.com/oauth2/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "60d0d151-6521-449c-8b76-352eb8b21cfb",
+    "name": "AWeber Lists API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "We are constantly working to improve this documentation. If you have\nfeedback and questions, please contact the AWeber API team at\napi@aweber.com.\n\nThe AWeber API is a REST API that uses the OAuth 2.0 authentication model. We also offer webhooks.\n\nPlease see the below resources for further information:\n- <a href=\"https://labs.aweber.com/docs/tos\" target=\"_blank\">Terms of Service</a>\n- <a href=\"https://help.aweber.com/hc/en-us/articles/204031776\" target=\"_blank\">Showcasing an Integration</a>\n- <a href=\"https://help.aweber.com/hc/en-us/sections/360000617213-API\" target=\"_blank\">Knowledge Base</a>\n- <a href=\"https://status.aweber.com\" target=\"_blank\">API Status Page</a>\n\n\nContact Support:\n Name: AWeber API Team\n Email: api@aweber.com",
+      "type": "text/plain"
+    }
+  }
+}

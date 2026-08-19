@@ -1,30 +1,38 @@
 {
   "provider": "aweber",
+  "generated": "2026-08-13",
+  "method": "harvested+refined",
+  "source": "https://api.aweber.com/swagger.yaml",
+  "source_note": "AWeber publishes OpenAPI 3.0.2 across 34 files at api.aweber.com (swagger.yaml plus _tags/_paths/_parameters/_responses/_definitions and 12 per-resource path files, plus doc-only tag files). All were fetched and bundled into openapi/_original/aweber-api-openapi.yml with external $refs resolved and nothing else changed.",
   "sources": [
-    "aweber-accounts-api-openapi.yml",
-    "aweber-broadcasts-api-openapi.yml",
-    "aweber-campaigns-api-openapi.yml",
-    "aweber-custom-fields-api-openapi.yml",
-    "aweber-landing-pages-api-openapi.yml",
-    "aweber-lists-api-openapi.yml",
-    "aweber-segments-api-openapi.yml",
-    "aweber-subscribers-api-openapi.yml",
-    "aweber-web-forms-api-openapi.yml"
+    "https://api.aweber.com/swagger.yaml"
   ],
   "outputs": [
     "aweber-accounts-api-openapi.yml",
+    "aweber-authentication-api-openapi.yml",
+    "aweber-beta-api-openapi.yml",
     "aweber-broadcasts-api-openapi.yml",
     "aweber-campaigns-api-openapi.yml",
     "aweber-custom-fields-api-openapi.yml",
+    "aweber-integrations-api-openapi.yml",
     "aweber-landing-pages-api-openapi.yml",
     "aweber-lists-api-openapi.yml",
     "aweber-segments-api-openapi.yml",
     "aweber-subscribers-api-openapi.yml",
     "aweber-web-forms-api-openapi.yml"
   ],
-  "archived": [],
+  "paths": 45,
+  "operations": 57,
+  "archived": [
+    "openapi/_original/aweber-openapi.yml"
+  ],
   "errors": [],
-  "warnings": [],
-  "notes": [],
+  "warnings": [
+    "The published spec assigns an operationId to only 1 of 57 operations; the refined per-tag specs carry operationIds derived from AWeber's own summaries, recorded in overlays/aweber-api-overlay.yaml.",
+    "Several published path keys carry a query string (?ws.op=find, ?ws.op=getActivity) - AWeber's named-operation convention, preserved verbatim."
+  ],
+  "notes": [
+    "Replaced a prior best-effort scaffold spec (18 fabricated operations, including a /accounts/{accountId}/landing_pages path that does not exist) with the provider's real published contract."
+  ],
   "skipped": []
 }

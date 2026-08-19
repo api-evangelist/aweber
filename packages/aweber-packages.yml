@@ -1,0 +1,98 @@
+generated: '2026-08-13'
+method: searched
+source: >-
+  Registry metadata read live from pypi.org, packagist.org and rubygems.org, plus the
+  AWeber developer documentation code-samples section at https://api.aweber.com/#tag/Introduction
+  and the aweber GitHub organization repo listing.
+note: >-
+  AWeber's three first-party client libraries (Python, PHP, Ruby) are all published and all
+  ARCHIVED. Each GitHub repository is marked archived with a description beginning "DEPRECATED",
+  and the newest release across all three registries is the PHP package from 2017. AWeber's
+  current developer guidance points at the language-agnostic code-samples repository
+  (aweber/public-api-examples) rather than at a maintained SDK. There is no first-party
+  JavaScript/Node, .NET, Java or Go client on any registry; the npm packages that carry the
+  AWeber name are third-party. Recorded as-is: the SDK decay is the finding.
+packages:
+  - language: php
+    registry: packagist
+    name: aweber/aweber
+    url: https://packagist.org/packages/aweber/aweber
+    install: composer require aweber/aweber
+    official: true
+    version: v1.1.18
+    published: '2017-09-13'
+    source_code: https://github.com/aweber/AWeber-API-PHP-Library
+    status: deprecated
+    note: >-
+      Registry description reads "The official AWeber API client library." The backing GitHub
+      repository is archived and titled "DEPRECATED - PHP Library to easily integrate with
+      AWeber's API" (last push 2019-08-28).
+  - language: python
+    registry: pypi
+    name: aweber_api
+    url: https://pypi.org/project/aweber_api/
+    install: pip install aweber_api
+    official: true
+    version: 1.4.0
+    published: '2015-01-22'
+    source_code: https://github.com/aweber/AWeber-API-Python-Library
+    status: deprecated
+    note: >-
+      Author "AWeber API Team". Repository archived and titled "DEPRECATED - Python Library to
+      easily integrate with AWeber's API". Predates the OAuth 2.0 API this pipeline profiles —
+      the library was written against the OAuth 1.0a era of the same 1.0 API.
+  - language: ruby
+    registry: rubygems
+    name: aweber
+    url: https://rubygems.org/gems/aweber
+    install: gem install aweber
+    official: true
+    version: 1.6.1
+    published: '2013-02-25'
+    source_code: https://github.com/aweber/AWeber-API-Ruby-Library
+    status: deprecated
+    note: >-
+      Authors "AWeber Communications, Inc." Repository archived and titled "DEPRECATED - Ruby
+      interface to AWeber's API".
+  - language: javascript
+    registry: npm
+    name: '@aweber/aw-grid'
+    url: https://www.npmjs.com/package/@aweber/aw-grid
+    official: true
+    version: 1.2.0
+    published: '2018-04-24'
+    source_code: https://github.com/aweber/aw-grid
+    status: unmaintained
+    note: >-
+      Published under AWeber's own npm scope but it is a CSS flexbox grid, NOT an API client.
+      Listed for completeness of the first-party registry footprint, not as an SDK.
+code_samples:
+  repository: https://github.com/aweber/public-api-examples
+  languages: [php, python, csharp, ruby, nodejs, postman]
+  note: >-
+    AWeber's current substitute for maintained SDKs. Sixteen worked examples (manage subscriber,
+    create+schedule broadcast, create purchase, manage custom fields, find subscribers across
+    lists, move subscriber, broadcast details/stats/opens/clicks, webforms detail, integrations,
+    segments, landing pages, get tags). Every example is also embedded in the OpenAPI as
+    x-codeSamples. Last push 2023-01-18.
+absent:
+  - registry: npm
+    checked: '2026-08-13'
+    result: >-
+      No first-party AWeber API client. Registry search returns only third-party wrappers
+      (aweber@1.0.1 by Vikash Dahiya, aweber-api-nodejs, api-aweber, passport-aweber,
+      @pipedream/aweber). AWeber's own Node.js support is example code in public-api-examples.
+  - registry: nuget
+    checked: '2026-08-13'
+    result: >-
+      No first-party package. Search returns Rsft.Lib.EmailListManagement.Aweber by Rolosoft Ltd
+      (third party). AWeber ships C#.NET examples in public-api-examples instead.
+  - registry: maven-central
+    checked: '2026-08-13'
+    result: No first-party Java client published.
+  - registry: crates.io
+    checked: '2026-08-13'
+    result: No first-party Rust client published.
+  - registry: pkg.go.dev
+    checked: '2026-08-13'
+    result: No first-party Go client published.

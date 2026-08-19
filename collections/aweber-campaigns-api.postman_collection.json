@@ -1,0 +1,3437 @@
+{
+  "item": [
+    {
+      "id": "f87c42ae-9a1e-4934-af1e-5494602a909d",
+      "name": "Campaigns",
+      "description": {
+        "content": "### What is it?\n\nRepresents followup and broadcast messages associated with a list.\n\n**The Campaigns email automation platform within the AWeber web platform is not\ncurrently supported by the AWeber API.**\n\nUse this set of resources to retrieve information and statistics for messages on a list by type\nof message (e.g., *followup* or *broadcast*).  The collection responses are sorted based on\nmessage type and paginated using `next_collection_link` and `prev_collection_link` properties.\nSee [How Collections are Represented](#collection-representation) for details on collection\ntraversal and the individual endpoints for sorting characteristics.\n\n### Related endpoints\n\n* [Campaigns](#tag/Campaigns)\n\n### Related code samples\n\n* [Get Broadcast Statistics](#tag/Get-Broadcast-Statistics)\n* [Get Subscribers Who Opened or Clicked a Broadcast](#tag/Get-Subscribers-Who-Opened-or-Clicked-a-Broadcast)\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "34b46232-cc88-4ea4-a6d2-75d45bfc8a09",
+          "name": "Get campaigns",
+          "request": {
+            "name": "Get campaigns",
+            "description": {
+              "content": "The collection of followup (\"f\") or broadcast (\"b\") campaigns for the list. The collection is ordered with followups messages followed by broadcast messages.  The followup messages are sorted by `id` ascending and the broadcast messages are sorted by `sent_at` descending.\n\nCheck out related examples:\n\n  * Get Clicks (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-clicks\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-clicks\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Clicks.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetClicks\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_clicks.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-clicks.js\" target=\"_blank\">Node.js</a> )\n  * Get Broadcast Opens and Clicks (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-broadcast-opens-clicks\" target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-broadcast-opens-clicks\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetBroadcastOpensClicks\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_broadcast_opens_clicks.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-broadcast-opens-clicks.js\" target=\"_blank\">Node.js</a> )\n  * Get Broadcast Statistics (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-broadcast-stats\" target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-broadcast-stats\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetBroadcastStats\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_broadcast_stats.rb\" target=\"_blank\">Ruby</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-broadcast-stats.js\" target=\"_blank\">Node.js</a> )",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounts",
+                ":accountId",
+                "lists",
+                ":listId",
+                "campaigns"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "ws.start",
+                  "value": "0",
+                  "description": "The pagination starting offset"
+                },
+                {
+                  "disabled": false,
+                  "key": "ws.size",
+                  "value": "100",
+                  "description": "The pagination total entries to retrieve"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "accountId",
+                  "description": "(Required) The account ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "listId",
+                  "description": "(Required) The list ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "account.read landing-page.read list.read list.write subscriber.read subscriber.write subscriber.read-extended email.read email.write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://auth.aweber.com/oauth2/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://auth.aweber.com/oauth2/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://auth.aweber.com/oauth2/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6861e9e5-d95d-4f3f-9370-b8753236d798",
+              "name": "The request completed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entries\": [\n    {\n      \"value\": \"reference #/definitions/Campaign not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/definitions/Campaign not found in the OpenAPI spec\"\n    }\n  ],\n  \"next_collection_link\": \"https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?ws.start=101&ws.size=100\",\n  \"prev_collection_link\": \"https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?ws.start=0&ws.size=100\",\n  \"start\": 2442,\n  \"total_size\": 6752\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6ae5449e-8e00-4752-b3e9-04c717d6d643",
+              "name": "The server cannot or will not process the request due to a client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#badrequest\",\n    \"message\": \"Maximum for \\\"ws.size\\\" parameter is 100.\",\n    \"status\": 400,\n    \"type\": \"BadRequestError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc30c411-f69c-4a13-aa24-84d2cfe7f986",
+              "name": "The request could not be completed due to an authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"value\": \"reference #/schemas/Endpoint Error not found in the OpenAPI spec\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ad6db2e-1656-4947-8b09-c92a402e9f17",
+              "name": "The request could not be completed due to a rate limit error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#forbidden\",\n    \"message\": \"Rate Limit Error\",\n    \"status\": 403,\n    \"type\": \"ForbiddenError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d8542953-f732-471c-9ede-d8624975d6bc",
+              "name": "The requested resource could not be found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#notfound\",\n    \"message\": \"Object: None, name: ''\",\n    \"status\": 404,\n    \"type\": \"NotFoundError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "66f671f8-b3aa-4d08-865e-2b390cde34dd",
+              "name": "The request has been blocked",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com/#blocked\",\n    \"message\": \"Blocked Error\",\n    \"status\": 410,\n    \"type\": \"BlockedError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3748056c-0bb8-42ff-a316-00d6c5d2bc07",
+              "name": "The request failed due to an internal error in the code or because of an external dependency failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#internalerror\",\n    \"message\": \"Something went wrong.\",\n    \"status\": 500,\n    \"type\": \"InternalServerError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "837552ac-a2e1-4643-924b-025079a0e394",
+              "name": "The server is currently unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#serviceunavailable\",\n    \"message\": \"Failed to communicate with endpoint\",\n    \"status\": 503,\n    \"type\": \"ServiceUnavailableError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "df8b5c7c-0926-4b53-88b1-ff886a137c1c",
+          "name": "Get campaign",
+          "request": {
+            "name": "Get campaign",
+            "description": {
+              "content": "A followup or broadcast campaign\n\nCheck out related examples:\n\n  * Get Clicks (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-clicks\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-clicks\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Clicks.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetClicks\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_clicks.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-clicks.js\" target=\"_blank\">Node.js</a> )\n  * Get Broadcast Opens and Clicks (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-broadcast-opens-clicks\" target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-broadcast-opens-clicks\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetBroadcastOpensClicks\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_broadcast_opens_clicks.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-broadcast-opens-clicks.js\" target=\"_blank\">Node.js</a> )\n  * Get Broadcast Statistics (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-broadcast-stats\" target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-broadcast-stats\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetBroadcastStats\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_broadcast_stats.rb\" target=\"_blank\">Ruby</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-broadcast-stats.js\" target=\"_blank\">Node.js</a> )",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounts",
+                ":accountId",
+                "lists",
+                ":listId",
+                "campaigns",
+                "{{campaignType}}{{campaignId}}"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "accountId",
+                  "description": "(Required) The account ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "listId",
+                  "description": "(Required) The list ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "account.read landing-page.read list.read list.write subscriber.read subscriber.write subscriber.read-extended email.read email.write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://auth.aweber.com/oauth2/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://auth.aweber.com/oauth2/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://auth.aweber.com/oauth2/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a0dee354-46ad-4ce4-8466-e5e770236b75",
+              "name": "The request completed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns",
+                    "{{campaignType}}{{campaignId}}"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"campaign_type\": \"b\",\n  \"click_tracking_enabled\": false,\n  \"content_type\": \"HTML\",\n  \"id\": 1234567,\n  \"is_archived\": true,\n  \"links_collection_link\": \"https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b3456789/links\",\n  \"message_interval\": 788,\n  \"message_number\": 803,\n  \"resource_type_link\": \"https://api.aweber.com/1.0/#broadcast_campaign\",\n  \"scheduled_at\": \"2017-07-18 16:53:02-04:00\",\n  \"self_link\": \"https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b3456789\",\n  \"sent_at\": \"2017-07-18 16:53:07-04:00\",\n  \"spam_assassin_score\": 2.1,\n  \"stats_collection_link\": \"https://api.aweber.com/1.0/accounts/accounts/123/lists/456/campaigns/b3456789/stats\",\n  \"subject\": \"Weekly Recipes\",\n  \"total_clicks\": 7231,\n  \"total_opens\": 2088,\n  \"total_sent\": 2190,\n  \"total_spam_complaints\": 5306,\n  \"total_undelivered\": 701,\n  \"total_unsubscribes\": 3889,\n  \"twitter_account_link\": \"https://api.aweber.com/1.0/account/123/integrations/456\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec61e790-dcda-43e9-9de0-414d478c9bef",
+              "name": "The server cannot or will not process the request due to a client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns",
+                    "{{campaignType}}{{campaignId}}"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#badrequest\",\n    \"message\": \"Maximum for \\\"ws.size\\\" parameter is 100.\",\n    \"status\": 400,\n    \"type\": \"BadRequestError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f52c1b1b-0b6c-4d0c-b058-f90537dca569",
+              "name": "The request could not be completed due to an authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns",
+                    "{{campaignType}}{{campaignId}}"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"value\": \"reference #/schemas/Endpoint Error not found in the OpenAPI spec\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f774f600-d0a3-4e33-a8ef-9c9d207a1024",
+              "name": "The request could not be completed due to a rate limit error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns",
+                    "{{campaignType}}{{campaignId}}"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#forbidden\",\n    \"message\": \"Rate Limit Error\",\n    \"status\": 403,\n    \"type\": \"ForbiddenError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ccab625-f9a0-45c1-8c41-d716932c4c3d",
+              "name": "The requested resource could not be found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns",
+                    "{{campaignType}}{{campaignId}}"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#notfound\",\n    \"message\": \"Object: None, name: ''\",\n    \"status\": 404,\n    \"type\": \"NotFoundError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6623954b-43bf-4a16-b6d1-eb3471686ee8",
+              "name": "The request has been blocked",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns",
+                    "{{campaignType}}{{campaignId}}"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com/#blocked\",\n    \"message\": \"Blocked Error\",\n    \"status\": 410,\n    \"type\": \"BlockedError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6a088463-79d4-41bd-82cb-e531e5c232f8",
+              "name": "The request failed due to an internal error in the code or because of an external dependency failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns",
+                    "{{campaignType}}{{campaignId}}"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#internalerror\",\n    \"message\": \"Something went wrong.\",\n    \"status\": 500,\n    \"type\": \"InternalServerError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4798236a-227b-42bd-a047-ad0f1c69bbcd",
+              "name": "The server is currently unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns",
+                    "{{campaignType}}{{campaignId}}"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#serviceunavailable\",\n    \"message\": \"Failed to communicate with endpoint\",\n    \"status\": 503,\n    \"type\": \"ServiceUnavailableError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f18ff6ef-e5a0-433a-9515-e18724ffbaa5",
+          "name": "Find campaigns",
+          "request": {
+            "name": "Find campaigns",
+            "description": {
+              "content": "Find a collection of either followup(\"f\") or broadcast(\"b\") Campaigns. The collection is ordered with followups messages followed by broadcast messages.  The followup messages are sorted by `id` ascending and the broadcast messages are sorted by `sent_at` descending.\n\nCheck out related examples:\n\n  * Get Clicks (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-clicks\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-clicks\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Clicks.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetClicks\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_clicks.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-clicks.js\" target=\"_blank\">Node.js</a> )\n  * Get Broadcast Opens and Clicks (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-broadcast-opens-clicks\" target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-broadcast-opens-clicks\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetBroadcastOpensClicks\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_broadcast_opens_clicks.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-broadcast-opens-clicks.js\" target=\"_blank\">Node.js</a> )\n  * Get Broadcast Statistics (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-broadcast-stats\" target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-broadcast-stats\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetBroadcastStats\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_broadcast_stats.rb\" target=\"_blank\">Ruby</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-broadcast-stats.js\" target=\"_blank\">Node.js</a> )",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounts",
+                ":accountId",
+                "lists",
+                ":listId",
+                "campaigns"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "key": "ws.op",
+                  "value": "find"
+                },
+                {
+                  "disabled": false,
+                  "key": "ws.op",
+                  "value": "<string>",
+                  "description": "The method name - expecting \"find\""
+                },
+                {
+                  "disabled": false,
+                  "key": "campaign_type",
+                  "value": "<string>",
+                  "description": "(Required) The campaign type (b - broadcast, f - followup)"
+                },
+                {
+                  "disabled": false,
+                  "key": "ws.start",
+                  "value": "0",
+                  "description": "The pagination starting offset"
+                },
+                {
+                  "disabled": false,
+                  "key": "ws.size",
+                  "value": "100",
+                  "description": "The pagination total entries to retrieve"
+                },
+                {
+                  "disabled": false,
+                  "key": "ws.show",
+                  "value": "<string>",
+                  "description": "A flag to show the total size only - expecting \\\"total_size\\\", when added the response will be an integer"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "accountId",
+                  "description": "(Required) The account ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "listId",
+                  "description": "(Required) The list ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "account.read landing-page.read list.read list.write subscriber.read subscriber.write subscriber.read-extended email.read email.write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://auth.aweber.com/oauth2/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://auth.aweber.com/oauth2/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://auth.aweber.com/oauth2/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f901e5d5-40fa-44d9-8e3b-b099110ac893",
+              "name": "The request completed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.op",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "campaign_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "ws.show",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entries\": [\n    {\n      \"value\": \"reference #/definitions/Campaign not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/definitions/Campaign not found in the OpenAPI spec\"\n    }\n  ],\n  \"next_collection_link\": \"https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?ws.start=101&ws.size=100\",\n  \"prev_collection_link\": \"https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?ws.start=0&ws.size=100\",\n  \"start\": 21,\n  \"total_size_link\": \"https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?campaign_type=b&ws.op=find&ws.show=total_size\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ee520098-ba09-4b63-8691-73df2eda9968",
+              "name": "The server cannot or will not process the request due to a client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.op",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "campaign_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "ws.show",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#badrequest\",\n    \"message\": \"Missing oauth parameters: oauth_consumer_key\",\n    \"status\": 400,\n    \"type\": \"BadRequestError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f3af5395-2af1-4b91-b80d-912be3b4769b",
+              "name": "The request could not be completed due to an authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.op",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "campaign_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "ws.show",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"value\": \"reference #/schemas/Endpoint Error not found in the OpenAPI spec\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "929f2742-f16a-4153-828a-555db4db8354",
+              "name": "The request could not be completed due to a rate limit error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.op",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "campaign_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "ws.show",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#forbidden\",\n    \"message\": \"Rate Limit Error\",\n    \"status\": 403,\n    \"type\": \"ForbiddenError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3508119a-8502-46af-a23b-1d0ed618b1e0",
+              "name": "The requested resource could not be found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.op",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "campaign_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "ws.show",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#notfound\",\n    \"message\": \"Object: None, name: ''\",\n    \"status\": 404,\n    \"type\": \"NotFoundError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c6fd54d1-fddd-4109-a039-8922b936532d",
+              "name": "The request has been blocked",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.op",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "campaign_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "ws.show",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com/#blocked\",\n    \"message\": \"Blocked Error\",\n    \"status\": 410,\n    \"type\": \"BlockedError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ae7dcdc-ba65-462b-bf59-8848e9b31146",
+              "name": "The request failed due to an internal error in the code or because of an external dependency failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.op",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "campaign_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "ws.show",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#internalerror\",\n    \"message\": \"Something went wrong.\",\n    \"status\": 500,\n    \"type\": \"InternalServerError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2eb6a4fc-ec51-4893-b628-10b65f9b560b",
+              "name": "The server is currently unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.op",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "campaign_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    },
+                    {
+                      "key": "ws.show",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#serviceunavailable\",\n    \"message\": \"Failed to communicate with endpoint\",\n    \"status\": 503,\n    \"type\": \"ServiceUnavailableError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a56f8da9-723f-436c-8351-203c17e70408",
+          "name": "Get broadcast statistics",
+          "request": {
+            "name": "Get broadcast statistics",
+            "description": {
+              "content": "A paginated collection of statistics for a broadcast campaign message\nsorted by \"statistics ID\"\n\n\nCheck out related examples:\n\n  * Get Clicks (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-clicks\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-clicks\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Clicks.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetClicks\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_clicks.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-clicks.js\" target=\"_blank\">Node.js</a> )\n  * Get Broadcast Opens and Clicks (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-broadcast-opens-clicks\" target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-broadcast-opens-clicks\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetBroadcastOpensClicks\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_broadcast_opens_clicks.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-broadcast-opens-clicks.js\" target=\"_blank\">Node.js</a> )\n  * Get Broadcast Statistics (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-broadcast-stats\" target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-broadcast-stats\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetBroadcastStats\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_broadcast_stats.rb\" target=\"_blank\">Ruby</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-broadcast-stats.js\" target=\"_blank\">Node.js</a> )\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounts",
+                ":accountId",
+                "lists",
+                ":listId",
+                "campaigns",
+                "b{{campaignId}}",
+                "stats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "ws.start",
+                  "value": "0",
+                  "description": "The pagination starting offset"
+                },
+                {
+                  "disabled": false,
+                  "key": "ws.size",
+                  "value": "100",
+                  "description": "The pagination total entries to retrieve"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "accountId",
+                  "description": "(Required) The account ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "listId",
+                  "description": "(Required) The list ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "account.read landing-page.read list.read list.write subscriber.read subscriber.write subscriber.read-extended email.read email.write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://auth.aweber.com/oauth2/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://auth.aweber.com/oauth2/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://auth.aweber.com/oauth2/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "77d3e609-2257-4612-9398-45b8ec95e770",
+              "name": "The request completed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns",
+                    "b{{campaignId}}",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"entries\": [\n    {\n      \"value\": \"reference #/definitions/Stat not found in the OpenAPI spec\"\n    },\n    {\n      \"value\": \"reference #/definitions/Stat not found in the OpenAPI spec\"\n    }\n  ],\n  \"next_collection_link\": \"https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/stats?ws.start=2&ws.size=1\",\n  \"prev_collection_link\": \"https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/stats?ws.start=0&ws.size=1\",\n  \"resource_type_link\": \"https://api.aweber.com/1.0/#stat-page-resource\",\n  \"start\": 1,\n  \"total_size\": 10\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "22dbb1ad-f4b7-42a2-9d1f-5f8e36338925",
+              "name": "The server cannot or will not process the request due to a client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns",
+                    "b{{campaignId}}",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#badrequest\",\n    \"message\": \"Maximum for \\\"ws.size\\\" parameter is 100.\",\n    \"status\": 400,\n    \"type\": \"BadRequestError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "358ab1ce-75e9-48cb-b568-d9a54968bf9b",
+              "name": "The request could not be completed due to an authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns",
+                    "b{{campaignId}}",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"value\": \"reference #/schemas/Endpoint Error not found in the OpenAPI spec\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4953eca1-8e67-4db4-94b6-4b40ff4eec15",
+              "name": "The request could not be completed due to a rate limit error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns",
+                    "b{{campaignId}}",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#forbidden\",\n    \"message\": \"Rate Limit Error\",\n    \"status\": 403,\n    \"type\": \"ForbiddenError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d053cd04-422a-4b7b-b707-eb87121e0b55",
+              "name": "The requested resource could not be found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns",
+                    "b{{campaignId}}",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#notfound\",\n    \"message\": \"Object: None, name: ''\",\n    \"status\": 404,\n    \"type\": \"NotFoundError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2856c533-1533-4f4f-8d1c-bf6f6b1e297c",
+              "name": "The request has been blocked",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns",
+                    "b{{campaignId}}",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com/#blocked\",\n    \"message\": \"Blocked Error\",\n    \"status\": 410,\n    \"type\": \"BlockedError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "88f38e3f-70d8-43c5-8667-717584a8a937",
+              "name": "The request failed due to an internal error in the code or because of an external dependency failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns",
+                    "b{{campaignId}}",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#internalerror\",\n    \"message\": \"Something went wrong.\",\n    \"status\": 500,\n    \"type\": \"InternalServerError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e85586a4-8871-4ffd-b1fa-ab6f161af79f",
+              "name": "The server is currently unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns",
+                    "b{{campaignId}}",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ws.start",
+                      "value": "0"
+                    },
+                    {
+                      "key": "ws.size",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#serviceunavailable\",\n    \"message\": \"Failed to communicate with endpoint\",\n    \"status\": 503,\n    \"type\": \"ServiceUnavailableError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2b325d69-32a2-4a4d-945a-8fb2a4525393",
+          "name": "Get broadcast statistic",
+          "request": {
+            "name": "Get broadcast statistic",
+            "description": {
+              "content": "A statistic for a broadcast campaign message\n\nCheck out related examples:\n\n  * Get Clicks (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-clicks\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-clicks\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Clicks.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetClicks\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_clicks.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-clicks.js\" target=\"_blank\">Node.js</a> )\n  * Get Broadcast Opens and Clicks (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-broadcast-opens-clicks\" target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-broadcast-opens-clicks\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetBroadcastOpensClicks\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_broadcast_opens_clicks.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-broadcast-opens-clicks.js\" target=\"_blank\">Node.js</a> )\n  * Get Broadcast Statistics (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-broadcast-stats\" target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-broadcast-stats\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetBroadcastStats\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_broadcast_stats.rb\" target=\"_blank\">Ruby</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-broadcast-stats.js\" target=\"_blank\">Node.js</a> )",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounts",
+                ":accountId",
+                "lists",
+                ":listId",
+                "campaigns",
+                "b{{campaignId}}",
+                "stats",
+                ":statsId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "accountId",
+                  "description": "(Required) The account ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "listId",
+                  "description": "(Required) The list ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "statsId",
+                  "description": "(Required) <br>\n\n>The statistic's ID.\n>\n>The datatype of the ID may be different for each Stat.\n>\n>Below is a list of the statistic IDs that can be passed in.\n>\n>__Aggregate Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| total_clicks | Total number of times a subscriber clicked any link appearing in your campaign except the unsubscribe link (includes multiple clicks of the same link) |\n>| unique_clicks | Total number of subscribers who clicked any link in your campaign |\n>| total_opens | Total number of times your campaign was opened by any subscriber your campaign was sent to (including multiple opens by the same subscriber) |\n>| unique_opens | Total number of subscribers who opened your campaign |\n>| total_sales | Total number of sales made by subscribers who received your campaign |\n>| total_sales_dollars | Total monetary value of sales made by subscribers who received your campaign |\n>| total_unsubscribed | Total number of subscribers who unsubscribed by clicking the unsubscribe link in your campaign |\n>\n>__Time Related Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| hourly_clicks | Hourly breakdown of unique and total clicks for the first 24 hours after a campaign was sent |\n>| hourly_opens | Hourly breakdown of unique and total opens for the first 24 hours after a campaign was sent |\n>| hourly_sales | Hourly breakdown of sales for the first 24 hours after a campaign was sent |\n>| hourly_unsubscribed | Hourly breakdown of subscribers who unsubscribed by clicking the unsubscribed link for the first 24 hours after a campaign was sent |\n>| hourly_webhits | Hourly breakdown of webhits to your website from subscribers sent this message for the first 24 hours after a campaign was sent |\n>| daily_clicks | Daily breakdown of unique and total clicks for the first 14 days after a campaign was sent |\n>| daily_opens | Daily breakdown of unique and total opens for the first 14 days after a campaign was sent |\n>| daily_sales | Daily breakdown of sales for the first 14 days after a campaign was sent |\n>| daily_unsubscribed | Daily breakdown of subscribers who unsuscribed by clicking the unsubscribed link for the first 14 days after a campaign was sent |\n>| daily_webhits | Daily breakdown of webhits to your website from subscribers sent this message for the first 14 days after a campaign was sent |\n>\n>__Top 10 URL Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| clicks_by_link | Top 10 links that were clicked (ranked by total_clicked) |\n>| webhits_by_link | Top 10 webhits by click (ranked by total clicks) |\n>\n>__Top 10 Subscriber Statistics__\n>(Requires access to subscriber data)\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| opens_by_subscriber | Top 10 subscribers that opened your message (ranked by total opens) |\n>| sales_by_subscriber | Top 10 subscribers that made a sale from your message (ranked by total sales dollars) |\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "key": "scope",
+                  "value": "account.read landing-page.read list.read list.write subscriber.read subscriber.write subscriber.read-extended email.read email.write"
+                },
+                {
+                  "key": "redirect_uri",
+                  "value": "https://auth.aweber.com/oauth2/token"
+                },
+                {
+                  "key": "accessTokenUrl",
+                  "value": "https://auth.aweber.com/oauth2/token"
+                },
+                {
+                  "key": "authUrl",
+                  "value": "https://auth.aweber.com/oauth2/authorize"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "authorization_code"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "edc3eb92-d0bf-4194-bbf4-a1718cf3020f",
+              "name": "The request completed successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns",
+                    "b{{campaignId}}",
+                    "stats",
+                    ":statsId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statsId",
+                      "description": "(Required) <br>\n\n>The statistic's ID.\n>\n>The datatype of the ID may be different for each Stat.\n>\n>Below is a list of the statistic IDs that can be passed in.\n>\n>__Aggregate Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| total_clicks | Total number of times a subscriber clicked any link appearing in your campaign except the unsubscribe link (includes multiple clicks of the same link) |\n>| unique_clicks | Total number of subscribers who clicked any link in your campaign |\n>| total_opens | Total number of times your campaign was opened by any subscriber your campaign was sent to (including multiple opens by the same subscriber) |\n>| unique_opens | Total number of subscribers who opened your campaign |\n>| total_sales | Total number of sales made by subscribers who received your campaign |\n>| total_sales_dollars | Total monetary value of sales made by subscribers who received your campaign |\n>| total_unsubscribed | Total number of subscribers who unsubscribed by clicking the unsubscribe link in your campaign |\n>\n>__Time Related Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| hourly_clicks | Hourly breakdown of unique and total clicks for the first 24 hours after a campaign was sent |\n>| hourly_opens | Hourly breakdown of unique and total opens for the first 24 hours after a campaign was sent |\n>| hourly_sales | Hourly breakdown of sales for the first 24 hours after a campaign was sent |\n>| hourly_unsubscribed | Hourly breakdown of subscribers who unsubscribed by clicking the unsubscribed link for the first 24 hours after a campaign was sent |\n>| hourly_webhits | Hourly breakdown of webhits to your website from subscribers sent this message for the first 24 hours after a campaign was sent |\n>| daily_clicks | Daily breakdown of unique and total clicks for the first 14 days after a campaign was sent |\n>| daily_opens | Daily breakdown of unique and total opens for the first 14 days after a campaign was sent |\n>| daily_sales | Daily breakdown of sales for the first 14 days after a campaign was sent |\n>| daily_unsubscribed | Daily breakdown of subscribers who unsuscribed by clicking the unsubscribed link for the first 14 days after a campaign was sent |\n>| daily_webhits | Daily breakdown of webhits to your website from subscribers sent this message for the first 14 days after a campaign was sent |\n>\n>__Top 10 URL Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| clicks_by_link | Top 10 links that were clicked (ranked by total_clicked) |\n>| webhits_by_link | Top 10 webhits by click (ranked by total clicks) |\n>\n>__Top 10 Subscriber Statistics__\n>(Requires access to subscriber data)\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| opens_by_subscriber | Top 10 subscribers that opened your message (ranked by total opens) |\n>| sales_by_subscriber | Top 10 subscribers that made a sale from your message (ranked by total sales dollars) |\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"total number of times a subscriber clicked any link appearing in your campaign except the unsubscribe link (includes multiple clicks of the same link)\",\n  \"id\": \"total_clicks\",\n  \"resource_type_link\": \"integer_stat\",\n  \"self_link\": \"https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/stats/total_clicks\",\n  \"value\": 8894\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07d3d9be-0262-4dd9-9460-acdcfe9c4917",
+              "name": "The server cannot or will not process the request due to a client error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns",
+                    "b{{campaignId}}",
+                    "stats",
+                    ":statsId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statsId",
+                      "description": "(Required) <br>\n\n>The statistic's ID.\n>\n>The datatype of the ID may be different for each Stat.\n>\n>Below is a list of the statistic IDs that can be passed in.\n>\n>__Aggregate Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| total_clicks | Total number of times a subscriber clicked any link appearing in your campaign except the unsubscribe link (includes multiple clicks of the same link) |\n>| unique_clicks | Total number of subscribers who clicked any link in your campaign |\n>| total_opens | Total number of times your campaign was opened by any subscriber your campaign was sent to (including multiple opens by the same subscriber) |\n>| unique_opens | Total number of subscribers who opened your campaign |\n>| total_sales | Total number of sales made by subscribers who received your campaign |\n>| total_sales_dollars | Total monetary value of sales made by subscribers who received your campaign |\n>| total_unsubscribed | Total number of subscribers who unsubscribed by clicking the unsubscribe link in your campaign |\n>\n>__Time Related Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| hourly_clicks | Hourly breakdown of unique and total clicks for the first 24 hours after a campaign was sent |\n>| hourly_opens | Hourly breakdown of unique and total opens for the first 24 hours after a campaign was sent |\n>| hourly_sales | Hourly breakdown of sales for the first 24 hours after a campaign was sent |\n>| hourly_unsubscribed | Hourly breakdown of subscribers who unsubscribed by clicking the unsubscribed link for the first 24 hours after a campaign was sent |\n>| hourly_webhits | Hourly breakdown of webhits to your website from subscribers sent this message for the first 24 hours after a campaign was sent |\n>| daily_clicks | Daily breakdown of unique and total clicks for the first 14 days after a campaign was sent |\n>| daily_opens | Daily breakdown of unique and total opens for the first 14 days after a campaign was sent |\n>| daily_sales | Daily breakdown of sales for the first 14 days after a campaign was sent |\n>| daily_unsubscribed | Daily breakdown of subscribers who unsuscribed by clicking the unsubscribed link for the first 14 days after a campaign was sent |\n>| daily_webhits | Daily breakdown of webhits to your website from subscribers sent this message for the first 14 days after a campaign was sent |\n>\n>__Top 10 URL Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| clicks_by_link | Top 10 links that were clicked (ranked by total_clicked) |\n>| webhits_by_link | Top 10 webhits by click (ranked by total clicks) |\n>\n>__Top 10 Subscriber Statistics__\n>(Requires access to subscriber data)\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| opens_by_subscriber | Top 10 subscribers that opened your message (ranked by total opens) |\n>| sales_by_subscriber | Top 10 subscribers that made a sale from your message (ranked by total sales dollars) |\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#badrequest\",\n    \"message\": \"Maximum for \\\"ws.size\\\" parameter is 100.\",\n    \"status\": 400,\n    \"type\": \"BadRequestError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4b8727d0-05dc-4a6d-b2b9-6896e7597ad0",
+              "name": "The request could not be completed due to an authentication error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns",
+                    "b{{campaignId}}",
+                    "stats",
+                    ":statsId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statsId",
+                      "description": "(Required) <br>\n\n>The statistic's ID.\n>\n>The datatype of the ID may be different for each Stat.\n>\n>Below is a list of the statistic IDs that can be passed in.\n>\n>__Aggregate Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| total_clicks | Total number of times a subscriber clicked any link appearing in your campaign except the unsubscribe link (includes multiple clicks of the same link) |\n>| unique_clicks | Total number of subscribers who clicked any link in your campaign |\n>| total_opens | Total number of times your campaign was opened by any subscriber your campaign was sent to (including multiple opens by the same subscriber) |\n>| unique_opens | Total number of subscribers who opened your campaign |\n>| total_sales | Total number of sales made by subscribers who received your campaign |\n>| total_sales_dollars | Total monetary value of sales made by subscribers who received your campaign |\n>| total_unsubscribed | Total number of subscribers who unsubscribed by clicking the unsubscribe link in your campaign |\n>\n>__Time Related Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| hourly_clicks | Hourly breakdown of unique and total clicks for the first 24 hours after a campaign was sent |\n>| hourly_opens | Hourly breakdown of unique and total opens for the first 24 hours after a campaign was sent |\n>| hourly_sales | Hourly breakdown of sales for the first 24 hours after a campaign was sent |\n>| hourly_unsubscribed | Hourly breakdown of subscribers who unsubscribed by clicking the unsubscribed link for the first 24 hours after a campaign was sent |\n>| hourly_webhits | Hourly breakdown of webhits to your website from subscribers sent this message for the first 24 hours after a campaign was sent |\n>| daily_clicks | Daily breakdown of unique and total clicks for the first 14 days after a campaign was sent |\n>| daily_opens | Daily breakdown of unique and total opens for the first 14 days after a campaign was sent |\n>| daily_sales | Daily breakdown of sales for the first 14 days after a campaign was sent |\n>| daily_unsubscribed | Daily breakdown of subscribers who unsuscribed by clicking the unsubscribed link for the first 14 days after a campaign was sent |\n>| daily_webhits | Daily breakdown of webhits to your website from subscribers sent this message for the first 14 days after a campaign was sent |\n>\n>__Top 10 URL Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| clicks_by_link | Top 10 links that were clicked (ranked by total_clicked) |\n>| webhits_by_link | Top 10 webhits by click (ranked by total clicks) |\n>\n>__Top 10 Subscriber Statistics__\n>(Requires access to subscriber data)\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| opens_by_subscriber | Top 10 subscribers that opened your message (ranked by total opens) |\n>| sales_by_subscriber | Top 10 subscribers that made a sale from your message (ranked by total sales dollars) |\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"value\": \"reference #/schemas/Endpoint Error not found in the OpenAPI spec\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c5ca0ee-8144-4d50-a97f-a16fb5d201c0",
+              "name": "The request could not be completed due to a rate limit error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns",
+                    "b{{campaignId}}",
+                    "stats",
+                    ":statsId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statsId",
+                      "description": "(Required) <br>\n\n>The statistic's ID.\n>\n>The datatype of the ID may be different for each Stat.\n>\n>Below is a list of the statistic IDs that can be passed in.\n>\n>__Aggregate Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| total_clicks | Total number of times a subscriber clicked any link appearing in your campaign except the unsubscribe link (includes multiple clicks of the same link) |\n>| unique_clicks | Total number of subscribers who clicked any link in your campaign |\n>| total_opens | Total number of times your campaign was opened by any subscriber your campaign was sent to (including multiple opens by the same subscriber) |\n>| unique_opens | Total number of subscribers who opened your campaign |\n>| total_sales | Total number of sales made by subscribers who received your campaign |\n>| total_sales_dollars | Total monetary value of sales made by subscribers who received your campaign |\n>| total_unsubscribed | Total number of subscribers who unsubscribed by clicking the unsubscribe link in your campaign |\n>\n>__Time Related Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| hourly_clicks | Hourly breakdown of unique and total clicks for the first 24 hours after a campaign was sent |\n>| hourly_opens | Hourly breakdown of unique and total opens for the first 24 hours after a campaign was sent |\n>| hourly_sales | Hourly breakdown of sales for the first 24 hours after a campaign was sent |\n>| hourly_unsubscribed | Hourly breakdown of subscribers who unsubscribed by clicking the unsubscribed link for the first 24 hours after a campaign was sent |\n>| hourly_webhits | Hourly breakdown of webhits to your website from subscribers sent this message for the first 24 hours after a campaign was sent |\n>| daily_clicks | Daily breakdown of unique and total clicks for the first 14 days after a campaign was sent |\n>| daily_opens | Daily breakdown of unique and total opens for the first 14 days after a campaign was sent |\n>| daily_sales | Daily breakdown of sales for the first 14 days after a campaign was sent |\n>| daily_unsubscribed | Daily breakdown of subscribers who unsuscribed by clicking the unsubscribed link for the first 14 days after a campaign was sent |\n>| daily_webhits | Daily breakdown of webhits to your website from subscribers sent this message for the first 14 days after a campaign was sent |\n>\n>__Top 10 URL Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| clicks_by_link | Top 10 links that were clicked (ranked by total_clicked) |\n>| webhits_by_link | Top 10 webhits by click (ranked by total clicks) |\n>\n>__Top 10 Subscriber Statistics__\n>(Requires access to subscriber data)\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| opens_by_subscriber | Top 10 subscribers that opened your message (ranked by total opens) |\n>| sales_by_subscriber | Top 10 subscribers that made a sale from your message (ranked by total sales dollars) |\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#forbidden\",\n    \"message\": \"Rate Limit Error\",\n    \"status\": 403,\n    \"type\": \"ForbiddenError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fe362e19-193f-45a8-96c8-f4afe3c0cda3",
+              "name": "The requested resource could not be found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns",
+                    "b{{campaignId}}",
+                    "stats",
+                    ":statsId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statsId",
+                      "description": "(Required) <br>\n\n>The statistic's ID.\n>\n>The datatype of the ID may be different for each Stat.\n>\n>Below is a list of the statistic IDs that can be passed in.\n>\n>__Aggregate Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| total_clicks | Total number of times a subscriber clicked any link appearing in your campaign except the unsubscribe link (includes multiple clicks of the same link) |\n>| unique_clicks | Total number of subscribers who clicked any link in your campaign |\n>| total_opens | Total number of times your campaign was opened by any subscriber your campaign was sent to (including multiple opens by the same subscriber) |\n>| unique_opens | Total number of subscribers who opened your campaign |\n>| total_sales | Total number of sales made by subscribers who received your campaign |\n>| total_sales_dollars | Total monetary value of sales made by subscribers who received your campaign |\n>| total_unsubscribed | Total number of subscribers who unsubscribed by clicking the unsubscribe link in your campaign |\n>\n>__Time Related Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| hourly_clicks | Hourly breakdown of unique and total clicks for the first 24 hours after a campaign was sent |\n>| hourly_opens | Hourly breakdown of unique and total opens for the first 24 hours after a campaign was sent |\n>| hourly_sales | Hourly breakdown of sales for the first 24 hours after a campaign was sent |\n>| hourly_unsubscribed | Hourly breakdown of subscribers who unsubscribed by clicking the unsubscribed link for the first 24 hours after a campaign was sent |\n>| hourly_webhits | Hourly breakdown of webhits to your website from subscribers sent this message for the first 24 hours after a campaign was sent |\n>| daily_clicks | Daily breakdown of unique and total clicks for the first 14 days after a campaign was sent |\n>| daily_opens | Daily breakdown of unique and total opens for the first 14 days after a campaign was sent |\n>| daily_sales | Daily breakdown of sales for the first 14 days after a campaign was sent |\n>| daily_unsubscribed | Daily breakdown of subscribers who unsuscribed by clicking the unsubscribed link for the first 14 days after a campaign was sent |\n>| daily_webhits | Daily breakdown of webhits to your website from subscribers sent this message for the first 14 days after a campaign was sent |\n>\n>__Top 10 URL Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| clicks_by_link | Top 10 links that were clicked (ranked by total_clicked) |\n>| webhits_by_link | Top 10 webhits by click (ranked by total clicks) |\n>\n>__Top 10 Subscriber Statistics__\n>(Requires access to subscriber data)\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| opens_by_subscriber | Top 10 subscribers that opened your message (ranked by total opens) |\n>| sales_by_subscriber | Top 10 subscribers that made a sale from your message (ranked by total sales dollars) |\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#notfound\",\n    \"message\": \"Object: None, name: ''\",\n    \"status\": 404,\n    \"type\": \"NotFoundError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c5eb0d46-2524-409a-b01e-606ade8f8b0f",
+              "name": "The request has been blocked",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns",
+                    "b{{campaignId}}",
+                    "stats",
+                    ":statsId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statsId",
+                      "description": "(Required) <br>\n\n>The statistic's ID.\n>\n>The datatype of the ID may be different for each Stat.\n>\n>Below is a list of the statistic IDs that can be passed in.\n>\n>__Aggregate Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| total_clicks | Total number of times a subscriber clicked any link appearing in your campaign except the unsubscribe link (includes multiple clicks of the same link) |\n>| unique_clicks | Total number of subscribers who clicked any link in your campaign |\n>| total_opens | Total number of times your campaign was opened by any subscriber your campaign was sent to (including multiple opens by the same subscriber) |\n>| unique_opens | Total number of subscribers who opened your campaign |\n>| total_sales | Total number of sales made by subscribers who received your campaign |\n>| total_sales_dollars | Total monetary value of sales made by subscribers who received your campaign |\n>| total_unsubscribed | Total number of subscribers who unsubscribed by clicking the unsubscribe link in your campaign |\n>\n>__Time Related Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| hourly_clicks | Hourly breakdown of unique and total clicks for the first 24 hours after a campaign was sent |\n>| hourly_opens | Hourly breakdown of unique and total opens for the first 24 hours after a campaign was sent |\n>| hourly_sales | Hourly breakdown of sales for the first 24 hours after a campaign was sent |\n>| hourly_unsubscribed | Hourly breakdown of subscribers who unsubscribed by clicking the unsubscribed link for the first 24 hours after a campaign was sent |\n>| hourly_webhits | Hourly breakdown of webhits to your website from subscribers sent this message for the first 24 hours after a campaign was sent |\n>| daily_clicks | Daily breakdown of unique and total clicks for the first 14 days after a campaign was sent |\n>| daily_opens | Daily breakdown of unique and total opens for the first 14 days after a campaign was sent |\n>| daily_sales | Daily breakdown of sales for the first 14 days after a campaign was sent |\n>| daily_unsubscribed | Daily breakdown of subscribers who unsuscribed by clicking the unsubscribed link for the first 14 days after a campaign was sent |\n>| daily_webhits | Daily breakdown of webhits to your website from subscribers sent this message for the first 14 days after a campaign was sent |\n>\n>__Top 10 URL Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| clicks_by_link | Top 10 links that were clicked (ranked by total_clicked) |\n>| webhits_by_link | Top 10 webhits by click (ranked by total clicks) |\n>\n>__Top 10 Subscriber Statistics__\n>(Requires access to subscriber data)\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| opens_by_subscriber | Top 10 subscribers that opened your message (ranked by total opens) |\n>| sales_by_subscriber | Top 10 subscribers that made a sale from your message (ranked by total sales dollars) |\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Gone",
+              "code": 410,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com/#blocked\",\n    \"message\": \"Blocked Error\",\n    \"status\": 410,\n    \"type\": \"BlockedError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e7f2c3a3-63df-4c78-b712-decd42ae08e5",
+              "name": "The request failed due to an internal error in the code or because of an external dependency failure",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns",
+                    "b{{campaignId}}",
+                    "stats",
+                    ":statsId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statsId",
+                      "description": "(Required) <br>\n\n>The statistic's ID.\n>\n>The datatype of the ID may be different for each Stat.\n>\n>Below is a list of the statistic IDs that can be passed in.\n>\n>__Aggregate Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| total_clicks | Total number of times a subscriber clicked any link appearing in your campaign except the unsubscribe link (includes multiple clicks of the same link) |\n>| unique_clicks | Total number of subscribers who clicked any link in your campaign |\n>| total_opens | Total number of times your campaign was opened by any subscriber your campaign was sent to (including multiple opens by the same subscriber) |\n>| unique_opens | Total number of subscribers who opened your campaign |\n>| total_sales | Total number of sales made by subscribers who received your campaign |\n>| total_sales_dollars | Total monetary value of sales made by subscribers who received your campaign |\n>| total_unsubscribed | Total number of subscribers who unsubscribed by clicking the unsubscribe link in your campaign |\n>\n>__Time Related Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| hourly_clicks | Hourly breakdown of unique and total clicks for the first 24 hours after a campaign was sent |\n>| hourly_opens | Hourly breakdown of unique and total opens for the first 24 hours after a campaign was sent |\n>| hourly_sales | Hourly breakdown of sales for the first 24 hours after a campaign was sent |\n>| hourly_unsubscribed | Hourly breakdown of subscribers who unsubscribed by clicking the unsubscribed link for the first 24 hours after a campaign was sent |\n>| hourly_webhits | Hourly breakdown of webhits to your website from subscribers sent this message for the first 24 hours after a campaign was sent |\n>| daily_clicks | Daily breakdown of unique and total clicks for the first 14 days after a campaign was sent |\n>| daily_opens | Daily breakdown of unique and total opens for the first 14 days after a campaign was sent |\n>| daily_sales | Daily breakdown of sales for the first 14 days after a campaign was sent |\n>| daily_unsubscribed | Daily breakdown of subscribers who unsuscribed by clicking the unsubscribed link for the first 14 days after a campaign was sent |\n>| daily_webhits | Daily breakdown of webhits to your website from subscribers sent this message for the first 14 days after a campaign was sent |\n>\n>__Top 10 URL Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| clicks_by_link | Top 10 links that were clicked (ranked by total_clicked) |\n>| webhits_by_link | Top 10 webhits by click (ranked by total clicks) |\n>\n>__Top 10 Subscriber Statistics__\n>(Requires access to subscriber data)\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| opens_by_subscriber | Top 10 subscribers that opened your message (ranked by total opens) |\n>| sales_by_subscriber | Top 10 subscribers that made a sale from your message (ranked by total sales dollars) |\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#internalerror\",\n    \"message\": \"Something went wrong.\",\n    \"status\": 500,\n    \"type\": \"InternalServerError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8d53dda8-b4d1-40d9-8a6f-1793ba712a3a",
+              "name": "The server is currently unavailable",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "lists",
+                    ":listId",
+                    "campaigns",
+                    "b{{campaignId}}",
+                    "stats",
+                    ":statsId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "accountId",
+                      "description": "(Required) The account ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "listId",
+                      "description": "(Required) The list ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statsId",
+                      "description": "(Required) <br>\n\n>The statistic's ID.\n>\n>The datatype of the ID may be different for each Stat.\n>\n>Below is a list of the statistic IDs that can be passed in.\n>\n>__Aggregate Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| total_clicks | Total number of times a subscriber clicked any link appearing in your campaign except the unsubscribe link (includes multiple clicks of the same link) |\n>| unique_clicks | Total number of subscribers who clicked any link in your campaign |\n>| total_opens | Total number of times your campaign was opened by any subscriber your campaign was sent to (including multiple opens by the same subscriber) |\n>| unique_opens | Total number of subscribers who opened your campaign |\n>| total_sales | Total number of sales made by subscribers who received your campaign |\n>| total_sales_dollars | Total monetary value of sales made by subscribers who received your campaign |\n>| total_unsubscribed | Total number of subscribers who unsubscribed by clicking the unsubscribe link in your campaign |\n>\n>__Time Related Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| hourly_clicks | Hourly breakdown of unique and total clicks for the first 24 hours after a campaign was sent |\n>| hourly_opens | Hourly breakdown of unique and total opens for the first 24 hours after a campaign was sent |\n>| hourly_sales | Hourly breakdown of sales for the first 24 hours after a campaign was sent |\n>| hourly_unsubscribed | Hourly breakdown of subscribers who unsubscribed by clicking the unsubscribed link for the first 24 hours after a campaign was sent |\n>| hourly_webhits | Hourly breakdown of webhits to your website from subscribers sent this message for the first 24 hours after a campaign was sent |\n>| daily_clicks | Daily breakdown of unique and total clicks for the first 14 days after a campaign was sent |\n>| daily_opens | Daily breakdown of unique and total opens for the first 14 days after a campaign was sent |\n>| daily_sales | Daily breakdown of sales for the first 14 days after a campaign was sent |\n>| daily_unsubscribed | Daily breakdown of subscribers who unsuscribed by clicking the unsubscribed link for the first 14 days after a campaign was sent |\n>| daily_webhits | Daily breakdown of webhits to your website from subscribers sent this message for the first 14 days after a campaign was sent |\n>\n>__Top 10 URL Statistics__\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| clicks_by_link | Top 10 links that were clicked (ranked by total_clicked) |\n>| webhits_by_link | Top 10 webhits by click (ranked by total clicks) |\n>\n>__Top 10 Subscriber Statistics__\n>(Requires access to subscriber data)\n>\n>| Stat ID | Description |\n>|---------|-------------|\n>| opens_by_subscriber | Top 10 subscribers that opened your message (ranked by total opens) |\n>| sales_by_subscriber | Top 10 subscribers that made a sale from your message (ranked by total sales dollars) |\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Service Unavailable",
+              "code": 503,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"documentation_url\": \"https://api.aweber.com#serviceunavailable\",\n    \"message\": \"Failed to communicate with endpoint\",\n    \"status\": 503,\n    \"type\": \"ServiceUnavailableError\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.aweber.com/1.0",
+      "key": "baseUrl"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) The campaign type (b - broadcast, f - followup)",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<string>",
+      "key": "campaignType"
+    },
+    {
+      "disabled": false,
+      "description": {
+        "content": "(Required) The campaign ID",
+        "type": "text/plain"
+      },
+      "type": "any",
+      "value": "<integer>",
+      "key": "campaignId"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "account.read landing-page.read list.read list.write subscriber.read subscriber.write subscriber.read-extended email.read email.write"
+      },
+      {
+        "key": "redirect_uri",
+        "value": "https://auth.aweber.com/oauth2/token"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://auth.aweber.com/oauth2/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://auth.aweber.com/oauth2/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b8a1b5b5-f1f4-498e-bbaf-3dc8eb405a79",
+    "name": "AWeber Campaigns API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "We are constantly working to improve this documentation. If you have\nfeedback and questions, please contact the AWeber API team at\napi@aweber.com.\n\nThe AWeber API is a REST API that uses the OAuth 2.0 authentication model. We also offer webhooks.\n\nPlease see the below resources for further information:\n- <a href=\"https://labs.aweber.com/docs/tos\" target=\"_blank\">Terms of Service</a>\n- <a href=\"https://help.aweber.com/hc/en-us/articles/204031776\" target=\"_blank\">Showcasing an Integration</a>\n- <a href=\"https://help.aweber.com/hc/en-us/sections/360000617213-API\" target=\"_blank\">Knowledge Base</a>\n- <a href=\"https://status.aweber.com\" target=\"_blank\">API Status Page</a>\n\n\nContact Support:\n Name: AWeber API Team\n Email: api@aweber.com",
+      "type": "text/plain"
+    }
+  }
+}

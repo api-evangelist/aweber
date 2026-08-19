@@ -1,65 +1,81 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/aweber-openapi.yml
+generated: '2026-08-13'
+method: searched
+source: openapi/_original/aweber-api-openapi.yml
+docs: https://api.aweber.com/#tag/OAuth-2.0-Overview
+docs_alt: https://help.aweber.com/hc/en-us/articles/360021487653
+note: >-
+  Nine scopes, all declared in the provider's own OpenAPI securitySchemes and all documented with
+  the exact endpoints each one unlocks — an unusually complete scope reference. Descriptions
+  below are AWeber's, with the inline HTML stripped and the endpoint lists split out as
+  `required_for` so they are readable as data. Scopes are space-separated and URL-encoded on the
+  authorize URL. Note the deprecation: subscriber.read-extended has been equivalent to
+  subscriber.read since API 1.1.0 (2021-06-16) and should not be requested in new code.
 schemes:
-- name: OAuth2
-  source: openapi/aweber-openapi.yml
-  flows:
-  - flow: authorizationCode
-    authorizationUrl: https://auth.aweber.com/oauth2/authorize
-    tokenUrl: https://auth.aweber.com/oauth2/token
+  - name: OAuth 2.0
+    type: oauth2
+    source: openapi/_original/aweber-api-openapi.yml
+    flows:
+      - flow: authorizationCode
+        authorizationUrl: https://auth.aweber.com/oauth2/authorize
+        tokenUrl: https://auth.aweber.com/oauth2/token
+        refreshUrl: https://auth.aweber.com/oauth2/token
+        revokeUrl: https://auth.aweber.com/oauth2/revoke
+        pkce: required-for-public-clients
+scope_count: 9
 scopes:
-- scope: account.read
-  description: Read account information
-  flows:
-  - authorizationCode
-  sources:
-  - openapi/aweber-openapi.yml
-- scope: email.read
-  description: Read broadcasts and campaigns
-  flows:
-  - authorizationCode
-  sources:
-  - openapi/aweber-openapi.yml
-- scope: email.write
-  description: Manage broadcasts and campaigns
-  flows:
-  - authorizationCode
-  sources:
-  - openapi/aweber-openapi.yml
-- scope: landing-page.read
-  description: Read landing pages
-  flows:
-  - authorizationCode
-  sources:
-  - openapi/aweber-openapi.yml
-- scope: landing-page.write
-  description: Manage landing pages
-  flows:
-  - authorizationCode
-  sources:
-  - openapi/aweber-openapi.yml
-- scope: list.read
-  description: Read lists
-  flows:
-  - authorizationCode
-  sources:
-  - openapi/aweber-openapi.yml
-- scope: list.write
-  description: Manage lists
-  flows:
-  - authorizationCode
-  sources:
-  - openapi/aweber-openapi.yml
-- scope: subscriber.read
-  description: Read subscribers
-  flows:
-  - authorizationCode
-  sources:
-  - openapi/aweber-openapi.yml
-- scope: subscriber.write
-  description: Manage subscribers
-  flows:
-  - authorizationCode
-  sources:
-  - openapi/aweber-openapi.yml
+  - scope: account.read
+    description: Access account information and associated integrations.
+    flows: [authorizationCode]
+    required_for: [get accounts, get account, get integrations, get integration]
+  - scope: list.read
+    description: Retrieve lists, custom fields, tags, and sign up forms.
+    flows: [authorizationCode]
+    required_for: [get list, get lists, find lists, get tags for list, get custom fields,
+                   get custom field, get webforms for list, get split tests for list,
+                   get split test components, get split test component, get webforms for account,
+                   get split tests for account]
+  - scope: list.write
+    description: Create, edit, and delete custom fields.
+    flows: [authorizationCode]
+    required_for: [add custom field, update custom field, delete custom field]
+  - scope: subscriber.read
+    description: Retrieve subscribers and their activity.
+    flows: [authorizationCode]
+    required_for: [get subscribers, get subscriber, get subscriber activity,
+                   get subscribers for message, find subscribers for account,
+                   find subscribers for list]
+    note: Also required (with account.read) to authorize a webhooks-enabled integration.
+  - scope: subscriber.write
+    description: Create, edit, delete, retrieve, search for, and move subscribers.
+    flows: [authorizationCode]
+    required_for: [add subscriber, move subscriber, update subscriber, delete subscriber]
+  - scope: subscriber.read-extended
+    description: >-
+      Previously required to retrieve subscriber PII such as name, email and IP address. That
+      functionality moved to the subscriber.read scope.
+    flows: [authorizationCode]
+    status: deprecated
+    superseded_by: subscriber.read
+    deprecated_since: '2021-06-16'
+    note: >-
+      Still accepted, but equivalent to subscriber.read. Tokens that already held it were
+      implicitly granted subscriber.read.
+  - scope: email.read
+    description: Retrieve email activity related to broadcasts and follow-ups.
+    flows: [authorizationCode]
+    required_for: [get messages, get message, get broadcasts, get broadcast, get message opens,
+                   get message open, get message tracked events, get message tracked event,
+                   get total broadcasts, get campaigns, get campaign, find campaigns,
+                   get broadcast statistics, get broadcast statistic]
+  - scope: email.write
+    description: Create and send email broadcasts.
+    flows: [authorizationCode]
+    required_for: [create broadcast, update broadcast, delete broadcast, cancel broadcast,
+                   schedule broadcast]
+    note: >-
+      The AWeber customer must additionally grant the "Manage All Email Communications"
+      permission; without it these calls return 403 "Application not authorized to manage email."
+  - scope: landing-page.read
+    description: Retrieve landing pages.
+    flows: [authorizationCode]
+    required_for: [get landing pages, get landing page]
