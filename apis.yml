@@ -38,6 +38,19 @@ tags:
   - Landing Pages
   - Web Forms
   - Segments
+  - Webhook
+  - Authentication
+  - Small Business
+tags_raw:
+  - Email Marketing
+  - Marketing Automation
+  - Email
+  - Newsletters
+  - Subscribers
+  - Campaigns
+  - Landing Pages
+  - Web Forms
+  - Segments
   - Webhooks
   - OAuth 2.0
   - Small Business
@@ -54,6 +67,8 @@ apis:
   humanURL: https://api.aweber.com/
   baseURL: https://api.aweber.com/1.0
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
@@ -149,6 +164,8 @@ apis:
   humanURL: https://api.aweber.com/
   baseURL: https://api.aweber.com/1.0
   tags:
+  - List
+  tags_raw:
   - Lists
   properties:
   - type: OpenAPI
@@ -227,6 +244,8 @@ apis:
   humanURL: https://api.aweber.com/
   baseURL: https://api.aweber.com/1.0
   tags:
+  - Integration
+  tags_raw:
   - Integrations
   properties:
   - type: OpenAPI
@@ -249,6 +268,8 @@ apis:
   humanURL: https://api.aweber.com/#tag/OAuth-2.0-Overview
   baseURL: https://api.aweber.com/1.0
   tags:
+  - Authentication
+  tags_raw:
   - Authentication
   - OAuth
   properties:
