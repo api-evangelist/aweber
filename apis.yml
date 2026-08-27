@@ -63,7 +63,8 @@ apis:
 - aid: aweber:aweber-accounts-api
   name: AWeber Accounts API
   description: >-
-    The Accounts API from AWeber — 2 operations for listing the accounts an access token can reach and reading a single account, the root of the AWeber resource hierarchy.
+    The Accounts API from AWeber — 2 operations for listing the accounts an access token can reach and
+    reading a single account, the root of the AWeber resource hierarchy.
   humanURL: https://api.aweber.com/
   baseURL: https://api.aweber.com/1.0
   tags:
@@ -84,7 +85,8 @@ apis:
 - aid: aweber:aweber-broadcasts-api
   name: AWeber Broadcasts API
   description: >-
-    The Broadcasts API from AWeber — 10 operations for creating, updating, scheduling, cancelling and deleting broadcast emails on a list, plus reading opens and clicks.
+    The Broadcasts API from AWeber — 10 operations for creating, updating, scheduling, cancelling and
+    deleting broadcast emails on a list, plus reading opens and clicks.
   humanURL: https://api.aweber.com/
   baseURL: https://api.aweber.com/1.0
   tags:
@@ -103,7 +105,8 @@ apis:
 - aid: aweber:aweber-campaigns-api
   name: AWeber Campaigns API
   description: >-
-    The Campaigns API from AWeber — 5 operations for reading follow-up and broadcast campaigns on a list and their aggregate statistics.
+    The Campaigns API from AWeber — 5 operations for reading follow-up and broadcast campaigns on a list
+    and their aggregate statistics.
   humanURL: https://api.aweber.com/
   baseURL: https://api.aweber.com/1.0
   tags:
@@ -122,7 +125,8 @@ apis:
 - aid: aweber:aweber-custom-fields-api
   name: AWeber Custom Fields API
   description: >-
-    The Custom Fields API from AWeber — 5 operations for creating, reading, renaming and deleting the custom subscriber fields defined on a list.
+    The Custom Fields API from AWeber — 5 operations for creating, reading, renaming and deleting the
+    custom subscriber fields defined on a list.
   humanURL: https://api.aweber.com/
   baseURL: https://api.aweber.com/1.0
   tags:
@@ -160,7 +164,8 @@ apis:
 - aid: aweber:aweber-lists-api
   name: AWeber Lists API
   description: >-
-    The Lists API from AWeber — 4 operations for listing and finding the email lists on an account and reading the tags applied on a list.
+    The Lists API from AWeber — 4 operations for listing and finding the email lists on an account and
+    reading the tags applied on a list.
   humanURL: https://api.aweber.com/
   baseURL: https://api.aweber.com/1.0
   tags:
@@ -200,7 +205,8 @@ apis:
 - aid: aweber:aweber-subscribers-api
   name: AWeber Subscribers API
   description: >-
-    The Subscribers API from AWeber — 12 operations for adding, reading, updating, moving, searching and deleting subscribers on a list, reading subscriber activity, and recording tracked purchases.
+    The Subscribers API from AWeber — 12 operations for adding, reading, updating, moving, searching and
+    deleting subscribers on a list, reading subscriber activity, and recording tracked purchases.
   humanURL: https://api.aweber.com/
   baseURL: https://api.aweber.com/1.0
   tags:
@@ -216,31 +222,12 @@ apis:
     url: https://api.aweber.com/#tag/OAuth-2.0-Overview
   - type: GettingStarted
     url: https://api.aweber.com/#tag/Getting-Started
-- aid: aweber:aweber-web-forms-api
-  name: AWeber Web Forms API
-  description: >-
-    The Web Forms API from AWeber — 8 operations for reading the sign-up forms on a list or account and their split tests and split-test components.
-  humanURL: https://api.aweber.com/
-  baseURL: https://api.aweber.com/1.0
-  tags:
-  - Web Forms
-  properties:
-  - type: OpenAPI
-    url: openapi/aweber-web-forms-api-openapi.yml
-  - type: Documentation
-    url: https://api.aweber.com/
-  - type: APIReference
-    url: https://api.aweber.com/
-  - type: Authentication
-    url: https://api.aweber.com/#tag/OAuth-2.0-Overview
-  - type: GettingStarted
-    url: https://api.aweber.com/#tag/Getting-Started
 - aid: aweber:aweber-integrations-api
   name: AWeber Integrations API
   description: >-
-    The Integrations API from AWeber — 2 operations for reading the third-party integrations
-    (PayPal, Shopify, WordPress, Facebook and the rest of the 750+ app catalog) connected to an
-    AWeber account and used for email sharing.
+    The Integrations API from AWeber — 2 operations for reading the third-party integrations (PayPal,
+    Shopify, WordPress, Facebook and the rest of the 750+ app catalog) connected to an AWeber account
+    and used for email sharing.
   humanURL: https://api.aweber.com/
   baseURL: https://api.aweber.com/1.0
   tags:
@@ -258,23 +245,98 @@ apis:
     url: https://api.aweber.com/#tag/OAuth-2.0-Overview
   - type: GettingStarted
     url: https://api.aweber.com/#tag/Getting-Started
-- aid: aweber:aweber-authentication-api
-  name: AWeber Authentication API
+- aid: aweber:aweber-beta-endpoints-api
+  name: AWeber Beta Endpoints API
   description: >-
-    The Authentication API from AWeber — 4 operations covering the OAuth 2.0 token and revoke
-    endpoints on auth.aweber.com plus the legacy OAuth 1.0a request-token and access-token
-    endpoints that remain published and live. OAuth 2.0 authorization code, with PKCE required
-    for public clients, is the only supported model for new applications.
-  humanURL: https://api.aweber.com/#tag/OAuth-2.0-Overview
+    ### What is it?
+
+
+    Beta endpoints are early-access versions of the upcoming v2 API that provide developers with a preview
+    of new features and changes before the official v2 release. These endpoints are accessible at `api.aweber.com/2.0-beta/`
+    and include **new functionality not available in v1**.
+
+
+    Beta endpoints are previews of v2 functionality and do not replace v1 endpoints. The stable v1 API
+    remains the recommended choice for production applications.
+
+
+    ### Important Notice
+
+
+    **Beta endpoints are experimental and subject to change without notice.** As beta endpoints, developers
+    should expect:
+
+
+    - **Contracts may change** at any time without backward compatibility
+
+    - **Endpoints may not follow** previously established patterns from v1 endpoints
+
+    - **Current Documentation may be inaccurate** or incomplete
+
+    - **Limited support** compared to stable v1 endpoints
+
+    - **No guarantee of stability** until official v2 release
+
+
+    **Use beta endpoints only for testing and development purposes.** Do not rely on beta endpoints for
+    production applications.
+
+
+    ### Key Differences from v1 API
+
+
+    Beta endpoints introduce several changes that preview the upcoming v2 API:
+
+
+    - **UUID Identifiers**: Resources use UUIDs instead of numeric IDs
+
+    - **New Functionality**: Access to capabilities and data not available through v1 endpoints
+
+    - **Different Base URL**: Beta endpoints are accessible at `api.aweber.com/2.0-beta/` instead of `api.aweber.com/1.0/`
+
+
+    ### Authentication
+
+
+    Beta endpoints use the same OAuth 2.0 authentication as v1 endpoints. Your existing access tokens
+    and authentication flow will work with beta endpoints.
+
+
+    ### Base URL
+
+
+    ```
+
+    https://api.aweber.com/2.0-beta/
+
+    ```
+
+
+    ### Support
+
+
+    For questions about beta endpoints:
+
+    - Email: [api@aweber.com](mailto:api@aweber.com?subject=Beta%20Endpoints)
+
+    - Include "Beta Endpoints" in your subject line
+
+    - Provide specific details about the endpoint and issue encountered
+  humanURL: https://api.aweber.com/
   baseURL: https://api.aweber.com/1.0
   tags:
-  - Authentication
-  tags_raw:
-  - Authentication
-  - OAuth
+  - Beta Endpoints
   properties:
   - type: OpenAPI
-    url: openapi/aweber-authentication-api-openapi.yml
+    url: openapi/aweber-beta-endpoints-api-openapi.yml
+  - type: Documentation
+    url: https://api.aweber.com/
+  - type: APIReference
+    url: https://api.aweber.com/
+  - type: Authentication
+    url: https://api.aweber.com/#tag/OAuth-2.0-Overview
+  - type: GettingStarted
+    url: https://api.aweber.com/#tag/Getting-Started
   - type: Documentation
     url: https://api.aweber.com/#tag/OAuth-2.0-Overview
   - type: APIReference
@@ -283,29 +345,156 @@ apis:
     url: authentication/aweber-authentication.yml
   - type: OAuthScopes
     url: scopes/aweber-scopes.yml
-  - type: GettingStarted
-    url: https://api.aweber.com/#tag/Getting-Started
-- aid: aweber:aweber-beta-api
-  name: AWeber Beta API
-  description: >-
-    The Beta API from AWeber — early-access endpoints served at https://api.aweber.com/2.0-beta/,
-    announced in API 1.4.0 on 2025-09-05 as a preview of the upcoming v2 API, primarily replacing
-    numeric ids with UUIDs. Currently one documented operation, broadcast links analytics. No
-    compatibility commitment is published; treat as unstable.
-  humanURL: https://api.aweber.com/#tag/Beta-Endpoints
-  baseURL: https://api.aweber.com/2.0-beta
-  tags:
-  - Beta
-  - Analytics
-  properties:
-  - type: OpenAPI
-    url: openapi/aweber-beta-api-openapi.yml
   - type: Documentation
     url: https://api.aweber.com/#tag/Beta-Endpoints
   - type: APIReference
     url: https://api.aweber.com/#tag/Beta-Endpoints
+  - type: ChangeLog
+    url: https://api.aweber.com/#tag/Developer-Changelog
+- aid: aweber:aweber-oauth-1-0a-reference-api
+  name: AWeber OAuth 1.0a Reference API
+  description: The OAuth 1.0a Reference API from AWeber — 2 operation(s) for oauth 1.0a reference.
+  humanURL: https://api.aweber.com/
+  baseURL: https://api.aweber.com/1.0
+  tags:
+  - OAuth 1.0a Reference
+  properties:
+  - type: OpenAPI
+    url: openapi/aweber-oauth-1-0a-reference-api-openapi.yml
+  - type: Documentation
+    url: https://api.aweber.com/
+  - type: APIReference
+    url: https://api.aweber.com/
   - type: Authentication
     url: https://api.aweber.com/#tag/OAuth-2.0-Overview
+  - type: GettingStarted
+    url: https://api.aweber.com/#tag/Getting-Started
+  - type: Documentation
+    url: https://api.aweber.com/#tag/OAuth-2.0-Overview
+  - type: APIReference
+    url: https://api.aweber.com/#tag/OAuth-2.0-Reference
+  - type: Authentication
+    url: authentication/aweber-authentication.yml
+  - type: OAuthScopes
+    url: scopes/aweber-scopes.yml
+  - type: Documentation
+    url: https://api.aweber.com/#tag/Beta-Endpoints
+  - type: APIReference
+    url: https://api.aweber.com/#tag/Beta-Endpoints
+  - type: ChangeLog
+    url: https://api.aweber.com/#tag/Developer-Changelog
+- aid: aweber:aweber-oauth-2-0-reference-api
+  name: AWeber OAuth 2.0 Reference API
+  description: >-
+    These endpoints are used to authenticate with the api. The AWeber API uses
+
+    the OAuth 2.0 model to handle authentication. OAuth is a standardized way
+
+    for services to grant permission on a user's behalf to another application,
+
+    without exposing their credentials (ie - username and password).
+  humanURL: https://api.aweber.com/
+  baseURL: https://api.aweber.com/1.0
+  tags:
+  - OAuth 2.0 Reference
+  properties:
+  - type: OpenAPI
+    url: openapi/aweber-oauth-2-0-reference-api-openapi.yml
+  - type: Documentation
+    url: https://api.aweber.com/
+  - type: APIReference
+    url: https://api.aweber.com/
+  - type: Authentication
+    url: https://api.aweber.com/#tag/OAuth-2.0-Overview
+  - type: GettingStarted
+    url: https://api.aweber.com/#tag/Getting-Started
+  - type: Documentation
+    url: https://api.aweber.com/#tag/OAuth-2.0-Overview
+  - type: APIReference
+    url: https://api.aweber.com/#tag/OAuth-2.0-Reference
+  - type: Authentication
+    url: authentication/aweber-authentication.yml
+  - type: OAuthScopes
+    url: scopes/aweber-scopes.yml
+  - type: Documentation
+    url: https://api.aweber.com/#tag/Beta-Endpoints
+  - type: APIReference
+    url: https://api.aweber.com/#tag/Beta-Endpoints
+  - type: ChangeLog
+    url: https://api.aweber.com/#tag/Developer-Changelog
+- aid: aweber:aweber-webforms-api
+  name: AWeber Webforms API
+  description: >-
+    ### What is it?
+
+
+    Represents the collection of sign-up forms associated with the AWeber Customer
+
+    Account's lists.
+
+
+    Webforms are sets of customized HTML and javascript that are used to put up a sign-up forms
+
+    on a customer's website.  The Webform can be modified in the AWeber Control Panel and if you
+
+    include the javascript source link on any web page, that form will be displayed.
+
+
+    Webforms can also be subject to split-tests to compare conversion effectiveness.  Webforms that
+
+    belong to a split test are listed as *components* of the split test and can be retrieved by
+
+    following the `components_collection_link` of the split test. The statistics of each component
+
+    include only displays of that Webform where it was displayed from a split test.
+
+
+    Use this set of resources to retrieve information about the available sign-up forms and associated
+
+    split tests.  The collection responses are sorted by the appropriate identifier and paginated using
+
+    `next_collection_link` and `prev_collection_link` properties. See
+
+    [How Collections are Represented](#collection-representation) for details on collection traversal.
+
+
+    ### Related endpoints
+
+
+    * [Webforms](#tag/Webforms)
+
+
+    ### Related code examples
+
+
+    * [Get Webforms Detail](#tag/Get-Webforms-Detail)
+  humanURL: https://api.aweber.com/
+  baseURL: https://api.aweber.com/1.0
+  tags:
+  - Webforms
+  properties:
+  - type: OpenAPI
+    url: openapi/aweber-webforms-api-openapi.yml
+  - type: Documentation
+    url: https://api.aweber.com/
+  - type: APIReference
+    url: https://api.aweber.com/
+  - type: Authentication
+    url: https://api.aweber.com/#tag/OAuth-2.0-Overview
+  - type: GettingStarted
+    url: https://api.aweber.com/#tag/Getting-Started
+  - type: Documentation
+    url: https://api.aweber.com/#tag/OAuth-2.0-Overview
+  - type: APIReference
+    url: https://api.aweber.com/#tag/OAuth-2.0-Reference
+  - type: Authentication
+    url: authentication/aweber-authentication.yml
+  - type: OAuthScopes
+    url: scopes/aweber-scopes.yml
+  - type: Documentation
+    url: https://api.aweber.com/#tag/Beta-Endpoints
+  - type: APIReference
+    url: https://api.aweber.com/#tag/Beta-Endpoints
   - type: ChangeLog
     url: https://api.aweber.com/#tag/Developer-Changelog
 common:
