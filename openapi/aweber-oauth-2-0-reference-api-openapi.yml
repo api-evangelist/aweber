@@ -1,0 +1,482 @@
+openapi: 3.2.0
+info:
+  title: AWeber Authentication OAuth 2.0 Reference API
+  version: '1.0'
+  description: 'We are constantly working to improve this documentation. If you have
+
+    feedback and questions, please contact the AWeber API team at
+
+    api@aweber.com.
+
+
+    The AWeber API is a REST API that uses the OAuth 2.0 authentication model. We also offer webhooks.
+
+
+    Please see the below resources for further information:
+
+    - <a href="https://labs.aweber.com/docs/tos" target="_blank">Terms of Service</a>
+
+    - <a href="https://help.aweber.com/hc/en-us/articles/204031776" target="_blank">Showcasing an Integration</a>
+
+    - <a href="https://help.aweber.com/hc/en-us/sections/360000617213-API" target="_blank">Knowledge Base</a>
+
+    - <a href="https://status.aweber.com" target="_blank">API Status Page</a>
+
+    '
+  contact:
+    name: AWeber API Team
+    email: api@aweber.com
+    url: https://api.aweber.com/
+servers:
+- url: https://api.aweber.com/1.0
+  description: v1 API endpoints
+security:
+- OAuth 2.0: []
+tags:
+- name: OAuth 2.0 Reference
+  description: 'These endpoints are used to authenticate with the api. The AWeber API uses
+
+    the OAuth 2.0 model to handle authentication. OAuth is a standardized way
+
+    for services to grant permission on a user''s behalf to another application,
+
+    without exposing their credentials (ie - username and password).
+
+    '
+paths:
+  /oauth2/token:
+    post:
+      servers:
+      - url: https://auth.aweber.com/
+      parameters:
+      - in: header
+        name: Authorization
+        schema:
+          type: string
+          example: Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=
+          description: 'A base-64 encoded string for `client_id:client_secret`.
+
+            '
+      summary: Get a token
+      description: 'This endpoint is used to get an access token. This endpoint can obtain an access point from one of two
+
+        grant types.
+
+
+        In the initial authorization, a `grant_type` of `authorization_code` is used with the `authorization_code`
+
+        received from the URL the user is redirected to after authorizing the integration to their account.
+
+
+        If an access token is expired this endpoint can be used with a `grant_type` of `refresh_token` and the `refresh_token`
+
+        stored for the user''s access token.
+
+
+        This endpoint must be provided with the `client_id` and `client_secret` either in the `Authorization` header (preferred)
+
+        or in the request body.
+
+        '
+      tags:
+      - OAuth 2.0 Reference
+      requestBody:
+        $ref: '#/components/requestBodies/Token'
+      responses:
+        '200':
+          description: The request completed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    description: The access token, which will be used to represent this specific AWeber user's account and can be used to gain access to their data. It should be stored for later use, consider doing so in a database or some other local storage in your application.
+                    type: string
+                    example: '***************'
+                  expires_in:
+                    description: The time in seconds in which the access token will expire.
+                    type: integer
+                    example: 7200
+                  refresh_token:
+                    description: The refresh token, which will be used to refresh a user's access token. It should be stored for later use, consider doing so in a database or some other local storage in your application.
+                    type: string
+                    example: '***************'
+                  token_type:
+                    description: The type of token the access token will be used as.
+                    type: string
+                    example: bearer
+        '400':
+          description: The server cannot or will not process the request due to a client error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    description: 'An error object.
+
+                      One of the following errors may be received:
+
+
+                      | Error Type           | Explanation |
+
+                      |----------------------|-------------|
+
+                      | BadRequestError      | Request does not have OAuth credentials |
+
+
+                      Please see the message body for more details.
+
+                      '
+                    type: object
+                    properties:
+                      documentation_url:
+                        description: A link to the documentation that describes the error
+                        type: string
+                        example: https://api.aweber.com#badrequest
+                      message:
+                        description: A human friendly description of the error
+                        type: string
+                        example: Request does not have OAuth credentials. https://api.aweber.com#badrequest
+                      status:
+                        description: The HTTP status code
+                        type: integer
+                        example: 400
+                      type:
+                        description: The API error type
+                        type: string
+                        example: BadRequestError
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '410':
+          $ref: '#/components/responses/BlockedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      operationId: getAToken
+  /oauth2/revoke:
+    post:
+      servers:
+      - url: https://auth.aweber.com/
+      parameters:
+      - in: header
+        name: Authorization
+        schema:
+          type: string
+          example: Basic Y2xpZW50X2lkOmNsaWVudF9zZWNyZXQ=
+          description: 'A base-64 encoded string for `client_id:client_secret`. The client_secret <b>must</b> be left blank for public clients.
+
+            '
+      summary: Revoke a token
+      description: 'This endpoint is used to revoke an access or refresh token.
+
+        '
+      tags:
+      - OAuth 2.0 Reference
+      requestBody:
+        $ref: '#/components/requestBodies/Revoke'
+      responses:
+        '200':
+          description: The token has been deleted
+        '400':
+          $ref: '#/components/responses/OAuth2ErrorInvalidRequest'
+        '401':
+          $ref: '#/components/responses/OAuth2ErrorInvalidClient'
+        '410':
+          $ref: '#/components/responses/BlockedError'
+        '500':
+          $ref: '#/components/responses/OAuth2ErrorServerError'
+      operationId: revokeAToken
+components:
+  responses:
+    OAuth2ErrorServerError:
+      description: The request failed due to an internal error in the code or because of an external dependency failure
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: OAuth 2 error code
+                type: string
+                required: true
+                enum:
+                - server_error
+                example: server_error
+              error_description:
+                description: Human-readable error description
+                type: string
+                example: An internal server error has occurred
+              error_uri:
+                description: Link to troubleshooting documentation
+                type: string
+                format: url
+                example: https://api.aweber.com
+    OAuth2ErrorInvalidRequest:
+      description: 'OAuth 2 error response (see [RFC-6749])
+
+
+        [RFC-6749]: https://tools.ietf.org/html/rfc6749#section-5.2
+
+        '
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: OAuth 2 error code
+                type: string
+                required: true
+                enum:
+                - invalid_request
+                example: invalid_request
+              error_description:
+                description: Human-readable error description
+                type: string
+                example: Missing parameter or other invalid request, or trying to pass in a client secret for a public client
+              error_uri:
+                description: Link to troubleshooting documentation
+                type: string
+                format: url
+                example: https://api.aweber.com
+    UnauthorizedError:
+      description: The request could not be completed due to an authentication error
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/schemas/Endpoint Error'
+            - $ref: '#/schemas/Auth Error'
+    InternalServerError:
+      description: The request failed due to an internal error in the code or because of an external dependency failure
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | InternalServerError    | The request failed due to an internal error |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#internalerror
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Something went wrong.
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 500
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - InternalServerError
+    ServiceUnavailable:
+      description: The server is currently unavailable
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | ServiceUnavailableError | The server is unavailable |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#serviceunavailable
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Failed to communicate with endpoint
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 503
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - ServiceUnavailableError
+    BlockedError:
+      description: The request has been blocked
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | BlockedError         | This Request has been blocked            |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com/#blocked
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Blocked Error
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 410
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BlockedError
+    OAuth2ErrorInvalidClient:
+      description: 'OAuth 2 error response (see [RFC-6749])
+
+
+        [RFC-6749]: https://tools.ietf.org/html/rfc6749#section-5.2
+
+        '
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: OAuth 2 error code
+                type: string
+                required: true
+                enum:
+                - invalid_client
+                example: invalid_client
+              error_description:
+                description: Human-readable error description
+                type: string
+                example: public clients MUST NOT include secrets
+              error_uri:
+                description: Link to troubleshooting documentation
+                type: string
+                format: url
+                example: https://api.aweber.com
+  securitySchemes:
+    OAuth_2.0:
+      description: 'The following endpoints and scopes are used to authenticate.
+
+        '
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.aweber.com/oauth2/authorize
+          tokenUrl: https://auth.aweber.com/oauth2/token
+          refreshUrl: https://auth.aweber.com/oauth2/token
+          scopes:
+            account.read: '<br>
+
+              Access account information and associated integrations. <br>
+
+              <b>Required for the following endpoints:</b> get accounts, get account, get integrations, get integration
+
+              '
+            landing-page.read: '<br>
+
+              Retrieve landing pages <br>
+
+              <b>Required for the following endpoints:</b> get landing pages, get landing page
+
+              '
+            list.read: '<br>
+
+              Retrieve lists, custom fields, tags, and sign up forms <br>
+
+              <b>Required for the following endpoints:</b> get list, get lists, find lists, get tags for list, get custom fields, get custom field, get webforms for list, get split tests for list, get split test components, get split test component, get webforms for account, get split tests for account
+
+              '
+            list.write: '<br>
+
+              Create, edit, and delete custom fields <br>
+
+              <b>Required for the following endpoints:</b> add custom field, update custom field, delete custom field
+
+              '
+            subscriber.read: '<br>
+
+              Retrieve subscribers and their activity <br>
+
+              <b>Required for the following endpoints:</b> get subscribers, get subscriber, get subscriber activity, get subscribers for message, find subscribers for account, find subscribers for list
+
+              '
+            subscriber.write: '<br>
+
+              Create, edit, delete, retrieve, search for, and move subscribers <br>
+
+              <b>Required for the following endpoints:</b> add subscriber, move subscriber, update subscriber, delete subscriber
+
+              '
+            subscriber.read-extended: '<br>
+
+              Previously required to retrieve subscriber PII such as name, email, IP address, etc.  This functionality was moved to the "subscriber.read" scope
+
+              '
+            email.read: '<br>
+
+              Retrieve email activity related to broadcasts and follow-ups <br>
+
+              <b>Required for the following endpoints:</b> get messages, get message, get broadcasts, get broadcast, get message opens, get message open, get message tracked events, get message tracked event, get total broadcasts, get campaigns, get campaign, find campaigns, get broadcast statistics, get broadcast statistic
+
+              '
+            email.write: '<br>
+
+              Create and send email broadcasts <br>
+
+              <b>Required for the following endpoints:</b> create broadcast, update broadcast, delete broadcast, cancel broadcast, schedule broadcast
+
+              '

@@ -1,0 +1,1370 @@
+openapi: 3.2.0
+info:
+  title: AWeber Web Forms Webforms API
+  version: '1.0'
+  description: 'We are constantly working to improve this documentation. If you have
+
+    feedback and questions, please contact the AWeber API team at
+
+    api@aweber.com.
+
+
+    The AWeber API is a REST API that uses the OAuth 2.0 authentication model. We also offer webhooks.
+
+
+    Please see the below resources for further information:
+
+    - <a href="https://labs.aweber.com/docs/tos" target="_blank">Terms of Service</a>
+
+    - <a href="https://help.aweber.com/hc/en-us/articles/204031776" target="_blank">Showcasing an Integration</a>
+
+    - <a href="https://help.aweber.com/hc/en-us/sections/360000617213-API" target="_blank">Knowledge Base</a>
+
+    - <a href="https://status.aweber.com" target="_blank">API Status Page</a>
+
+    '
+  contact:
+    name: AWeber API Team
+    email: api@aweber.com
+    url: https://api.aweber.com/
+servers:
+- url: https://api.aweber.com/1.0
+  description: v1 API endpoints
+security:
+- OAuth 2.0: []
+tags:
+- name: Webforms
+  description: '### What is it?
+
+
+    Represents the collection of sign-up forms associated with the AWeber Customer
+
+    Account''s lists.
+
+
+    Webforms are sets of customized HTML and javascript that are used to put up a sign-up forms
+
+    on a customer''s website.  The Webform can be modified in the AWeber Control Panel and if you
+
+    include the javascript source link on any web page, that form will be displayed.
+
+
+    Webforms can also be subject to split-tests to compare conversion effectiveness.  Webforms that
+
+    belong to a split test are listed as *components* of the split test and can be retrieved by
+
+    following the `components_collection_link` of the split test. The statistics of each component
+
+    include only displays of that Webform where it was displayed from a split test.
+
+
+    Use this set of resources to retrieve information about the available sign-up forms and associated
+
+    split tests.  The collection responses are sorted by the appropriate identifier and paginated using
+
+    `next_collection_link` and `prev_collection_link` properties. See
+
+    [How Collections are Represented](#collection-representation) for details on collection traversal.
+
+
+    ### Related endpoints
+
+
+    * [Webforms](#tag/Webforms)
+
+
+    ### Related code examples
+
+
+    * [Get Webforms Detail](#tag/Get-Webforms-Detail)
+
+    '
+paths:
+  /accounts/{accountId}?ws.op=getWebForms:
+    get:
+      summary: Get webforms for account
+      description: "This endpoint is used to retrieve webforms for all lists on an account.\n\nCheck out related examples:\n\n  * Get Webforms Detail (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-webforms-detail\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-webforms-detail\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Webforms%20Detail.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Example.GetWebformsDetail\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_webforms_details.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-webforms-details.js\" target=\"_blank\">Node.js</a> )"
+      tags:
+      - Webforms
+      parameters:
+      - $ref: '#/components/parameters/accountId'
+      - name: ws.op
+        in: query
+        required: true
+        description: The method name - expecting "getWebForms"
+        schema:
+          type: string
+          enum:
+          - getWebForms
+      - name: ws.size
+        in: query
+        required: true
+        description: The pagination total entries to retrieve
+        schema:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 100
+          default: 100
+      - name: ws.start
+        in: query
+        required: true
+        description: The pagination starting offset
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+          default: 0
+      security:
+      - OAuth 2.0:
+        - list.read
+      x-code-samples:
+      - lang: Shell
+        source: "curl -G \\\n  https://api.aweber.com/1.0/accounts/{accountId} \\\n  -d ws.op=getWebForms \\\n  -H 'Authorization: Bearer {YOUR_ACCESS_TOKEN}'\n"
+      - lang: Python
+        source: "headers = {'Accept': 'application/json',\n           'User-Agent': 'AWeber-Python-code-sample/1.0',\n           'Authorization': f'Bearer {access_token}'}\nurl = f'https://api.aweber.com/1.0/accounts/{account_id}'\nparams = urlencode({'ws.op': 'getWebForms'})\nsubs_url = '{}?{}'.format(url, params)\nresponse = requests.get(subs_url, headers=headers)\nprint(response.json())\n"
+      - lang: PHP
+        source: "$headers = [\n    'User-Agent' => 'AWeber-PHP-code-sample/1.0',\n    'Accept' => 'application/json',\n    'Authorization' => 'Bearer $token',\n];\n$url = \"https://api.aweber.com/1.0/accounts/{$accountId}\";\n$params = ['ws.op' => 'getWebForms'];\n$subsUrl = $url . '?' . http_build_query($params);\n$response = $client->get($subsUrl, ['headers' => $headers]);\n$body = json_decode($response->getBody(), true);\nprint_r($body);\n"
+      - lang: C#
+        source: "const string url = \"https://api.aweber.com/1.0/accounts/{accountId}\";\nvar queryParams = new Dictionary<string, string>\n{\n  {\"ws.op\", \"getWebForms\"}\n};\nvar encodedQueryParams = string.Join(\"&\", queryParams.Select(\n  kvp => string.Format(\"{0}={1}\", kvp.Key, Uri.EscapeDataString(kvp.Value))));\nvar getUrl = string.Format(\"{0}?{1}\", url, encodedQueryParams);\nvar request = new HttpRequestMessage(HttpMethod.Get, getUrl);\nrequest.Headers.Add(\"Accept\",\"application/json\");\nrequest.Headers.Add(\"User-Agent\",\"AWeber-CSharp-code-sample/1.0\");\nrequest.Headers.Add(\"Authorization\", $\"Bearer {Token}\");\nvar response = await Client.SendAsync(request);\nConsole.Write(response.Content.ReadAsStringAsync());\n"
+      - lang: JavaScript
+        label: Node.js
+        source: "const headers = {\n  \"Accept\": \"application/json\",\n  \"User-Agent\": \"AWeber-Node-code-sample/1.0\",\n  \"Authorization\": `Bearer ${accessToken}`\n};\nquerystring = require(\"querystring\");\nconst params = querystring.stringify({\n  'ws.op': 'getWebForms'\n});\nconst url = `https://api.aweber.com/1.0/accounts/${accountId}?${params}`;\nfetch(url, { headers: headers })\n  .then(response => response.json())\n  .then(data => {\n    console.log(data)\n})\n"
+      - lang: Ruby
+        source: "headers = {\n  'Accept': 'application/json',\n  'User-Agent': 'AWeber-Ruby-code-sample/1.0',\n  'Authorization': \"Bearer #{access_token}\"\n}\nresponse = Faraday.get(\n  \"https://api.aweber.com/1.0/accounts/#{account_id}\", {\n    'ws.op': 'getWebForms'\n  }\n) do |req|\n  req.headers = headers\nend\nputs response.body\n"
+      responses:
+        '200':
+          description: The request completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webforms'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/NotAllowed'
+        '410':
+          $ref: '#/components/responses/BlockedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      operationId: getWebformsForAccount
+  /accounts/{accountId}?ws.op=getWebFormSplitTests:
+    get:
+      summary: Get split tests for account
+      description: "This endpoint is used to retrieve webform split tests for all lists on an account.\n\nCheck out related examples:\n\n  * Get Webforms Detail (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-webforms-detail\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-webforms-detail\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Webforms%20Detail.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Example.GetWebformsDetail\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_webforms_details.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-webforms-details.js\" target=\"_blank\">Node.js</a> )"
+      tags:
+      - Webforms
+      parameters:
+      - $ref: '#/components/parameters/accountId'
+      - name: ws.op
+        in: query
+        required: true
+        description: The method name - expecting "getWebFormSplitTests"
+        schema:
+          type: string
+          enum:
+          - getWebFormSplitTests
+      - name: ws.size
+        in: query
+        required: true
+        description: The pagination total entries to retrieve
+        schema:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 100
+          default: 100
+      - name: ws.start
+        in: query
+        required: true
+        description: The pagination starting offset
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+          default: 0
+      security:
+      - OAuth 2.0:
+        - list.read
+      x-code-samples:
+      - lang: Shell
+        source: "curl -G \\\n  https://api.aweber.com/1.0/accounts/{accountId} \\\n  -d ws.op=getWebFormSplitTests \\\n  -H 'Authorization: Bearer {YOUR_ACCESS_TOKEN}'\n"
+      - lang: Python
+        source: "headers = {'Accept': 'application/json',\n           'User-Agent': 'AWeber-Python-code-sample/1.0',\n           'Authorization': f'Bearer {access_token}'}\nurl = f'https://api.aweber.com/1.0/accounts/{account_id}'\nparams = urlencode({'ws.op': 'getWebFormSplitTests'})\nsubs_url = '{}?{}'.format(url, params)\nresponse = requests.get(subs_url, headers=headers)\nprint(response.json())\n"
+      - lang: PHP
+        source: "$headers = [\n    'User-Agent' => 'AWeber-PHP-code-sample/1.0',\n    'Accept' => 'application/json',\n    'Authorization' => 'Bearer $token',\n];\n$url = \"https://api.aweber.com/1.0/accounts/{$accountId}\";\n$params = ['ws.op' => 'getWebFormSplitTests'];\n$subsUrl = $url . '?' . http_build_query($params);\n$response = $client->get($subsUrl, ['headers' => $headers]);\n$body = json_decode($response->getBody(), true);\nprint_r($body);\n"
+      - lang: C#
+        source: "const string url = \"https://api.aweber.com/1.0/accounts/{accountId}\";\nvar queryParams = new Dictionary<string, string>\n{\n  {\"ws.op\", \"getWebFormSplitTests\"}\n};\nvar encodedQueryParams = string.Join(\"&\", queryParams.Select(\n  kvp => string.Format(\"{0}={1}\", kvp.Key, Uri.EscapeDataString(kvp.Value))));\nvar getUrl = string.Format(\"{0}?{1}\", url, encodedQueryParams);\nvar request = new HttpRequestMessage(HttpMethod.Get, getUrl);\nrequest.Headers.Add(\"Accept\",\"application/json\");\nrequest.Headers.Add(\"User-Agent\",\"AWeber-CSharp-code-sample/1.0\");\nrequest.Headers.Add(\"Authorization\", $\"Bearer {Token}\");\nvar response = await Client.SendAsync(request);\nConsole.Write(response.Content.ReadAsStringAsync());\n"
+      - lang: JavaScript
+        label: Node.js
+        source: "const headers = {\n  \"Accept\": \"application/json\",\n  \"User-Agent\": \"AWeber-Node-code-sample/1.0\",\n  \"Authorization\": `Bearer ${accessToken}`\n};\nquerystring = require(\"querystring\");\nconst params = querystring.stringify({\n  'ws.op': 'getWebFormSplitTests'\n});\nconst url = `https://api.aweber.com/1.0/accounts/${accountId}?${params}`;\nfetch(url, { headers: headers })\n  .then(response => response.json())\n  .then(data => {\n    console.log(data)\n})\n"
+      - lang: Ruby
+        source: "headers = {\n  'Accept': 'application/json',\n  'User-Agent': 'AWeber-Ruby-code-sample/1.0',\n  'Authorization': \"Bearer #{access_token}\"\n}\nresponse = Faraday.get(\n  \"https://api.aweber.com/1.0/accounts/#{account_id}\", {\n    'ws.op': 'getWebFormSplitTests'\n  }\n) do |req|\n  req.headers = headers\nend\nputs response.body\n"
+      responses:
+        '200':
+          description: The request completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebFormSplitTests'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/NotAllowed'
+        '410':
+          $ref: '#/components/responses/BlockedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      operationId: getSplitTestsForAccount
+  /accounts/{accountId}/lists/{listId}/web_forms:
+    get:
+      summary: Get webforms for list
+      description: "This endpoint is used to retrieve a collection of webforms for a list\n\nCheck out related examples:\n\n  * Get Webforms Detail (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-webforms-detail\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-webforms-detail\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Webforms%20Detail.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Example.GetWebformsDetail\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_webforms_details.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-webforms-details.js\" target=\"_blank\">Node.js</a> )"
+      tags:
+      - Webforms
+      parameters:
+      - $ref: '#/components/parameters/accountId'
+      - $ref: '#/components/parameters/listId'
+      - $ref: '#/components/parameters/wsStart'
+      - $ref: '#/components/parameters/wsSize'
+      security:
+      - OAuth 2.0:
+        - list.read
+      x-code-samples:
+      - lang: Shell
+        source: "curl -G \\\n  https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/web_forms \\\n  -H 'Authorization: Bearer {YOUR_ACCESS_TOKEN}'\n"
+      - lang: Python
+        source: "headers = {'Accept': 'application/json',\n           'User-Agent': 'AWeber-Python-code-sample/1.0',\n           'Authorization': f'Bearer {access_token}'}\nurl = (f'https://api.aweber.com/1.0/accounts/{account_id}'\n       f'/lists/{list_id}/web_forms')\nresponse = requests.get(url, headers=headers)\nprint(response.json())\n"
+      - lang: PHP
+        source: "$headers = [\n    'User-Agent' => 'AWeber-PHP-code-sample/1.0',\n    'Accept' => 'application/json',\n    'Authorization' => 'Bearer $token',\n];\n$url = \"https://api.aweber.com/1.0/accounts/{$accountId}/lists/{$listId}/web_forms\";\n$response = $client->get($url, ['headers' => $headers]);\n$body = json_decode($response->getBody(), true);\nprint_r($body);\n"
+      - lang: C#
+        source: 'const string url = "https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/web_forms";
+
+          var request = new HttpRequestMessage(HttpMethod.Get, url);
+
+          request.Headers.Add("Accept","application/json");
+
+          request.Headers.Add("User-Agent","AWeber-CSharp-code-sample/1.0");
+
+          request.Headers.Add("Authorization", $"Bearer {Token}");
+
+          var response = await Client.SendAsync(request);
+
+          Console.Write(response.Content.ReadAsStringAsync());
+
+          '
+      - lang: JavaScript
+        label: Node.js
+        source: "const headers = {\n  \"Accept\": \"application/json\",\n  \"User-Agent\": \"AWeber-Node-code-sample/1.0\",\n  \"Authorization\": `Bearer ${accessToken}`\n};\nconst url = `https://api.aweber.com/1.0/accounts/${accountId}/lists/${listId}/web_forms`;\nfetch(url, { headers: headers })\n  .then(response => response.json())\n  .then(data => {\n    console.log(data)\n})\n"
+      - lang: Ruby
+        source: "headers = {\n  'Accept': 'application/json',\n  'User-Agent': 'AWeber-Ruby-code-sample/1.0',\n  'Authorization': \"Bearer #{access_token}\"\n}\nresponse = Faraday.get(\n  \"https://api.aweber.com/1.0/accounts/#{account_id}/\" \\\n  \"lists/#{list_id}/web_forms\"\n) do |req|\n  req.headers = headers\nend\nputs response.body\n"
+      responses:
+        '200':
+          description: The request completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webforms'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/NotAllowed'
+        '410':
+          $ref: '#/components/responses/BlockedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      operationId: getWebformsForList
+  /accounts/{accountId}/lists/{listId}/web_forms/{webformId}:
+    get:
+      summary: Get webform for list
+      description: "This endpoint is used to retrieve single webform for a list\n\nCheck out related examples:\n\n  * Get Webforms Detail (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-webforms-detail\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-webforms-detail\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Webforms%20Detail.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Example.GetWebformsDetail\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_webforms_details.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-webforms-details.js\" target=\"_blank\">Node.js</a> )"
+      tags:
+      - Webforms
+      parameters:
+      - $ref: '#/components/parameters/accountId'
+      - $ref: '#/components/parameters/listId'
+      - $ref: '#/components/parameters/webformId'
+      x-code-samples:
+      - lang: Shell
+        source: "curl -G \\\n  https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/web_forms/{webformId} \\\n  -H 'Authorization: Bearer {YOUR_ACCESS_TOKEN}'\n"
+      - lang: Python
+        source: "headers = {'Accept': 'application/json',\n           'User-Agent': 'AWeber-Python-code-sample/1.0',\n           'Authorization': f'Bearer {access_token}'}\nurl = (f'https://api.aweber.com/1.0/accounts/{account_id}'\n       f'/lists/{list_id}/web_forms/{webform_id}')\nresponse = requests.get(url, headers=headers)\nprint(response.json())\n"
+      - lang: PHP
+        source: "$headers = [\n    'User-Agent' => 'AWeber-PHP-code-sample/1.0',\n    'Accept' => 'application/json',\n    'Authorization' => 'Bearer $token',\n];\n$url = \"https://api.aweber.com/1.0/accounts/{$accountId}/lists/{$listId}/web_forms/{$webformId}\";\n$response = $client->get($url, ['headers' => $headers]);\n$body = json_decode($response->getBody(), true);\nprint_r($body);\n"
+      - lang: C#
+        source: 'const string url = "https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/web_forms/{webformId}";
+
+          var request = new HttpRequestMessage(HttpMethod.Get, url);
+
+          request.Headers.Add("Accept","application/json");
+
+          request.Headers.Add("User-Agent","AWeber-CSharp-code-sample/1.0");
+
+          request.Headers.Add("Authorization", $"Bearer {Token}");
+
+          var response = await Client.SendAsync(request);
+
+          Console.Write(response.Content.ReadAsStringAsync());
+
+          '
+      - lang: JavaScript
+        label: Node.js
+        source: "const headers = {\n  \"Accept\": \"application/json\",\n  \"User-Agent\": \"AWeber-Node-code-sample/1.0\",\n  \"Authorization\": `Bearer ${accessToken}`\n};\nconst url = `https://api.aweber.com/1.0/accounts/${accountId}/lists/${listId}/web_forms/${webFormId}`;\nfetch(url, { headers: headers })\n  .then(response => response.json())\n  .then(data => {\n    console.log(data)\n})\n"
+      - lang: Ruby
+        source: "headers = {\n  'Accept': 'application/json',\n  'User-Agent': 'AWeber-Ruby-code-sample/1.0',\n  'Authorization': \"Bearer #{access_token}\"\n}\nresponse = Faraday.get(\n  \"https://api.aweber.com/1.0/accounts/#{account_id}/\" \\\n  \"lists/#{list_id}/web_forms/#{web_form_id}\"\n) do |req|\n  req.headers = headers\nend\nputs response.body\n"
+      responses:
+        '200':
+          description: The request completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webform'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/NotAllowed'
+        '410':
+          $ref: '#/components/responses/BlockedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      operationId: getWebformForList
+  /accounts/{accountId}/lists/{listId}/web_form_split_tests:
+    get:
+      summary: Get split tests for list
+      description: "This endpoint is used to retrieve webform split tests for a list.\n\nCheck out related examples:\n\n  * Get Webforms Detail (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-webforms-detail\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-webforms-detail\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Webforms%20Detail.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Example.GetWebformsDetail\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_webforms_details.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-webforms-details.js\" target=\"_blank\">Node.js</a> )"
+      tags:
+      - Webforms
+      parameters:
+      - $ref: '#/components/parameters/accountId'
+      - $ref: '#/components/parameters/listId'
+      - $ref: '#/components/parameters/wsStart'
+      - $ref: '#/components/parameters/wsSize'
+      security:
+      - OAuth 2.0:
+        - list.read
+      x-code-samples:
+      - lang: Shell
+        source: "curl -G \\\n  https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/web_form_split_tests \\\n  -H 'Authorization: Bearer {YOUR_ACCESS_TOKEN}'\n"
+      - lang: Python
+        source: "headers = {'Accept': 'application/json',\n           'User-Agent': 'AWeber-Python-code-sample/1.0',\n           'Authorization': f'Bearer {access_token}'}\nurl = (f'https://api.aweber.com/1.0/accounts/{account_id}'\n       f'/lists/{list_id}/web_form_split_tests')\nresponse = requests.get(url, headers=headers)\nprint(response.json())\n"
+      - lang: PHP
+        source: "$headers = [\n    'User-Agent' => 'AWeber-PHP-code-sample/1.0',\n    'Accept' => 'application/json',\n    'Authorization' => 'Bearer $token',\n];\n$url = \"https://api.aweber.com/1.0/accounts/{$accountId}/lists/{$listId}/web_form_split_tests\";\n$response = $client->get($url, ['headers' => $headers]);\n$body = json_decode($response->getBody(), true);\nprint_r($body);\n"
+      - lang: C#
+        source: 'const string url = "https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/web_form_split_tests";
+
+          var request = new HttpRequestMessage(HttpMethod.Get, url);
+
+          request.Headers.Add("Accept","application/json");
+
+          request.Headers.Add("User-Agent","AWeber-CSharp-code-sample/1.0");
+
+          request.Headers.Add("Authorization", $"Bearer {Token}");
+
+          var response = await Client.SendAsync(request);
+
+          Console.Write(response.Content.ReadAsStringAsync());
+
+          '
+      - lang: JavaScript
+        label: Node.js
+        source: "const headers = {\n  \"Accept\": \"application/json\",\n  \"User-Agent\": \"AWeber-Node-code-sample/1.0\",\n  \"Authorization\": `Bearer ${accessToken}`\n};\nconst url = `https://api.aweber.com/1.0/accounts/${accountId}/lists/${listId}/web_form_split_tests`;\nfetch(url, { headers: headers })\n  .then(response => response.json())\n  .then(data => {\n    console.log(data)\n})\n"
+      - lang: Ruby
+        source: "headers = {\n  'Accept': 'application/json',\n  'User-Agent': 'AWeber-Ruby-code-sample/1.0',\n  'Authorization': \"Bearer #{access_token}\"\n}\nresponse = Faraday.get(\n  \"https://api.aweber.com/1.0/accounts/#{account_id}/\" \\\n  \"lists/#{list_id}/web_form_split_tests\"\n) do |req|\n  req.headers = headers\nend\nputs response.body\n"
+      responses:
+        '200':
+          description: The request completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebFormSplitTests'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/NotAllowed'
+        '410':
+          $ref: '#/components/responses/BlockedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      operationId: getSplitTestsForList
+  /accounts/{accountId}/lists/{listId}/web_form_split_tests/{splitTestId}:
+    get:
+      summary: Get split test for list
+      description: "This endpoint is used to retrieve a specific webform split test.\n\nCheck out related examples:\n\n  * Get Webforms Detail (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-webforms-detail\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-webforms-detail\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Webforms%20Detail.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Example.GetWebformsDetail\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_webforms_details.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-webforms-details.js\" target=\"_blank\">Node.js</a> )"
+      tags:
+      - Webforms
+      parameters:
+      - $ref: '#/components/parameters/accountId'
+      - $ref: '#/components/parameters/listId'
+      - $ref: '#/components/parameters/splitTestId'
+      security:
+      - OAuth 2.0:
+        - list.read
+      x-code-samples:
+      - lang: Shell
+        source: "curl -G \\\n  https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/web_form_split_tests/{splitTestId} \\\n  -H 'Authorization: Bearer {YOUR_ACCESS_TOKEN}'\n"
+      - lang: Python
+        source: "headers = {'Accept': 'application/json',\n           'User-Agent': 'AWeber-Python-code-sample/1.0',\n           'Authorization': f'Bearer {access_token}'}\nurl = (f'https://api.aweber.com/1.0/accounts/{account_id}'\n       f'/lists/{list_id}/web_form_split_tests/{split_test_id}')\nresponse = requests.get(url, headers=headers)\nprint(response.json())\n"
+      - lang: PHP
+        source: "$headers = [\n    'User-Agent' => 'AWeber-PHP-code-sample/1.0',\n    'Accept' => 'application/json',\n    'Authorization' => 'Bearer $token',\n];\n$url = \"https://api.aweber.com/1.0/accounts/{$accountId}/lists/{$listId}/web_form_split_tests/{$splitTestId}\";\n$response = $client->get($url, ['headers' => $headers]);\n$body = json_decode($response->getBody(), true);\nprint_r($body);\n"
+      - lang: C#
+        source: 'const string url = "https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/web_form_split_tests/{splitTestId}";
+
+          var request = new HttpRequestMessage(HttpMethod.Get, url);
+
+          request.Headers.Add("Accept","application/json");
+
+          request.Headers.Add("User-Agent","AWeber-CSharp-code-sample/1.0");
+
+          request.Headers.Add("Authorization", $"Bearer {Token}");
+
+          var response = await Client.SendAsync(request);
+
+          Console.Write(response.Content.ReadAsStringAsync());
+
+          '
+      - lang: JavaScript
+        label: Node.js
+        source: "const headers = {\n  \"Accept\": \"application/json\",\n  \"User-Agent\": \"AWeber-Node-code-sample/1.0\",\n  \"Authorization\": `Bearer ${accessToken}`\n};\nconst url = `https://api.aweber.com/1.0/accounts/${accountId}/lists/${listId}/web_form_split_tests/${splitTestId}`;\nfetch(url, { headers: headers })\n  .then(response => response.json())\n  .then(data => {\n    console.log(data)\n})\n"
+      - lang: Ruby
+        source: "headers = {\n  'Accept': 'application/json',\n  'User-Agent': 'AWeber-Ruby-code-sample/1.0',\n  'Authorization': \"Bearer #{access_token}\"\n}\nresponse = Faraday.get(\n  \"https://api.aweber.com/1.0/accounts/#{account_id}/\" \\\n  \"lists/#{list_id}/web_form_split_tests/#{split_test_id}\"\n) do |req|\n  req.headers = headers\nend\nputs response.body\n"
+      responses:
+        '200':
+          description: The request completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebformSplitTest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/NotAllowed'
+        '410':
+          $ref: '#/components/responses/BlockedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      operationId: getSplitTestForList
+  /accounts/{accountId}/lists/{listId}/web_form_split_tests/{splitTestId}/components:
+    get:
+      summary: Get split test components
+      description: "This endpoint is used to retrieve a collection of webform split test components.\n\nCheck out related examples:\n\n  * Get Webforms Detail (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-webforms-detail\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-webforms-detail\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Webforms%20Detail.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Example.GetWebformsDetail\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_webforms_details.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-webforms-details.js\" target=\"_blank\">Node.js</a> )"
+      tags:
+      - Webforms
+      parameters:
+      - $ref: '#/components/parameters/accountId'
+      - $ref: '#/components/parameters/listId'
+      - $ref: '#/components/parameters/splitTestId'
+      - $ref: '#/components/parameters/wsStart'
+      - $ref: '#/components/parameters/wsSize'
+      security:
+      - OAuth 2.0:
+        - list.read
+      x-code-samples:
+      - lang: Shell
+        source: "curl -G \\\n  https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/web_form_split_tests/{splitTestId}/components \\\n  -H 'Authorization: Bearer {YOUR_ACCESS_TOKEN}'\n"
+      - lang: Python
+        source: "headers = {'Accept': 'application/json',\n           'User-Agent': 'AWeber-Python-code-sample/1.0',\n           'Authorization': f'Bearer {access_token}'}\nurl = (f'https://api.aweber.com/1.0/accounts/{account_id}'\n       f'/lists/{list_id}/web_form_split_tests/{split_test_id}/components')\nresponse = requests.get(url, headers=headers)\nprint(response.json())\n"
+      - lang: PHP
+        source: "$headers = [\n    'User-Agent' => 'AWeber-PHP-code-sample/1.0',\n    'Accept' => 'application/json',\n    'Authorization' => 'Bearer $token',\n];\n$url = \"https://api.aweber.com/1.0/accounts/{$accountId}/lists/{$listId}/web_form_split_tests/{$splitTestId}/components\";\n$response = $client->get($url, ['headers' => $headers]);\n$body = json_decode($response->getBody(), true);\nprint_r($body);\n"
+      - lang: C#
+        source: 'const string url = "https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/web_form_split_tests/{splitTestId}/components";
+
+          var request = new HttpRequestMessage(HttpMethod.Get, url);
+
+          request.Headers.Add("Accept","application/json");
+
+          request.Headers.Add("User-Agent","AWeber-CSharp-code-sample/1.0");
+
+          request.Headers.Add("Authorization", $"Bearer {Token}");
+
+          var response = await Client.SendAsync(request);
+
+          Console.Write(response.Content.ReadAsStringAsync());
+
+          '
+      - lang: JavaScript
+        label: Node.js
+        source: "const headers = {\n  \"Accept\": \"application/json\",\n  \"User-Agent\": \"AWeber-Node-code-sample/1.0\",\n  \"Authorization\": `Bearer ${accessToken}`\n};\nconst url = `https://api.aweber.com/1.0/accounts/${accountId}/lists/${listId}/web_form_split_tests/${splitTestId}/components`;\nfetch(url, { headers: headers })\n  .then(response => response.json())\n  .then(data => {\n    console.log(data)\n})\n"
+      - lang: Ruby
+        source: "headers = {\n  'Accept': 'application/json',\n  'User-Agent': 'AWeber-Ruby-code-sample/1.0',\n  'Authorization': \"Bearer #{access_token}\"\n}\nresponse = Faraday.get(\n  \"https://api.aweber.com/1.0/accounts/#{account_id}/\" \\\n  \"lists/#{list_id}/web_form_split_tests/#{split_test_id}/components\"\n) do |req|\n  req.headers = headers\nend\nputs response.body\n"
+      responses:
+        '200':
+          description: The request completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebformSplitTestComponents'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/NotAllowed'
+        '410':
+          $ref: '#/components/responses/BlockedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      operationId: getSplitTestComponents
+  /accounts/{accountId}/lists/{listId}/web_form_split_tests/{splitTestId}/components/{splitTestComponentId}:
+    get:
+      summary: Get split test component
+      description: "This endpoint is used to retrieve a collection of webform split test components.\n\nCheck out related examples:\n\n  * Get Webforms Detail (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-webforms-detail\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-webforms-detail\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Webforms%20Detail.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Example.GetWebformsDetail\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_webforms_details.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-webforms-details.js\" target=\"_blank\">Node.js</a> )"
+      tags:
+      - Webforms
+      parameters:
+      - $ref: '#/components/parameters/accountId'
+      - $ref: '#/components/parameters/listId'
+      - $ref: '#/components/parameters/splitTestId'
+      - $ref: '#/components/parameters/splitTestComponentId'
+      security:
+      - OAuth 2.0:
+        - list.read
+      x-code-samples:
+      - lang: Shell
+        source: "curl -G \\\n  https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/web_form_split_tests/{splitTestId}/components/{splitTestComponentId} \\\n  -H 'Authorization: Bearer {YOUR_ACCESS_TOKEN}'\n"
+      - lang: Python
+        source: "headers = {'Accept': 'application/json',\n           'User-Agent': 'AWeber-Python-code-sample/1.0',\n           'Authorization': f'Bearer {access_token}'}\nurl = (f'https://api.aweber.com/1.0/accounts/{account_id}'\n       f'/lists/{list_id}/web_form_split_tests/{split_test_id}/components'\n       f'/{split_test_component_id}')\nresponse = requests.get(url, headers=headers)\nprint(response.json())\n"
+      - lang: PHP
+        source: "$headers = [\n    'User-Agent' => 'AWeber-PHP-code-sample/1.0',\n    'Accept' => 'application/json',\n    'Authorization' => 'Bearer $token',\n];\n$url = \"https://api.aweber.com/1.0/accounts/{$accountId}/lists/{$listId}/web_form_split_tests/{$splitTestId}/components/{$splitTestComponentId}\";\n$response = $client->get($url, ['headers' => $headers]);\n$body = json_decode($response->getBody(), true);\nprint_r($body);\n"
+      - lang: C#
+        source: 'const string url = "https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/web_form_split_tests/{splitTestId}/components/{splitTestComponentId}";
+
+          var request = new HttpRequestMessage(HttpMethod.Get, url);
+
+          request.Headers.Add("Accept","application/json");
+
+          request.Headers.Add("User-Agent","AWeber-CSharp-code-sample/1.0");
+
+          request.Headers.Add("Authorization", $"Bearer {Token}");
+
+          var response = await Client.SendAsync(request);
+
+          Console.Write(response.Content.ReadAsStringAsync());
+
+          '
+      - lang: JavaScript
+        label: Node.js
+        source: "const headers = {\n  \"Accept\": \"application/json\",\n  \"User-Agent\": \"AWeber-Node-code-sample/1.0\",\n  \"Authorization\": `Bearer ${accessToken}`\n};\nconst url = `https://api.aweber.com/1.0/accounts/${accountId}/lists/${listId}/web_form_split_tests/${split_testId}/components/${splitTestComponentId}`;\nfetch(url, { headers: headers })\n  .then(response => response.json())\n  .then(data => {\n    console.log(data)\n})\n"
+      - lang: Ruby
+        source: "headers = {\n  'Accept': 'application/json',\n  'User-Agent': 'AWeber-Ruby-code-sample/1.0',\n  'Authorization': \"Bearer #{access_token}\"\n}\nresponse = Faraday.get(\n  \"https://api.aweber.com/1.0/accounts/#{account_id}/\" \\\n  \"lists/#{list_id}/web_form_split_tests/#{split_test_id}/\" \\\n  \"components/#{split_test_component_id}\"\n) do |req|\n  req.headers = headers\nend\nputs response.body\n"
+      responses:
+        '200':
+          description: The request completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebformSplitTestComponent'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          $ref: '#/components/responses/ForbiddenError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/NotAllowed'
+        '410':
+          $ref: '#/components/responses/BlockedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      operationId: getSplitTestComponent
+components:
+  parameters:
+    listId:
+      name: listId
+      in: path
+      description: The list ID
+      required: true
+      schema:
+        type: integer
+        format: int32
+    wsStart:
+      name: ws.start
+      in: query
+      description: The pagination starting offset
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        default: 0
+    splitTestComponentId:
+      name: splitTestComponentId
+      in: path
+      description: The webform split test component ID
+      required: true
+      schema:
+        type: string
+    accountId:
+      name: accountId
+      in: path
+      description: The account ID
+      required: true
+      schema:
+        type: integer
+        format: int32
+    webformId:
+      name: webformId
+      required: true
+      in: path
+      description: The webform ID
+      schema:
+        type: integer
+        format: int32
+    splitTestId:
+      name: splitTestId
+      required: true
+      in: path
+      description: The webform split test ID
+      schema:
+        type: integer
+        format: int32
+    wsSize:
+      name: ws.size
+      in: query
+      description: The pagination total entries to retrieve
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 100
+        default: 100
+  schemas:
+    WebformSplitTestComponent:
+      type: object
+      properties:
+        conversion_percentage:
+          description: The conversion percentage
+          type: number
+          format: float
+          minimum: 0
+          example: 0.0
+        html_source_link:
+          description: The webform HTML source URL
+          type: string
+          format: uri
+          example: http://forms.aweber.com/form/123/456.html
+        http_etag:
+          description: The ETag HTTP header
+          type: string
+          example: \"902ba3cda1883801594b6e1b452790cc53948fda-f83cb0ac22a8d5f792417f9b3dc0e9dc7558aa32\"
+        id:
+          description: The unique ID for the webform component
+          type: string
+          example: 234-456
+        is_active:
+          description: Whether the webform is active or not
+          type: boolean
+        javascript_source_link:
+          description: The webform javascript source URL
+          type: string
+          format: uri
+          example: http://forms.aweber.com/form/123/456.js
+        name:
+          description: The webform name
+          type: string
+          example: Joker's Wild
+        resource_type_link:
+          description: The link to the webform type
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/#component
+        self_link:
+          description: The link to this resource
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_form_split_tests/789/component/234-456
+        tags:
+          description: A list of tags added to the webform component
+          type: array
+          items:
+            type: string
+            minLength: 1
+          example:
+          - slow
+          - fast
+          - lightspeed
+        total_displays:
+          description: The total number of times the webform is displayed
+          type: integer
+          minimum: 0
+          example: 123456789
+        total_submissions:
+          description: The total number of submissions received by the webform
+          type: integer
+          minimum: 0
+          example: 123456
+        total_unique_displays:
+          description: The total number of unique times the webform is displayed
+          type: integer
+          minimum: 0
+          example: 1234
+        type:
+          description: The webform display type
+          type: string
+          enum:
+          - exitpopup
+          - inline
+          - lightbox
+          - popover
+          - popunder
+          - popup
+          - styled
+        unique_conversion_percentage:
+          description: The conversion percentage based on unique counts
+          type: number
+          format: float
+          minimum: 0
+          example: 6.451612903225806
+        web_form_link:
+          description: The link to [Webform](#tag/Webforms/paths/~1accounts~1{accountId}~1lists~1{listId}~1web_forms~1{webformId}/get)
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_form/789
+        weight:
+          description: The relative display weight
+          type: integer
+          minimum: 0
+          example: 40
+    Webforms:
+      type: object
+      properties:
+        entries:
+          description: A list of webform entries
+          type: array
+          items:
+            $ref: '#/definitions/Webform'
+        next_collection_link:
+          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_forms?ws.start=0&ws.size=10
+        prev_collection_link:
+          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_forms?ws.start=10&ws.size=10
+        resource_type_link:
+          description: A link that identifies the type of resource that this collection represents
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/#web_form-page-resource
+        start:
+          description: The starting offset for the page of entries to retrieve
+          type: integer
+          minimum: 0
+        total_size:
+          description: The total number of entries
+          type: integer
+          minimum: 0
+          example: 100
+    WebformSplitTest:
+      type: object
+      properties:
+        components_collection_link:
+          description: The webform [Split Test Components](#tag/Webforms/paths/~1accounts~1{accountId}~1lists~1{listId}~1web_form_split_tests~1{splitTestId}~1components/get) URL
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_form_split_tests/789/components
+        http_etag:
+          description: The ETag HTTP header
+          type: string
+          example: \"902ba3cda1883801594b6e1b452790cc53948fda-f83cb0ac22a8d5f792417f9b3dc0e9dc7558aa32\"
+        id:
+          description: The unique ID for the webform split test
+          type: integer
+          example: 234
+        is_active:
+          description: Whether the split test is active or not
+          type: boolean
+        javascript_source_link:
+          description: The webform javascript source URL
+          type: string
+          format: uri
+          example: http://forms.aweber.com/form/123/split_456.js
+        name:
+          description: The split test name
+          type: string
+          example: Joker's Wild Split Test
+        resource_type_link:
+          description: The link to the split test type
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/#web_form_split_test
+        self_link:
+          description: The link to this resource
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_form_split_tests/789
+    WebFormSplitTests:
+      type: object
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebformSplitTest'
+        next_collection_link:
+          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_form_split_tests?ws.start=10&ws.size=10
+        prev_collection_link:
+          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_form_split_tests?ws.start=0
+        resource_type_link:
+          description: The link to the event type
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/#web_form_split_test-page-resource
+        start:
+          description: The starting offset for the page of entries to retrieve
+          type: integer
+          minimum: 0
+        total_size:
+          description: The total number of entries
+          type: integer
+          minimum: 0
+          example: 100
+    Webform:
+      type: object
+      properties:
+        conversion_percentage:
+          description: The conversion percentage
+          type: number
+          format: float
+          example: 6.451612903225806
+        html_source_link:
+          description: The webform HTML source URL
+          type: string
+          format: uri
+          example: http://forms.aweber.com/form/123/456.html
+        http_etag:
+          description: The ETag HTTP header
+          type: string
+          example: \"902ba3cda1883801594b6e1b452790cc53948fda-f83cb0ac22a8d5f792417f9b3dc0e9dc7558aa32\"
+        id:
+          description: The unique ID for the webform activity
+          type: integer
+          example: 234
+        is_active:
+          description: Whether the webform is active or not
+          type: boolean
+        javascript_source_link:
+          description: The webform javascript source URL
+          type: string
+          format: uri
+          example: http://forms.aweber.com/form/123/456.js
+        name:
+          description: The webform name
+          type: string
+          example: Joker's Wild
+        resource_type_link:
+          description: The link to the webform type
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/#web_form
+        self_link:
+          description: The link to this resource
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_forms/789
+        tags:
+          description: A list of tags added to the webform
+          type: array
+          items:
+            type: string
+            minLength: 1
+          example:
+          - slow
+          - fast
+          - lightspeed
+        total_displays:
+          description: The total number of times the webform is displayed
+          type: integer
+          example: 123456789
+        total_submissions:
+          description: The total number of submissions received by the webform
+          type: integer
+          example: 123456
+        total_unique_displays:
+          description: The total number of unique times the webform is displayed
+          type: integer
+          example: 1234
+        type:
+          description: The webform display type
+          type: string
+          enum:
+          - exitpopup
+          - inline
+          - lightbox
+          - popover
+          - popunder
+          - popup
+          - styled
+        unique_conversion_percentage:
+          description: The conversion percentage based on unique counts
+          type: number
+          format: float
+          example: 6.451612903225806
+    WebformSplitTestComponents:
+      type: object
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebformSplitTestComponent'
+        next_collection_link:
+          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_form_split_tests/789/components?ws.start=10&ws.size=10
+        prev_collection_link:
+          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_form_split_tests/789/components?ws.start=0
+        resource_type_link:
+          description: The link to the Component type
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/#component-page-resource
+        start:
+          description: The starting offset for the page of entries to retrieve
+          type: integer
+          minimum: 0
+        total_size:
+          description: The total number of entries
+          type: integer
+          minimum: 0
+          example: 100
+  responses:
+    BadRequest:
+      description: The server cannot or will not process the request due to a client error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type        | Explanation |
+
+                  |-------------------|-------------|
+
+                  | BadRequestError   | The request is malformed.  This can be caused by missing authorization credentials |
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#badrequest
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Missing required argument(s)
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 400
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BadRequestError
+    UnauthorizedError:
+      description: The request could not be completed due to an authentication error
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/schemas/Endpoint Error'
+            - $ref: '#/schemas/Auth Error'
+    ServiceUnavailable:
+      description: The server is currently unavailable
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | ServiceUnavailableError | The server is unavailable |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#serviceunavailable
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Failed to communicate with endpoint
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 503
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - ServiceUnavailableError
+    NotAllowed:
+      description: The method received in the request-line is known by the origin server but not supported by the target resource.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  One of the following errors may be received:
+
+
+                  | Error Type              | Explanation |
+
+                  |-------------------------|-------------|
+
+                  | MethodNotAllowedError   | The requested resource does not implement the requested method. |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#methodnotallowed
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: ' https://api.aweber.com#methodnotallowed'
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 405
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - MethodNotAllowedError
+    ForbiddenError:
+      description: The request could not be completed due to a rate limit error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | ForbiddenError       | Rate limit may be reached or account may be suspended |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#forbidden
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Rate Limit Error
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 403
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - ForbiddenError
+    InternalServerError:
+      description: The request failed due to an internal error in the code or because of an external dependency failure
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | InternalServerError    | The request failed due to an internal error |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#internalerror
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Something went wrong.
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 500
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - InternalServerError
+    NotFound:
+      description: The requested resource could not be found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | NotFoundError        | The requested resource could not be found |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#notfound
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: 'Object: None, name: '''''
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 404
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - NotFoundError
+    BlockedError:
+      description: The request has been blocked
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | BlockedError         | This Request has been blocked            |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com/#blocked
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Blocked Error
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 410
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BlockedError
+  securitySchemes:
+    OAuth_2.0:
+      description: 'The following endpoints and scopes are used to authenticate.
+
+        '
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.aweber.com/oauth2/authorize
+          tokenUrl: https://auth.aweber.com/oauth2/token
+          refreshUrl: https://auth.aweber.com/oauth2/token
+          scopes:
+            account.read: '<br>
+
+              Access account information and associated integrations. <br>
+
+              <b>Required for the following endpoints:</b> get accounts, get account, get integrations, get integration
+
+              '
+            landing-page.read: '<br>
+
+              Retrieve landing pages <br>
+
+              <b>Required for the following endpoints:</b> get landing pages, get landing page
+
+              '
+            list.read: '<br>
+
+              Retrieve lists, custom fields, tags, and sign up forms <br>
+
+              <b>Required for the following endpoints:</b> get list, get lists, find lists, get tags for list, get custom fields, get custom field, get webforms for list, get split tests for list, get split test components, get split test component, get webforms for account, get split tests for account
+
+              '
+            list.write: '<br>
+
+              Create, edit, and delete custom fields <br>
+
+              <b>Required for the following endpoints:</b> add custom field, update custom field, delete custom field
+
+              '
+            subscriber.read: '<br>
+
+              Retrieve subscribers and their activity <br>
+
+              <b>Required for the following endpoints:</b> get subscribers, get subscriber, get subscriber activity, get subscribers for message, find subscribers for account, find subscribers for list
+
+              '
+            subscriber.write: '<br>
+
+              Create, edit, delete, retrieve, search for, and move subscribers <br>
+
+              <b>Required for the following endpoints:</b> add subscriber, move subscriber, update subscriber, delete subscriber
+
+              '
+            subscriber.read-extended: '<br>
+
+              Previously required to retrieve subscriber PII such as name, email, IP address, etc.  This functionality was moved to the "subscriber.read" scope
+
+              '
+            email.read: '<br>
+
+              Retrieve email activity related to broadcasts and follow-ups <br>
+
+              <b>Required for the following endpoints:</b> get messages, get message, get broadcasts, get broadcast, get message opens, get message open, get message tracked events, get message tracked event, get total broadcasts, get campaigns, get campaign, find campaigns, get broadcast statistics, get broadcast statistic
+
+              '
+            email.write: '<br>
+
+              Create and send email broadcasts <br>
+
+              <b>Required for the following endpoints:</b> create broadcast, update broadcast, delete broadcast, cancel broadcast, schedule broadcast
+
+              '

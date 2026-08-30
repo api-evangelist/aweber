@@ -1,0 +1,520 @@
+openapi: 3.2.0
+info:
+  title: AWeber Authentication OAuth 1.0a Reference API
+  version: '1.0'
+  description: 'We are constantly working to improve this documentation. If you have
+
+    feedback and questions, please contact the AWeber API team at
+
+    api@aweber.com.
+
+
+    The AWeber API is a REST API that uses the OAuth 2.0 authentication model. We also offer webhooks.
+
+
+    Please see the below resources for further information:
+
+    - <a href="https://labs.aweber.com/docs/tos" target="_blank">Terms of Service</a>
+
+    - <a href="https://help.aweber.com/hc/en-us/articles/204031776" target="_blank">Showcasing an Integration</a>
+
+    - <a href="https://help.aweber.com/hc/en-us/sections/360000617213-API" target="_blank">Knowledge Base</a>
+
+    - <a href="https://status.aweber.com" target="_blank">API Status Page</a>
+
+    '
+  contact:
+    name: AWeber API Team
+    email: api@aweber.com
+    url: https://api.aweber.com/
+servers:
+- url: https://api.aweber.com/1.0
+  description: v1 API endpoints
+security:
+- OAuth 2.0: []
+tags:
+- name: OAuth 1.0a Reference
+paths:
+  /oauth/request_token:
+    post:
+      servers:
+      - url: https://auth.aweber.com/1.0
+      summary: Get a request token
+      description: This endpoint is used to get a request token.
+      tags:
+      - OAuth 1.0a Reference
+      requestBody:
+        description: This request body requires the `application/x-www-form-urlencoded` MIME type.
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              example: oauth_callback=oob&oauth_consumer_key=******************&oauth_nonce=******************&oauth_signature=******************&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1285168264&oauth_token=&oauth_version=1.0
+              properties:
+                oauth_consumer_key:
+                  $ref: '#/components/parameters/oauth_consumer_key'
+                oauth_callback:
+                  $ref: '#/components/parameters/oauth_callback'
+                oauth_nonce:
+                  $ref: '#/components/parameters/oauth_nonce'
+                oauth_signature:
+                  $ref: '#/components/parameters/oauth_signature'
+                oauth_signature_method:
+                  $ref: '#/components/parameters/oauth_signature_method'
+                oauth_timestamp:
+                  $ref: '#/components/parameters/oauth_timestamp'
+                oauth_token:
+                  $ref: '#/components/parameters/oauth_token'
+                oauth_version:
+                  $ref: '#/components/parameters/oauth_version'
+      responses:
+        '200':
+          description: The request completed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  oauth_token:
+                    description: This is a newly generated request token that temporarily represents the user of the application. This will expire when an access token is created for this user.
+                    type: string
+                  oauth_callback_confirmed:
+                    description: Whether the callback was accepted. If true, the result of the authorization step will be sent to this url.
+                    type: boolean
+                example: oauth_token_secret=******************&oauth_token=******************&oauth_callback_confirmed=true
+        '400':
+          description: The server cannot or will not process the request due to a client error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    description: 'An error object.
+
+                      One of the following errors may be received:
+
+
+                      | Error Type           | Explanation                              |
+
+                      |----------------------|------------------------------------------|
+
+                      | BadRequestError      | Request does not have OAuth credentials or callback |
+
+
+                      Please see the message body for more details.
+
+                      '
+                    type: object
+                    properties:
+                      documentation_url:
+                        description: A link to the documentation that describes the error
+                        type: string
+                        example: https://api.aweber.com#badrequest
+                      message:
+                        description: A human friendly description of the error
+                        type: string
+                        example: Request does not have OAuth credentials. https://api.aweber.com#badrequest
+                      status:
+                        description: The HTTP status code
+                        type: integer
+                        example: 400
+                      type:
+                        description: The API error type
+                        type: string
+                        example: BadRequestError
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '410':
+          $ref: '#/components/responses/BlockedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      operationId: getARequestToken
+  /oauth/access_token:
+    post:
+      servers:
+      - url: https://auth.aweber.com/1.0
+      summary: Get an access token
+      description: This endpoint is used to get an access token.
+      tags:
+      - OAuth 1.0a Reference
+      requestBody:
+        description: This request body requires the `application/x-www-form-urlencoded` MIME type.
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              example: oauth_consumer_key=******************&oauth_nonce=******************&oauth_signature=******************&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1285168264&oauth_token=******************&oauth_version=1.0
+              properties:
+                oauth_consumer_key:
+                  $ref: '#/components/parameters/oauth_consumer_key'
+                oauth_callback:
+                  $ref: '#/components/parameters/oauth_callback'
+                oauth_nonce:
+                  $ref: '#/components/parameters/oauth_nonce'
+                oauth_signature:
+                  $ref: '#/components/parameters/oauth_signature'
+                oauth_signature_method:
+                  $ref: '#/components/parameters/oauth_signature_method'
+                oauth_timestamp:
+                  $ref: '#/components/parameters/oauth_timestamp'
+                oauth_token:
+                  $ref: '#/components/parameters/oauth_token'
+                oauth_version:
+                  $ref: '#/components/parameters/oauth_version'
+      responses:
+        '200':
+          description: The request completed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  oauth_token:
+                    description: The access token, which will be used to represent this specific AWeber user's account and can be used to gain access to their data. It should be stored for later use, consider doing so in a database or some other local storage in your application.
+                    type: string
+                  oauth_token_secret:
+                    description: This is a newly generated secret which will be used in the creation of the request's oauth_signature. This token secret is paired exclusively with the access token and does not expire. It should be stored for later use. Consider savng it in a database or some other local storage in your application. At this point, the oauth_token and oauth_token_secret that were generated in Step 1 as the request token have expired, and can not be used again.
+                    type: boolean
+                example: oauth_token_secret=******************&oauth_token=******************
+        '400':
+          description: The server cannot or will not process the request due to a client error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    description: 'An error object.
+
+                      One of the following errors may be received:
+
+
+                      | Error Type           | Explanation |
+
+                      |----------------------|-------------|
+
+                      | BadRequestError      | Request does not have OAuth credentials or callback |
+
+
+                      Please see the message body for more details.
+
+                      '
+                    type: object
+                    properties:
+                      documentation_url:
+                        description: A link to the documentation that describes the error
+                        type: string
+                        example: https://api.aweber.com#badrequest
+                      message:
+                        description: A human friendly description of the error
+                        type: string
+                        example: Request does not have OAuth credentials. https://api.aweber.com#badrequest
+                      status:
+                        description: The HTTP status code
+                        type: integer
+                        example: 400
+                      type:
+                        description: The API error type
+                        type: string
+                        example: BadRequestError
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '410':
+          $ref: '#/components/responses/BlockedError'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+      operationId: getAnAccessToken
+components:
+  parameters:
+    oauth_timestamp:
+      name: oauth_timestamp
+      in: body
+      required: true
+      description: Timestamp for the request. This is in the format of a Unix timestamp, or seconds since January 1st, 1970.
+      type: string
+      example: 1285168264
+    oauth_nonce:
+      name: oauth_nonce
+      in: body
+      required: true
+      description: A unique, randomly generated string. Each request should have a unique nonce.
+      type: string
+      example: 510a6d6f0e4fb70b72096ce48cb22af8
+    oauth_signature:
+      name: oauth_signature
+      in: body
+      required: true
+      description: 'This is an HMAC-SHA1 hash of the entire request, including the application''s secret,
+
+        and the customer''s oauth_token_secret. Generating the signature is a complex process,
+
+        and we highly recommend using an OAuth library that will handle this for you.
+
+        '
+      type: string
+      example: uvNa27v1uyVES37VfsX2Tj1OUYU=
+    oauth_signature_method:
+      name: oauth_signature_method
+      in: body
+      required: true
+      description: The hashing algorithm that was used to generate the signature. AWeber only supports the HMAC-SHA1 hash, so that's what this parameter should always be.
+      type: string
+      example: HMAC-SHA1
+    oauth_token:
+      name: oauth_token
+      in: body
+      required: true
+      description: 'This is the token that represents the user of the application. This will be either the request token,
+
+        when in the process of gaining an access token, or the access token when making requests to the AWeber API.
+
+        The oauth_token parameter will be blank when you are getting a request token for a new user.
+
+        '
+      type: string
+      example: null
+    oauth_consumer_key:
+      name: oauth_consumer_key
+      in: body
+      required: true
+      description: The consumer key assigned to your application, available on the <a href="https://labs.aweber.com/apps" target="_blank">My Apps Page</a>
+      type: string
+      example: XXXXXXXXXXXXXX
+    oauth_callback:
+      name: oauth_callback
+      in: body
+      required: false
+      description: 'A url that will be sent the verifier token when authorizing the request token in a future step.
+
+        If you don''t have a callback, use `oob` as the value, this will indicate that the callback is ''out of band''
+
+        and will display an html page after authorization, containing the verifier token.
+
+        '
+      type: string
+      example: http://localhost/demo.php
+    oauth_version:
+      name: oauth_version
+      in: body
+      required: true
+      description: This identifies which version of the OAuth protocol you are using, and should always be 1.0 when working with the AWeber API.
+      type: string
+      example: 1.0
+  responses:
+    UnauthorizedError:
+      description: The request could not be completed due to an authentication error
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/schemas/Endpoint Error'
+            - $ref: '#/schemas/Auth Error'
+    InternalServerError:
+      description: The request failed due to an internal error in the code or because of an external dependency failure
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | InternalServerError    | The request failed due to an internal error |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#internalerror
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Something went wrong.
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 500
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - InternalServerError
+    ServiceUnavailable:
+      description: The server is currently unavailable
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | ServiceUnavailableError | The server is unavailable |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#serviceunavailable
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Failed to communicate with endpoint
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 503
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - ServiceUnavailableError
+    BlockedError:
+      description: The request has been blocked
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | BlockedError         | This Request has been blocked            |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com/#blocked
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Blocked Error
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 410
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BlockedError
+  securitySchemes:
+    OAuth_2.0:
+      description: 'The following endpoints and scopes are used to authenticate.
+
+        '
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.aweber.com/oauth2/authorize
+          tokenUrl: https://auth.aweber.com/oauth2/token
+          refreshUrl: https://auth.aweber.com/oauth2/token
+          scopes:
+            account.read: '<br>
+
+              Access account information and associated integrations. <br>
+
+              <b>Required for the following endpoints:</b> get accounts, get account, get integrations, get integration
+
+              '
+            landing-page.read: '<br>
+
+              Retrieve landing pages <br>
+
+              <b>Required for the following endpoints:</b> get landing pages, get landing page
+
+              '
+            list.read: '<br>
+
+              Retrieve lists, custom fields, tags, and sign up forms <br>
+
+              <b>Required for the following endpoints:</b> get list, get lists, find lists, get tags for list, get custom fields, get custom field, get webforms for list, get split tests for list, get split test components, get split test component, get webforms for account, get split tests for account
+
+              '
+            list.write: '<br>
+
+              Create, edit, and delete custom fields <br>
+
+              <b>Required for the following endpoints:</b> add custom field, update custom field, delete custom field
+
+              '
+            subscriber.read: '<br>
+
+              Retrieve subscribers and their activity <br>
+
+              <b>Required for the following endpoints:</b> get subscribers, get subscriber, get subscriber activity, get subscribers for message, find subscribers for account, find subscribers for list
+
+              '
+            subscriber.write: '<br>
+
+              Create, edit, delete, retrieve, search for, and move subscribers <br>
+
+              <b>Required for the following endpoints:</b> add subscriber, move subscriber, update subscriber, delete subscriber
+
+              '
+            subscriber.read-extended: '<br>
+
+              Previously required to retrieve subscriber PII such as name, email, IP address, etc.  This functionality was moved to the "subscriber.read" scope
+
+              '
+            email.read: '<br>
+
+              Retrieve email activity related to broadcasts and follow-ups <br>
+
+              <b>Required for the following endpoints:</b> get messages, get message, get broadcasts, get broadcast, get message opens, get message open, get message tracked events, get message tracked event, get total broadcasts, get campaigns, get campaign, find campaigns, get broadcast statistics, get broadcast statistic
+
+              '
+            email.write: '<br>
+
+              Create and send email broadcasts <br>
+
+              <b>Required for the following endpoints:</b> create broadcast, update broadcast, delete broadcast, cancel broadcast, schedule broadcast
+
+              '
