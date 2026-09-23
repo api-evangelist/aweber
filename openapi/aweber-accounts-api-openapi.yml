@@ -1,7 +1,6 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
   title: AWeber Accounts API
-  version: '1.0'
   description: 'We are constantly working to improve this documentation. If you have
 
     feedback and questions, please contact the AWeber API team at
@@ -14,19 +13,14 @@ info:
 
     Please see the below resources for further information:
 
-    - <a href="https://labs.aweber.com/docs/tos" target="_blank">Terms of Service</a>
+    - Terms of Service
 
-    - <a href="https://help.aweber.com/hc/en-us/articles/204031776" target="_blank">Showcasing an Integration</a>
+    - Showcasing an Integration
 
-    - <a href="https://help.aweber.com/hc/en-us/sections/360000617213-API" target="_blank">Knowledge Base</a>
+    - Knowledge Base
 
-    - <a href="https://status.aweber.com" target="_blank">API Status Page</a>
-
-    '
-  contact:
-    name: AWeber API Team
-    email: api@aweber.com
-    url: https://api.aweber.com/
+    - API Status Page'
+  version: '1.0'
 servers:
 - url: https://api.aweber.com/1.0
   description: v1 API endpoints
@@ -40,7 +34,7 @@ tags:
 
     The Account collection contains a single account entry for the AWeber Customer Account
 
-    that has authorized your application.  You can use the links in the Account entry to
+    that has authorized your application. You can use the links in the Account entry to
 
     retrieve the lists owned by the account as well as the social integrations associated
 
@@ -50,19 +44,15 @@ tags:
     ### Related endpoints
 
 
-    * [Accounts](#tag/Accounts)
+    * Accounts
 
 
     ### Related code samples
 
 
-    * [Find a list on an account](#tag/Find-a-List-and-Get-Tags)
+    * Find a list on an account
 
-    * [Get Integrations List](#tag/Get-Integrations-List)
-
-    '
-security:
-- OAuth 2.0: []
+    * Get Integrations List'
 paths:
   /accounts:
     get:
@@ -70,20 +60,17 @@ paths:
       description: 'This endpoint is used to get a paginated collection of accounts.
 
 
-        Check out examples for <a href="https://github.com/aweber/public-api-examples/tree/master/python"
-        target="_blank">Python</a>,
+        Check out examples for Python,
 
-        <a href="https://github.com/aweber/public-api-examples/tree/master/php" target="_blank">PHP</a>,
+        PHP,
 
-        <a href="https://github.com/aweber/public-api-examples/tree/master/postman" target="_blank">Postman</a>,
+        Postman,
 
-        <a href="https://github.com/aweber/public-api-examples/tree/master/csharp" target="_blank">C#.NET</a>,
+        C#.NET,
 
-        <a href="https://github.com/aweber/public-api-examples/tree/master/ruby" target="_blank">Ruby</a>,
+        Ruby,
 
-        and <a href="https://github.com/aweber/public-api-examples/blob/master/node" target="_blank">Node.js</a>.
-
-        '
+        and Node.js.'
       tags:
       - Accounts
       parameters:
@@ -96,14 +83,9 @@ paths:
       - lang: Shell
         source: "curl -G \\\n  https://api.aweber.com/1.0/accounts \\\n  -H 'Authorization: Bearer {YOUR_ACCESS_TOKEN}'\n"
       - lang: Python
-        source: "headers = {'Accept': 'application/json',\n           'User-Agent': 'AWeber-Python-code-sample/1.0',\n\
-          \           'Authorization': f'Bearer {access_token}'}\nurl = 'https://api.aweber.com/1.0/accounts'\n\
-          response = requests.get(url, headers=headers)\nprint(response.json())\n"
+        source: "headers = {'Accept': 'application/json',\n           'User-Agent': 'AWeber-Python-code-sample/1.0',\n           'Authorization': f'Bearer {access_token}'}\nurl = 'https://api.aweber.com/1.0/accounts'\nresponse = requests.get(url, headers=headers)\nprint(response.json())\n"
       - lang: PHP
-        source: "$headers = [\n    'User-Agent' => 'AWeber-PHP-code-sample/1.0',\n    'Accept' => 'application/json',\n\
-          \    'Authorization' => 'Bearer $token',\n];\n$url = 'https://api.aweber.com/1.0/accounts';\n\
-          $response = $client->get($url, ['headers' => $headers]);\n$body = json_decode($response->getBody(),\
-          \ true);\nprint_r($body);\n"
+        source: "$headers = [\n    'User-Agent' => 'AWeber-PHP-code-sample/1.0',\n    'Accept' => 'application/json',\n    'Authorization' => 'Bearer $token',\n];\n$url = 'https://api.aweber.com/1.0/accounts';\n$response = $client->get($url, ['headers' => $headers]);\n$body = json_decode($response->getBody(), true);\nprint_r($body);\n"
       - lang: C#
         source: 'const string url = "https://api.aweber.com/1.0/accounts";
 
@@ -122,14 +104,9 @@ paths:
           '
       - lang: JavaScript
         label: Node.js
-        source: "const headers = {\n  \"Accept\": \"application/json\",\n  \"User-Agent\": \"AWeber-Node-code-sample/1.0\"\
-          ,\n  \"Authorization\": `Bearer ${accessToken}`\n};\nconst url = \"https://api.aweber.com/1.0/accounts\"\
-          ;\nfetch(url, { headers: headers })\n  .then(response => response.json())\n  .then(data => {\n\
-          \      console.log(data)\n  })\n"
+        source: "const headers = {\n  \"Accept\": \"application/json\",\n  \"User-Agent\": \"AWeber-Node-code-sample/1.0\",\n  \"Authorization\": `Bearer ${accessToken}`\n};\nconst url = \"https://api.aweber.com/1.0/accounts\";\nfetch(url, { headers: headers })\n  .then(response => response.json())\n  .then(data => {\n      console.log(data)\n  })\n"
       - lang: Ruby
-        source: "headers = {\n  'Accept': 'application/json',\n  'User-Agent': 'AWeber-Ruby-code-sample/1.0',\n\
-          \  'Authorization': \"Bearer #{access_token}\"\n}\nresponse = Faraday.get(\n  \"https://api.aweber.com/1.0/accounts\"\
-          \n) do |req|\n  req.headers = headers\nend\nputs response.body\n"
+        source: "headers = {\n  'Accept': 'application/json',\n  'User-Agent': 'AWeber-Ruby-code-sample/1.0',\n  'Authorization': \"Bearer #{access_token}\"\n}\nresponse = Faraday.get(\n  \"https://api.aweber.com/1.0/accounts\"\n) do |req|\n  req.headers = headers\nend\nputs response.body\n"
       responses:
         '200':
           description: The request completed successfully
@@ -197,26 +174,24 @@ paths:
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
       operationId: getAccounts
+      x-operation-id-source: derived
   /accounts/{accountId}:
     get:
       summary: Get account
       description: 'This endpoint is used to retrieve information for a specific account.
 
 
-        Check out examples for <a href="https://github.com/aweber/public-api-examples/tree/master/python"
-        target="_blank">Python</a>,
+        Check out examples for Python,
 
-        <a href="https://github.com/aweber/public-api-examples/tree/master/php" target="_blank">PHP</a>,
+        PHP,
 
-        <a href="https://github.com/aweber/public-api-examples/tree/master/postman" target="_blank">Postman</a>,
+        Postman,
 
-        <a href="https://github.com/aweber/public-api-examples/tree/master/csharp" target="_blank">C#.NET</a>,
+        C#.NET,
 
-        <a href="https://github.com/aweber/public-api-examples/tree/master/ruby" target="_blank">Ruby</a>,
+        Ruby,
 
-        and <a href="https://github.com/aweber/public-api-examples/blob/master/node" target="_blank">Node.js</a>.
-
-        '
+        and Node.js.'
       tags:
       - Accounts
       parameters:
@@ -226,17 +201,11 @@ paths:
         - account.read
       x-code-samples:
       - lang: Shell
-        source: "curl -G \\\n  https://api.aweber.com/1.0/accounts/{accountId} \\\n  -H 'Authorization:\
-          \ Bearer {YOUR_ACCESS_TOKEN}'\n"
+        source: "curl -G \\\n  https://api.aweber.com/1.0/accounts/{accountId} \\\n  -H 'Authorization: Bearer {YOUR_ACCESS_TOKEN}'\n"
       - lang: Python
-        source: "headers = {'Accept': 'application/json',\n           'User-Agent': 'AWeber-Python-code-sample/1.0',\n\
-          \           'Authorization': f'Bearer {access_token}'}\nurl = f'https://api.aweber.com/1.0/accounts/{account_id}'\n\
-          response = requests.get(url, headers=headers)\nprint(response.json())\n"
+        source: "headers = {'Accept': 'application/json',\n           'User-Agent': 'AWeber-Python-code-sample/1.0',\n           'Authorization': f'Bearer {access_token}'}\nurl = f'https://api.aweber.com/1.0/accounts/{account_id}'\nresponse = requests.get(url, headers=headers)\nprint(response.json())\n"
       - lang: PHP
-        source: "$headers = [\n    'User-Agent' => 'AWeber-PHP-code-sample/1.0',\n    'Accept' => 'application/json',\n\
-          \    'Authorization' => 'Bearer $token',\n];\n$url = \"https://api.aweber.com/1.0/accounts/{$accountId}\"\
-          ;\n$response = $client->get($url, ['headers' => $headers]);\n$body = json_decode($response->getBody(),\
-          \ true);\nprint_r($body);\n"
+        source: "$headers = [\n    'User-Agent' => 'AWeber-PHP-code-sample/1.0',\n    'Accept' => 'application/json',\n    'Authorization' => 'Bearer $token',\n];\n$url = \"https://api.aweber.com/1.0/accounts/{$accountId}\";\n$response = $client->get($url, ['headers' => $headers]);\n$body = json_decode($response->getBody(), true);\nprint_r($body);\n"
       - lang: C#
         source: 'const string url = "https://api.aweber.com/1.0/accounts/{accountId}";
 
@@ -255,14 +224,9 @@ paths:
           '
       - lang: JavaScript
         label: Node.js
-        source: "const headers = {\n  \"Accept\": \"application/json\",\n  \"User-Agent\": \"AWeber-Node-code-sample/1.0\"\
-          ,\n  \"Authorization\": `Bearer ${accessToken}`\n};\nconst url = `https://api.aweber.com/1.0/accounts/${accountId}`;\n\
-          fetch(url, { headers: headers })\n  .then(response => response.json())\n  .then(data => {\n\
-          \      console.log(data)\n  })\n"
+        source: "const headers = {\n  \"Accept\": \"application/json\",\n  \"User-Agent\": \"AWeber-Node-code-sample/1.0\",\n  \"Authorization\": `Bearer ${accessToken}`\n};\nconst url = `https://api.aweber.com/1.0/accounts/${accountId}`;\nfetch(url, { headers: headers })\n  .then(response => response.json())\n  .then(data => {\n      console.log(data)\n  })\n"
       - lang: Ruby
-        source: "headers = {\n  'Accept': 'application/json',\n  'User-Agent': 'AWeber-Ruby-code-sample/1.0',\n\
-          \  'Authorization': \"Bearer #{access_token}\"\n}\nresponse = Faraday.get(\n  \"https://api.aweber.com/1.0/accounts/#{account_id}\"\
-          \n) do |req|\n  req.headers = headers\nend\nputs response.body\n"
+        source: "headers = {\n  'Accept': 'application/json',\n  'User-Agent': 'AWeber-Ruby-code-sample/1.0',\n  'Authorization': \"Bearer #{access_token}\"\n}\nresponse = Faraday.get(\n  \"https://api.aweber.com/1.0/accounts/#{account_id}\"\n) do |req|\n  req.headers = headers\nend\nputs response.body\n"
       responses:
         '200':
           description: The request completed successfully
@@ -284,92 +248,12 @@ paths:
           $ref: '#/components/responses/InternalServerError'
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
-      operationId: getAccount
+      operationId: getAccountsByAccountId
+      x-operation-id-source: derived
 components:
-  parameters:
-    accountId:
-      name: accountId
-      in: path
-      description: The account ID
-      required: true
-      schema:
-        type: integer
-        format: int32
-    wsSize:
-      name: ws.size
-      in: query
-      description: The pagination total entries to retrieve
-      schema:
-        type: integer
-        format: int32
-        minimum: 1
-        maximum: 100
-        default: 100
-    wsStart:
-      name: ws.start
-      in: query
-      description: The pagination starting offset
-      schema:
-        type: integer
-        format: int32
-        minimum: 0
-        default: 0
   responses:
-    BadOAuth1:
-      description: The server cannot or will not process the request due to a client error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  One of the following errors may be received:
-
-
-                  | Error Type                           | Explanation                              |
-
-                  |--------------------------------------|------------------------------------------|
-
-                  | BadRequestError                      | There was an error decoding query parameters
-                  |
-
-                  | MissingOAuthParametersError          | An OAuth parameter is missing in the request
-                  |
-
-                  | UnsupportedOAuthSignatureMethodError | The provided OAuth 1 signature method is unsupported.
-                  Only HMAC-SHA1 is supported. |
-
-                  | UnsupportedOAuthVersionError         | The provided OAuth 1 version is unsupported.
-                  |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#badrequest
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: 'Missing oauth parameters: oauth_consumer_key'
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 400
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - MissingOAuthParametersError
-    BlockedError:
-      description: The request has been blocked
+    ServiceUnavailable:
+      description: The server is currently unavailable
       content:
         application/json:
           schema:
@@ -385,7 +269,7 @@ components:
 
                   |----------------------|------------------------------------------|
 
-                  | BlockedError         | This Request has been blocked            |
+                  | ServiceUnavailableError | The server is unavailable |
 
 
                   Please see the message body for more details.
@@ -396,21 +280,21 @@ components:
                   documentation_url:
                     description: A link to the documentation that describes the error
                     type: string
-                    example: https://api.aweber.com/#blocked
+                    example: https://api.aweber.com#serviceunavailable
                   message:
                     description: A human friendly description of the error
                     type: string
-                    example: Blocked Error
+                    example: Failed to communicate with endpoint
                   status:
                     description: The HTTP status code
                     type: integer
                     enum:
-                    - 410
+                    - 503
                   type:
                     description: The API error type
                     type: string
                     enum:
-                    - BlockedError
+                    - ServiceUnavailableError
     ForbiddenError:
       description: The request could not be completed due to a rate limit error
       content:
@@ -455,8 +339,7 @@ components:
                     enum:
                     - ForbiddenError
     InternalServerError:
-      description: The request failed due to an internal error in the code or because of an external dependency
-        failure
+      description: The request failed due to an internal error in the code or because of an external dependency failure
       content:
         application/json:
           schema:
@@ -498,6 +381,57 @@ components:
                     type: string
                     enum:
                     - InternalServerError
+    BlockedError:
+      description: The request has been blocked
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | BlockedError         | This Request has been blocked            |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com/#blocked
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Blocked Error
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 410
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BlockedError
+    UnauthorizedError:
+      description: The request could not be completed due to an authentication error
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/schemas/Endpoint Error'
+            - $ref: '#/schemas/Auth Error'
     NotFound:
       description: The requested resource could not be found
       content:
@@ -541,8 +475,8 @@ components:
                     type: string
                     enum:
                     - NotFoundError
-    ServiceUnavailable:
-      description: The server is currently unavailable
+    BadOAuth1:
+      description: The server cannot or will not process the request due to a client error
       content:
         application/json:
           schema:
@@ -551,14 +485,20 @@ components:
               error:
                 description: 'An error object.
 
-                  The following error may be received:
+                  One of the following errors may be received:
 
 
-                  | Error Type           | Explanation                              |
+                  | Error Type                           | Explanation                              |
 
-                  |----------------------|------------------------------------------|
+                  |--------------------------------------|------------------------------------------|
 
-                  | ServiceUnavailableError | The server is unavailable |
+                  | BadRequestError                      | There was an error decoding query parameters |
+
+                  | MissingOAuthParametersError          | An OAuth parameter is missing in the request |
+
+                  | UnsupportedOAuthSignatureMethodError | The provided OAuth 1 signature method is unsupported. Only HMAC-SHA1 is supported. |
+
+                  | UnsupportedOAuthVersionError         | The provided OAuth 1 version is unsupported. |
 
 
                   Please see the message body for more details.
@@ -569,30 +509,82 @@ components:
                   documentation_url:
                     description: A link to the documentation that describes the error
                     type: string
-                    example: https://api.aweber.com#serviceunavailable
+                    example: https://api.aweber.com#badrequest
                   message:
                     description: A human friendly description of the error
                     type: string
-                    example: Failed to communicate with endpoint
+                    example: 'Missing oauth parameters: oauth_consumer_key'
                   status:
                     description: The HTTP status code
                     type: integer
                     enum:
-                    - 503
+                    - 400
                   type:
                     description: The API error type
                     type: string
                     enum:
-                    - ServiceUnavailableError
-    UnauthorizedError:
-      description: The request could not be completed due to an authentication error
-      content:
-        application/json:
-          schema:
-            oneOf:
-            - $ref: '#/schemas/Endpoint Error'
-            - $ref: '#/schemas/Auth Error'
+                    - MissingOAuthParametersError
+  parameters:
+    accountId:
+      name: accountId
+      in: path
+      description: The account ID
+      required: true
+      schema:
+        type: integer
+        format: int32
+    wsSize:
+      name: ws.size
+      in: query
+      description: The pagination total entries to retrieve
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 100
+        default: 100
+    wsStart:
+      name: ws.start
+      in: query
+      description: The pagination starting offset
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        default: 0
   schemas:
+    Accounts:
+      type: object
+      properties:
+        entries:
+          description: A list of account entries
+          type: array
+          items:
+            $ref: '#/definitions/Account'
+        next_collection_link:
+          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/custom_fields?ws.start=0&ws.size=10
+        prev_collection_link:
+          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/custom_fields?ws.start=0
+        resource_type_link:
+          description: A link that identifies the type of resource that this collection represents
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/#account
+        start:
+          description: The starting offset for the page of entries to retrieve
+          type: integer
+          minimum: 0
+        total_size:
+          description: The total number of entries
+          type: integer
+          minimum: 0
+          example: 100
     Account:
       type: object
       properties:
@@ -637,42 +629,8 @@ components:
           description: Company Name associated with the account
           type: string
           example: Example Company 1
-    Accounts:
-      type: object
-      properties:
-        entries:
-          description: A list of account entries
-          type: array
-          items:
-            $ref: '#/definitions/Account'
-        next_collection_link:
-          description: A link to the next page of entries if more entries exist. This attribute is omitted
-            from the collection if there are no more entries.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/custom_fields?ws.start=0&ws.size=10
-        prev_collection_link:
-          description: A link to the previous page of entries if any exist. This attribute is omitted
-            from the collection if ws.start is 0.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/custom_fields?ws.start=0
-        resource_type_link:
-          description: A link that identifies the type of resource that this collection represents
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/#account
-        start:
-          description: The starting offset for the page of entries to retrieve
-          type: integer
-          minimum: 0
-        total_size:
-          description: The total number of entries
-          type: integer
-          minimum: 0
-          example: 100
   securitySchemes:
-    OAuth 2.0:
+    OAuth_2.0:
       description: 'The following endpoints and scopes are used to authenticate.
 
         '
@@ -687,8 +645,7 @@ components:
 
               Access account information and associated integrations. <br>
 
-              <b>Required for the following endpoints:</b> get accounts, get account, get integrations,
-              get integration
+              <b>Required for the following endpoints:</b> get accounts, get account, get integrations, get integration
 
               '
             landing-page.read: '<br>
@@ -702,58 +659,97 @@ components:
 
               Retrieve lists, custom fields, tags, and sign up forms <br>
 
-              <b>Required for the following endpoints:</b> get list, get lists, find lists, get tags for
-              list, get custom fields, get custom field, get webforms for list, get split tests for list,
-              get split test components, get split test component, get webforms for account, get split
-              tests for account
+              <b>Required for the following endpoints:</b> get list, get lists, find lists, get tags for list, get custom fields, get custom field, get webforms for list, get split tests for list, get split test components, get split test component, get webforms for account, get split tests for account
 
               '
             list.write: '<br>
 
               Create, edit, and delete custom fields <br>
 
-              <b>Required for the following endpoints:</b> add custom field, update custom field, delete
-              custom field
+              <b>Required for the following endpoints:</b> add custom field, update custom field, delete custom field
 
               '
             subscriber.read: '<br>
 
               Retrieve subscribers and their activity <br>
 
-              <b>Required for the following endpoints:</b> get subscribers, get subscriber, get subscriber
-              activity, get subscribers for message, find subscribers for account, find subscribers for
-              list
+              <b>Required for the following endpoints:</b> get subscribers, get subscriber, get subscriber activity, get subscribers for message, find subscribers for account, find subscribers for list
 
               '
             subscriber.write: '<br>
 
               Create, edit, delete, retrieve, search for, and move subscribers <br>
 
-              <b>Required for the following endpoints:</b> add subscriber, move subscriber, update subscriber,
-              delete subscriber
+              <b>Required for the following endpoints:</b> add subscriber, move subscriber, update subscriber, delete subscriber
 
               '
             subscriber.read-extended: '<br>
 
-              Previously required to retrieve subscriber PII such as name, email, IP address, etc.  This
-              functionality was moved to the "subscriber.read" scope
+              Previously required to retrieve subscriber PII such as name, email, IP address, etc.  This functionality was moved to the "subscriber.read" scope
 
               '
             email.read: '<br>
 
               Retrieve email activity related to broadcasts and follow-ups <br>
 
-              <b>Required for the following endpoints:</b> get messages, get message, get broadcasts,
-              get broadcast, get message opens, get message open, get message tracked events, get message
-              tracked event, get total broadcasts, get campaigns, get campaign, find campaigns, get broadcast
-              statistics, get broadcast statistic
+              <b>Required for the following endpoints:</b> get messages, get message, get broadcasts, get broadcast, get message opens, get message open, get message tracked events, get message tracked event, get total broadcasts, get campaigns, get campaign, find campaigns, get broadcast statistics, get broadcast statistic
 
               '
             email.write: '<br>
 
               Create and send email broadcasts <br>
 
-              <b>Required for the following endpoints:</b> create broadcast, update broadcast, delete
-              broadcast, cancel broadcast, schedule broadcast
+              <b>Required for the following endpoints:</b> create broadcast, update broadcast, delete broadcast, cancel broadcast, schedule broadcast
 
               '
+x-tagGroups:
+- name: Getting Started
+  tags:
+  - Getting Started
+- name: Authentication
+  tags:
+  - Authentication Overview
+  - OAuth 2.0 Examples
+  - OAuth 2.0 Traces
+  - OAuth 2.0 Reference
+  - OAuth 1.0a Reference
+- name: API Reference
+  tags:
+  - Accounts
+  - Broadcasts
+  - Campaigns
+  - Custom Fields
+  - Integrations
+  - Landing Pages
+  - Lists
+  - Segments
+  - Subscribers
+  - Webforms
+- name: Beta API Reference
+  tags:
+  - Beta Endpoints
+- name: Webhooks
+  tags:
+  - Webhooks
+- name: Code Samples
+  tags:
+  - Introduction
+  - Find a List and Get Tags
+  - Manage a Subscriber
+  - Create a Purchase
+  - Manage Custom Fields
+  - Find Subscribers Across Lists
+  - Move Subscriber to Another List
+  - Create and Schedule a Broadcast
+  - Get Sent Broadcast Details
+  - Get Broadcast Statistics
+  - Get Subscribers Who Opened or Clicked a Broadcast
+  - Get Webforms Detail
+  - Get Integrations List
+  - Get Segments
+  - Get Landing Pages
+- name: Miscellaneous
+  tags:
+  - Developer Changelog
+  - FAQ
+  - Troubleshooting

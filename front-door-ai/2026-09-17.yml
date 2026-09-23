@@ -1,0 +1,27 @@
+# Front Door AI Index — aweber — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: aweber
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.aweber.com
+  final_host: www.aweber.com
+  ownership: own
+  owner: aweber
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 5
+  host_score: 5
+  density: 1.62
+  words: 3090
+  tiers:
+    agentic: 0
+    core: 5
+    model: 0
+  ambiguous: 4
+  top_terms:
+    AI: 5
+    agent: 2
+    automation: 2

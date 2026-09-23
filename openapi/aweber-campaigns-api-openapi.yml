@@ -1,7 +1,6 @@
-openapi: 3.0.2
+openapi: 3.2.0
 info:
   title: AWeber Campaigns API
-  version: '1.0'
   description: 'We are constantly working to improve this documentation. If you have
 
     feedback and questions, please contact the AWeber API team at
@@ -14,86 +13,67 @@ info:
 
     Please see the below resources for further information:
 
-    - <a href="https://labs.aweber.com/docs/tos" target="_blank">Terms of Service</a>
+    - Terms of Service
 
-    - <a href="https://help.aweber.com/hc/en-us/articles/204031776" target="_blank">Showcasing an Integration</a>
+    - Showcasing an Integration
 
-    - <a href="https://help.aweber.com/hc/en-us/sections/360000617213-API" target="_blank">Knowledge Base</a>
+    - Knowledge Base
 
-    - <a href="https://status.aweber.com" target="_blank">API Status Page</a>
-
-    '
-  contact:
-    name: AWeber API Team
-    email: api@aweber.com
-    url: https://api.aweber.com/
+    - API Status Page'
+  version: '1.0'
 servers:
 - url: https://api.aweber.com/1.0
   description: v1 API endpoints
 tags:
 - name: Campaigns
-  description: '### What is it?
-
-
-    Represents followup and broadcast messages associated with a list.
-
-
-    **The Campaigns email automation platform within the AWeber web platform is not
-
-    currently supported by the AWeber API.**
-
-
-    Use this set of resources to retrieve information and statistics for messages on a list by type
-
-    of message (e.g., *followup* or *broadcast*).  The collection responses are sorted based on
-
-    message type and paginated using `next_collection_link` and `prev_collection_link` properties.
-
-    See [How Collections are Represented](#collection-representation) for details on collection
-
-    traversal and the individual endpoints for sorting characteristics.
-
-
-    ### Related endpoints
-
-
-    * [Campaigns](#tag/Campaigns)
-
-
-    ### Related code samples
-
-
-    * [Get Broadcast Statistics](#tag/Get-Broadcast-Statistics)
-
-    * [Get Subscribers Who Opened or Clicked a Broadcast](#tag/Get-Subscribers-Who-Opened-or-Clicked-a-Broadcast)
-
-    '
-security:
-- OAuth 2.0: []
+  description: '### What is it?'
 paths:
   /accounts/{accountId}/lists/{listId}/campaigns:
     get:
       summary: Get campaigns
-      description: "The collection of followup (\"f\") or broadcast (\"b\") campaigns for the list. The\
-        \ collection is ordered with followups messages followed by broadcast messages.  The followup\
-        \ messages are sorted by `id` ascending and the broadcast messages are sorted by `sent_at` descending.\n\
-        \nCheck out related examples:\n\n  * Get Clicks (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-clicks\"\
-        \ target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-clicks\"\
-        \ target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Clicks.postman_collection.json\"\
-        \ target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetClicks\"\
-        \ target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_clicks.rb\"\
-        \ target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-clicks.js\"\
-        \ target=\"_blank\">Node.js</a> )\n  * Get Broadcast Opens and Clicks (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-broadcast-opens-clicks\"\
-        \ target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-broadcast-opens-clicks\"\
-        \ target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetBroadcastOpensClicks\"\
-        \ target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_broadcast_opens_clicks.rb\"\
-        \ target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-broadcast-opens-clicks.js\"\
-        \ target=\"_blank\">Node.js</a> )\n  * Get Broadcast Statistics (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-broadcast-stats\"\
-        \ target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-broadcast-stats\"\
-        \ target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetBroadcastStats\"\
-        \ target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_broadcast_stats.rb\"\
-        \ target=\"_blank\">Ruby</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-broadcast-stats.js\"\
-        \ target=\"_blank\">Node.js</a> )"
+      description: 'The collection of followup ("f") or broadcast ("b") campaigns for the list. The collection is ordered with followups messages followed by broadcast messages. The followup messages are sorted by `id` ascending and the broadcast messages are sorted by `sent_at` descending.
+
+
+        Check out related examples:
+
+
+        * Get Clicks (
+
+        Python |
+
+        PHP |
+
+        Postman |
+
+        C#.NET |
+
+        Ruby |
+
+        Node.js )
+
+        * Get Broadcast Opens and Clicks (
+
+        Python |
+
+        PHP |
+
+        C#.NET |
+
+        Ruby |
+
+        Node.js )
+
+        * Get Broadcast Statistics (
+
+        Python |
+
+        PHP |
+
+        C#.NET |
+
+        Ruby |
+
+        Node.js )'
       tags:
       - Campaigns
       parameters:
@@ -106,17 +86,11 @@ paths:
         - email.read
       x-code-samples:
       - lang: Shell
-        source: "curl -G \\\n  https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/campaignss\
-          \ \\\n  -H 'Authorization: Bearer {YOUR_ACCESS_TOKEN}'\n"
+        source: "curl -G \\\n  https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/campaignss \\\n  -H 'Authorization: Bearer {YOUR_ACCESS_TOKEN}'\n"
       - lang: Python
-        source: "headers = {'Accept': 'application/json',\n           'User-Agent': 'AWeber-Python-code-sample/1.0',\n\
-          \           'Authorization': f'Bearer {access_token}'}\nurl = (f'https://api.aweber.com/1.0/accounts/{account_id}'\n\
-          \       f'/lists/{list_id}/campaigns')\nresponse = requests.get(url, headers=headers)\nprint(response.json())\n"
+        source: "headers = {'Accept': 'application/json',\n           'User-Agent': 'AWeber-Python-code-sample/1.0',\n           'Authorization': f'Bearer {access_token}'}\nurl = (f'https://api.aweber.com/1.0/accounts/{account_id}'\n       f'/lists/{list_id}/campaigns')\nresponse = requests.get(url, headers=headers)\nprint(response.json())\n"
       - lang: PHP
-        source: "$headers = [\n    'User-Agent' => 'AWeber-PHP-code-sample/1.0',\n    'Accept' => 'application/json',\n\
-          \    'Authorization' => 'Bearer $token',\n];\n$url = \"https://api.aweber.com/1.0/accounts/{$accountId}/lists/{$listId}/campaigns\"\
-          ;\n$response = $client->get($url, ['headers' => $headers]);\n$body = json_decode($response->getBody(),\
-          \ true);\nprint_r($body);\n"
+        source: "$headers = [\n    'User-Agent' => 'AWeber-PHP-code-sample/1.0',\n    'Accept' => 'application/json',\n    'Authorization' => 'Bearer $token',\n];\n$url = \"https://api.aweber.com/1.0/accounts/{$accountId}/lists/{$listId}/campaigns\";\n$response = $client->get($url, ['headers' => $headers]);\n$body = json_decode($response->getBody(), true);\nprint_r($body);\n"
       - lang: C#
         source: 'const string url = "https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/campaigns";
 
@@ -135,14 +109,9 @@ paths:
           '
       - lang: JavaScript
         label: Node.js
-        source: "const headers = {\n  \"Accept\": \"application/json\",\n  \"User-Agent\": \"AWeber-Node-code-sample/1.0\"\
-          ,\n  \"Authorization\": `Bearer ${accessToken}`\n};\nconst url = `https://api.aweber.com/1.0/accounts/${accountId}/lists/${listId}/campaigns`;\n\
-          fetch(url, { headers: headers })\n  .then(response => response.json())\n  .then(data => {\n\
-          \      console.log(data)\n  })\n"
+        source: "const headers = {\n  \"Accept\": \"application/json\",\n  \"User-Agent\": \"AWeber-Node-code-sample/1.0\",\n  \"Authorization\": `Bearer ${accessToken}`\n};\nconst url = `https://api.aweber.com/1.0/accounts/${accountId}/lists/${listId}/campaigns`;\nfetch(url, { headers: headers })\n  .then(response => response.json())\n  .then(data => {\n      console.log(data)\n  })\n"
       - lang: Ruby
-        source: "headers = {\n  'Accept': 'application/json',\n  'User-Agent': 'AWeber-Ruby-code-sample/1.0',\n\
-          \  'Authorization': \"Bearer #{access_token}\"\n}\nresponse = Faraday.get(\n  \"https://api.aweber.com/1.0/accounts/#{account_id}/\"\
-          \ \\\n  \"lists/#{list_id}/campaigns\"\n) do |req|\n  req.headers = headers\nend\nputs response.body\n"
+        source: "headers = {\n  'Accept': 'application/json',\n  'User-Agent': 'AWeber-Ruby-code-sample/1.0',\n  'Authorization': \"Bearer #{access_token}\"\n}\nresponse = Faraday.get(\n  \"https://api.aweber.com/1.0/accounts/#{account_id}/\" \\\n  \"lists/#{list_id}/campaigns\"\n) do |req|\n  req.headers = headers\nend\nputs response.body\n"
       responses:
         '200':
           description: The request completed successfully
@@ -164,28 +133,54 @@ paths:
           $ref: '#/components/responses/InternalServerError'
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
-      operationId: getCampaigns
+      operationId: getAccountsByAccountIdListsByListIdCampaigns
+      x-operation-id-source: derived
   /accounts/{accountId}/lists/{listId}/campaigns/{campaignType}{campaignId}:
     get:
       summary: Get campaign
-      description: "A followup or broadcast campaign\n\nCheck out related examples:\n\n  * Get Clicks\
-        \ (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-clicks\"\
-        \ target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-clicks\"\
-        \ target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Clicks.postman_collection.json\"\
-        \ target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetClicks\"\
-        \ target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_clicks.rb\"\
-        \ target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-clicks.js\"\
-        \ target=\"_blank\">Node.js</a> )\n  * Get Broadcast Opens and Clicks (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-broadcast-opens-clicks\"\
-        \ target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-broadcast-opens-clicks\"\
-        \ target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetBroadcastOpensClicks\"\
-        \ target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_broadcast_opens_clicks.rb\"\
-        \ target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-broadcast-opens-clicks.js\"\
-        \ target=\"_blank\">Node.js</a> )\n  * Get Broadcast Statistics (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-broadcast-stats\"\
-        \ target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-broadcast-stats\"\
-        \ target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetBroadcastStats\"\
-        \ target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_broadcast_stats.rb\"\
-        \ target=\"_blank\">Ruby</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-broadcast-stats.js\"\
-        \ target=\"_blank\">Node.js</a> )"
+      description: 'A followup or broadcast campaign
+
+
+        Check out related examples:
+
+
+        * Get Clicks (
+
+        Python |
+
+        PHP |
+
+        Postman |
+
+        C#.NET |
+
+        Ruby |
+
+        Node.js )
+
+        * Get Broadcast Opens and Clicks (
+
+        Python |
+
+        PHP |
+
+        C#.NET |
+
+        Ruby |
+
+        Node.js )
+
+        * Get Broadcast Statistics (
+
+        Python |
+
+        PHP |
+
+        C#.NET |
+
+        Ruby |
+
+        Node.js )'
       tags:
       - Campaigns
       parameters:
@@ -198,18 +193,11 @@ paths:
         - email.read
       x-code-samples:
       - lang: Shell
-        source: "curl -G \\\n  https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/campaigns/{campaignType}{campaignId}\
-          \ \\\n  -H 'Authorization: Bearer {YOUR_ACCESS_TOKEN}'\n"
+        source: "curl -G \\\n  https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/campaigns/{campaignType}{campaignId} \\\n  -H 'Authorization: Bearer {YOUR_ACCESS_TOKEN}'\n"
       - lang: Python
-        source: "headers = {'Accept': 'application/json',\n           'User-Agent': 'AWeber-Python-code-sample/1.0',\n\
-          \           'Authorization': f'Bearer {access_token}'}\nurl = (f'https://api.aweber.com/1.0/accounts/{account_id}'\n\
-          \       f'/lists/{list_id}/campaigns/{campaign_type}{campaign_id}')\nresponse = requests.get(url,\
-          \ headers=headers)\nprint(response.json())\n"
+        source: "headers = {'Accept': 'application/json',\n           'User-Agent': 'AWeber-Python-code-sample/1.0',\n           'Authorization': f'Bearer {access_token}'}\nurl = (f'https://api.aweber.com/1.0/accounts/{account_id}'\n       f'/lists/{list_id}/campaigns/{campaign_type}{campaign_id}')\nresponse = requests.get(url, headers=headers)\nprint(response.json())\n"
       - lang: PHP
-        source: "$headers = [\n    'User-Agent' => 'AWeber-PHP-code-sample/1.0',\n    'Accept' => 'application/json',\n\
-          \    'Authorization' => 'Bearer $token',\n];\n$url = \"https://api.aweber.com/1.0/accounts/{$accountId}/lists/{$listId}/campaigns/{$campaignType}{$campaignId}\"\
-          ;\n$response = $client->get($url, ['headers' => $headers]);\n$body = json_decode($response->getBody(),\
-          \ true);\nprint_r($body);\n"
+        source: "$headers = [\n    'User-Agent' => 'AWeber-PHP-code-sample/1.0',\n    'Accept' => 'application/json',\n    'Authorization' => 'Bearer $token',\n];\n$url = \"https://api.aweber.com/1.0/accounts/{$accountId}/lists/{$listId}/campaigns/{$campaignType}{$campaignId}\";\n$response = $client->get($url, ['headers' => $headers]);\n$body = json_decode($response->getBody(), true);\nprint_r($body);\n"
       - lang: C#
         source: 'const string url = "https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/campaigns/{campaignType}{campaignId}";
 
@@ -228,15 +216,9 @@ paths:
           '
       - lang: JavaScript
         label: Node.js
-        source: "const headers = {\n  \"Accept\": \"application/json\",\n  \"User-Agent\": \"AWeber-Node-code-sample/1.0\"\
-          ,\n  \"Authorization\": `Bearer ${accessToken}`\n};\nconst url = `https://api.aweber.com/1.0/accounts/${accountId}/lists/${listId}/campaigns/${campaign_type}${campaignId}`;\n\
-          fetch(url, { headers: headers })\n  .then(response => response.json())\n  .then(data => {\n\
-          \      console.log(data)\n  })\n"
+        source: "const headers = {\n  \"Accept\": \"application/json\",\n  \"User-Agent\": \"AWeber-Node-code-sample/1.0\",\n  \"Authorization\": `Bearer ${accessToken}`\n};\nconst url = `https://api.aweber.com/1.0/accounts/${accountId}/lists/${listId}/campaigns/${campaign_type}${campaignId}`;\nfetch(url, { headers: headers })\n  .then(response => response.json())\n  .then(data => {\n      console.log(data)\n  })\n"
       - lang: Ruby
-        source: "headers = {\n  'Accept': 'application/json',\n  'User-Agent': 'AWeber-Ruby-code-sample/1.0',\n\
-          \  'Authorization': \"Bearer #{access_token}\"\n}\nresponse = Faraday.get(\n  \"https://api.aweber.com/1.0/accounts/#{account_id}/\"\
-          \ \\\n  \"lists/#{list_id}/campaigns/#{campaign_type}#{campaign_id}\"\n) do |req|\n  req.headers\
-          \ = headers\nend\nputs response.body\n"
+        source: "headers = {\n  'Accept': 'application/json',\n  'User-Agent': 'AWeber-Ruby-code-sample/1.0',\n  'Authorization': \"Bearer #{access_token}\"\n}\nresponse = Faraday.get(\n  \"https://api.aweber.com/1.0/accounts/#{account_id}/\" \\\n  \"lists/#{list_id}/campaigns/#{campaign_type}#{campaign_id}\"\n) do |req|\n  req.headers = headers\nend\nputs response.body\n"
       responses:
         '200':
           description: The request completed successfully
@@ -258,30 +240,54 @@ paths:
           $ref: '#/components/responses/InternalServerError'
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
-      operationId: getCampaign
+      operationId: getAccountsByAccountIdListsByListIdCampaignsByCampaignType}{campaignId
+      x-operation-id-source: derived
   /accounts/{accountId}/lists/{listId}/campaigns?ws.op=find:
     get:
       summary: Find campaigns
-      description: "Find a collection of either followup(\"f\") or broadcast(\"b\") Campaigns. The collection\
-        \ is ordered with followups messages followed by broadcast messages.  The followup messages are\
-        \ sorted by `id` ascending and the broadcast messages are sorted by `sent_at` descending.\n\n\
-        Check out related examples:\n\n  * Get Clicks (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-clicks\"\
-        \ target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-clicks\"\
-        \ target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Clicks.postman_collection.json\"\
-        \ target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetClicks\"\
-        \ target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_clicks.rb\"\
-        \ target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-clicks.js\"\
-        \ target=\"_blank\">Node.js</a> )\n  * Get Broadcast Opens and Clicks (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-broadcast-opens-clicks\"\
-        \ target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-broadcast-opens-clicks\"\
-        \ target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetBroadcastOpensClicks\"\
-        \ target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_broadcast_opens_clicks.rb\"\
-        \ target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-broadcast-opens-clicks.js\"\
-        \ target=\"_blank\">Node.js</a> )\n  * Get Broadcast Statistics (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-broadcast-stats\"\
-        \ target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-broadcast-stats\"\
-        \ target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetBroadcastStats\"\
-        \ target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_broadcast_stats.rb\"\
-        \ target=\"_blank\">Ruby</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-broadcast-stats.js\"\
-        \ target=\"_blank\">Node.js</a> )"
+      description: 'Find a collection of either followup("f") or broadcast("b") Campaigns. The collection is ordered with followups messages followed by broadcast messages. The followup messages are sorted by `id` ascending and the broadcast messages are sorted by `sent_at` descending.
+
+
+        Check out related examples:
+
+
+        * Get Clicks (
+
+        Python |
+
+        PHP |
+
+        Postman |
+
+        C#.NET |
+
+        Ruby |
+
+        Node.js )
+
+        * Get Broadcast Opens and Clicks (
+
+        Python |
+
+        PHP |
+
+        C#.NET |
+
+        Ruby |
+
+        Node.js )
+
+        * Get Broadcast Statistics (
+
+        Python |
+
+        PHP |
+
+        C#.NET |
+
+        Ruby |
+
+        Node.js )'
       tags:
       - Campaigns
       parameters:
@@ -312,45 +318,18 @@ paths:
         - email.read
       x-code-samples:
       - lang: Shell
-        source: "curl -G \\\n  https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/campaigns\
-          \ \\\n  -d ws.op=find \\\n  -d campaign_type=b \\\n  -d ws.start=0 \\\n  -d ws.size=100 \\\n\
-          \  -H 'Authorization: Bearer {YOUR_ACCESS_TOKEN}'\n"
+        source: "curl -G \\\n  https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/campaigns \\\n  -d ws.op=find \\\n  -d campaign_type=b \\\n  -d ws.start=0 \\\n  -d ws.size=100 \\\n  -H 'Authorization: Bearer {YOUR_ACCESS_TOKEN}'\n"
       - lang: Python
-        source: "headers = {'Accept': 'application/json',\n           'User-Agent': 'AWeber-Python-code-sample/1.0',\n\
-          \           'Authorization': f'Bearer {access_token}'}\nurl = (f'https://api.aweber.com/1.0/accounts/{account_id}'\n\
-          \       f'/lists/{list_id}/campaigns')\nparams = urlencode({\n    'ws.op': 'find',\n    'campaign_type':\
-          \ 'b',\n    'ws.start': 0,\n    'ws.size': 100,\n})\nfind_url = '{}?{}'.format(url, params)\n\
-          response = requests.get(find_url, headers=headers)\nprint(response.json())\n"
+        source: "headers = {'Accept': 'application/json',\n           'User-Agent': 'AWeber-Python-code-sample/1.0',\n           'Authorization': f'Bearer {access_token}'}\nurl = (f'https://api.aweber.com/1.0/accounts/{account_id}'\n       f'/lists/{list_id}/campaigns')\nparams = urlencode({\n    'ws.op': 'find',\n    'campaign_type': 'b',\n    'ws.start': 0,\n    'ws.size': 100,\n})\nfind_url = '{}?{}'.format(url, params)\nresponse = requests.get(find_url, headers=headers)\nprint(response.json())\n"
       - lang: PHP
-        source: "$headers = [\n    'User-Agent' => 'AWeber-PHP-code-sample/1.0',\n    'Accept' => 'application/json',\n\
-          \    'Authorization' => 'Bearer $token',\n];\n$url = \"https://api.aweber.com/1.0/accounts/{$accountId}/lists/{$listId}/campaigns\"\
-          ;\n$params = [\n    'ws.op' => 'find',\n    'campaign_type' => 'b',\n    'ws.start' => 0,\n\
-          \    'ws.size' => 100,\n];\n$findUrl = $url . '?' . http_build_query($params);\n$response =\
-          \ $client->get($findUrl, ['headers' => $headers]);\n$body = json_decode($response->getBody(),\
-          \ true);\nprint_r($body);\n"
+        source: "$headers = [\n    'User-Agent' => 'AWeber-PHP-code-sample/1.0',\n    'Accept' => 'application/json',\n    'Authorization' => 'Bearer $token',\n];\n$url = \"https://api.aweber.com/1.0/accounts/{$accountId}/lists/{$listId}/campaigns\";\n$params = [\n    'ws.op' => 'find',\n    'campaign_type' => 'b',\n    'ws.start' => 0,\n    'ws.size' => 100,\n];\n$findUrl = $url . '?' . http_build_query($params);\n$response = $client->get($findUrl, ['headers' => $headers]);\n$body = json_decode($response->getBody(), true);\nprint_r($body);\n"
       - lang: C#
-        source: "const string url = \"https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/campaigns\"\
-          ;\nvar queryParams = new Dictionary<string, string>\n{\n  {\"campaign_type\", \"b\"},\n  {\"\
-          ws.op\", \"find\"},\n  {\"ws.start\", \"0\"},\n  {\"ws.size\", \"100\"}\n};\nvar encodedQueryParams\
-          \ = string.Join(\"&\", queryParams.Select(\n  kvp => string.Format(\"{0}={1}\", kvp.Key, Uri.EscapeDataString(kvp.Value))));\n\
-          var getUrl = string.Format(\"{0}?{1}\", url, encodedQueryParams);\nvar request = new HttpRequestMessage(HttpMethod.Get,\
-          \ getUrl);\nrequest.Headers.Add(\"Accept\",\"application/json\");\nrequest.Headers.Add(\"User-Agent\"\
-          ,\"AWeber-CSharp-code-sample/1.0\");\nrequest.Headers.Add(\"Authorization\", $\"Bearer {Token}\"\
-          );\nvar response = await Client.SendAsync(request);\nConsole.Write(response.Content.ReadAsStringAsync());\n"
+        source: "const string url = \"https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/campaigns\";\nvar queryParams = new Dictionary<string, string>\n{\n  {\"campaign_type\", \"b\"},\n  {\"ws.op\", \"find\"},\n  {\"ws.start\", \"0\"},\n  {\"ws.size\", \"100\"}\n};\nvar encodedQueryParams = string.Join(\"&\", queryParams.Select(\n  kvp => string.Format(\"{0}={1}\", kvp.Key, Uri.EscapeDataString(kvp.Value))));\nvar getUrl = string.Format(\"{0}?{1}\", url, encodedQueryParams);\nvar request = new HttpRequestMessage(HttpMethod.Get, getUrl);\nrequest.Headers.Add(\"Accept\",\"application/json\");\nrequest.Headers.Add(\"User-Agent\",\"AWeber-CSharp-code-sample/1.0\");\nrequest.Headers.Add(\"Authorization\", $\"Bearer {Token}\");\nvar response = await Client.SendAsync(request);\nConsole.Write(response.Content.ReadAsStringAsync());\n"
       - lang: JavaScript
         label: Node.js
-        source: "const headers = {\n  \"Accept\": \"application/json\",\n  \"User-Agent\": \"AWeber-Node-code-sample/1.0\"\
-          ,\n  \"Authorization\": `Bearer ${accessToken}`\n};\nquerystring = require(\"querystring\");\n\
-          const params = querystring.stringify({\n  'ws.op': 'find',\n  'campaign_type': 'b',\n  'ws.start':\
-          \ 0,\n  'ws.size': 1,\n});\nconst url = `https://api.aweber.com/1.0/accounts/${accountId}/lists/${listId}/campaigns?${params}`;\n\
-          fetch(url, { headers: headers })\n  .then(response => response.json())\n  .then(data => {\n\
-          \      console.log(data)\n  })\n"
+        source: "const headers = {\n  \"Accept\": \"application/json\",\n  \"User-Agent\": \"AWeber-Node-code-sample/1.0\",\n  \"Authorization\": `Bearer ${accessToken}`\n};\nquerystring = require(\"querystring\");\nconst params = querystring.stringify({\n  'ws.op': 'find',\n  'campaign_type': 'b',\n  'ws.start': 0,\n  'ws.size': 1,\n});\nconst url = `https://api.aweber.com/1.0/accounts/${accountId}/lists/${listId}/campaigns?${params}`;\nfetch(url, { headers: headers })\n  .then(response => response.json())\n  .then(data => {\n      console.log(data)\n  })\n"
       - lang: Ruby
-        source: "headers = {\n  'Accept': 'application/json',\n  'User-Agent': 'AWeber-Ruby-code-sample/1.0',\n\
-          \  'Authorization': \"Bearer #{access_token}\"\n}\nparams = {\n  'ws.op': 'find',\n  'campaign_type':\
-          \ 'b',\n  'ws.start': 0,\n  'ws.size': 100,\n}\nresponse = Faraday.get(\n  \"https://api.aweber.com/1.0/accounts/#{account_id}/\"\
-          \ \\\n  \"lists/#{list_id}/campaigns\",\n  params\n) do |req|\n  req.headers = headers\nend\n\
-          puts response.body\n"
+        source: "headers = {\n  'Accept': 'application/json',\n  'User-Agent': 'AWeber-Ruby-code-sample/1.0',\n  'Authorization': \"Bearer #{access_token}\"\n}\nparams = {\n  'ws.op': 'find',\n  'campaign_type': 'b',\n  'ws.start': 0,\n  'ws.size': 100,\n}\nresponse = Faraday.get(\n  \"https://api.aweber.com/1.0/accounts/#{account_id}/\" \\\n  \"lists/#{list_id}/campaigns\",\n  params\n) do |req|\n  req.headers = headers\nend\nputs response.body\n"
       responses:
         '200':
           description: The request completed successfully
@@ -372,28 +351,56 @@ paths:
           $ref: '#/components/responses/InternalServerError'
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
-      operationId: findCampaigns
+      operationId: getAccountsByAccountIdListsByListIdCampaigns?wsOp=find
+      x-operation-id-source: derived
   /accounts/{accountId}/lists/{listId}/campaigns/b{campaignId}/stats:
     get:
       summary: Get broadcast statistics
-      description: "A paginated collection of statistics for a broadcast campaign message\nsorted by \"\
-        statistics ID\"\n\n\nCheck out related examples:\n\n  * Get Clicks (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-clicks\"\
-        \ target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-clicks\"\
-        \ target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Clicks.postman_collection.json\"\
-        \ target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetClicks\"\
-        \ target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_clicks.rb\"\
-        \ target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-clicks.js\"\
-        \ target=\"_blank\">Node.js</a> )\n  * Get Broadcast Opens and Clicks (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-broadcast-opens-clicks\"\
-        \ target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-broadcast-opens-clicks\"\
-        \ target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetBroadcastOpensClicks\"\
-        \ target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_broadcast_opens_clicks.rb\"\
-        \ target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-broadcast-opens-clicks.js\"\
-        \ target=\"_blank\">Node.js</a> )\n  * Get Broadcast Statistics (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-broadcast-stats\"\
-        \ target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-broadcast-stats\"\
-        \ target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetBroadcastStats\"\
-        \ target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_broadcast_stats.rb\"\
-        \ target=\"_blank\">Ruby</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-broadcast-stats.js\"\
-        \ target=\"_blank\">Node.js</a> )\n"
+      description: 'A paginated collection of statistics for a broadcast campaign message
+
+        sorted by "statistics ID"
+
+
+        Check out related examples:
+
+
+        * Get Clicks (
+
+        Python |
+
+        PHP |
+
+        Postman |
+
+        C#.NET |
+
+        Ruby |
+
+        Node.js )
+
+        * Get Broadcast Opens and Clicks (
+
+        Python |
+
+        PHP |
+
+        C#.NET |
+
+        Ruby |
+
+        Node.js )
+
+        * Get Broadcast Statistics (
+
+        Python |
+
+        PHP |
+
+        C#.NET |
+
+        Ruby |
+
+        Node.js )'
       tags:
       - Campaigns
       parameters:
@@ -407,18 +414,11 @@ paths:
         - email.read
       x-code-samples:
       - lang: Shell
-        source: "curl -G \\\n  https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/campaigns/b{campaignId}/stats\
-          \ \\\n  -H 'Authorization: Bearer {YOUR_ACCESS_TOKEN}'\n"
+        source: "curl -G \\\n  https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/campaigns/b{campaignId}/stats \\\n  -H 'Authorization: Bearer {YOUR_ACCESS_TOKEN}'\n"
       - lang: Python
-        source: "headers = {'Accept': 'application/json',\n           'User-Agent': 'AWeber-Python-code-sample/1.0',\n\
-          \           'Authorization': f'Bearer {access_token}'}\nurl = (f'https://api.aweber.com/1.0/accounts/{account_id}'\n\
-          \       f'/lists/{list_id}/campaigns/b{campaign_id}/stats')\nresponse = requests.get(url, headers=headers)\n\
-          print(response.json())\n"
+        source: "headers = {'Accept': 'application/json',\n           'User-Agent': 'AWeber-Python-code-sample/1.0',\n           'Authorization': f'Bearer {access_token}'}\nurl = (f'https://api.aweber.com/1.0/accounts/{account_id}'\n       f'/lists/{list_id}/campaigns/b{campaign_id}/stats')\nresponse = requests.get(url, headers=headers)\nprint(response.json())\n"
       - lang: PHP
-        source: "$headers = [\n    'User-Agent' => 'AWeber-PHP-code-sample/1.0',\n    'Accept' => 'application/json',\n\
-          \    'Authorization' => 'Bearer $token',\n];\n$url = \"https://api.aweber.com/1.0/accounts/{$accountId}/lists/{$listId}/campaigns/b{$campaignId}/stats\"\
-          ;\n$response = $client->get($url, ['headers' => $headers]);\n$body = json_decode($response->getBody(),\
-          \ true);\nprint_r($body);\n"
+        source: "$headers = [\n    'User-Agent' => 'AWeber-PHP-code-sample/1.0',\n    'Accept' => 'application/json',\n    'Authorization' => 'Bearer $token',\n];\n$url = \"https://api.aweber.com/1.0/accounts/{$accountId}/lists/{$listId}/campaigns/b{$campaignId}/stats\";\n$response = $client->get($url, ['headers' => $headers]);\n$body = json_decode($response->getBody(), true);\nprint_r($body);\n"
       - lang: C#
         source: 'const string url = "https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/campaigns/b{campaignId}/stats";
 
@@ -437,15 +437,9 @@ paths:
           '
       - lang: JavaScript
         label: Node.js
-        source: "const headers = {\n  \"Accept\": \"application/json\",\n  \"User-Agent\": \"AWeber-Node-code-sample/1.0\"\
-          ,\n  \"Authorization\": `Bearer ${accessToken}`\n};\nconst url = `https://api.aweber.com/1.0/accounts/${accountId}/lists/${listId}/campaigns/b${campaignId}/stats`;\n\
-          fetch(url, { headers: headers })\n  .then(response => response.json())\n  .then(data => {\n\
-          \    console.log(data)\n})\n"
+        source: "const headers = {\n  \"Accept\": \"application/json\",\n  \"User-Agent\": \"AWeber-Node-code-sample/1.0\",\n  \"Authorization\": `Bearer ${accessToken}`\n};\nconst url = `https://api.aweber.com/1.0/accounts/${accountId}/lists/${listId}/campaigns/b${campaignId}/stats`;\nfetch(url, { headers: headers })\n  .then(response => response.json())\n  .then(data => {\n    console.log(data)\n})\n"
       - lang: Ruby
-        source: "headers = {\n  'Accept': 'application/json',\n  'User-Agent': 'AWeber-Ruby-code-sample/1.0',\n\
-          \  'Authorization': \"Bearer #{access_token}\"\n}\nresponse = Faraday.get(\n  \"https://api.aweber.com/1.0/accounts/#{account_id}/\"\
-          \ \\\n  \"lists/#{list_id}/campaigns/b#{campaign_id}/stats\",\n) do |req|\n  req.headers = headers\n\
-          end\nputs response.body\n"
+        source: "headers = {\n  'Accept': 'application/json',\n  'User-Agent': 'AWeber-Ruby-code-sample/1.0',\n  'Authorization': \"Bearer #{access_token}\"\n}\nresponse = Faraday.get(\n  \"https://api.aweber.com/1.0/accounts/#{account_id}/\" \\\n  \"lists/#{list_id}/campaigns/b#{campaign_id}/stats\",\n) do |req|\n  req.headers = headers\nend\nputs response.body\n"
       responses:
         '200':
           description: The request completed successfully
@@ -468,28 +462,54 @@ paths:
           $ref: '#/components/responses/InternalServerError'
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
-      operationId: getBroadcastStatistics
+      operationId: getAccountsByAccountIdListsByListIdCampaignsB{campaignId}Stats
+      x-operation-id-source: derived
   /accounts/{accountId}/lists/{listId}/campaigns/b{campaignId}/stats/{statsId}:
     get:
       summary: Get broadcast statistic
-      description: "A statistic for a broadcast campaign message\n\nCheck out related examples:\n\n  *\
-        \ Get Clicks (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-clicks\"\
-        \ target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-clicks\"\
-        \ target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Clicks.postman_collection.json\"\
-        \ target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetClicks\"\
-        \ target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_clicks.rb\"\
-        \ target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-clicks.js\"\
-        \ target=\"_blank\">Node.js</a> )\n  * Get Broadcast Opens and Clicks (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-broadcast-opens-clicks\"\
-        \ target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-broadcast-opens-clicks\"\
-        \ target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetBroadcastOpensClicks\"\
-        \ target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_broadcast_opens_clicks.rb\"\
-        \ target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-broadcast-opens-clicks.js\"\
-        \ target=\"_blank\">Node.js</a> )\n  * Get Broadcast Statistics (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-broadcast-stats\"\
-        \ target=\"_blank\">Python</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-broadcast-stats\"\
-        \ target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Examples.GetBroadcastStats\"\
-        \ target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_broadcast_stats.rb\"\
-        \ target=\"_blank\">Ruby</a>  |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-broadcast-stats.js\"\
-        \ target=\"_blank\">Node.js</a> )"
+      description: 'A statistic for a broadcast campaign message
+
+
+        Check out related examples:
+
+
+        * Get Clicks (
+
+        Python |
+
+        PHP |
+
+        Postman |
+
+        C#.NET |
+
+        Ruby |
+
+        Node.js )
+
+        * Get Broadcast Opens and Clicks (
+
+        Python |
+
+        PHP |
+
+        C#.NET |
+
+        Ruby |
+
+        Node.js )
+
+        * Get Broadcast Statistics (
+
+        Python |
+
+        PHP |
+
+        C#.NET |
+
+        Ruby |
+
+        Node.js )'
       tags:
       - Campaigns
       parameters:
@@ -502,18 +522,11 @@ paths:
         - email.read
       x-code-samples:
       - lang: Shell
-        source: "curl -G \\\n  https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/campaigns/{campaignType}{campaignId}/stats/{statsId}\
-          \ \\\n  -H 'Authorization: Bearer {YOUR_ACCESS_TOKEN}'\n"
+        source: "curl -G \\\n  https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/campaigns/{campaignType}{campaignId}/stats/{statsId} \\\n  -H 'Authorization: Bearer {YOUR_ACCESS_TOKEN}'\n"
       - lang: Python
-        source: "headers = {'Accept': 'application/json',\n           'User-Agent': 'AWeber-Python-code-sample/1.0',\n\
-          \           'Authorization': f'Bearer {access_token}'}\nurl = (f'https://api.aweber.com/1.0/accounts/{account_id}'\n\
-          \       f'/lists/{list_id}/campaigns/b{campaign_id}/stats/{stats_id}')\nresponse = requests.get(url,\
-          \ headers=headers)\nprint(response.json())\n"
+        source: "headers = {'Accept': 'application/json',\n           'User-Agent': 'AWeber-Python-code-sample/1.0',\n           'Authorization': f'Bearer {access_token}'}\nurl = (f'https://api.aweber.com/1.0/accounts/{account_id}'\n       f'/lists/{list_id}/campaigns/b{campaign_id}/stats/{stats_id}')\nresponse = requests.get(url, headers=headers)\nprint(response.json())\n"
       - lang: PHP
-        source: "$headers = [\n    'User-Agent' => 'AWeber-PHP-code-sample/1.0',\n    'Accept' => 'application/json',\n\
-          \    'Authorization' => 'Bearer $token',\n];\n$url = \"https://api.aweber.com/1.0/accounts/{$accountId}/lists/{$listId}/campaigns/b{$campaignId}/stats/{$statsId}\"\
-          ;\n$response = $client->get($url, ['headers' => $headers]);\n$body = json_decode($response->getBody(),\
-          \ true);\nprint_r($body);\n"
+        source: "$headers = [\n    'User-Agent' => 'AWeber-PHP-code-sample/1.0',\n    'Accept' => 'application/json',\n    'Authorization' => 'Bearer $token',\n];\n$url = \"https://api.aweber.com/1.0/accounts/{$accountId}/lists/{$listId}/campaigns/b{$campaignId}/stats/{$statsId}\";\n$response = $client->get($url, ['headers' => $headers]);\n$body = json_decode($response->getBody(), true);\nprint_r($body);\n"
       - lang: C#
         source: 'const string url = "https://api.aweber.com/1.0/accounts/{accountId}/lists/{listId}/campaigns/b{campaignId}/stats/{statsId}";
 
@@ -532,15 +545,9 @@ paths:
           '
       - lang: JavaScript
         label: Node.js
-        source: "const headers = {\n  \"Accept\": \"application/json\",\n  \"User-Agent\": \"AWeber-Node-code-sample/1.0\"\
-          ,\n  \"Authorization\": `Bearer ${accessToken}`\n};\nconst url = `https://api.aweber.com/1.0/accounts/${accountId}/lists/${listId}/campaigns/b${campaignId}/stats/${statsId}`;\n\
-          fetch(url, { headers: headers })\n  .then(response => response.json())\n  .then(data => {\n\
-          \    console.log(data)\n})\n"
+        source: "const headers = {\n  \"Accept\": \"application/json\",\n  \"User-Agent\": \"AWeber-Node-code-sample/1.0\",\n  \"Authorization\": `Bearer ${accessToken}`\n};\nconst url = `https://api.aweber.com/1.0/accounts/${accountId}/lists/${listId}/campaigns/b${campaignId}/stats/${statsId}`;\nfetch(url, { headers: headers })\n  .then(response => response.json())\n  .then(data => {\n    console.log(data)\n})\n"
       - lang: Ruby
-        source: "headers = {\n  'Accept': 'application/json',\n  'User-Agent': 'AWeber-Ruby-code-sample/1.0',\n\
-          \  'Authorization': \"Bearer #{access_token}\"\n}\nresponse = Faraday.get(\n  \"https://api.aweber.com/1.0/accounts/#{account_id}/\"\
-          \ \\\n  \"lists/#{list_id}/campaigns/b#{campaign_id}/stats/#{stats_id}\",\n) do |req|\n  req.headers\
-          \ = headers\nend\nputs response.body\n"
+        source: "headers = {\n  'Accept': 'application/json',\n  'User-Agent': 'AWeber-Ruby-code-sample/1.0',\n  'Authorization': \"Bearer #{access_token}\"\n}\nresponse = Faraday.get(\n  \"https://api.aweber.com/1.0/accounts/#{account_id}/\" \\\n  \"lists/#{list_id}/campaigns/b#{campaign_id}/stats/#{stats_id}\",\n) do |req|\n  req.headers = headers\nend\nputs response.body\n"
       responses:
         '200':
           description: The request completed successfully
@@ -563,25 +570,10 @@ paths:
           $ref: '#/components/responses/InternalServerError'
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
-      operationId: getBroadcastStatistic
+      operationId: getAccountsByAccountIdListsByListIdCampaignsB{campaignId}StatsByStatsId
+      x-operation-id-source: derived
 components:
   parameters:
-    accountId:
-      name: accountId
-      in: path
-      description: The account ID
-      required: true
-      schema:
-        type: integer
-        format: int32
-    campaignId:
-      name: campaignId
-      required: true
-      in: path
-      description: The campaign ID
-      schema:
-        type: integer
-        format: int32
     campaignType:
       name: campaignType
       in: path
@@ -592,6 +584,24 @@ components:
         enum:
         - b
         - f
+    accountId:
+      name: accountId
+      in: path
+      description: The account ID
+      required: true
+      schema:
+        type: integer
+        format: int32
+    wsSize:
+      name: ws.size
+      in: query
+      description: The pagination total entries to retrieve
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 100
+        default: 100
     listId:
       name: listId
       in: path
@@ -627,23 +637,19 @@ components:
 
         >|---------|-------------|
 
-        >| total_clicks | Total number of times a subscriber clicked any link appearing in your campaign
-        except the unsubscribe link (includes multiple clicks of the same link) |
+        >| total_clicks | Total number of times a subscriber clicked any link appearing in your campaign except the unsubscribe link (includes multiple clicks of the same link) |
 
         >| unique_clicks | Total number of subscribers who clicked any link in your campaign |
 
-        >| total_opens | Total number of times your campaign was opened by any subscriber your campaign
-        was sent to (including multiple opens by the same subscriber) |
+        >| total_opens | Total number of times your campaign was opened by any subscriber your campaign was sent to (including multiple opens by the same subscriber) |
 
         >| unique_opens | Total number of subscribers who opened your campaign |
 
         >| total_sales | Total number of sales made by subscribers who received your campaign |
 
-        >| total_sales_dollars | Total monetary value of sales made by subscribers who received your campaign
-        |
+        >| total_sales_dollars | Total monetary value of sales made by subscribers who received your campaign |
 
-        >| total_unsubscribed | Total number of subscribers who unsubscribed by clicking the unsubscribe
-        link in your campaign |
+        >| total_unsubscribed | Total number of subscribers who unsubscribed by clicking the unsubscribe link in your campaign |
 
         >
 
@@ -655,33 +661,25 @@ components:
 
         >|---------|-------------|
 
-        >| hourly_clicks | Hourly breakdown of unique and total clicks for the first 24 hours after a
-        campaign was sent |
+        >| hourly_clicks | Hourly breakdown of unique and total clicks for the first 24 hours after a campaign was sent |
 
-        >| hourly_opens | Hourly breakdown of unique and total opens for the first 24 hours after a campaign
-        was sent |
+        >| hourly_opens | Hourly breakdown of unique and total opens for the first 24 hours after a campaign was sent |
 
         >| hourly_sales | Hourly breakdown of sales for the first 24 hours after a campaign was sent |
 
-        >| hourly_unsubscribed | Hourly breakdown of subscribers who unsubscribed by clicking the unsubscribed
-        link for the first 24 hours after a campaign was sent |
+        >| hourly_unsubscribed | Hourly breakdown of subscribers who unsubscribed by clicking the unsubscribed link for the first 24 hours after a campaign was sent |
 
-        >| hourly_webhits | Hourly breakdown of webhits to your website from subscribers sent this message
-        for the first 24 hours after a campaign was sent |
+        >| hourly_webhits | Hourly breakdown of webhits to your website from subscribers sent this message for the first 24 hours after a campaign was sent |
 
-        >| daily_clicks | Daily breakdown of unique and total clicks for the first 14 days after a campaign
-        was sent |
+        >| daily_clicks | Daily breakdown of unique and total clicks for the first 14 days after a campaign was sent |
 
-        >| daily_opens | Daily breakdown of unique and total opens for the first 14 days after a campaign
-        was sent |
+        >| daily_opens | Daily breakdown of unique and total opens for the first 14 days after a campaign was sent |
 
         >| daily_sales | Daily breakdown of sales for the first 14 days after a campaign was sent |
 
-        >| daily_unsubscribed | Daily breakdown of subscribers who unsuscribed by clicking the unsubscribed
-        link for the first 14 days after a campaign was sent |
+        >| daily_unsubscribed | Daily breakdown of subscribers who unsuscribed by clicking the unsubscribed link for the first 14 days after a campaign was sent |
 
-        >| daily_webhits | Daily breakdown of webhits to your website from subscribers sent this message
-        for the first 14 days after a campaign was sent |
+        >| daily_webhits | Daily breakdown of webhits to your website from subscribers sent this message for the first 14 days after a campaign was sent |
 
         >
 
@@ -711,8 +709,7 @@ components:
 
         >| opens_by_subscriber | Top 10 subscribers that opened your message (ranked by total opens) |
 
-        >| sales_by_subscriber | Top 10 subscribers that made a sale from your message (ranked by total
-        sales dollars) |
+        >| sales_by_subscriber | Top 10 subscribers that made a sale from your message (ranked by total sales dollars) |
 
         '
       schema:
@@ -739,25 +736,6 @@ components:
         - webhits_by_link
         - opens_by_subscriber
         - sales_by_subscriber
-    wsShow:
-      name: ws.show
-      in: query
-      description: A flag to show the total size only - expecting \"total_size\", when added the response
-        will be an integer
-      schema:
-        type: string
-        enum:
-        - total_size
-    wsSize:
-      name: ws.size
-      in: query
-      description: The pagination total entries to retrieve
-      schema:
-        type: integer
-        format: int32
-        minimum: 1
-        maximum: 100
-        default: 100
     wsStart:
       name: ws.start
       in: query
@@ -767,516 +745,62 @@ components:
         format: int32
         minimum: 0
         default: 0
-  responses:
-    BlockedError:
-      description: The request has been blocked
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | BlockedError         | This Request has been blocked            |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com/#blocked
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Blocked Error
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 410
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - BlockedError
-    CampaignBadRequest:
-      description: The server cannot or will not process the request due to a client error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  One of the following errors may be received:
-
-
-                  | Error Type                  | Explanation                                |
-
-                  |-----------------------------|--------------------------------------------|
-
-                  | BadRequestError             | Query parameters are invalid  |
-
-                  | MissingArgumentError | An required argument was not provided |
-
-                  | MissingOAuthParametersError | An OAuth parameter is missing in the request |
-
-                  | UnsupportedOAuthSignatureMethodError | Unsupported OAuth 1 signature method |
-
-                  | UnsupportedOAuthVersionError | Unsupported OAuth 1 version |
-
-                  | WebServiceError             | `ws.start` or `ws.size` values are invalid |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#badrequest
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Maximum for "ws.size" parameter is 100.
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 400
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - BadRequestError
-                    - MissingArgumentError
-                    - MissingOAuthParametersError
-                    - UnsupportedOAuthSignatureMethodError
-                    - UnsupportedOAuthVersionError
-                    - WebServiceError
-                    example: BadRequestError
-    ForbiddenError:
-      description: The request could not be completed due to a rate limit error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | ForbiddenError       | Rate limit may be reached or account may be suspended |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#forbidden
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Rate Limit Error
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 403
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - ForbiddenError
-    InternalServerError:
-      description: The request failed due to an internal error in the code or because of an external dependency
-        failure
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | InternalServerError    | The request failed due to an internal error |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#internalerror
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Something went wrong.
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 500
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - InternalServerError
-    NotFound:
-      description: The requested resource could not be found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | NotFoundError        | The requested resource could not be found |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#notfound
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: 'Object: None, name: '''''
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 404
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - NotFoundError
-    SearchBadRequest:
-      description: The server cannot or will not process the request due to a client error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  One of the following errors may be received:
-
-
-                  | Error Type                           | Explanation                              |
-
-                  |--------------------------------------|------------------------------------------|
-
-                  | BadRequestError                      | The search parameters or were invalid or the
-                  OAuth query string could not be parsed|
-
-                  | WebServiceError                      | `ws.start` or `ws.size` values are invalid
-                  |
-
-                  | MissingOAuthParametersError          | An OAuth parameter is missing in the request
-                  |
-
-                  | UnsupportedOAuthSignatureMethodError | The provided OAuth 1 signature method is unsupported.
-                  Only HMAC-SHA1 is supported. |
-
-                  | UnsupportedOAuthVersionError         | The provided OAuth 1 version is unsupported.
-                  |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#badrequest
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: 'Missing oauth parameters: oauth_consumer_key'
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 400
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - BadRequestError
-                    - MissingOAuthParametersError
-                    - UnsupportedOAuthSignatureMethodError
-                    - UnsupportedOAuthVersionError
-                    - WebServiceError
-    ServiceUnavailable:
-      description: The server is currently unavailable
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | ServiceUnavailableError | The server is unavailable |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#serviceunavailable
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Failed to communicate with endpoint
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 503
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - ServiceUnavailableError
-    UnauthorizedError:
-      description: The request could not be completed due to an authentication error
-      content:
-        application/json:
-          schema:
-            oneOf:
-            - $ref: '#/schemas/Endpoint Error'
-            - $ref: '#/schemas/Auth Error'
+    campaignId:
+      name: campaignId
+      required: true
+      in: path
+      description: The campaign ID
+      schema:
+        type: integer
+        format: int32
+    wsShow:
+      name: ws.show
+      in: query
+      description: A flag to show the total size only - expecting \"total_size\", when added the response will be an integer
+      schema:
+        type: string
+        enum:
+        - total_size
   schemas:
-    Campaign:
+    Stats:
+      type: object
       properties:
-        campaign_type:
-          description: 'Type of campaign. (f: followup, b: broadcast)'
-          type: string
-          enum:
-          - b
-          - f
-        click_tracking_enabled:
-          description: Whether click tracking is enabled
-          type: boolean
-        content_type:
-          description: Type of message
-          type: string
-          enum:
-          - Text
-          - HTML
-          - Text/HTML
-        id:
-          description: Unique campaign ID for followup or broadcast
-          type: integer
-          example: 1234567
-        is_archived:
-          description: Is the campaign in the campaign archive (broadcast only)
-          type: boolean
-        links_collection_link:
-          description: A URL to retrieve the [Links](#tag/Campaigns/paths/~1accounts~1{accountId}~1lists~1{listId}~1campaigns~1{campaignType}{campaignId}~1links/get)
-            for this campaign
+        entries:
+          description: A list of stats entries
+          type: array
+          items:
+            $ref: '#/definitions/Stat'
+        next_collection_link:
+          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
           type: string
           format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b3456789/links
-        message_interval:
-          description: Message interval (followup only)
-          type: integer
-          minimum: 1
-          maximum: 999
-        message_number:
-          description: Followup sequence number (followup only)
-          type: integer
-          minimum: 1
-          maximum: 999
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/stats?ws.start=2&ws.size=1
+        prev_collection_link:
+          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/stats?ws.start=0&ws.size=1
         resource_type_link:
-          description: A link that identifies the type of resource that this collection represents
+          description: A link that identifies the type of resource that this represents
           type: string
           format: uri
-          example: https://api.aweber.com/1.0/#broadcast_campaign
-        scheduled_at:
-          description: When broadcast is scheduled to send (broadcast only)
-          type: string
-          format: date-time
-          example: '2017-07-18 16:53:02-04:00'
-        self_link:
-          description: The link to this resource
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b3456789
-        sent_at:
-          description: Date/Time campaign was sent (broadcast only)
-          type: string
-          format: date-time
-          example: '2017-07-18 16:53:07-04:00'
-        spam_assassin_score:
-          description: "SpamAssassin score.  Read <a href=\"https://blog.aweber.com/email-deliverability/spamassassin-deliverability-tips.htm\"\
-            \n target=\"_blank\">SpamAssassin's Tips on Deliverability</a> for more detail."
-          type: number
-          format: float
-          example: 2.1
-        stats_collection_link:
-          description: A link to the [statistics collection](#tag/Campaigns/paths/~1accounts~1{accountId}~1lists~1{listId}~1campaigns~1b{campaignId}~1stats/get)
-            for this campaign
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/accounts/123/lists/456/campaigns/b3456789/stats
-        subject:
-          description: Subject of message
-          type: string
-          maximum: 120
-          example: Weekly Recipes
-        total_clicks:
-          description: Total clicks of this message
-          type: integer
-        total_opens:
-          description: Total number of messages opened
-          type: integer
-        total_sent:
-          description: Total number of messages sent
-          type: integer
-        total_spam_complaints:
-          description: Total number of spam complaints received
-          type: integer
-        total_undelivered:
-          description: Total number of undeliverable messages
-          type: integer
-        total_unsubscribes:
-          description: Total number of unsubscribes from this campaign
-          type: integer
-        twitter_account_link:
-          description: Twitter account where broadcast was tweeted (broadcasts only). Links to [Integration](#tag/Integrations/paths/~1accounts~1{accountId}~1integrations~1{integrationId}/get).
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/account/123/integrations/456
-    FindCampaigns:
-      type: object
-      properties:
-        entries:
-          description: A list of campaign entries
-          type: array
-          items:
-            $ref: '#/definitions/Campaign'
-        next_collection_link:
-          description: A link to the next page of entries if more entries exist. This attribute is omitted
-            from the collection if there are no more entries.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?ws.start=101&ws.size=100
-        prev_collection_link:
-          description: A link to the previous page of entries if any exist. This attribute is omitted
-            from the collection if ws.start is 0.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?ws.start=0&ws.size=100
+          example: https://api.aweber.com/1.0/#stat-page-resource
         start:
           description: The starting offset for the page of entries to retrieve
           type: integer
           minimum: 0
-        total_size_link:
-          description: Link to the total number of entries
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?campaign_type=b&ws.op=find&ws.show=total_size
-    ListCampaigns:
-      type: object
-      properties:
-        entries:
-          description: A list of campaign entries
-          type: array
-          items:
-            $ref: '#/definitions/Campaign'
-        next_collection_link:
-          description: A link to the next page of entries if more entries exist. This attribute is omitted
-            from the collection if there are no more entries.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?ws.start=101&ws.size=100
-        prev_collection_link:
-          description: A link to the previous page of entries if any exist. This attribute is omitted
-            from the collection if ws.start is 0.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?ws.start=0&ws.size=100
-        start:
-          description: The starting offset for the page of entries to retrieve
-          type: integer
-          minimum: 0
+          example: 1
         total_size:
           description: The total number of entries
           type: integer
+          example: 10
     Stat:
       type: object
       properties:
         description:
           description: A description of the statistic
           type: string
-          example: total number of times a subscriber clicked any link appearing in your campaign except
-            the unsubscribe link (includes multiple clicks of the same link)
+          example: total number of times a subscriber clicked any link appearing in your campaign except the unsubscribe link (includes multiple clicks of the same link)
         id:
           description: Statistic's ID
           type: string
@@ -1380,42 +904,496 @@ components:
           - type: number
           - type: string
           example: 21
-    Stats:
+    Campaign:
+      properties:
+        campaign_type:
+          description: 'Type of campaign. (f: followup, b: broadcast)'
+          type: string
+          enum:
+          - b
+          - f
+        click_tracking_enabled:
+          description: Whether click tracking is enabled
+          type: boolean
+        content_type:
+          description: Type of message
+          type: string
+          enum:
+          - Text
+          - HTML
+          - Text/HTML
+        id:
+          description: Unique campaign ID for followup or broadcast
+          type: integer
+          example: 1234567
+        is_archived:
+          description: Is the campaign in the campaign archive (broadcast only)
+          type: boolean
+        links_collection_link:
+          description: A URL to retrieve the [Links](#tag/Campaigns/paths/~1accounts~1{accountId}~1lists~1{listId}~1campaigns~1{campaignType}{campaignId}~1links/get) for this campaign
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b3456789/links
+        message_interval:
+          description: Message interval (followup only)
+          type: integer
+          minimum: 1
+          maximum: 999
+        message_number:
+          description: Followup sequence number (followup only)
+          type: integer
+          minimum: 1
+          maximum: 999
+        resource_type_link:
+          description: A link that identifies the type of resource that this collection represents
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/#broadcast_campaign
+        scheduled_at:
+          description: When broadcast is scheduled to send (broadcast only)
+          type: string
+          format: date-time
+          example: '2017-07-18 16:53:02-04:00'
+        self_link:
+          description: The link to this resource
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b3456789
+        sent_at:
+          description: Date/Time campaign was sent (broadcast only)
+          type: string
+          format: date-time
+          example: '2017-07-18 16:53:07-04:00'
+        spam_assassin_score:
+          description: "SpamAssassin score.  Read <a href=\"https://blog.aweber.com/email-deliverability/spamassassin-deliverability-tips.htm\"\n target=\"_blank\">SpamAssassin's Tips on Deliverability</a> for more detail."
+          type: number
+          format: float
+          example: 2.1
+        stats_collection_link:
+          description: A link to the [statistics collection](#tag/Campaigns/paths/~1accounts~1{accountId}~1lists~1{listId}~1campaigns~1b{campaignId}~1stats/get) for this campaign
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/accounts/123/lists/456/campaigns/b3456789/stats
+        subject:
+          description: Subject of message
+          type: string
+          maximum: 120
+          example: Weekly Recipes
+        total_clicks:
+          description: Total clicks of this message
+          type: integer
+        total_opens:
+          description: Total number of messages opened
+          type: integer
+        total_sent:
+          description: Total number of messages sent
+          type: integer
+        total_spam_complaints:
+          description: Total number of spam complaints received
+          type: integer
+        total_undelivered:
+          description: Total number of undeliverable messages
+          type: integer
+        total_unsubscribes:
+          description: Total number of unsubscribes from this campaign
+          type: integer
+        twitter_account_link:
+          description: Twitter account where broadcast was tweeted (broadcasts only). Links to [Integration](#tag/Integrations/paths/~1accounts~1{accountId}~1integrations~1{integrationId}/get).
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/account/123/integrations/456
+    ListCampaigns:
       type: object
       properties:
         entries:
-          description: A list of stats entries
+          description: A list of campaign entries
           type: array
           items:
-            $ref: '#/definitions/Stat'
+            $ref: '#/definitions/Campaign'
         next_collection_link:
-          description: A link to the next page of entries if more entries exist. This attribute is omitted
-            from the collection if there are no more entries.
+          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
           type: string
           format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/stats?ws.start=2&ws.size=1
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?ws.start=101&ws.size=100
         prev_collection_link:
-          description: A link to the previous page of entries if any exist. This attribute is omitted
-            from the collection if ws.start is 0.
+          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
           type: string
           format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/stats?ws.start=0&ws.size=1
-        resource_type_link:
-          description: A link that identifies the type of resource that this represents
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/#stat-page-resource
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?ws.start=0&ws.size=100
         start:
           description: The starting offset for the page of entries to retrieve
           type: integer
           minimum: 0
-          example: 1
         total_size:
           description: The total number of entries
           type: integer
-          example: 10
+    FindCampaigns:
+      type: object
+      properties:
+        entries:
+          description: A list of campaign entries
+          type: array
+          items:
+            $ref: '#/definitions/Campaign'
+        next_collection_link:
+          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?ws.start=101&ws.size=100
+        prev_collection_link:
+          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?ws.start=0&ws.size=100
+        start:
+          description: The starting offset for the page of entries to retrieve
+          type: integer
+          minimum: 0
+        total_size_link:
+          description: Link to the total number of entries
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?campaign_type=b&ws.op=find&ws.show=total_size
+  responses:
+    ServiceUnavailable:
+      description: The server is currently unavailable
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | ServiceUnavailableError | The server is unavailable |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#serviceunavailable
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Failed to communicate with endpoint
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 503
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - ServiceUnavailableError
+    ForbiddenError:
+      description: The request could not be completed due to a rate limit error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | ForbiddenError       | Rate limit may be reached or account may be suspended |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#forbidden
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Rate Limit Error
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 403
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - ForbiddenError
+    InternalServerError:
+      description: The request failed due to an internal error in the code or because of an external dependency failure
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | InternalServerError    | The request failed due to an internal error |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#internalerror
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Something went wrong.
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 500
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - InternalServerError
+    UnauthorizedError:
+      description: The request could not be completed due to an authentication error
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/schemas/Endpoint Error'
+            - $ref: '#/schemas/Auth Error'
+    NotFound:
+      description: The requested resource could not be found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | NotFoundError        | The requested resource could not be found |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#notfound
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: 'Object: None, name: '''''
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 404
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - NotFoundError
+    SearchBadRequest:
+      description: The server cannot or will not process the request due to a client error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  One of the following errors may be received:
+
+
+                  | Error Type                           | Explanation                              |
+
+                  |--------------------------------------|------------------------------------------|
+
+                  | BadRequestError                      | The search parameters or were invalid or the OAuth query string could not be parsed|
+
+                  | WebServiceError                      | `ws.start` or `ws.size` values are invalid |
+
+                  | MissingOAuthParametersError          | An OAuth parameter is missing in the request |
+
+                  | UnsupportedOAuthSignatureMethodError | The provided OAuth 1 signature method is unsupported. Only HMAC-SHA1 is supported. |
+
+                  | UnsupportedOAuthVersionError         | The provided OAuth 1 version is unsupported. |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#badrequest
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: 'Missing oauth parameters: oauth_consumer_key'
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 400
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BadRequestError
+                    - MissingOAuthParametersError
+                    - UnsupportedOAuthSignatureMethodError
+                    - UnsupportedOAuthVersionError
+                    - WebServiceError
+    CampaignBadRequest:
+      description: The server cannot or will not process the request due to a client error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  One of the following errors may be received:
+
+
+                  | Error Type                  | Explanation                                |
+
+                  |-----------------------------|--------------------------------------------|
+
+                  | BadRequestError             | Query parameters are invalid  |
+
+                  | MissingArgumentError | An required argument was not provided |
+
+                  | MissingOAuthParametersError | An OAuth parameter is missing in the request |
+
+                  | UnsupportedOAuthSignatureMethodError | Unsupported OAuth 1 signature method |
+
+                  | UnsupportedOAuthVersionError | Unsupported OAuth 1 version |
+
+                  | WebServiceError             | `ws.start` or `ws.size` values are invalid |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#badrequest
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Maximum for "ws.size" parameter is 100.
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 400
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BadRequestError
+                    - MissingArgumentError
+                    - MissingOAuthParametersError
+                    - UnsupportedOAuthSignatureMethodError
+                    - UnsupportedOAuthVersionError
+                    - WebServiceError
+                    example: BadRequestError
+    BlockedError:
+      description: The request has been blocked
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | BlockedError         | This Request has been blocked            |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com/#blocked
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Blocked Error
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 410
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BlockedError
   securitySchemes:
-    OAuth 2.0:
+    OAuth_2.0:
       description: 'The following endpoints and scopes are used to authenticate.
 
         '
@@ -1430,8 +1408,7 @@ components:
 
               Access account information and associated integrations. <br>
 
-              <b>Required for the following endpoints:</b> get accounts, get account, get integrations,
-              get integration
+              <b>Required for the following endpoints:</b> get accounts, get account, get integrations, get integration
 
               '
             landing-page.read: '<br>
@@ -1445,58 +1422,97 @@ components:
 
               Retrieve lists, custom fields, tags, and sign up forms <br>
 
-              <b>Required for the following endpoints:</b> get list, get lists, find lists, get tags for
-              list, get custom fields, get custom field, get webforms for list, get split tests for list,
-              get split test components, get split test component, get webforms for account, get split
-              tests for account
+              <b>Required for the following endpoints:</b> get list, get lists, find lists, get tags for list, get custom fields, get custom field, get webforms for list, get split tests for list, get split test components, get split test component, get webforms for account, get split tests for account
 
               '
             list.write: '<br>
 
               Create, edit, and delete custom fields <br>
 
-              <b>Required for the following endpoints:</b> add custom field, update custom field, delete
-              custom field
+              <b>Required for the following endpoints:</b> add custom field, update custom field, delete custom field
 
               '
             subscriber.read: '<br>
 
               Retrieve subscribers and their activity <br>
 
-              <b>Required for the following endpoints:</b> get subscribers, get subscriber, get subscriber
-              activity, get subscribers for message, find subscribers for account, find subscribers for
-              list
+              <b>Required for the following endpoints:</b> get subscribers, get subscriber, get subscriber activity, get subscribers for message, find subscribers for account, find subscribers for list
 
               '
             subscriber.write: '<br>
 
               Create, edit, delete, retrieve, search for, and move subscribers <br>
 
-              <b>Required for the following endpoints:</b> add subscriber, move subscriber, update subscriber,
-              delete subscriber
+              <b>Required for the following endpoints:</b> add subscriber, move subscriber, update subscriber, delete subscriber
 
               '
             subscriber.read-extended: '<br>
 
-              Previously required to retrieve subscriber PII such as name, email, IP address, etc.  This
-              functionality was moved to the "subscriber.read" scope
+              Previously required to retrieve subscriber PII such as name, email, IP address, etc.  This functionality was moved to the "subscriber.read" scope
 
               '
             email.read: '<br>
 
               Retrieve email activity related to broadcasts and follow-ups <br>
 
-              <b>Required for the following endpoints:</b> get messages, get message, get broadcasts,
-              get broadcast, get message opens, get message open, get message tracked events, get message
-              tracked event, get total broadcasts, get campaigns, get campaign, find campaigns, get broadcast
-              statistics, get broadcast statistic
+              <b>Required for the following endpoints:</b> get messages, get message, get broadcasts, get broadcast, get message opens, get message open, get message tracked events, get message tracked event, get total broadcasts, get campaigns, get campaign, find campaigns, get broadcast statistics, get broadcast statistic
 
               '
             email.write: '<br>
 
               Create and send email broadcasts <br>
 
-              <b>Required for the following endpoints:</b> create broadcast, update broadcast, delete
-              broadcast, cancel broadcast, schedule broadcast
+              <b>Required for the following endpoints:</b> create broadcast, update broadcast, delete broadcast, cancel broadcast, schedule broadcast
 
               '
+x-tagGroups:
+- name: Getting Started
+  tags:
+  - Getting Started
+- name: Authentication
+  tags:
+  - Authentication Overview
+  - OAuth 2.0 Examples
+  - OAuth 2.0 Traces
+  - OAuth 2.0 Reference
+  - OAuth 1.0a Reference
+- name: API Reference
+  tags:
+  - Accounts
+  - Broadcasts
+  - Campaigns
+  - Custom Fields
+  - Integrations
+  - Landing Pages
+  - Lists
+  - Segments
+  - Subscribers
+  - Webforms
+- name: Beta API Reference
+  tags:
+  - Beta Endpoints
+- name: Webhooks
+  tags:
+  - Webhooks
+- name: Code Samples
+  tags:
+  - Introduction
+  - Find a List and Get Tags
+  - Manage a Subscriber
+  - Create a Purchase
+  - Manage Custom Fields
+  - Find Subscribers Across Lists
+  - Move Subscriber to Another List
+  - Create and Schedule a Broadcast
+  - Get Sent Broadcast Details
+  - Get Broadcast Statistics
+  - Get Subscribers Who Opened or Clicked a Broadcast
+  - Get Webforms Detail
+  - Get Integrations List
+  - Get Segments
+  - Get Landing Pages
+- name: Miscellaneous
+  tags:
+  - Developer Changelog
+  - FAQ
+  - Troubleshooting

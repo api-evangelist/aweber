@@ -1,38 +1,63 @@
 {
   "provider": "aweber",
-  "generated": "2026-08-13",
-  "method": "harvested+refined",
-  "source": "https://api.aweber.com/swagger.yaml",
-  "source_note": "AWeber publishes OpenAPI 3.0.2 across 34 files at api.aweber.com (swagger.yaml plus _tags/_paths/_parameters/_responses/_definitions and 12 per-resource path files, plus doc-only tag files). All were fetched and bundled into openapi/_original/aweber-api-openapi.yml with external $refs resolved and nothing else changed.",
   "sources": [
-    "https://api.aweber.com/swagger.yaml"
+    "_original/aweber-api-openapi.yml"
   ],
   "outputs": [
     "aweber-accounts-api-openapi.yml",
-    "aweber-authentication-api-openapi.yml",
-    "aweber-beta-api-openapi.yml",
+    "aweber-beta-endpoints-api-openapi.yml",
     "aweber-broadcasts-api-openapi.yml",
     "aweber-campaigns-api-openapi.yml",
     "aweber-custom-fields-api-openapi.yml",
     "aweber-integrations-api-openapi.yml",
     "aweber-landing-pages-api-openapi.yml",
     "aweber-lists-api-openapi.yml",
+    "aweber-oauth-1-0a-reference-api-openapi.yml",
+    "aweber-oauth-2-0-reference-api-openapi.yml",
     "aweber-segments-api-openapi.yml",
     "aweber-subscribers-api-openapi.yml",
-    "aweber-web-forms-api-openapi.yml"
+    "aweber-webforms-api-openapi.yml"
   ],
-  "paths": 45,
-  "operations": 57,
-  "archived": [
-    "openapi/_original/aweber-openapi.yml"
+  "archived": [],
+  "errors": [
+    "aweber-api-openapi.yml: dangling $ref: #/components/requestBodies/Revoke",
+    "aweber-api-openapi.yml: dangling $ref: #/components/requestBodies/Token",
+    "aweber-api-openapi.yml: dangling $ref: #/definitions/Account",
+    "aweber-api-openapi.yml: dangling $ref: #/definitions/Campaign",
+    "aweber-api-openapi.yml: dangling $ref: #/definitions/CustomField",
+    "aweber-api-openapi.yml: dangling $ref: #/definitions/Integration",
+    "aweber-api-openapi.yml: dangling $ref: #/definitions/List",
+    "aweber-api-openapi.yml: dangling $ref: #/definitions/Stat",
+    "aweber-api-openapi.yml: dangling $ref: #/definitions/Subscriber",
+    "aweber-api-openapi.yml: dangling $ref: #/definitions/SubscriberFind",
+    "aweber-api-openapi.yml: dangling $ref: #/definitions/Webform",
+    "aweber-api-openapi.yml: dangling $ref: #/schemas/Auth Error",
+    "aweber-api-openapi.yml: dangling $ref: #/schemas/Endpoint Error"
   ],
-  "errors": [],
-  "warnings": [
-    "The published spec assigns an operationId to only 1 of 57 operations; the refined per-tag specs carry operationIds derived from AWeber's own summaries, recorded in overlays/aweber-api-overlay.yaml.",
-    "Several published path keys carry a query string (?ws.op=find, ?ws.op=getActivity) - AWeber's named-operation convention, preserved verbatim."
-  ],
+  "warnings": [],
   "notes": [
-    "Replaced a prior best-effort scaffold spec (18 fabricated operations, including a /accounts/{accountId}/landing_pages path that does not exist) with the provider's real published contract."
+    "3 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "aweber-api-openapi.yml: upgraded openapi 3.0.2 -> OpenAPI 3.2.0; renamed 1 component key(s) illegal in 3.x (e.g. OAuth 2.0)",
+    "aweber-api-openapi.yml: declared missing tag: OAuth 1.0a Reference",
+    "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "_original/aweber-web-forms-api-openapi.yml: archived document superseded by a larger archived document",
+    "_original/aweber-beta-api-openapi.yml: archived document superseded by a larger archived document",
+    "_original/aweber-authentication-api-openapi.yml: archived document superseded by a larger archived document",
+    "aweber-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aweber-beta-endpoints-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aweber-broadcasts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aweber-campaigns-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aweber-custom-fields-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aweber-integrations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aweber-landing-pages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aweber-lists-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aweber-oauth-1-0a-reference-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aweber-oauth-2-0-reference-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aweber-segments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aweber-subscribers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "aweber-webforms-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

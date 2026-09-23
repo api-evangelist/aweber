@@ -1,7 +1,6 @@
 openapi: 3.2.0
 info:
-  title: AWeber Beta Beta Endpoints API
-  version: '1.0'
+  title: AWeber Beta Endpoints API
   description: 'We are constantly working to improve this documentation. If you have
 
     feedback and questions, please contact the AWeber API team at
@@ -14,96 +13,20 @@ info:
 
     Please see the below resources for further information:
 
-    - <a href="https://labs.aweber.com/docs/tos" target="_blank">Terms of Service</a>
+    - Terms of Service
 
-    - <a href="https://help.aweber.com/hc/en-us/articles/204031776" target="_blank">Showcasing an Integration</a>
+    - Showcasing an Integration
 
-    - <a href="https://help.aweber.com/hc/en-us/sections/360000617213-API" target="_blank">Knowledge Base</a>
+    - Knowledge Base
 
-    - <a href="https://status.aweber.com" target="_blank">API Status Page</a>
-
-    '
-  contact:
-    name: AWeber API Team
-    email: api@aweber.com
-    url: https://api.aweber.com/
+    - API Status Page'
+  version: '1.0'
 servers:
 - url: https://api.aweber.com/1.0
   description: v1 API endpoints
-security:
-- OAuth 2.0: []
 tags:
 - name: Beta Endpoints
-  description: '### What is it?
-
-
-    Beta endpoints are early-access versions of the upcoming v2 API that provide developers with a preview of new features and changes before the official v2 release. These endpoints are accessible at `api.aweber.com/2.0-beta/` and include **new functionality not available in v1**.
-
-
-    Beta endpoints are previews of v2 functionality and do not replace v1 endpoints. The stable v1 API remains the recommended choice for production applications.
-
-
-    ### Important Notice
-
-
-    **Beta endpoints are experimental and subject to change without notice.** As beta endpoints, developers should expect:
-
-
-    - **Contracts may change** at any time without backward compatibility
-
-    - **Endpoints may not follow** previously established patterns from v1 endpoints
-
-    - **Current Documentation may be inaccurate** or incomplete
-
-    - **Limited support** compared to stable v1 endpoints
-
-    - **No guarantee of stability** until official v2 release
-
-
-    **Use beta endpoints only for testing and development purposes.** Do not rely on beta endpoints for production applications.
-
-
-    ### Key Differences from v1 API
-
-
-    Beta endpoints introduce several changes that preview the upcoming v2 API:
-
-
-    - **UUID Identifiers**: Resources use UUIDs instead of numeric IDs
-
-    - **New Functionality**: Access to capabilities and data not available through v1 endpoints
-
-    - **Different Base URL**: Beta endpoints are accessible at `api.aweber.com/2.0-beta/` instead of `api.aweber.com/1.0/`
-
-
-    ### Authentication
-
-
-    Beta endpoints use the same OAuth 2.0 authentication as v1 endpoints. Your existing access tokens and authentication flow will work with beta endpoints.
-
-
-    ### Base URL
-
-
-    ```
-
-    https://api.aweber.com/2.0-beta/
-
-    ```
-
-
-    ### Support
-
-
-    For questions about beta endpoints:
-
-    - Email: [api@aweber.com](mailto:api@aweber.com?subject=Beta%20Endpoints)
-
-    - Include "Beta Endpoints" in your subject line
-
-    - Provide specific details about the endpoint and issue encountered
-
-    '
+  description: '### What is it?'
 paths:
   /analytics/reports/broadcasts-links:
     get:
@@ -386,3 +309,54 @@ components:
               <b>Required for the following endpoints:</b> create broadcast, update broadcast, delete broadcast, cancel broadcast, schedule broadcast
 
               '
+x-tagGroups:
+- name: Getting Started
+  tags:
+  - Getting Started
+- name: Authentication
+  tags:
+  - Authentication Overview
+  - OAuth 2.0 Examples
+  - OAuth 2.0 Traces
+  - OAuth 2.0 Reference
+  - OAuth 1.0a Reference
+- name: API Reference
+  tags:
+  - Accounts
+  - Broadcasts
+  - Campaigns
+  - Custom Fields
+  - Integrations
+  - Landing Pages
+  - Lists
+  - Segments
+  - Subscribers
+  - Webforms
+- name: Beta API Reference
+  tags:
+  - Beta Endpoints
+- name: Webhooks
+  tags:
+  - Webhooks
+- name: Code Samples
+  tags:
+  - Introduction
+  - Find a List and Get Tags
+  - Manage a Subscriber
+  - Create a Purchase
+  - Manage Custom Fields
+  - Find Subscribers Across Lists
+  - Move Subscriber to Another List
+  - Create and Schedule a Broadcast
+  - Get Sent Broadcast Details
+  - Get Broadcast Statistics
+  - Get Subscribers Who Opened or Clicked a Broadcast
+  - Get Webforms Detail
+  - Get Integrations List
+  - Get Segments
+  - Get Landing Pages
+- name: Miscellaneous
+  tags:
+  - Developer Changelog
+  - FAQ
+  - Troubleshooting

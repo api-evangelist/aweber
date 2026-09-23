@@ -1,7 +1,6 @@
 openapi: 3.2.0
 info:
-  title: AWeber Web Forms Webforms API
-  version: '1.0'
+  title: AWeber Webforms API
   description: 'We are constantly working to improve this documentation. If you have
 
     feedback and questions, please contact the AWeber API team at
@@ -14,76 +13,43 @@ info:
 
     Please see the below resources for further information:
 
-    - <a href="https://labs.aweber.com/docs/tos" target="_blank">Terms of Service</a>
+    - Terms of Service
 
-    - <a href="https://help.aweber.com/hc/en-us/articles/204031776" target="_blank">Showcasing an Integration</a>
+    - Showcasing an Integration
 
-    - <a href="https://help.aweber.com/hc/en-us/sections/360000617213-API" target="_blank">Knowledge Base</a>
+    - Knowledge Base
 
-    - <a href="https://status.aweber.com" target="_blank">API Status Page</a>
-
-    '
-  contact:
-    name: AWeber API Team
-    email: api@aweber.com
-    url: https://api.aweber.com/
+    - API Status Page'
+  version: '1.0'
 servers:
 - url: https://api.aweber.com/1.0
   description: v1 API endpoints
-security:
-- OAuth 2.0: []
 tags:
 - name: Webforms
-  description: '### What is it?
-
-
-    Represents the collection of sign-up forms associated with the AWeber Customer
-
-    Account''s lists.
-
-
-    Webforms are sets of customized HTML and javascript that are used to put up a sign-up forms
-
-    on a customer''s website.  The Webform can be modified in the AWeber Control Panel and if you
-
-    include the javascript source link on any web page, that form will be displayed.
-
-
-    Webforms can also be subject to split-tests to compare conversion effectiveness.  Webforms that
-
-    belong to a split test are listed as *components* of the split test and can be retrieved by
-
-    following the `components_collection_link` of the split test. The statistics of each component
-
-    include only displays of that Webform where it was displayed from a split test.
-
-
-    Use this set of resources to retrieve information about the available sign-up forms and associated
-
-    split tests.  The collection responses are sorted by the appropriate identifier and paginated using
-
-    `next_collection_link` and `prev_collection_link` properties. See
-
-    [How Collections are Represented](#collection-representation) for details on collection traversal.
-
-
-    ### Related endpoints
-
-
-    * [Webforms](#tag/Webforms)
-
-
-    ### Related code examples
-
-
-    * [Get Webforms Detail](#tag/Get-Webforms-Detail)
-
-    '
+  description: '### What is it?'
 paths:
   /accounts/{accountId}?ws.op=getWebForms:
     get:
       summary: Get webforms for account
-      description: "This endpoint is used to retrieve webforms for all lists on an account.\n\nCheck out related examples:\n\n  * Get Webforms Detail (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-webforms-detail\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-webforms-detail\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Webforms%20Detail.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Example.GetWebformsDetail\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_webforms_details.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-webforms-details.js\" target=\"_blank\">Node.js</a> )"
+      description: 'This endpoint is used to retrieve webforms for all lists on an account.
+
+
+        Check out related examples:
+
+
+        * Get Webforms Detail (
+
+        Python |
+
+        PHP |
+
+        Postman |
+
+        C#.NET |
+
+        Ruby |
+
+        Node.js )'
       tags:
       - Webforms
       parameters:
@@ -155,11 +121,30 @@ paths:
           $ref: '#/components/responses/InternalServerError'
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
-      operationId: getWebformsForAccount
+      operationId: getAccounts{accountId}?wsOp=getWebForms
+      x-operation-id-source: derived
   /accounts/{accountId}?ws.op=getWebFormSplitTests:
     get:
       summary: Get split tests for account
-      description: "This endpoint is used to retrieve webform split tests for all lists on an account.\n\nCheck out related examples:\n\n  * Get Webforms Detail (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-webforms-detail\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-webforms-detail\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Webforms%20Detail.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Example.GetWebformsDetail\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_webforms_details.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-webforms-details.js\" target=\"_blank\">Node.js</a> )"
+      description: 'This endpoint is used to retrieve webform split tests for all lists on an account.
+
+
+        Check out related examples:
+
+
+        * Get Webforms Detail (
+
+        Python |
+
+        PHP |
+
+        Postman |
+
+        C#.NET |
+
+        Ruby |
+
+        Node.js )'
       tags:
       - Webforms
       parameters:
@@ -231,11 +216,30 @@ paths:
           $ref: '#/components/responses/InternalServerError'
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
-      operationId: getSplitTestsForAccount
+      operationId: getAccounts{accountId}?wsOp=getWebFormSplitTests
+      x-operation-id-source: derived
   /accounts/{accountId}/lists/{listId}/web_forms:
     get:
       summary: Get webforms for list
-      description: "This endpoint is used to retrieve a collection of webforms for a list\n\nCheck out related examples:\n\n  * Get Webforms Detail (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-webforms-detail\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-webforms-detail\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Webforms%20Detail.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Example.GetWebformsDetail\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_webforms_details.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-webforms-details.js\" target=\"_blank\">Node.js</a> )"
+      description: 'This endpoint is used to retrieve a collection of webforms for a list
+
+
+        Check out related examples:
+
+
+        * Get Webforms Detail (
+
+        Python |
+
+        PHP |
+
+        Postman |
+
+        C#.NET |
+
+        Ruby |
+
+        Node.js )'
       tags:
       - Webforms
       parameters:
@@ -297,11 +301,30 @@ paths:
           $ref: '#/components/responses/InternalServerError'
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
-      operationId: getWebformsForList
+      operationId: getAccountsByAccountIdListsByListIdWebForms
+      x-operation-id-source: derived
   /accounts/{accountId}/lists/{listId}/web_forms/{webformId}:
     get:
       summary: Get webform for list
-      description: "This endpoint is used to retrieve single webform for a list\n\nCheck out related examples:\n\n  * Get Webforms Detail (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-webforms-detail\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-webforms-detail\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Webforms%20Detail.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Example.GetWebformsDetail\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_webforms_details.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-webforms-details.js\" target=\"_blank\">Node.js</a> )"
+      description: 'This endpoint is used to retrieve single webform for a list
+
+
+        Check out related examples:
+
+
+        * Get Webforms Detail (
+
+        Python |
+
+        PHP |
+
+        Postman |
+
+        C#.NET |
+
+        Ruby |
+
+        Node.js )'
       tags:
       - Webforms
       parameters:
@@ -357,11 +380,30 @@ paths:
           $ref: '#/components/responses/InternalServerError'
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
-      operationId: getWebformForList
+      operationId: getAccountsByAccountIdListsByListIdWebFormsByWebformId
+      x-operation-id-source: derived
   /accounts/{accountId}/lists/{listId}/web_form_split_tests:
     get:
       summary: Get split tests for list
-      description: "This endpoint is used to retrieve webform split tests for a list.\n\nCheck out related examples:\n\n  * Get Webforms Detail (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-webforms-detail\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-webforms-detail\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Webforms%20Detail.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Example.GetWebformsDetail\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_webforms_details.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-webforms-details.js\" target=\"_blank\">Node.js</a> )"
+      description: 'This endpoint is used to retrieve webform split tests for a list.
+
+
+        Check out related examples:
+
+
+        * Get Webforms Detail (
+
+        Python |
+
+        PHP |
+
+        Postman |
+
+        C#.NET |
+
+        Ruby |
+
+        Node.js )'
       tags:
       - Webforms
       parameters:
@@ -423,11 +465,30 @@ paths:
           $ref: '#/components/responses/InternalServerError'
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
-      operationId: getSplitTestsForList
+      operationId: getAccountsByAccountIdListsByListIdWebFormSplitTests
+      x-operation-id-source: derived
   /accounts/{accountId}/lists/{listId}/web_form_split_tests/{splitTestId}:
     get:
       summary: Get split test for list
-      description: "This endpoint is used to retrieve a specific webform split test.\n\nCheck out related examples:\n\n  * Get Webforms Detail (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-webforms-detail\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-webforms-detail\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Webforms%20Detail.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Example.GetWebformsDetail\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_webforms_details.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-webforms-details.js\" target=\"_blank\">Node.js</a> )"
+      description: 'This endpoint is used to retrieve a specific webform split test.
+
+
+        Check out related examples:
+
+
+        * Get Webforms Detail (
+
+        Python |
+
+        PHP |
+
+        Postman |
+
+        C#.NET |
+
+        Ruby |
+
+        Node.js )'
       tags:
       - Webforms
       parameters:
@@ -486,11 +547,30 @@ paths:
           $ref: '#/components/responses/InternalServerError'
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
-      operationId: getSplitTestForList
+      operationId: getAccountsByAccountIdListsByListIdWebFormSplitTestsBySplitTestId
+      x-operation-id-source: derived
   /accounts/{accountId}/lists/{listId}/web_form_split_tests/{splitTestId}/components:
     get:
       summary: Get split test components
-      description: "This endpoint is used to retrieve a collection of webform split test components.\n\nCheck out related examples:\n\n  * Get Webforms Detail (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-webforms-detail\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-webforms-detail\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Webforms%20Detail.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Example.GetWebformsDetail\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_webforms_details.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-webforms-details.js\" target=\"_blank\">Node.js</a> )"
+      description: 'This endpoint is used to retrieve a collection of webform split test components.
+
+
+        Check out related examples:
+
+
+        * Get Webforms Detail (
+
+        Python |
+
+        PHP |
+
+        Postman |
+
+        C#.NET |
+
+        Ruby |
+
+        Node.js )'
       tags:
       - Webforms
       parameters:
@@ -553,11 +633,30 @@ paths:
           $ref: '#/components/responses/InternalServerError'
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
-      operationId: getSplitTestComponents
+      operationId: getAccountsByAccountIdListsByListIdWebFormSplitTestsBySplitTestIdComponents
+      x-operation-id-source: derived
   /accounts/{accountId}/lists/{listId}/web_form_split_tests/{splitTestId}/components/{splitTestComponentId}:
     get:
       summary: Get split test component
-      description: "This endpoint is used to retrieve a collection of webform split test components.\n\nCheck out related examples:\n\n  * Get Webforms Detail (\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/python/get-webforms-detail\" target=\"_blank\">Python</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/php/get-webforms-detail\" target=\"_blank\">PHP</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/postman/Get%20Webforms%20Detail.postman_collection.json\" target=\"_blank\">Postman</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/csharp/AWeber.Example.GetWebformsDetail\" target=\"_blank\">C#.NET</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/ruby/get_webforms_details.rb\" target=\"_blank\">Ruby</a> |\n    <a href=\"https://github.com/aweber/public-api-examples/blob/master/node/get-webforms-details.js\" target=\"_blank\">Node.js</a> )"
+      description: 'This endpoint is used to retrieve a collection of webform split test components.
+
+
+        Check out related examples:
+
+
+        * Get Webforms Detail (
+
+        Python |
+
+        PHP |
+
+        Postman |
+
+        C#.NET |
+
+        Ruby |
+
+        Node.js )'
       tags:
       - Webforms
       parameters:
@@ -617,14 +716,49 @@ paths:
           $ref: '#/components/responses/InternalServerError'
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
-      operationId: getSplitTestComponent
+      operationId: getAccountsByAccountIdListsByListIdWebFormSplitTestsBySplitTestIdComponentsBySplitTestComponentId
+      x-operation-id-source: derived
 components:
   parameters:
+    accountId:
+      name: accountId
+      in: path
+      description: The account ID
+      required: true
+      schema:
+        type: integer
+        format: int32
+    webformId:
+      name: webformId
+      required: true
+      in: path
+      description: The webform ID
+      schema:
+        type: integer
+        format: int32
+    wsSize:
+      name: ws.size
+      in: query
+      description: The pagination total entries to retrieve
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 100
+        default: 100
     listId:
       name: listId
       in: path
       description: The list ID
       required: true
+      schema:
+        type: integer
+        format: int32
+    splitTestId:
+      name: splitTestId
+      required: true
+      in: path
+      description: The webform split test ID
       schema:
         type: integer
         format: int32
@@ -644,40 +778,6 @@ components:
       required: true
       schema:
         type: string
-    accountId:
-      name: accountId
-      in: path
-      description: The account ID
-      required: true
-      schema:
-        type: integer
-        format: int32
-    webformId:
-      name: webformId
-      required: true
-      in: path
-      description: The webform ID
-      schema:
-        type: integer
-        format: int32
-    splitTestId:
-      name: splitTestId
-      required: true
-      in: path
-      description: The webform split test ID
-      schema:
-        type: integer
-        format: int32
-    wsSize:
-      name: ws.size
-      in: query
-      description: The pagination total entries to retrieve
-      schema:
-        type: integer
-        format: int32
-        minimum: 1
-        maximum: 100
-        default: 100
   schemas:
     WebformSplitTestComponent:
       type: object
@@ -775,107 +875,6 @@ components:
           type: integer
           minimum: 0
           example: 40
-    Webforms:
-      type: object
-      properties:
-        entries:
-          description: A list of webform entries
-          type: array
-          items:
-            $ref: '#/definitions/Webform'
-        next_collection_link:
-          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_forms?ws.start=0&ws.size=10
-        prev_collection_link:
-          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_forms?ws.start=10&ws.size=10
-        resource_type_link:
-          description: A link that identifies the type of resource that this collection represents
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/#web_form-page-resource
-        start:
-          description: The starting offset for the page of entries to retrieve
-          type: integer
-          minimum: 0
-        total_size:
-          description: The total number of entries
-          type: integer
-          minimum: 0
-          example: 100
-    WebformSplitTest:
-      type: object
-      properties:
-        components_collection_link:
-          description: The webform [Split Test Components](#tag/Webforms/paths/~1accounts~1{accountId}~1lists~1{listId}~1web_form_split_tests~1{splitTestId}~1components/get) URL
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_form_split_tests/789/components
-        http_etag:
-          description: The ETag HTTP header
-          type: string
-          example: \"902ba3cda1883801594b6e1b452790cc53948fda-f83cb0ac22a8d5f792417f9b3dc0e9dc7558aa32\"
-        id:
-          description: The unique ID for the webform split test
-          type: integer
-          example: 234
-        is_active:
-          description: Whether the split test is active or not
-          type: boolean
-        javascript_source_link:
-          description: The webform javascript source URL
-          type: string
-          format: uri
-          example: http://forms.aweber.com/form/123/split_456.js
-        name:
-          description: The split test name
-          type: string
-          example: Joker's Wild Split Test
-        resource_type_link:
-          description: The link to the split test type
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/#web_form_split_test
-        self_link:
-          description: The link to this resource
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_form_split_tests/789
-    WebFormSplitTests:
-      type: object
-      properties:
-        entries:
-          type: array
-          items:
-            $ref: '#/components/schemas/WebformSplitTest'
-        next_collection_link:
-          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_form_split_tests?ws.start=10&ws.size=10
-        prev_collection_link:
-          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_form_split_tests?ws.start=0
-        resource_type_link:
-          description: The link to the event type
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/#web_form_split_test-page-resource
-        start:
-          description: The starting offset for the page of entries to retrieve
-          type: integer
-          minimum: 0
-        total_size:
-          description: The total number of entries
-          type: integer
-          minimum: 0
-          example: 100
     Webform:
       type: object
       properties:
@@ -957,6 +956,75 @@ components:
           type: number
           format: float
           example: 6.451612903225806
+    WebFormSplitTests:
+      type: object
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebformSplitTest'
+        next_collection_link:
+          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_form_split_tests?ws.start=10&ws.size=10
+        prev_collection_link:
+          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_form_split_tests?ws.start=0
+        resource_type_link:
+          description: The link to the event type
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/#web_form_split_test-page-resource
+        start:
+          description: The starting offset for the page of entries to retrieve
+          type: integer
+          minimum: 0
+        total_size:
+          description: The total number of entries
+          type: integer
+          minimum: 0
+          example: 100
+    WebformSplitTest:
+      type: object
+      properties:
+        components_collection_link:
+          description: The webform [Split Test Components](#tag/Webforms/paths/~1accounts~1{accountId}~1lists~1{listId}~1web_form_split_tests~1{splitTestId}~1components/get) URL
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_form_split_tests/789/components
+        http_etag:
+          description: The ETag HTTP header
+          type: string
+          example: \"902ba3cda1883801594b6e1b452790cc53948fda-f83cb0ac22a8d5f792417f9b3dc0e9dc7558aa32\"
+        id:
+          description: The unique ID for the webform split test
+          type: integer
+          example: 234
+        is_active:
+          description: Whether the split test is active or not
+          type: boolean
+        javascript_source_link:
+          description: The webform javascript source URL
+          type: string
+          format: uri
+          example: http://forms.aweber.com/form/123/split_456.js
+        name:
+          description: The split test name
+          type: string
+          example: Joker's Wild Split Test
+        resource_type_link:
+          description: The link to the split test type
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/#web_form_split_test
+        self_link:
+          description: The link to this resource
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_form_split_tests/789
     WebformSplitTestComponents:
       type: object
       properties:
@@ -988,55 +1056,39 @@ components:
           type: integer
           minimum: 0
           example: 100
+    Webforms:
+      type: object
+      properties:
+        entries:
+          description: A list of webform entries
+          type: array
+          items:
+            $ref: '#/definitions/Webform'
+        next_collection_link:
+          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_forms?ws.start=0&ws.size=10
+        prev_collection_link:
+          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_forms?ws.start=10&ws.size=10
+        resource_type_link:
+          description: A link that identifies the type of resource that this collection represents
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/#web_form-page-resource
+        start:
+          description: The starting offset for the page of entries to retrieve
+          type: integer
+          minimum: 0
+        total_size:
+          description: The total number of entries
+          type: integer
+          minimum: 0
+          example: 100
   responses:
-    BadRequest:
-      description: The server cannot or will not process the request due to a client error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type        | Explanation |
-
-                  |-------------------|-------------|
-
-                  | BadRequestError   | The request is malformed.  This can be caused by missing authorization credentials |
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#badrequest
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Missing required argument(s)
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 400
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - BadRequestError
-    UnauthorizedError:
-      description: The request could not be completed due to an authentication error
-      content:
-        application/json:
-          schema:
-            oneOf:
-            - $ref: '#/schemas/Endpoint Error'
-            - $ref: '#/schemas/Auth Error'
     ServiceUnavailable:
       description: The server is currently unavailable
       content:
@@ -1080,49 +1132,6 @@ components:
                     type: string
                     enum:
                     - ServiceUnavailableError
-    NotAllowed:
-      description: The method received in the request-line is known by the origin server but not supported by the target resource.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  One of the following errors may be received:
-
-
-                  | Error Type              | Explanation |
-
-                  |-------------------------|-------------|
-
-                  | MethodNotAllowedError   | The requested resource does not implement the requested method. |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#methodnotallowed
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: ' https://api.aweber.com#methodnotallowed'
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 405
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - MethodNotAllowedError
     ForbiddenError:
       description: The request could not be completed due to a rate limit error
       content:
@@ -1166,6 +1175,49 @@ components:
                     type: string
                     enum:
                     - ForbiddenError
+    NotAllowed:
+      description: The method received in the request-line is known by the origin server but not supported by the target resource.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  One of the following errors may be received:
+
+
+                  | Error Type              | Explanation |
+
+                  |-------------------------|-------------|
+
+                  | MethodNotAllowedError   | The requested resource does not implement the requested method. |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#methodnotallowed
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: ' https://api.aweber.com#methodnotallowed'
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 405
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - MethodNotAllowedError
     InternalServerError:
       description: The request failed due to an internal error in the code or because of an external dependency failure
       content:
@@ -1209,6 +1261,14 @@ components:
                     type: string
                     enum:
                     - InternalServerError
+    UnauthorizedError:
+      description: The request could not be completed due to an authentication error
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/schemas/Endpoint Error'
+            - $ref: '#/schemas/Auth Error'
     NotFound:
       description: The requested resource could not be found
       content:
@@ -1252,6 +1312,46 @@ components:
                     type: string
                     enum:
                     - NotFoundError
+    BadRequest:
+      description: The server cannot or will not process the request due to a client error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type        | Explanation |
+
+                  |-------------------|-------------|
+
+                  | BadRequestError   | The request is malformed.  This can be caused by missing authorization credentials |
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#badrequest
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Missing required argument(s)
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 400
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BadRequestError
     BlockedError:
       description: The request has been blocked
       content:
@@ -1368,3 +1468,54 @@ components:
               <b>Required for the following endpoints:</b> create broadcast, update broadcast, delete broadcast, cancel broadcast, schedule broadcast
 
               '
+x-tagGroups:
+- name: Getting Started
+  tags:
+  - Getting Started
+- name: Authentication
+  tags:
+  - Authentication Overview
+  - OAuth 2.0 Examples
+  - OAuth 2.0 Traces
+  - OAuth 2.0 Reference
+  - OAuth 1.0a Reference
+- name: API Reference
+  tags:
+  - Accounts
+  - Broadcasts
+  - Campaigns
+  - Custom Fields
+  - Integrations
+  - Landing Pages
+  - Lists
+  - Segments
+  - Subscribers
+  - Webforms
+- name: Beta API Reference
+  tags:
+  - Beta Endpoints
+- name: Webhooks
+  tags:
+  - Webhooks
+- name: Code Samples
+  tags:
+  - Introduction
+  - Find a List and Get Tags
+  - Manage a Subscriber
+  - Create a Purchase
+  - Manage Custom Fields
+  - Find Subscribers Across Lists
+  - Move Subscriber to Another List
+  - Create and Schedule a Broadcast
+  - Get Sent Broadcast Details
+  - Get Broadcast Statistics
+  - Get Subscribers Who Opened or Clicked a Broadcast
+  - Get Webforms Detail
+  - Get Integrations List
+  - Get Segments
+  - Get Landing Pages
+- name: Miscellaneous
+  tags:
+  - Developer Changelog
+  - FAQ
+  - Troubleshooting

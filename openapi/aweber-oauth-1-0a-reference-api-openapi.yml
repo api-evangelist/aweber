@@ -1,7 +1,6 @@
 openapi: 3.2.0
 info:
-  title: AWeber Authentication OAuth 1.0a Reference API
-  version: '1.0'
+  title: AWeber OAuth 1.0a Reference API
   description: 'We are constantly working to improve this documentation. If you have
 
     feedback and questions, please contact the AWeber API team at
@@ -14,24 +13,17 @@ info:
 
     Please see the below resources for further information:
 
-    - <a href="https://labs.aweber.com/docs/tos" target="_blank">Terms of Service</a>
+    - Terms of Service
 
-    - <a href="https://help.aweber.com/hc/en-us/articles/204031776" target="_blank">Showcasing an Integration</a>
+    - Showcasing an Integration
 
-    - <a href="https://help.aweber.com/hc/en-us/sections/360000617213-API" target="_blank">Knowledge Base</a>
+    - Knowledge Base
 
-    - <a href="https://status.aweber.com" target="_blank">API Status Page</a>
-
-    '
-  contact:
-    name: AWeber API Team
-    email: api@aweber.com
-    url: https://api.aweber.com/
+    - API Status Page'
+  version: '1.0'
 servers:
 - url: https://api.aweber.com/1.0
   description: v1 API endpoints
-security:
-- OAuth 2.0: []
 tags:
 - name: OAuth 1.0a Reference
 paths:
@@ -132,7 +124,8 @@ paths:
           $ref: '#/components/responses/InternalServerError'
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
-      operationId: getARequestToken
+      operationId: postOauthRequestToken
+      x-operation-id-source: derived
   /oauth/access_token:
     post:
       servers:
@@ -230,135 +223,10 @@ paths:
           $ref: '#/components/responses/InternalServerError'
         '503':
           $ref: '#/components/responses/ServiceUnavailable'
-      operationId: getAnAccessToken
+      operationId: postOauthAccessToken
+      x-operation-id-source: derived
 components:
-  parameters:
-    oauth_timestamp:
-      name: oauth_timestamp
-      in: body
-      required: true
-      description: Timestamp for the request. This is in the format of a Unix timestamp, or seconds since January 1st, 1970.
-      type: string
-      example: 1285168264
-    oauth_nonce:
-      name: oauth_nonce
-      in: body
-      required: true
-      description: A unique, randomly generated string. Each request should have a unique nonce.
-      type: string
-      example: 510a6d6f0e4fb70b72096ce48cb22af8
-    oauth_signature:
-      name: oauth_signature
-      in: body
-      required: true
-      description: 'This is an HMAC-SHA1 hash of the entire request, including the application''s secret,
-
-        and the customer''s oauth_token_secret. Generating the signature is a complex process,
-
-        and we highly recommend using an OAuth library that will handle this for you.
-
-        '
-      type: string
-      example: uvNa27v1uyVES37VfsX2Tj1OUYU=
-    oauth_signature_method:
-      name: oauth_signature_method
-      in: body
-      required: true
-      description: The hashing algorithm that was used to generate the signature. AWeber only supports the HMAC-SHA1 hash, so that's what this parameter should always be.
-      type: string
-      example: HMAC-SHA1
-    oauth_token:
-      name: oauth_token
-      in: body
-      required: true
-      description: 'This is the token that represents the user of the application. This will be either the request token,
-
-        when in the process of gaining an access token, or the access token when making requests to the AWeber API.
-
-        The oauth_token parameter will be blank when you are getting a request token for a new user.
-
-        '
-      type: string
-      example: null
-    oauth_consumer_key:
-      name: oauth_consumer_key
-      in: body
-      required: true
-      description: The consumer key assigned to your application, available on the <a href="https://labs.aweber.com/apps" target="_blank">My Apps Page</a>
-      type: string
-      example: XXXXXXXXXXXXXX
-    oauth_callback:
-      name: oauth_callback
-      in: body
-      required: false
-      description: 'A url that will be sent the verifier token when authorizing the request token in a future step.
-
-        If you don''t have a callback, use `oob` as the value, this will indicate that the callback is ''out of band''
-
-        and will display an html page after authorization, containing the verifier token.
-
-        '
-      type: string
-      example: http://localhost/demo.php
-    oauth_version:
-      name: oauth_version
-      in: body
-      required: true
-      description: This identifies which version of the OAuth protocol you are using, and should always be 1.0 when working with the AWeber API.
-      type: string
-      example: 1.0
   responses:
-    UnauthorizedError:
-      description: The request could not be completed due to an authentication error
-      content:
-        application/json:
-          schema:
-            oneOf:
-            - $ref: '#/schemas/Endpoint Error'
-            - $ref: '#/schemas/Auth Error'
-    InternalServerError:
-      description: The request failed due to an internal error in the code or because of an external dependency failure
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | InternalServerError    | The request failed due to an internal error |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#internalerror
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Something went wrong.
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 500
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - InternalServerError
     ServiceUnavailable:
       description: The server is currently unavailable
       content:
@@ -402,6 +270,49 @@ components:
                     type: string
                     enum:
                     - ServiceUnavailableError
+    InternalServerError:
+      description: The request failed due to an internal error in the code or because of an external dependency failure
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | InternalServerError    | The request failed due to an internal error |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#internalerror
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Something went wrong.
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 500
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - InternalServerError
     BlockedError:
       description: The request has been blocked
       content:
@@ -445,6 +356,89 @@ components:
                     type: string
                     enum:
                     - BlockedError
+    UnauthorizedError:
+      description: The request could not be completed due to an authentication error
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/schemas/Endpoint Error'
+            - $ref: '#/schemas/Auth Error'
+  parameters:
+    oauth_signature:
+      name: oauth_signature
+      in: body
+      required: true
+      description: 'This is an HMAC-SHA1 hash of the entire request, including the application''s secret,
+
+        and the customer''s oauth_token_secret. Generating the signature is a complex process,
+
+        and we highly recommend using an OAuth library that will handle this for you.
+
+        '
+      type: string
+      example: uvNa27v1uyVES37VfsX2Tj1OUYU=
+    oauth_signature_method:
+      name: oauth_signature_method
+      in: body
+      required: true
+      description: The hashing algorithm that was used to generate the signature. AWeber only supports the HMAC-SHA1 hash, so that's what this parameter should always be.
+      type: string
+      example: HMAC-SHA1
+    oauth_token:
+      name: oauth_token
+      in: body
+      required: true
+      description: 'This is the token that represents the user of the application. This will be either the request token,
+
+        when in the process of gaining an access token, or the access token when making requests to the AWeber API.
+
+        The oauth_token parameter will be blank when you are getting a request token for a new user.
+
+        '
+      type: string
+      example: null
+    oauth_timestamp:
+      name: oauth_timestamp
+      in: body
+      required: true
+      description: Timestamp for the request. This is in the format of a Unix timestamp, or seconds since January 1st, 1970.
+      type: string
+      example: 1285168264
+    oauth_nonce:
+      name: oauth_nonce
+      in: body
+      required: true
+      description: A unique, randomly generated string. Each request should have a unique nonce.
+      type: string
+      example: 510a6d6f0e4fb70b72096ce48cb22af8
+    oauth_version:
+      name: oauth_version
+      in: body
+      required: true
+      description: This identifies which version of the OAuth protocol you are using, and should always be 1.0 when working with the AWeber API.
+      type: string
+      example: 1.0
+    oauth_consumer_key:
+      name: oauth_consumer_key
+      in: body
+      required: true
+      description: The consumer key assigned to your application, available on the <a href="https://labs.aweber.com/apps" target="_blank">My Apps Page</a>
+      type: string
+      example: XXXXXXXXXXXXXX
+    oauth_callback:
+      name: oauth_callback
+      in: body
+      required: false
+      description: 'A url that will be sent the verifier token when authorizing the request token in a future step.
+
+        If you don''t have a callback, use `oob` as the value, this will indicate that the callback is ''out of band''
+
+        and will display an html page after authorization, containing the verifier token.
+
+        '
+      type: string
+      example: http://localhost/demo.php
   securitySchemes:
     OAuth_2.0:
       description: 'The following endpoints and scopes are used to authenticate.
@@ -518,3 +512,54 @@ components:
               <b>Required for the following endpoints:</b> create broadcast, update broadcast, delete broadcast, cancel broadcast, schedule broadcast
 
               '
+x-tagGroups:
+- name: Getting Started
+  tags:
+  - Getting Started
+- name: Authentication
+  tags:
+  - Authentication Overview
+  - OAuth 2.0 Examples
+  - OAuth 2.0 Traces
+  - OAuth 2.0 Reference
+  - OAuth 1.0a Reference
+- name: API Reference
+  tags:
+  - Accounts
+  - Broadcasts
+  - Campaigns
+  - Custom Fields
+  - Integrations
+  - Landing Pages
+  - Lists
+  - Segments
+  - Subscribers
+  - Webforms
+- name: Beta API Reference
+  tags:
+  - Beta Endpoints
+- name: Webhooks
+  tags:
+  - Webhooks
+- name: Code Samples
+  tags:
+  - Introduction
+  - Find a List and Get Tags
+  - Manage a Subscriber
+  - Create a Purchase
+  - Manage Custom Fields
+  - Find Subscribers Across Lists
+  - Move Subscriber to Another List
+  - Create and Schedule a Broadcast
+  - Get Sent Broadcast Details
+  - Get Broadcast Statistics
+  - Get Subscribers Who Opened or Clicked a Broadcast
+  - Get Webforms Detail
+  - Get Integrations List
+  - Get Segments
+  - Get Landing Pages
+- name: Miscellaneous
+  tags:
+  - Developer Changelog
+  - FAQ
+  - Troubleshooting
