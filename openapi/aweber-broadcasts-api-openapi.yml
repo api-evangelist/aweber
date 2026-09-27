@@ -1198,38 +1198,626 @@ paths:
       operationId: getAccountsByAccountIdListsByListIdBroadcastsByBroadcastIdClicks
       x-operation-id-source: derived
 components:
+  parameters:
+    after:
+      name: after
+      in: query
+      description: The pagination key when paging forward. Cannot be combined with `before`.
+      schema:
+        type: string
+    wsStart:
+      name: ws.start
+      in: query
+      description: The pagination starting offset
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        default: 0
+    accountId:
+      name: accountId
+      in: path
+      description: The account ID
+      required: true
+      schema:
+        type: integer
+        format: int32
+    listId:
+      name: listId
+      in: path
+      description: The list ID
+      required: true
+      schema:
+        type: integer
+        format: int32
+    before:
+      name: before
+      in: query
+      description: The pagination key when paging in reverse. Cannot be combined with `after`.
+      schema:
+        type: string
+    wsSize:
+      name: ws.size
+      in: query
+      description: The pagination total entries to retrieve
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 100
+        default: 100
+    pageSize:
+      name: page_size
+      in: query
+      description: The pagination total entries to retrieve
+      schema:
+        type: integer
+        maximum: 100
+        minimum: 1
+        default: 100
+    broadcastId:
+      name: broadcastId
+      in: path
+      description: The broadcast ID
+      required: true
+      schema:
+        type: integer
+        format: int32
+  responses:
+    NotFormURLEncoded:
+      description: The enclosed body has a media type that is not application/x-www-form-urlencoded
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type         | Explanation                               |
+
+                  |--------------------|-------------------------------------------|
+
+                  | InvalidContentType | The requested resource could not be found |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#invalidcontent
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Content Type must be application/x-www-form-urlencoded
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 415
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - InvalidContentType
+    UnauthorizedError:
+      description: The request could not be completed due to an authentication error
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/schemas/Endpoint Error'
+            - $ref: '#/schemas/Auth Error'
+    BlockedError:
+      description: The request has been blocked
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | BlockedError         | This Request has been blocked            |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com/#blocked
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Blocked Error
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 410
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BlockedError
+    ServiceUnavailable:
+      description: The server is currently unavailable
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | ServiceUnavailableError | The server is unavailable |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#serviceunavailable
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Failed to communicate with endpoint
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 503
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - ServiceUnavailableError
+    InternalServerError:
+      description: The request failed due to an internal error in the code or because of an external dependency failure
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | InternalServerError    | The request failed due to an internal error |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#internalerror
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Something went wrong.
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 500
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - InternalServerError
+    BroadcastNotFound:
+      description: The requested resource could not be found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following errors may be received:
+
+
+                  | Error Type             | Explanation                           |
+
+                  |------------------------|---------------------------------------|
+
+                  | BroadcastNotFoundError | The requested broadcast could not be found |
+
+                  | ListNotFoundError      | The requested list could not be found |
+
+                  | ResourceNotFoundError  | The requested resource could not be found |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#notfound
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: List id:456 not found
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 404
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BroadcastNotFoundError
+                    - ListNotFoundError
+                    - ResourceNotFoundError
+                    example: ListNotFoundError
+    BroadcastSchedulingError:
+      description: The request could not be completed due to a conflict with the current state of the target resource
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type               | Explanation                              |
+
+                  |--------------------------|------------------------------------------|
+
+                  | BroadcastSchedulingError | Scheduling or canceling failed due to the broadcast status or the account being locked. |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#conflict
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: This broadcast cannot be scheduled. It may have been queued, sent or the account is locked
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 409
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BroadcastSchedulingError
+    BadRequest:
+      description: The server cannot or will not process the request due to a client error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type        | Explanation |
+
+                  |-------------------|-------------|
+
+                  | BadRequestError   | The request is malformed.  This can be caused by missing authorization credentials |
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#badrequest
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Missing required argument(s)
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 400
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BadRequestError
+    NotFound:
+      description: The requested resource could not be found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | NotFoundError        | The requested resource could not be found |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#notfound
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: 'Object: None, name: '''''
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 404
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - NotFoundError
+    BroadcastBadRequest:
+      description: The server cannot or will not process the request due to a client error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  One of the following errors may be received:
+
+
+                  | Error Type                  | Explanation                                |
+
+                  |-----------------------------|--------------------------------------------|
+
+                  | BadRequestError             | Query parameters are invalid |
+
+                  | BroadcastDatetimeExpired    | Broadcast schedule time is in the past |
+
+                  | InvalidBroadcastStatusError | `status` parameter has an invalid value |
+
+                  | InvalidDatetimeError        | `scheduled_for` has an invalid value |
+
+                  | InvalidIntegrationURIError  | An integration URI parameter has an invalid value |
+
+                  | InvalidListURIError         | A list URI parameter has an invalid value |
+
+                  | InvalidSegmentURIError      | `segment_link` parameter has an invalid value |
+
+                  | InvalidSubjectError         | `subject` parameter has an invalid value |
+
+                  | MissingArgumentError        | An required argument was not provided |
+
+                  | MissingBodyError            | `body_html` or `body_text` paraeter was not provided |
+
+                  | MissingDatetimeError        | `scheduled_for` parameter was not provided |
+
+                  | MissingOAuthParametersError | An OAuth parameter is missing in the request |
+
+                  | MissingStatusError          | `status` parameter was not provided |
+
+                  | SplitTestSegmentError       | `segment_link` refers to a split test segment |
+
+                  | UnsupportedOAuthSignatureMethodError | Unsupported OAuth 1 signature method |
+
+                  | UnsupportedOAuthVersionError | Unsupported OAuth 1 version |
+
+                  | WebServiceError             | `ws.start` or `ws.size` values are invalid |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#badrequest
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Maximum for "ws.size" parameter is 100.
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 400
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BadRequestError
+                    - BroadcastDatetimeExpired
+                    - InvalidBroadcastStatusError
+                    - InvalidDatetimeError
+                    - InvalidIntegrationURIError
+                    - InvalidListURIError
+                    - InvalidSubjectError
+                    - MissingArgumentError
+                    - MissingBodyError
+                    - MissingDatetimeError
+                    - MissingOAuthParametersError
+                    - MissingStatusError
+                    - UnsupportedOAuthSignatureMethodError
+                    - UnsupportedOAuthVersionError
+                    - WebServiceError
+                    example: BadRequestError
+    ForbiddenError:
+      description: The request could not be completed due to a rate limit error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | ForbiddenError       | Rate limit may be reached or account may be suspended |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#forbidden
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Rate Limit Error
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 403
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - ForbiddenError
+    RateLimitOrEmailPermission:
+      description: Forbidden due to rate limit or missing Manage Email permission
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | ForbiddenError       | Rate limit may be reached, account may be suspended, or the application does not have Manage Email permission |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#forbidden
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Rate Limit Error
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 403
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - ForbiddenError
   schemas:
-    ScheduleBroadcast:
-      type: object
-      required:
-      - scheduled_for
-      properties:
-        scheduled_for:
-          description: Scheduled time for sending broadcast message, ISO-8601 formatted.
-          type: string
-          format: date-time
-          example: 2017-07-18 16:53:02-04:00
-    BroadcastOpens:
+    BroadcastClicks:
       type: object
       properties:
         entries:
           type: array
-          description: A list of entries
+          description: A list of aggregated click entries, showing unique clicks per subscriber with click statistics
           items:
             properties:
               email:
-                description: Email address of the subscriber who opened the broadcast. *Note:* This is the current email address of the subscriber, not necessarily the email address the broadcast was sent to.
+                description: Email address of the subscriber who clicked the broadcast. *Note:* This is the current email address of the subscriber, not necessarily the email address the broadcast was sent to.
                 type: string
                 example: user@example.com
               event_time:
-                description: Time that the open occurred
+                description: Time when the first click occurred for this subscriber
                 type: string
                 format: date-time
                 example: 2017-07-18 16:53:02-04:00
               resource_type_link:
-                description: A link to the open type
+                description: A link to the click type
                 type: string
-                example: https://api.aweber.com/1.0/#open
+                example: https://api.aweber.com/1.0/#click
               subscriber_link:
                 description: The link to the subscriber entry
                 type: string
@@ -1238,24 +1826,39 @@ components:
                 description: Type of subscriber activity
                 type: string
                 enum:
-                - open
+                - click
+              first_click_at:
+                description: Time of the first click by this subscriber
+                type: string
+                format: date-time
+                example: 2025-04-30 11:48:29-04:00
+              last_click_at:
+                description: Time of the last click by this subscriber
+                type: string
+                format: date-time
+                example: 2025-04-30 12:03:09-04:00
+              total_clicks:
+                description: Total number of clicks by this subscriber
+                type: integer
+                minimum: 1
+                example: 4
         next_collection_link:
           description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
           type: string
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/broadcasts/789/opens?after=MjAyMC0wOS0wNCAxODozMzozNCswMDowMCw0NDk%3D
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/broadcasts/789/clicks?after=MjAyMC0wOS0wNCAxODozMzozNCswMDowMCw0NDk%3D
         prev_collection_link:
           description: A link to the previous page of entries if any exist.
           type: string
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/broadcasts/789/opens?before=MjAyMC0wOS0wNCAxODozMzozNCswMDowMCw0NDk%3D
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/broadcasts/789/clicks?before=MjAyMC0wOS0wNCAxODozMzozNCswMDowMCw0NDk%3D
         resource_type_link:
           description: A link that identifies the type of resource that this collection represents
           type: string
-          example: https://api.aweber.com/1.0/#open-page-resource
+          example: https://api.aweber.com/1.0/#click-page-resource
         total_size:
-          description: The total number of entries
+          description: The total number of unique subscribers who clicked the broadcast
           type: integer
           minimum: 0
-          example: 1
+          example: 10
     UpdateBroadcast:
       type: object
       properties:
@@ -1459,68 +2062,6 @@ components:
           description: The broadcast UUID.
           type: string
           example: 123e4567-e89b-12d3-a456-426614174000
-    BroadcastClicks:
-      type: object
-      properties:
-        entries:
-          type: array
-          description: A list of aggregated click entries, showing unique clicks per subscriber with click statistics
-          items:
-            properties:
-              email:
-                description: Email address of the subscriber who clicked the broadcast. *Note:* This is the current email address of the subscriber, not necessarily the email address the broadcast was sent to.
-                type: string
-                example: user@example.com
-              event_time:
-                description: Time when the first click occurred for this subscriber
-                type: string
-                format: date-time
-                example: 2017-07-18 16:53:02-04:00
-              resource_type_link:
-                description: A link to the click type
-                type: string
-                example: https://api.aweber.com/1.0/#click
-              subscriber_link:
-                description: The link to the subscriber entry
-                type: string
-                example: https://api.aweber.com/1.0/accounts/123/lists/456/subscribers/789
-              type:
-                description: Type of subscriber activity
-                type: string
-                enum:
-                - click
-              first_click_at:
-                description: Time of the first click by this subscriber
-                type: string
-                format: date-time
-                example: 2025-04-30 11:48:29-04:00
-              last_click_at:
-                description: Time of the last click by this subscriber
-                type: string
-                format: date-time
-                example: 2025-04-30 12:03:09-04:00
-              total_clicks:
-                description: Total number of clicks by this subscriber
-                type: integer
-                minimum: 1
-                example: 4
-        next_collection_link:
-          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
-          type: string
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/broadcasts/789/clicks?after=MjAyMC0wOS0wNCAxODozMzozNCswMDowMCw0NDk%3D
-        prev_collection_link:
-          description: A link to the previous page of entries if any exist.
-          type: string
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/broadcasts/789/clicks?before=MjAyMC0wOS0wNCAxODozMzozNCswMDowMCw0NDk%3D
-        resource_type_link:
-          description: A link that identifies the type of resource that this collection represents
-          type: string
-          example: https://api.aweber.com/1.0/#click-page-resource
-        total_size:
-          description: The total number of unique subscribers who clicked the broadcast
-          type: integer
-          minimum: 0
-          example: 10
     BroadcastClicksDetailed:
       type: object
       properties:
@@ -1578,74 +2119,63 @@ components:
           type: integer
           minimum: 0
           example: 15
-    CreateBroadcast:
+    ScheduleBroadcast:
       type: object
       required:
-      - body_html
-      - body_text
-      - subject
+      - scheduled_for
       properties:
-        body_html:
-          description: The content of the message in html format. If body_text is not provided, it will be auto-generated. If body_text is not provided, body_html must be provided.
+        scheduled_for:
+          description: Scheduled time for sending broadcast message, ISO-8601 formatted.
           type: string
-          format: html
-          example: <html><h1>Title</h1><body>Message body.</body></html>
-        body_text:
-          description: The content of the message in plain text, used when HTML is not supported. If body_html is not provided, the broadcast will be sent using only the body_text. If body_text is not provided, body_html must be provided.
+          format: date-time
+          example: 2017-07-18 16:53:02-04:00
+    BroadcastOpens:
+      type: object
+      properties:
+        entries:
+          type: array
+          description: A list of entries
+          items:
+            properties:
+              email:
+                description: Email address of the subscriber who opened the broadcast. *Note:* This is the current email address of the subscriber, not necessarily the email address the broadcast was sent to.
+                type: string
+                example: user@example.com
+              event_time:
+                description: Time that the open occurred
+                type: string
+                format: date-time
+                example: 2017-07-18 16:53:02-04:00
+              resource_type_link:
+                description: A link to the open type
+                type: string
+                example: https://api.aweber.com/1.0/#open
+              subscriber_link:
+                description: The link to the subscriber entry
+                type: string
+                example: https://api.aweber.com/1.0/accounts/123/lists/456/subscribers/789
+              type:
+                description: Type of subscriber activity
+                type: string
+                enum:
+                - open
+        next_collection_link:
+          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
           type: string
-          example: This is the content of my message
-        body_amp:
-          description: <b>[Please read <a href="https://help.aweber.com/hc/en-us/articles/360025741194" target="_blank">our KB article</a> before using this field.]</b><br>The content of the message in AMP format.
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/broadcasts/789/opens?after=MjAyMC0wOS0wNCAxODozMzozNCswMDowMCw0NDk%3D
+        prev_collection_link:
+          description: A link to the previous page of entries if any exist.
           type: string
-          format: amp
-          example: <html amp4email><body>content</body></html>
-        click_tracking_enabled:
-          description: Enables links in the email message to be tracked
-          default: true
-          type: boolean
-        exclude_lists:
-          description: JSON encoded list of [Lists](#tag/Lists) URLs to exclude in the delivery of this broadcast.<br> Use the `self_link` of the list here - e.g. `https://api.aweber.com/1.0/accounts/<account_id>/lists/<list_id>`. If updated, this value will replace the existing excluded_lists.
-          default: []
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/broadcasts/789/opens?before=MjAyMC0wOS0wNCAxODozMzozNCswMDowMCw0NDk%3D
+        resource_type_link:
+          description: A link that identifies the type of resource that this collection represents
           type: string
-          example: '["https://api.aweber.com/1.0/accounts/123/lists/456"]'
-        include_lists:
-          description: JSON encoded list of [Lists](#tag/Lists) URLs to include in the delivery of this broadcast.<br> Use the `self_link` of the list here - e.g. `https://api.aweber.com/1.0/accounts/<account_id>/lists/<list_id>`. If updated, this value will replace the existing included_lists.
-          default: []
-          type: string
-          example: '["https://api.aweber.com/1.0/accounts/123/lists/456"]'
-        facebook_integration:
-          description: URL to the [Facebook broadcast integration](#tag/Integrations) to use for this broadcast. When the broadcast is sent, the subject of the broadcast will be posted to this Facebook integration  - e.g., `https://api.aweber.com/1.0/accounts/<account_id>/integrations/<integration_id>`
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/integrations/1
-        is_archived:
-          description: Whether the broadcast enabled sharing via an archive url
-          default: true
-          type: boolean
-        notify_on_send:
-          description: If true, notify when stats are available on a sent broadcast message
-          default: true
-          type: boolean
-        segment_link:
-          description: 'URL to the [Segment](#tag/Segments) to send this broadcast to.  Use the `self_link` of the
-
-            segment here - e.g.
-
-            `https://api.aweber.com/1.0/accounts/<account_id>/lists/<list_id>/segments/<segment_id>`.
-
-            If not specified, the broadcast will be sent to the “Active Subscribers” segment.
-
-            '
-        subject:
-          description: The broadcast subject line. Subject must not be empty nor contain only whitespace.
-          type: string
-          maximum: 120
-          example: Weekly Recipes
-        twitter_integration:
-          description: URL to the [Twitter broadcast integration](#tag/Integrations) to use for this broadcast. When the broadcast is sent, the subject of the broadcast will be tweeted - e.g., `https://api.aweber.com/1.0/accounts/<account_id>/integrations/<integration_id>`
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/integrations/2
+          example: https://api.aweber.com/1.0/#open-page-resource
+        total_size:
+          description: The total number of entries
+          type: integer
+          minimum: 0
+          example: 1
     Broadcasts:
       type: object
       properties:
@@ -1720,604 +2250,74 @@ components:
           type: string
           format: uri
           example: https://api.aweber.com/1.0/accounts/123/lists/456/broadcasts/total?status=draft
-  responses:
-    NotFormURLEncoded:
-      description: The enclosed body has a media type that is not application/x-www-form-urlencoded
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type         | Explanation                               |
-
-                  |--------------------|-------------------------------------------|
-
-                  | InvalidContentType | The requested resource could not be found |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#invalidcontent
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Content Type must be application/x-www-form-urlencoded
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 415
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - InvalidContentType
-    ServiceUnavailable:
-      description: The server is currently unavailable
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | ServiceUnavailableError | The server is unavailable |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#serviceunavailable
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Failed to communicate with endpoint
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 503
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - ServiceUnavailableError
-    ForbiddenError:
-      description: The request could not be completed due to a rate limit error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | ForbiddenError       | Rate limit may be reached or account may be suspended |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#forbidden
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Rate Limit Error
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 403
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - ForbiddenError
-    InternalServerError:
-      description: The request failed due to an internal error in the code or because of an external dependency failure
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | InternalServerError    | The request failed due to an internal error |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#internalerror
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Something went wrong.
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 500
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - InternalServerError
-    UnauthorizedError:
-      description: The request could not be completed due to an authentication error
-      content:
-        application/json:
-          schema:
-            oneOf:
-            - $ref: '#/schemas/Endpoint Error'
-            - $ref: '#/schemas/Auth Error'
-    NotFound:
-      description: The requested resource could not be found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | NotFoundError        | The requested resource could not be found |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#notfound
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: 'Object: None, name: '''''
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 404
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - NotFoundError
-    BadRequest:
-      description: The server cannot or will not process the request due to a client error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type        | Explanation |
-
-                  |-------------------|-------------|
-
-                  | BadRequestError   | The request is malformed.  This can be caused by missing authorization credentials |
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#badrequest
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Missing required argument(s)
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 400
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - BadRequestError
-    BroadcastBadRequest:
-      description: The server cannot or will not process the request due to a client error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  One of the following errors may be received:
-
-
-                  | Error Type                  | Explanation                                |
-
-                  |-----------------------------|--------------------------------------------|
-
-                  | BadRequestError             | Query parameters are invalid |
-
-                  | BroadcastDatetimeExpired    | Broadcast schedule time is in the past |
-
-                  | InvalidBroadcastStatusError | `status` parameter has an invalid value |
-
-                  | InvalidDatetimeError        | `scheduled_for` has an invalid value |
-
-                  | InvalidIntegrationURIError  | An integration URI parameter has an invalid value |
-
-                  | InvalidListURIError         | A list URI parameter has an invalid value |
-
-                  | InvalidSegmentURIError      | `segment_link` parameter has an invalid value |
-
-                  | InvalidSubjectError         | `subject` parameter has an invalid value |
-
-                  | MissingArgumentError        | An required argument was not provided |
-
-                  | MissingBodyError            | `body_html` or `body_text` paraeter was not provided |
-
-                  | MissingDatetimeError        | `scheduled_for` parameter was not provided |
-
-                  | MissingOAuthParametersError | An OAuth parameter is missing in the request |
-
-                  | MissingStatusError          | `status` parameter was not provided |
-
-                  | SplitTestSegmentError       | `segment_link` refers to a split test segment |
-
-                  | UnsupportedOAuthSignatureMethodError | Unsupported OAuth 1 signature method |
-
-                  | UnsupportedOAuthVersionError | Unsupported OAuth 1 version |
-
-                  | WebServiceError             | `ws.start` or `ws.size` values are invalid |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#badrequest
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Maximum for "ws.size" parameter is 100.
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 400
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - BadRequestError
-                    - BroadcastDatetimeExpired
-                    - InvalidBroadcastStatusError
-                    - InvalidDatetimeError
-                    - InvalidIntegrationURIError
-                    - InvalidListURIError
-                    - InvalidSubjectError
-                    - MissingArgumentError
-                    - MissingBodyError
-                    - MissingDatetimeError
-                    - MissingOAuthParametersError
-                    - MissingStatusError
-                    - UnsupportedOAuthSignatureMethodError
-                    - UnsupportedOAuthVersionError
-                    - WebServiceError
-                    example: BadRequestError
-    RateLimitOrEmailPermission:
-      description: Forbidden due to rate limit or missing Manage Email permission
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | ForbiddenError       | Rate limit may be reached, account may be suspended, or the application does not have Manage Email permission |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#forbidden
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Rate Limit Error
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 403
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - ForbiddenError
-    BroadcastNotFound:
-      description: The requested resource could not be found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following errors may be received:
-
-
-                  | Error Type             | Explanation                           |
-
-                  |------------------------|---------------------------------------|
-
-                  | BroadcastNotFoundError | The requested broadcast could not be found |
-
-                  | ListNotFoundError      | The requested list could not be found |
-
-                  | ResourceNotFoundError  | The requested resource could not be found |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#notfound
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: List id:456 not found
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 404
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - BroadcastNotFoundError
-                    - ListNotFoundError
-                    - ResourceNotFoundError
-                    example: ListNotFoundError
-    BlockedError:
-      description: The request has been blocked
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | BlockedError         | This Request has been blocked            |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com/#blocked
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Blocked Error
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 410
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - BlockedError
-    BroadcastSchedulingError:
-      description: The request could not be completed due to a conflict with the current state of the target resource
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type               | Explanation                              |
-
-                  |--------------------------|------------------------------------------|
-
-                  | BroadcastSchedulingError | Scheduling or canceling failed due to the broadcast status or the account being locked. |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#conflict
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: This broadcast cannot be scheduled. It may have been queued, sent or the account is locked
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 409
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - BroadcastSchedulingError
-  parameters:
-    accountId:
-      name: accountId
-      in: path
-      description: The account ID
-      required: true
-      schema:
-        type: integer
-        format: int32
-    wsSize:
-      name: ws.size
-      in: query
-      description: The pagination total entries to retrieve
-      schema:
-        type: integer
-        format: int32
-        minimum: 1
-        maximum: 100
-        default: 100
-    pageSize:
-      name: page_size
-      in: query
-      description: The pagination total entries to retrieve
-      schema:
-        type: integer
-        maximum: 100
-        minimum: 1
-        default: 100
-    before:
-      name: before
-      in: query
-      description: The pagination key when paging in reverse. Cannot be combined with `after`.
-      schema:
-        type: string
-    listId:
-      name: listId
-      in: path
-      description: The list ID
-      required: true
-      schema:
-        type: integer
-        format: int32
-    wsStart:
-      name: ws.start
-      in: query
-      description: The pagination starting offset
-      schema:
-        type: integer
-        format: int32
-        minimum: 0
-        default: 0
-    after:
-      name: after
-      in: query
-      description: The pagination key when paging forward. Cannot be combined with `before`.
-      schema:
-        type: string
-    broadcastId:
-      name: broadcastId
-      in: path
-      description: The broadcast ID
-      required: true
-      schema:
-        type: integer
-        format: int32
+    CreateBroadcast:
+      type: object
+      required:
+      - body_html
+      - body_text
+      - subject
+      properties:
+        body_html:
+          description: The content of the message in html format. If body_text is not provided, it will be auto-generated. If body_text is not provided, body_html must be provided.
+          type: string
+          format: html
+          example: <html><h1>Title</h1><body>Message body.</body></html>
+        body_text:
+          description: The content of the message in plain text, used when HTML is not supported. If body_html is not provided, the broadcast will be sent using only the body_text. If body_text is not provided, body_html must be provided.
+          type: string
+          example: This is the content of my message
+        body_amp:
+          description: <b>[Please read <a href="https://help.aweber.com/hc/en-us/articles/360025741194" target="_blank">our KB article</a> before using this field.]</b><br>The content of the message in AMP format.
+          type: string
+          format: amp
+          example: <html amp4email><body>content</body></html>
+        click_tracking_enabled:
+          description: Enables links in the email message to be tracked
+          default: true
+          type: boolean
+        exclude_lists:
+          description: JSON encoded list of [Lists](#tag/Lists) URLs to exclude in the delivery of this broadcast.<br> Use the `self_link` of the list here - e.g. `https://api.aweber.com/1.0/accounts/<account_id>/lists/<list_id>`. If updated, this value will replace the existing excluded_lists.
+          default: []
+          type: string
+          example: '["https://api.aweber.com/1.0/accounts/123/lists/456"]'
+        include_lists:
+          description: JSON encoded list of [Lists](#tag/Lists) URLs to include in the delivery of this broadcast.<br> Use the `self_link` of the list here - e.g. `https://api.aweber.com/1.0/accounts/<account_id>/lists/<list_id>`. If updated, this value will replace the existing included_lists.
+          default: []
+          type: string
+          example: '["https://api.aweber.com/1.0/accounts/123/lists/456"]'
+        facebook_integration:
+          description: URL to the [Facebook broadcast integration](#tag/Integrations) to use for this broadcast. When the broadcast is sent, the subject of the broadcast will be posted to this Facebook integration  - e.g., `https://api.aweber.com/1.0/accounts/<account_id>/integrations/<integration_id>`
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/integrations/1
+        is_archived:
+          description: Whether the broadcast enabled sharing via an archive url
+          default: true
+          type: boolean
+        notify_on_send:
+          description: If true, notify when stats are available on a sent broadcast message
+          default: true
+          type: boolean
+        segment_link:
+          description: 'URL to the [Segment](#tag/Segments) to send this broadcast to.  Use the `self_link` of the
+
+            segment here - e.g.
+
+            `https://api.aweber.com/1.0/accounts/<account_id>/lists/<list_id>/segments/<segment_id>`.
+
+            If not specified, the broadcast will be sent to the “Active Subscribers” segment.
+
+            '
+        subject:
+          description: The broadcast subject line. Subject must not be empty nor contain only whitespace.
+          type: string
+          maximum: 120
+          example: Weekly Recipes
+        twitter_integration:
+          description: URL to the [Twitter broadcast integration](#tag/Integrations) to use for this broadcast. When the broadcast is sent, the subject of the broadcast will be tweeted - e.g., `https://api.aweber.com/1.0/accounts/<account_id>/integrations/<integration_id>`
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/integrations/2
   securitySchemes:
     OAuth_2.0:
       description: 'The following endpoints and scopes are used to authenticate.

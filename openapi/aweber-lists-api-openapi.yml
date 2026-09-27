@@ -503,50 +503,6 @@ paths:
       operationId: getAccountsByAccountIdListsByListIdTags
       x-operation-id-source: derived
 components:
-  parameters:
-    wsShow:
-      name: ws.show
-      in: query
-      description: A flag to show the total size only - expecting \"total_size\", when added the response will be an integer
-      schema:
-        type: string
-        enum:
-        - total_size
-    listId:
-      name: listId
-      in: path
-      description: The list ID
-      required: true
-      schema:
-        type: integer
-        format: int32
-    accountId:
-      name: accountId
-      in: path
-      description: The account ID
-      required: true
-      schema:
-        type: integer
-        format: int32
-    wsSize:
-      name: ws.size
-      in: query
-      description: The pagination total entries to retrieve
-      schema:
-        type: integer
-        format: int32
-        minimum: 1
-        maximum: 100
-        default: 100
-    wsStart:
-      name: ws.start
-      in: query
-      description: The pagination starting offset
-      schema:
-        type: integer
-        format: int32
-        minimum: 0
-        default: 0
   responses:
     ServiceUnavailable:
       description: The server is currently unavailable
@@ -591,49 +547,6 @@ components:
                     type: string
                     enum:
                     - ServiceUnavailableError
-    ForbiddenError:
-      description: The request could not be completed due to a rate limit error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | ForbiddenError       | Rate limit may be reached or account may be suspended |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#forbidden
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Rate Limit Error
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 403
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - ForbiddenError
     InternalServerError:
       description: The request failed due to an internal error in the code or because of an external dependency failure
       content:
@@ -677,6 +590,49 @@ components:
                     type: string
                     enum:
                     - InternalServerError
+    ForbiddenError:
+      description: The request could not be completed due to a rate limit error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | ForbiddenError       | Rate limit may be reached or account may be suspended |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#forbidden
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Rate Limit Error
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 403
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - ForbiddenError
     BlockedError:
       description: The request has been blocked
       content:
@@ -720,14 +676,6 @@ components:
                     type: string
                     enum:
                     - BlockedError
-    UnauthorizedError:
-      description: The request could not be completed due to an authentication error
-      content:
-        application/json:
-          schema:
-            oneOf:
-            - $ref: '#/schemas/Endpoint Error'
-            - $ref: '#/schemas/Auth Error'
     NotFound:
       description: The requested resource could not be found
       content:
@@ -771,6 +719,14 @@ components:
                     type: string
                     enum:
                     - NotFoundError
+    UnauthorizedError:
+      description: The request could not be completed due to an authentication error
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/schemas/Endpoint Error'
+            - $ref: '#/schemas/Auth Error'
     BadOAuth1:
       description: The server cannot or will not process the request due to a client error
       content:
@@ -821,55 +777,6 @@ components:
                     enum:
                     - MissingOAuthParametersError
   schemas:
-    FindLists:
-      type: object
-      properties:
-        entries:
-          description: The list of list entries
-          type: array
-          items:
-            $ref: '#/definitions/List'
-        start:
-          description: The starting offset for the page of entries to retrieve
-          type: integer
-          minimum: 0
-        total_size_link:
-          description: A link to check the total number of entries found for this resource
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists?name=List+Name&ws.op=find&ws.show=total_size
-    Lists:
-      type: object
-      properties:
-        entries:
-          description: A list of list entries
-          type: array
-          items:
-            $ref: '#/definitions/List'
-        next_collection_link:
-          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists?ws.start=0&ws.size=10
-        prev_collection_link:
-          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists?ws.start=0
-        resource_type_link:
-          description: A link that identifies the type of resource that this collection represents
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/#list-page-resource
-        start:
-          description: The starting offset for the page of entries to retrieve
-          type: integer
-          minimum: 0
-        total_size:
-          description: The total number of entries
-          type: integer
-          minimum: 0
-          example: 100
     List:
       type: object
       properties:
@@ -1005,6 +912,99 @@ components:
           type: string
           format: uri
           example: https://api.aweber.com/1.0/accounts/123/lists/456/web_forms
+    Lists:
+      type: object
+      properties:
+        entries:
+          description: A list of list entries
+          type: array
+          items:
+            $ref: '#/definitions/List'
+        next_collection_link:
+          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists?ws.start=0&ws.size=10
+        prev_collection_link:
+          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists?ws.start=0
+        resource_type_link:
+          description: A link that identifies the type of resource that this collection represents
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/#list-page-resource
+        start:
+          description: The starting offset for the page of entries to retrieve
+          type: integer
+          minimum: 0
+        total_size:
+          description: The total number of entries
+          type: integer
+          minimum: 0
+          example: 100
+    FindLists:
+      type: object
+      properties:
+        entries:
+          description: The list of list entries
+          type: array
+          items:
+            $ref: '#/definitions/List'
+        start:
+          description: The starting offset for the page of entries to retrieve
+          type: integer
+          minimum: 0
+        total_size_link:
+          description: A link to check the total number of entries found for this resource
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists?name=List+Name&ws.op=find&ws.show=total_size
+  parameters:
+    wsStart:
+      name: ws.start
+      in: query
+      description: The pagination starting offset
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        default: 0
+    wsShow:
+      name: ws.show
+      in: query
+      description: A flag to show the total size only - expecting \"total_size\", when added the response will be an integer
+      schema:
+        type: string
+        enum:
+        - total_size
+    listId:
+      name: listId
+      in: path
+      description: The list ID
+      required: true
+      schema:
+        type: integer
+        format: int32
+    wsSize:
+      name: ws.size
+      in: query
+      description: The pagination total entries to retrieve
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 100
+        default: 100
+    accountId:
+      name: accountId
+      in: path
+      description: The account ID
+      required: true
+      schema:
+        type: integer
+        format: int32
   securitySchemes:
     OAuth_2.0:
       description: 'The following endpoints and scopes are used to authenticate.
