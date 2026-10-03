@@ -179,49 +179,6 @@ paths:
       x-operation-id-source: derived
 components:
   responses:
-    ServiceUnavailable:
-      description: The server is currently unavailable
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | ServiceUnavailableError | The server is unavailable |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#serviceunavailable
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Failed to communicate with endpoint
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 503
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - ServiceUnavailableError
     InternalServerError:
       description: The request failed due to an internal error in the code or because of an external dependency failure
       content:
@@ -265,15 +222,7 @@ components:
                     type: string
                     enum:
                     - InternalServerError
-    UnauthorizedError:
-      description: The request could not be completed due to an authentication error
-      content:
-        application/json:
-          schema:
-            oneOf:
-            - $ref: '#/schemas/Endpoint Error'
-            - $ref: '#/schemas/Auth Error'
-    OAuth2ErrorInvalidClient:
+    OAuth2ErrorInvalidRequest:
       description: 'OAuth 2 error response (see [RFC-6749])
 
 
@@ -290,12 +239,12 @@ components:
                 type: string
                 required: true
                 enum:
-                - invalid_client
-                example: invalid_client
+                - invalid_request
+                example: invalid_request
               error_description:
                 description: Human-readable error description
                 type: string
-                example: public clients MUST NOT include secrets
+                example: Missing parameter or other invalid request, or trying to pass in a client secret for a public client
               error_uri:
                 description: Link to troubleshooting documentation
                 type: string
@@ -344,7 +293,50 @@ components:
                     type: string
                     enum:
                     - BlockedError
-    OAuth2ErrorInvalidRequest:
+    ServiceUnavailable:
+      description: The server is currently unavailable
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | ServiceUnavailableError | The server is unavailable |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#serviceunavailable
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Failed to communicate with endpoint
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 503
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - ServiceUnavailableError
+    OAuth2ErrorInvalidClient:
       description: 'OAuth 2 error response (see [RFC-6749])
 
 
@@ -361,12 +353,12 @@ components:
                 type: string
                 required: true
                 enum:
-                - invalid_request
-                example: invalid_request
+                - invalid_client
+                example: invalid_client
               error_description:
                 description: Human-readable error description
                 type: string
-                example: Missing parameter or other invalid request, or trying to pass in a client secret for a public client
+                example: public clients MUST NOT include secrets
               error_uri:
                 description: Link to troubleshooting documentation
                 type: string
@@ -395,6 +387,14 @@ components:
                 type: string
                 format: url
                 example: https://api.aweber.com
+    UnauthorizedError:
+      description: The request could not be completed due to an authentication error
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/schemas/Endpoint Error'
+            - $ref: '#/schemas/Auth Error'
   securitySchemes:
     OAuth_2.0:
       description: 'The following endpoints and scopes are used to authenticate.

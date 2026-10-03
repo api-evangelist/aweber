@@ -573,325 +573,35 @@ paths:
       operationId: getAccountsByAccountIdListsByListIdCampaignsB{campaignId}StatsByStatsId
       x-operation-id-source: derived
 components:
-  schemas:
-    Stats:
-      type: object
-      properties:
-        entries:
-          description: A list of stats entries
-          type: array
-          items:
-            $ref: '#/definitions/Stat'
-        next_collection_link:
-          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/stats?ws.start=2&ws.size=1
-        prev_collection_link:
-          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/stats?ws.start=0&ws.size=1
-        resource_type_link:
-          description: A link that identifies the type of resource that this represents
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/#stat-page-resource
-        start:
-          description: The starting offset for the page of entries to retrieve
-          type: integer
-          minimum: 0
-          example: 1
-        total_size:
-          description: The total number of entries
-          type: integer
-          example: 10
-    Stat:
-      type: object
-      properties:
-        description:
-          description: A description of the statistic
-          type: string
-          example: total number of times a subscriber clicked any link appearing in your campaign except the unsubscribe link (includes multiple clicks of the same link)
-        id:
-          description: Statistic's ID
-          type: string
-          example: total_clicks
-        resource_type_link:
-          description: A link that identifies the type of resource that this represents
-          type: string
-          format: uri
-          enum:
-          - integer_stat
-          - decimal_stat
-          - list_stat
-          example: https://api.aweber.com/1.0/#integer_stat
-        self_link:
-          description: The link to this resource
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/stats/total_clicks
-        value:
-          description: 'The statistic''s value
-
-
-            The datatype of the value attribute may be different for each Stat.
-
-            Stats can be integer_stat, decimal_stat, or list_stat. Evaluate the
-
-            resource_type_link attribute if you must programmatically handle
-
-            different datatypes in a special way.
-
-
-            Below is a list of the statistics ID and return type
-
-
-            >
-
-            > __Aggregate Statistics__
-
-            >
-
-            > * total_clicks - integer_stat
-
-            > * unique_clicks - integer_stat
-
-            > * total_opens - integer_stat
-
-            > * unique_opens - integer_stat
-
-            > * total_sales - integer_stat
-
-            > * total_sales_dollars - decimal_stat
-
-            > * total_unsubscribed - integer_stat
-
-
-            > __Time Related Statistics__
-
-            >
-
-            > * hourly_opens - list_stat
-
-            > * hourly_clicks - list_stat
-
-            > * hourly_webhits - list_stat
-
-            > * hourly_sales - list_stat
-
-            > * hourly_unsubscribes - list_stat
-
-            > * daily_opens - list_stat
-
-            > * daily_clicks - list_stat
-
-            > * daily_webhits - list_stat
-
-            > * daily_sales - list_stat
-
-            > * daily_unsubscribes - list_stat
-
-
-            > __Top 10 URL Statistics__
-
-            >
-
-            > * clicks_by_link - list_stat
-
-            > * webhits_by_link - list_stat
-
-
-            >  __Top 10 Subscriber Statistics__ (Requires access to subscriber data)
-
-            >
-
-            > * opens_by_subscriber - list_stat
-
-            > * sales_by_subscriber - list_stat
-
-            '
-          oneOf:
-          - type: integer
-          - type: number
-          - type: string
-          example: 21
-    ListCampaigns:
-      type: object
-      properties:
-        entries:
-          description: A list of campaign entries
-          type: array
-          items:
-            $ref: '#/definitions/Campaign'
-        next_collection_link:
-          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?ws.start=101&ws.size=100
-        prev_collection_link:
-          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?ws.start=0&ws.size=100
-        start:
-          description: The starting offset for the page of entries to retrieve
-          type: integer
-          minimum: 0
-        total_size:
-          description: The total number of entries
-          type: integer
-    Campaign:
-      properties:
-        campaign_type:
-          description: 'Type of campaign. (f: followup, b: broadcast)'
-          type: string
-          enum:
-          - b
-          - f
-        click_tracking_enabled:
-          description: Whether click tracking is enabled
-          type: boolean
-        content_type:
-          description: Type of message
-          type: string
-          enum:
-          - Text
-          - HTML
-          - Text/HTML
-        id:
-          description: Unique campaign ID for followup or broadcast
-          type: integer
-          example: 1234567
-        is_archived:
-          description: Is the campaign in the campaign archive (broadcast only)
-          type: boolean
-        links_collection_link:
-          description: A URL to retrieve the [Links](#tag/Campaigns/paths/~1accounts~1{accountId}~1lists~1{listId}~1campaigns~1{campaignType}{campaignId}~1links/get) for this campaign
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b3456789/links
-        message_interval:
-          description: Message interval (followup only)
-          type: integer
-          minimum: 1
-          maximum: 999
-        message_number:
-          description: Followup sequence number (followup only)
-          type: integer
-          minimum: 1
-          maximum: 999
-        resource_type_link:
-          description: A link that identifies the type of resource that this collection represents
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/#broadcast_campaign
-        scheduled_at:
-          description: When broadcast is scheduled to send (broadcast only)
-          type: string
-          format: date-time
-          example: '2017-07-18 16:53:02-04:00'
-        self_link:
-          description: The link to this resource
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b3456789
-        sent_at:
-          description: Date/Time campaign was sent (broadcast only)
-          type: string
-          format: date-time
-          example: '2017-07-18 16:53:07-04:00'
-        spam_assassin_score:
-          description: "SpamAssassin score.  Read <a href=\"https://blog.aweber.com/email-deliverability/spamassassin-deliverability-tips.htm\"\n target=\"_blank\">SpamAssassin's Tips on Deliverability</a> for more detail."
-          type: number
-          format: float
-          example: 2.1
-        stats_collection_link:
-          description: A link to the [statistics collection](#tag/Campaigns/paths/~1accounts~1{accountId}~1lists~1{listId}~1campaigns~1b{campaignId}~1stats/get) for this campaign
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/accounts/123/lists/456/campaigns/b3456789/stats
-        subject:
-          description: Subject of message
-          type: string
-          maximum: 120
-          example: Weekly Recipes
-        total_clicks:
-          description: Total clicks of this message
-          type: integer
-        total_opens:
-          description: Total number of messages opened
-          type: integer
-        total_sent:
-          description: Total number of messages sent
-          type: integer
-        total_spam_complaints:
-          description: Total number of spam complaints received
-          type: integer
-        total_undelivered:
-          description: Total number of undeliverable messages
-          type: integer
-        total_unsubscribes:
-          description: Total number of unsubscribes from this campaign
-          type: integer
-        twitter_account_link:
-          description: Twitter account where broadcast was tweeted (broadcasts only). Links to [Integration](#tag/Integrations/paths/~1accounts~1{accountId}~1integrations~1{integrationId}/get).
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/account/123/integrations/456
-    FindCampaigns:
-      type: object
-      properties:
-        entries:
-          description: A list of campaign entries
-          type: array
-          items:
-            $ref: '#/definitions/Campaign'
-        next_collection_link:
-          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?ws.start=101&ws.size=100
-        prev_collection_link:
-          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?ws.start=0&ws.size=100
-        start:
-          description: The starting offset for the page of entries to retrieve
-          type: integer
-          minimum: 0
-        total_size_link:
-          description: Link to the total number of entries
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?campaign_type=b&ws.op=find&ws.show=total_size
   parameters:
-    wsStart:
-      name: ws.start
+    campaignType:
+      name: campaignType
+      in: path
+      description: The campaign type (b - broadcast, f - followup)
+      required: true
+      schema:
+        type: string
+        enum:
+        - b
+        - f
+    wsShow:
+      name: ws.show
       in: query
-      description: The pagination starting offset
+      description: A flag to show the total size only - expecting \"total_size\", when added the response will be an integer
+      schema:
+        type: string
+        enum:
+        - total_size
+    wsSize:
+      name: ws.size
+      in: query
+      description: The pagination total entries to retrieve
       schema:
         type: integer
         format: int32
-        minimum: 0
-        default: 0
-    accountId:
-      name: accountId
-      in: path
-      description: The account ID
-      required: true
-      schema:
-        type: integer
-        format: int32
-    listId:
-      name: listId
-      in: path
-      description: The list ID
-      required: true
-      schema:
-        type: integer
-        format: int32
+        minimum: 1
+        maximum: 100
+        default: 100
     statsId:
       name: statsId
       required: true
@@ -1018,6 +728,14 @@ components:
         - webhits_by_link
         - opens_by_subscriber
         - sales_by_subscriber
+    listId:
+      name: listId
+      in: path
+      description: The list ID
+      required: true
+      schema:
+        type: integer
+        format: int32
     campaignId:
       name: campaignId
       required: true
@@ -1026,35 +744,79 @@ components:
       schema:
         type: integer
         format: int32
-    wsSize:
-      name: ws.size
+    wsStart:
+      name: ws.start
       in: query
-      description: The pagination total entries to retrieve
+      description: The pagination starting offset
       schema:
         type: integer
         format: int32
-        minimum: 1
-        maximum: 100
-        default: 100
-    wsShow:
-      name: ws.show
-      in: query
-      description: A flag to show the total size only - expecting \"total_size\", when added the response will be an integer
-      schema:
-        type: string
-        enum:
-        - total_size
-    campaignType:
-      name: campaignType
+        minimum: 0
+        default: 0
+    accountId:
+      name: accountId
       in: path
-      description: The campaign type (b - broadcast, f - followup)
+      description: The account ID
       required: true
       schema:
-        type: string
-        enum:
-        - b
-        - f
+        type: integer
+        format: int32
   responses:
+    SearchBadRequest:
+      description: The server cannot or will not process the request due to a client error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  One of the following errors may be received:
+
+
+                  | Error Type                           | Explanation                              |
+
+                  |--------------------------------------|------------------------------------------|
+
+                  | BadRequestError                      | The search parameters or were invalid or the OAuth query string could not be parsed|
+
+                  | WebServiceError                      | `ws.start` or `ws.size` values are invalid |
+
+                  | MissingOAuthParametersError          | An OAuth parameter is missing in the request |
+
+                  | UnsupportedOAuthSignatureMethodError | The provided OAuth 1 signature method is unsupported. Only HMAC-SHA1 is supported. |
+
+                  | UnsupportedOAuthVersionError         | The provided OAuth 1 version is unsupported. |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#badrequest
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: 'Missing oauth parameters: oauth_consumer_key'
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 400
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BadRequestError
+                    - MissingOAuthParametersError
+                    - UnsupportedOAuthSignatureMethodError
+                    - UnsupportedOAuthVersionError
+                    - WebServiceError
     UnauthorizedError:
       description: The request could not be completed due to an authentication error
       content:
@@ -1063,92 +825,6 @@ components:
             oneOf:
             - $ref: '#/schemas/Endpoint Error'
             - $ref: '#/schemas/Auth Error'
-    BlockedError:
-      description: The request has been blocked
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | BlockedError         | This Request has been blocked            |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com/#blocked
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Blocked Error
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 410
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - BlockedError
-    ServiceUnavailable:
-      description: The server is currently unavailable
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | ServiceUnavailableError | The server is unavailable |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#serviceunavailable
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Failed to communicate with endpoint
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 503
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - ServiceUnavailableError
     InternalServerError:
       description: The request failed due to an internal error in the code or because of an external dependency failure
       content:
@@ -1192,6 +868,92 @@ components:
                     type: string
                     enum:
                     - InternalServerError
+    ServiceUnavailable:
+      description: The server is currently unavailable
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | ServiceUnavailableError | The server is unavailable |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#serviceunavailable
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Failed to communicate with endpoint
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 503
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - ServiceUnavailableError
+    NotFound:
+      description: The requested resource could not be found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | NotFoundError        | The requested resource could not be found |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#notfound
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: 'Object: None, name: '''''
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 404
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - NotFoundError
     CampaignBadRequest:
       description: The server cannot or will not process the request due to a client error
       content:
@@ -1251,8 +1013,8 @@ components:
                     - UnsupportedOAuthVersionError
                     - WebServiceError
                     example: BadRequestError
-    SearchBadRequest:
-      description: The server cannot or will not process the request due to a client error
+    BlockedError:
+      description: The request has been blocked
       content:
         application/json:
           schema:
@@ -1261,22 +1023,14 @@ components:
               error:
                 description: 'An error object.
 
-                  One of the following errors may be received:
+                  The following error may be received:
 
 
-                  | Error Type                           | Explanation                              |
+                  | Error Type           | Explanation                              |
 
-                  |--------------------------------------|------------------------------------------|
+                  |----------------------|------------------------------------------|
 
-                  | BadRequestError                      | The search parameters or were invalid or the OAuth query string could not be parsed|
-
-                  | WebServiceError                      | `ws.start` or `ws.size` values are invalid |
-
-                  | MissingOAuthParametersError          | An OAuth parameter is missing in the request |
-
-                  | UnsupportedOAuthSignatureMethodError | The provided OAuth 1 signature method is unsupported. Only HMAC-SHA1 is supported. |
-
-                  | UnsupportedOAuthVersionError         | The provided OAuth 1 version is unsupported. |
+                  | BlockedError         | This Request has been blocked            |
 
 
                   Please see the message body for more details.
@@ -1287,25 +1041,21 @@ components:
                   documentation_url:
                     description: A link to the documentation that describes the error
                     type: string
-                    example: https://api.aweber.com#badrequest
+                    example: https://api.aweber.com/#blocked
                   message:
                     description: A human friendly description of the error
                     type: string
-                    example: 'Missing oauth parameters: oauth_consumer_key'
+                    example: Blocked Error
                   status:
                     description: The HTTP status code
                     type: integer
                     enum:
-                    - 400
+                    - 410
                   type:
                     description: The API error type
                     type: string
                     enum:
-                    - BadRequestError
-                    - MissingOAuthParametersError
-                    - UnsupportedOAuthSignatureMethodError
-                    - UnsupportedOAuthVersionError
-                    - WebServiceError
+                    - BlockedError
     ForbiddenError:
       description: The request could not be completed due to a rate limit error
       content:
@@ -1349,49 +1099,299 @@ components:
                     type: string
                     enum:
                     - ForbiddenError
-    NotFound:
-      description: The requested resource could not be found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
+  schemas:
+    ListCampaigns:
+      type: object
+      properties:
+        entries:
+          description: A list of campaign entries
+          type: array
+          items:
+            $ref: '#/definitions/Campaign'
+        next_collection_link:
+          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?ws.start=101&ws.size=100
+        prev_collection_link:
+          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?ws.start=0&ws.size=100
+        start:
+          description: The starting offset for the page of entries to retrieve
+          type: integer
+          minimum: 0
+        total_size:
+          description: The total number of entries
+          type: integer
+    FindCampaigns:
+      type: object
+      properties:
+        entries:
+          description: A list of campaign entries
+          type: array
+          items:
+            $ref: '#/definitions/Campaign'
+        next_collection_link:
+          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?ws.start=101&ws.size=100
+        prev_collection_link:
+          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?ws.start=0&ws.size=100
+        start:
+          description: The starting offset for the page of entries to retrieve
+          type: integer
+          minimum: 0
+        total_size_link:
+          description: Link to the total number of entries
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?campaign_type=b&ws.op=find&ws.show=total_size
+    Stats:
+      type: object
+      properties:
+        entries:
+          description: A list of stats entries
+          type: array
+          items:
+            $ref: '#/definitions/Stat'
+        next_collection_link:
+          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/stats?ws.start=2&ws.size=1
+        prev_collection_link:
+          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/stats?ws.start=0&ws.size=1
+        resource_type_link:
+          description: A link that identifies the type of resource that this represents
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/#stat-page-resource
+        start:
+          description: The starting offset for the page of entries to retrieve
+          type: integer
+          minimum: 0
+          example: 1
+        total_size:
+          description: The total number of entries
+          type: integer
+          example: 10
+    Campaign:
+      properties:
+        campaign_type:
+          description: 'Type of campaign. (f: followup, b: broadcast)'
+          type: string
+          enum:
+          - b
+          - f
+        click_tracking_enabled:
+          description: Whether click tracking is enabled
+          type: boolean
+        content_type:
+          description: Type of message
+          type: string
+          enum:
+          - Text
+          - HTML
+          - Text/HTML
+        id:
+          description: Unique campaign ID for followup or broadcast
+          type: integer
+          example: 1234567
+        is_archived:
+          description: Is the campaign in the campaign archive (broadcast only)
+          type: boolean
+        links_collection_link:
+          description: A URL to retrieve the [Links](#tag/Campaigns/paths/~1accounts~1{accountId}~1lists~1{listId}~1campaigns~1{campaignType}{campaignId}~1links/get) for this campaign
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b3456789/links
+        message_interval:
+          description: Message interval (followup only)
+          type: integer
+          minimum: 1
+          maximum: 999
+        message_number:
+          description: Followup sequence number (followup only)
+          type: integer
+          minimum: 1
+          maximum: 999
+        resource_type_link:
+          description: A link that identifies the type of resource that this collection represents
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/#broadcast_campaign
+        scheduled_at:
+          description: When broadcast is scheduled to send (broadcast only)
+          type: string
+          format: date-time
+          example: '2017-07-18 16:53:02-04:00'
+        self_link:
+          description: The link to this resource
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b3456789
+        sent_at:
+          description: Date/Time campaign was sent (broadcast only)
+          type: string
+          format: date-time
+          example: '2017-07-18 16:53:07-04:00'
+        spam_assassin_score:
+          description: "SpamAssassin score.  Read <a href=\"https://blog.aweber.com/email-deliverability/spamassassin-deliverability-tips.htm\"\n target=\"_blank\">SpamAssassin's Tips on Deliverability</a> for more detail."
+          type: number
+          format: float
+          example: 2.1
+        stats_collection_link:
+          description: A link to the [statistics collection](#tag/Campaigns/paths/~1accounts~1{accountId}~1lists~1{listId}~1campaigns~1b{campaignId}~1stats/get) for this campaign
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/accounts/123/lists/456/campaigns/b3456789/stats
+        subject:
+          description: Subject of message
+          type: string
+          maximum: 120
+          example: Weekly Recipes
+        total_clicks:
+          description: Total clicks of this message
+          type: integer
+        total_opens:
+          description: Total number of messages opened
+          type: integer
+        total_sent:
+          description: Total number of messages sent
+          type: integer
+        total_spam_complaints:
+          description: Total number of spam complaints received
+          type: integer
+        total_undelivered:
+          description: Total number of undeliverable messages
+          type: integer
+        total_unsubscribes:
+          description: Total number of unsubscribes from this campaign
+          type: integer
+        twitter_account_link:
+          description: Twitter account where broadcast was tweeted (broadcasts only). Links to [Integration](#tag/Integrations/paths/~1accounts~1{accountId}~1integrations~1{integrationId}/get).
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/account/123/integrations/456
+    Stat:
+      type: object
+      properties:
+        description:
+          description: A description of the statistic
+          type: string
+          example: total number of times a subscriber clicked any link appearing in your campaign except the unsubscribe link (includes multiple clicks of the same link)
+        id:
+          description: Statistic's ID
+          type: string
+          example: total_clicks
+        resource_type_link:
+          description: A link that identifies the type of resource that this represents
+          type: string
+          format: uri
+          enum:
+          - integer_stat
+          - decimal_stat
+          - list_stat
+          example: https://api.aweber.com/1.0/#integer_stat
+        self_link:
+          description: The link to this resource
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/stats/total_clicks
+        value:
+          description: 'The statistic''s value
 
-                  The following error may be received:
+
+            The datatype of the value attribute may be different for each Stat.
+
+            Stats can be integer_stat, decimal_stat, or list_stat. Evaluate the
+
+            resource_type_link attribute if you must programmatically handle
+
+            different datatypes in a special way.
 
 
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | NotFoundError        | The requested resource could not be found |
+            Below is a list of the statistics ID and return type
 
 
-                  Please see the message body for more details.
+            >
 
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#notfound
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: 'Object: None, name: '''''
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 404
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - NotFoundError
+            > __Aggregate Statistics__
+
+            >
+
+            > * total_clicks - integer_stat
+
+            > * unique_clicks - integer_stat
+
+            > * total_opens - integer_stat
+
+            > * unique_opens - integer_stat
+
+            > * total_sales - integer_stat
+
+            > * total_sales_dollars - decimal_stat
+
+            > * total_unsubscribed - integer_stat
+
+
+            > __Time Related Statistics__
+
+            >
+
+            > * hourly_opens - list_stat
+
+            > * hourly_clicks - list_stat
+
+            > * hourly_webhits - list_stat
+
+            > * hourly_sales - list_stat
+
+            > * hourly_unsubscribes - list_stat
+
+            > * daily_opens - list_stat
+
+            > * daily_clicks - list_stat
+
+            > * daily_webhits - list_stat
+
+            > * daily_sales - list_stat
+
+            > * daily_unsubscribes - list_stat
+
+
+            > __Top 10 URL Statistics__
+
+            >
+
+            > * clicks_by_link - list_stat
+
+            > * webhits_by_link - list_stat
+
+
+            >  __Top 10 Subscriber Statistics__ (Requires access to subscriber data)
+
+            >
+
+            > * opens_by_subscriber - list_stat
+
+            > * sales_by_subscriber - list_stat
+
+            '
+          oneOf:
+          - type: integer
+          - type: number
+          - type: string
+          example: 21
   securitySchemes:
     OAuth_2.0:
       description: 'The following endpoints and scopes are used to authenticate.
