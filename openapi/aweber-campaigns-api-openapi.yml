@@ -574,34 +574,6 @@ paths:
       x-operation-id-source: derived
 components:
   parameters:
-    campaignType:
-      name: campaignType
-      in: path
-      description: The campaign type (b - broadcast, f - followup)
-      required: true
-      schema:
-        type: string
-        enum:
-        - b
-        - f
-    wsShow:
-      name: ws.show
-      in: query
-      description: A flag to show the total size only - expecting \"total_size\", when added the response will be an integer
-      schema:
-        type: string
-        enum:
-        - total_size
-    wsSize:
-      name: ws.size
-      in: query
-      description: The pagination total entries to retrieve
-      schema:
-        type: integer
-        format: int32
-        minimum: 1
-        maximum: 100
-        default: 100
     statsId:
       name: statsId
       required: true
@@ -728,22 +700,14 @@ components:
         - webhits_by_link
         - opens_by_subscriber
         - sales_by_subscriber
-    listId:
-      name: listId
-      in: path
-      description: The list ID
-      required: true
+    wsShow:
+      name: ws.show
+      in: query
+      description: A flag to show the total size only - expecting \"total_size\", when added the response will be an integer
       schema:
-        type: integer
-        format: int32
-    campaignId:
-      name: campaignId
-      required: true
-      in: path
-      description: The campaign ID
-      schema:
-        type: integer
-        format: int32
+        type: string
+        enum:
+        - total_size
     wsStart:
       name: ws.start
       in: query
@@ -753,6 +717,42 @@ components:
         format: int32
         minimum: 0
         default: 0
+    campaignId:
+      name: campaignId
+      required: true
+      in: path
+      description: The campaign ID
+      schema:
+        type: integer
+        format: int32
+    campaignType:
+      name: campaignType
+      in: path
+      description: The campaign type (b - broadcast, f - followup)
+      required: true
+      schema:
+        type: string
+        enum:
+        - b
+        - f
+    wsSize:
+      name: ws.size
+      in: query
+      description: The pagination total entries to retrieve
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 100
+        default: 100
+    listId:
+      name: listId
+      in: path
+      description: The list ID
+      required: true
+      schema:
+        type: integer
+        format: int32
     accountId:
       name: accountId
       in: path
@@ -761,370 +761,7 @@ components:
       schema:
         type: integer
         format: int32
-  responses:
-    SearchBadRequest:
-      description: The server cannot or will not process the request due to a client error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  One of the following errors may be received:
-
-
-                  | Error Type                           | Explanation                              |
-
-                  |--------------------------------------|------------------------------------------|
-
-                  | BadRequestError                      | The search parameters or were invalid or the OAuth query string could not be parsed|
-
-                  | WebServiceError                      | `ws.start` or `ws.size` values are invalid |
-
-                  | MissingOAuthParametersError          | An OAuth parameter is missing in the request |
-
-                  | UnsupportedOAuthSignatureMethodError | The provided OAuth 1 signature method is unsupported. Only HMAC-SHA1 is supported. |
-
-                  | UnsupportedOAuthVersionError         | The provided OAuth 1 version is unsupported. |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#badrequest
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: 'Missing oauth parameters: oauth_consumer_key'
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 400
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - BadRequestError
-                    - MissingOAuthParametersError
-                    - UnsupportedOAuthSignatureMethodError
-                    - UnsupportedOAuthVersionError
-                    - WebServiceError
-    UnauthorizedError:
-      description: The request could not be completed due to an authentication error
-      content:
-        application/json:
-          schema:
-            oneOf:
-            - $ref: '#/schemas/Endpoint Error'
-            - $ref: '#/schemas/Auth Error'
-    InternalServerError:
-      description: The request failed due to an internal error in the code or because of an external dependency failure
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | InternalServerError    | The request failed due to an internal error |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#internalerror
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Something went wrong.
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 500
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - InternalServerError
-    ServiceUnavailable:
-      description: The server is currently unavailable
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | ServiceUnavailableError | The server is unavailable |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#serviceunavailable
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Failed to communicate with endpoint
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 503
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - ServiceUnavailableError
-    NotFound:
-      description: The requested resource could not be found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | NotFoundError        | The requested resource could not be found |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#notfound
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: 'Object: None, name: '''''
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 404
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - NotFoundError
-    CampaignBadRequest:
-      description: The server cannot or will not process the request due to a client error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  One of the following errors may be received:
-
-
-                  | Error Type                  | Explanation                                |
-
-                  |-----------------------------|--------------------------------------------|
-
-                  | BadRequestError             | Query parameters are invalid  |
-
-                  | MissingArgumentError | An required argument was not provided |
-
-                  | MissingOAuthParametersError | An OAuth parameter is missing in the request |
-
-                  | UnsupportedOAuthSignatureMethodError | Unsupported OAuth 1 signature method |
-
-                  | UnsupportedOAuthVersionError | Unsupported OAuth 1 version |
-
-                  | WebServiceError             | `ws.start` or `ws.size` values are invalid |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#badrequest
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Maximum for "ws.size" parameter is 100.
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 400
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - BadRequestError
-                    - MissingArgumentError
-                    - MissingOAuthParametersError
-                    - UnsupportedOAuthSignatureMethodError
-                    - UnsupportedOAuthVersionError
-                    - WebServiceError
-                    example: BadRequestError
-    BlockedError:
-      description: The request has been blocked
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | BlockedError         | This Request has been blocked            |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com/#blocked
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Blocked Error
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 410
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - BlockedError
-    ForbiddenError:
-      description: The request could not be completed due to a rate limit error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | ForbiddenError       | Rate limit may be reached or account may be suspended |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#forbidden
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Rate Limit Error
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 403
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - ForbiddenError
   schemas:
-    ListCampaigns:
-      type: object
-      properties:
-        entries:
-          description: A list of campaign entries
-          type: array
-          items:
-            $ref: '#/definitions/Campaign'
-        next_collection_link:
-          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?ws.start=101&ws.size=100
-        prev_collection_link:
-          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?ws.start=0&ws.size=100
-        start:
-          description: The starting offset for the page of entries to retrieve
-          type: integer
-          minimum: 0
-        total_size:
-          description: The total number of entries
-          type: integer
     FindCampaigns:
       type: object
       properties:
@@ -1152,38 +789,6 @@ components:
           type: string
           format: uri
           example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?campaign_type=b&ws.op=find&ws.show=total_size
-    Stats:
-      type: object
-      properties:
-        entries:
-          description: A list of stats entries
-          type: array
-          items:
-            $ref: '#/definitions/Stat'
-        next_collection_link:
-          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/stats?ws.start=2&ws.size=1
-        prev_collection_link:
-          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/stats?ws.start=0&ws.size=1
-        resource_type_link:
-          description: A link that identifies the type of resource that this represents
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/#stat-page-resource
-        start:
-          description: The starting offset for the page of entries to retrieve
-          type: integer
-          minimum: 0
-          example: 1
-        total_size:
-          description: The total number of entries
-          type: integer
-          example: 10
     Campaign:
       properties:
         campaign_type:
@@ -1282,6 +887,38 @@ components:
           type: string
           format: uri
           example: https://api.aweber.com/1.0/account/123/integrations/456
+    Stats:
+      type: object
+      properties:
+        entries:
+          description: A list of stats entries
+          type: array
+          items:
+            $ref: '#/definitions/Stat'
+        next_collection_link:
+          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/stats?ws.start=2&ws.size=1
+        prev_collection_link:
+          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/stats?ws.start=0&ws.size=1
+        resource_type_link:
+          description: A link that identifies the type of resource that this represents
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/#stat-page-resource
+        start:
+          description: The starting offset for the page of entries to retrieve
+          type: integer
+          minimum: 0
+          example: 1
+        total_size:
+          description: The total number of entries
+          type: integer
+          example: 10
     Stat:
       type: object
       properties:
@@ -1392,6 +1029,369 @@ components:
           - type: number
           - type: string
           example: 21
+    ListCampaigns:
+      type: object
+      properties:
+        entries:
+          description: A list of campaign entries
+          type: array
+          items:
+            $ref: '#/definitions/Campaign'
+        next_collection_link:
+          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?ws.start=101&ws.size=100
+        prev_collection_link:
+          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns?ws.start=0&ws.size=100
+        start:
+          description: The starting offset for the page of entries to retrieve
+          type: integer
+          minimum: 0
+        total_size:
+          description: The total number of entries
+          type: integer
+  responses:
+    InternalServerError:
+      description: The request failed due to an internal error in the code or because of an external dependency failure
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | InternalServerError    | The request failed due to an internal error |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#internalerror
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Something went wrong.
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 500
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - InternalServerError
+    CampaignBadRequest:
+      description: The server cannot or will not process the request due to a client error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  One of the following errors may be received:
+
+
+                  | Error Type                  | Explanation                                |
+
+                  |-----------------------------|--------------------------------------------|
+
+                  | BadRequestError             | Query parameters are invalid  |
+
+                  | MissingArgumentError | An required argument was not provided |
+
+                  | MissingOAuthParametersError | An OAuth parameter is missing in the request |
+
+                  | UnsupportedOAuthSignatureMethodError | Unsupported OAuth 1 signature method |
+
+                  | UnsupportedOAuthVersionError | Unsupported OAuth 1 version |
+
+                  | WebServiceError             | `ws.start` or `ws.size` values are invalid |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#badrequest
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Maximum for "ws.size" parameter is 100.
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 400
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BadRequestError
+                    - MissingArgumentError
+                    - MissingOAuthParametersError
+                    - UnsupportedOAuthSignatureMethodError
+                    - UnsupportedOAuthVersionError
+                    - WebServiceError
+                    example: BadRequestError
+    ServiceUnavailable:
+      description: The server is currently unavailable
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | ServiceUnavailableError | The server is unavailable |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#serviceunavailable
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Failed to communicate with endpoint
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 503
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - ServiceUnavailableError
+    ForbiddenError:
+      description: The request could not be completed due to a rate limit error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | ForbiddenError       | Rate limit may be reached or account may be suspended |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#forbidden
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Rate Limit Error
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 403
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - ForbiddenError
+    BlockedError:
+      description: The request has been blocked
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | BlockedError         | This Request has been blocked            |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com/#blocked
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Blocked Error
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 410
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BlockedError
+    SearchBadRequest:
+      description: The server cannot or will not process the request due to a client error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  One of the following errors may be received:
+
+
+                  | Error Type                           | Explanation                              |
+
+                  |--------------------------------------|------------------------------------------|
+
+                  | BadRequestError                      | The search parameters or were invalid or the OAuth query string could not be parsed|
+
+                  | WebServiceError                      | `ws.start` or `ws.size` values are invalid |
+
+                  | MissingOAuthParametersError          | An OAuth parameter is missing in the request |
+
+                  | UnsupportedOAuthSignatureMethodError | The provided OAuth 1 signature method is unsupported. Only HMAC-SHA1 is supported. |
+
+                  | UnsupportedOAuthVersionError         | The provided OAuth 1 version is unsupported. |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#badrequest
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: 'Missing oauth parameters: oauth_consumer_key'
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 400
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BadRequestError
+                    - MissingOAuthParametersError
+                    - UnsupportedOAuthSignatureMethodError
+                    - UnsupportedOAuthVersionError
+                    - WebServiceError
+    UnauthorizedError:
+      description: The request could not be completed due to an authentication error
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/schemas/Endpoint Error'
+            - $ref: '#/schemas/Auth Error'
+    NotFound:
+      description: The requested resource could not be found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | NotFoundError        | The requested resource could not be found |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#notfound
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: 'Object: None, name: '''''
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 404
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - NotFoundError
   securitySchemes:
     OAuth_2.0:
       description: 'The following endpoints and scopes are used to authenticate.

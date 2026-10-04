@@ -719,66 +719,134 @@ paths:
       operationId: getAccountsByAccountIdListsByListIdWebFormSplitTestsBySplitTestIdComponentsBySplitTestComponentId
       x-operation-id-source: derived
 components:
-  parameters:
-    webformId:
-      name: webformId
-      required: true
-      in: path
-      description: The webform ID
-      schema:
-        type: integer
-        format: int32
-    wsSize:
-      name: ws.size
-      in: query
-      description: The pagination total entries to retrieve
-      schema:
-        type: integer
-        format: int32
-        minimum: 1
-        maximum: 100
-        default: 100
-    splitTestId:
-      name: splitTestId
-      required: true
-      in: path
-      description: The webform split test ID
-      schema:
-        type: integer
-        format: int32
-    listId:
-      name: listId
-      in: path
-      description: The list ID
-      required: true
-      schema:
-        type: integer
-        format: int32
-    splitTestComponentId:
-      name: splitTestComponentId
-      in: path
-      description: The webform split test component ID
-      required: true
-      schema:
-        type: string
-    wsStart:
-      name: ws.start
-      in: query
-      description: The pagination starting offset
-      schema:
-        type: integer
-        format: int32
-        minimum: 0
-        default: 0
-    accountId:
-      name: accountId
-      in: path
-      description: The account ID
-      required: true
-      schema:
-        type: integer
-        format: int32
   schemas:
+    WebFormSplitTests:
+      type: object
+      properties:
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebformSplitTest'
+        next_collection_link:
+          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_form_split_tests?ws.start=10&ws.size=10
+        prev_collection_link:
+          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_form_split_tests?ws.start=0
+        resource_type_link:
+          description: The link to the event type
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/#web_form_split_test-page-resource
+        start:
+          description: The starting offset for the page of entries to retrieve
+          type: integer
+          minimum: 0
+        total_size:
+          description: The total number of entries
+          type: integer
+          minimum: 0
+          example: 100
+    WebformSplitTestComponent:
+      type: object
+      properties:
+        conversion_percentage:
+          description: The conversion percentage
+          type: number
+          format: float
+          minimum: 0
+          example: 0.0
+        html_source_link:
+          description: The webform HTML source URL
+          type: string
+          format: uri
+          example: http://forms.aweber.com/form/123/456.html
+        http_etag:
+          description: The ETag HTTP header
+          type: string
+          example: \"902ba3cda1883801594b6e1b452790cc53948fda-f83cb0ac22a8d5f792417f9b3dc0e9dc7558aa32\"
+        id:
+          description: The unique ID for the webform component
+          type: string
+          example: 234-456
+        is_active:
+          description: Whether the webform is active or not
+          type: boolean
+        javascript_source_link:
+          description: The webform javascript source URL
+          type: string
+          format: uri
+          example: http://forms.aweber.com/form/123/456.js
+        name:
+          description: The webform name
+          type: string
+          example: Joker's Wild
+        resource_type_link:
+          description: The link to the webform type
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/#component
+        self_link:
+          description: The link to this resource
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_form_split_tests/789/component/234-456
+        tags:
+          description: A list of tags added to the webform component
+          type: array
+          items:
+            type: string
+            minLength: 1
+          example:
+          - slow
+          - fast
+          - lightspeed
+        total_displays:
+          description: The total number of times the webform is displayed
+          type: integer
+          minimum: 0
+          example: 123456789
+        total_submissions:
+          description: The total number of submissions received by the webform
+          type: integer
+          minimum: 0
+          example: 123456
+        total_unique_displays:
+          description: The total number of unique times the webform is displayed
+          type: integer
+          minimum: 0
+          example: 1234
+        type:
+          description: The webform display type
+          type: string
+          enum:
+          - exitpopup
+          - inline
+          - lightbox
+          - popover
+          - popunder
+          - popup
+          - styled
+        unique_conversion_percentage:
+          description: The conversion percentage based on unique counts
+          type: number
+          format: float
+          minimum: 0
+          example: 6.451612903225806
+        web_form_link:
+          description: The link to [Webform](#tag/Webforms/paths/~1accounts~1{accountId}~1lists~1{listId}~1web_forms~1{webformId}/get)
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_form/789
+        weight:
+          description: The relative display weight
+          type: integer
+          minimum: 0
+          example: 40
     Webforms:
       type: object
       properties:
@@ -880,102 +948,6 @@ components:
           type: string
           format: uri
           example: https://api.aweber.com/1.0/accounts/123/lists/456/web_form_split_tests/789
-    WebformSplitTestComponent:
-      type: object
-      properties:
-        conversion_percentage:
-          description: The conversion percentage
-          type: number
-          format: float
-          minimum: 0
-          example: 0.0
-        html_source_link:
-          description: The webform HTML source URL
-          type: string
-          format: uri
-          example: http://forms.aweber.com/form/123/456.html
-        http_etag:
-          description: The ETag HTTP header
-          type: string
-          example: \"902ba3cda1883801594b6e1b452790cc53948fda-f83cb0ac22a8d5f792417f9b3dc0e9dc7558aa32\"
-        id:
-          description: The unique ID for the webform component
-          type: string
-          example: 234-456
-        is_active:
-          description: Whether the webform is active or not
-          type: boolean
-        javascript_source_link:
-          description: The webform javascript source URL
-          type: string
-          format: uri
-          example: http://forms.aweber.com/form/123/456.js
-        name:
-          description: The webform name
-          type: string
-          example: Joker's Wild
-        resource_type_link:
-          description: The link to the webform type
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/#component
-        self_link:
-          description: The link to this resource
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_form_split_tests/789/component/234-456
-        tags:
-          description: A list of tags added to the webform component
-          type: array
-          items:
-            type: string
-            minLength: 1
-          example:
-          - slow
-          - fast
-          - lightspeed
-        total_displays:
-          description: The total number of times the webform is displayed
-          type: integer
-          minimum: 0
-          example: 123456789
-        total_submissions:
-          description: The total number of submissions received by the webform
-          type: integer
-          minimum: 0
-          example: 123456
-        total_unique_displays:
-          description: The total number of unique times the webform is displayed
-          type: integer
-          minimum: 0
-          example: 1234
-        type:
-          description: The webform display type
-          type: string
-          enum:
-          - exitpopup
-          - inline
-          - lightbox
-          - popover
-          - popunder
-          - popup
-          - styled
-        unique_conversion_percentage:
-          description: The conversion percentage based on unique counts
-          type: number
-          format: float
-          minimum: 0
-          example: 6.451612903225806
-        web_form_link:
-          description: The link to [Webform](#tag/Webforms/paths/~1accounts~1{accountId}~1lists~1{listId}~1web_forms~1{webformId}/get)
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_form/789
-        weight:
-          description: The relative display weight
-          type: integer
-          minimum: 0
-          example: 40
     Webform:
       type: object
       properties:
@@ -1057,129 +1029,66 @@ components:
           type: number
           format: float
           example: 6.451612903225806
-    WebFormSplitTests:
-      type: object
-      properties:
-        entries:
-          type: array
-          items:
-            $ref: '#/components/schemas/WebformSplitTest'
-        next_collection_link:
-          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_form_split_tests?ws.start=10&ws.size=10
-        prev_collection_link:
-          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/web_form_split_tests?ws.start=0
-        resource_type_link:
-          description: The link to the event type
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/#web_form_split_test-page-resource
-        start:
-          description: The starting offset for the page of entries to retrieve
-          type: integer
-          minimum: 0
-        total_size:
-          description: The total number of entries
-          type: integer
-          minimum: 0
-          example: 100
+  parameters:
+    wsStart:
+      name: ws.start
+      in: query
+      description: The pagination starting offset
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        default: 0
+    wsSize:
+      name: ws.size
+      in: query
+      description: The pagination total entries to retrieve
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 100
+        default: 100
+    listId:
+      name: listId
+      in: path
+      description: The list ID
+      required: true
+      schema:
+        type: integer
+        format: int32
+    accountId:
+      name: accountId
+      in: path
+      description: The account ID
+      required: true
+      schema:
+        type: integer
+        format: int32
+    splitTestId:
+      name: splitTestId
+      required: true
+      in: path
+      description: The webform split test ID
+      schema:
+        type: integer
+        format: int32
+    splitTestComponentId:
+      name: splitTestComponentId
+      in: path
+      description: The webform split test component ID
+      required: true
+      schema:
+        type: string
+    webformId:
+      name: webformId
+      required: true
+      in: path
+      description: The webform ID
+      schema:
+        type: integer
+        format: int32
   responses:
-    BadRequest:
-      description: The server cannot or will not process the request due to a client error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type        | Explanation |
-
-                  |-------------------|-------------|
-
-                  | BadRequestError   | The request is malformed.  This can be caused by missing authorization credentials |
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#badrequest
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Missing required argument(s)
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 400
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - BadRequestError
-    NotAllowed:
-      description: The method received in the request-line is known by the origin server but not supported by the target resource.
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  One of the following errors may be received:
-
-
-                  | Error Type              | Explanation |
-
-                  |-------------------------|-------------|
-
-                  | MethodNotAllowedError   | The requested resource does not implement the requested method. |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#methodnotallowed
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: ' https://api.aweber.com#methodnotallowed'
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 405
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - MethodNotAllowedError
-    UnauthorizedError:
-      description: The request could not be completed due to an authentication error
-      content:
-        application/json:
-          schema:
-            oneOf:
-            - $ref: '#/schemas/Endpoint Error'
-            - $ref: '#/schemas/Auth Error'
     InternalServerError:
       description: The request failed due to an internal error in the code or because of an external dependency failure
       content:
@@ -1266,92 +1175,6 @@ components:
                     type: string
                     enum:
                     - ServiceUnavailableError
-    NotFound:
-      description: The requested resource could not be found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | NotFoundError        | The requested resource could not be found |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#notfound
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: 'Object: None, name: '''''
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 404
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - NotFoundError
-    BlockedError:
-      description: The request has been blocked
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | BlockedError         | This Request has been blocked            |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com/#blocked
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Blocked Error
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 410
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - BlockedError
     ForbiddenError:
       description: The request could not be completed due to a rate limit error
       content:
@@ -1395,6 +1218,183 @@ components:
                     type: string
                     enum:
                     - ForbiddenError
+    BlockedError:
+      description: The request has been blocked
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | BlockedError         | This Request has been blocked            |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com/#blocked
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Blocked Error
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 410
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BlockedError
+    UnauthorizedError:
+      description: The request could not be completed due to an authentication error
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/schemas/Endpoint Error'
+            - $ref: '#/schemas/Auth Error'
+    NotFound:
+      description: The requested resource could not be found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | NotFoundError        | The requested resource could not be found |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#notfound
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: 'Object: None, name: '''''
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 404
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - NotFoundError
+    BadRequest:
+      description: The server cannot or will not process the request due to a client error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type        | Explanation |
+
+                  |-------------------|-------------|
+
+                  | BadRequestError   | The request is malformed.  This can be caused by missing authorization credentials |
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#badrequest
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Missing required argument(s)
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 400
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BadRequestError
+    NotAllowed:
+      description: The method received in the request-line is known by the origin server but not supported by the target resource.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  One of the following errors may be received:
+
+
+                  | Error Type              | Explanation |
+
+                  |-------------------------|-------------|
+
+                  | MethodNotAllowedError   | The requested resource does not implement the requested method. |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#methodnotallowed
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: ' https://api.aweber.com#methodnotallowed'
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 405
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - MethodNotAllowedError
   securitySchemes:
     OAuth_2.0:
       description: 'The following endpoints and scopes are used to authenticate.

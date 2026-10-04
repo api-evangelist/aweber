@@ -234,19 +234,13 @@ components:
       description: The hashing algorithm that was used to generate the signature. AWeber only supports the HMAC-SHA1 hash, so that's what this parameter should always be.
       type: string
       example: HMAC-SHA1
-    oauth_callback:
-      name: oauth_callback
+    oauth_consumer_key:
+      name: oauth_consumer_key
       in: body
-      required: false
-      description: 'A url that will be sent the verifier token when authorizing the request token in a future step.
-
-        If you don''t have a callback, use `oob` as the value, this will indicate that the callback is ''out of band''
-
-        and will display an html page after authorization, containing the verifier token.
-
-        '
+      required: true
+      description: The consumer key assigned to your application, available on the <a href="https://labs.aweber.com/apps" target="_blank">My Apps Page</a>
       type: string
-      example: http://localhost/demo.php
+      example: XXXXXXXXXXXXXX
     oauth_signature:
       name: oauth_signature
       in: body
@@ -260,6 +254,39 @@ components:
         '
       type: string
       example: uvNa27v1uyVES37VfsX2Tj1OUYU=
+    oauth_version:
+      name: oauth_version
+      in: body
+      required: true
+      description: This identifies which version of the OAuth protocol you are using, and should always be 1.0 when working with the AWeber API.
+      type: string
+      example: 1.0
+    oauth_callback:
+      name: oauth_callback
+      in: body
+      required: false
+      description: 'A url that will be sent the verifier token when authorizing the request token in a future step.
+
+        If you don''t have a callback, use `oob` as the value, this will indicate that the callback is ''out of band''
+
+        and will display an html page after authorization, containing the verifier token.
+
+        '
+      type: string
+      example: http://localhost/demo.php
+    oauth_token:
+      name: oauth_token
+      in: body
+      required: true
+      description: 'This is the token that represents the user of the application. This will be either the request token,
+
+        when in the process of gaining an access token, or the access token when making requests to the AWeber API.
+
+        The oauth_token parameter will be blank when you are getting a request token for a new user.
+
+        '
+      type: string
+      example: null
     oauth_nonce:
       name: oauth_nonce
       in: body
@@ -274,77 +301,15 @@ components:
       description: Timestamp for the request. This is in the format of a Unix timestamp, or seconds since January 1st, 1970.
       type: string
       example: 1285168264
-    oauth_token:
-      name: oauth_token
-      in: body
-      required: true
-      description: 'This is the token that represents the user of the application. This will be either the request token,
-
-        when in the process of gaining an access token, or the access token when making requests to the AWeber API.
-
-        The oauth_token parameter will be blank when you are getting a request token for a new user.
-
-        '
-      type: string
-      example: null
-    oauth_version:
-      name: oauth_version
-      in: body
-      required: true
-      description: This identifies which version of the OAuth protocol you are using, and should always be 1.0 when working with the AWeber API.
-      type: string
-      example: 1.0
-    oauth_consumer_key:
-      name: oauth_consumer_key
-      in: body
-      required: true
-      description: The consumer key assigned to your application, available on the <a href="https://labs.aweber.com/apps" target="_blank">My Apps Page</a>
-      type: string
-      example: XXXXXXXXXXXXXX
   responses:
-    InternalServerError:
-      description: The request failed due to an internal error in the code or because of an external dependency failure
+    UnauthorizedError:
+      description: The request could not be completed due to an authentication error
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | InternalServerError    | The request failed due to an internal error |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#internalerror
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Something went wrong.
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 500
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - InternalServerError
+            oneOf:
+            - $ref: '#/schemas/Endpoint Error'
+            - $ref: '#/schemas/Auth Error'
     BlockedError:
       description: The request has been blocked
       content:
@@ -431,14 +396,49 @@ components:
                     type: string
                     enum:
                     - ServiceUnavailableError
-    UnauthorizedError:
-      description: The request could not be completed due to an authentication error
+    InternalServerError:
+      description: The request failed due to an internal error in the code or because of an external dependency failure
       content:
         application/json:
           schema:
-            oneOf:
-            - $ref: '#/schemas/Endpoint Error'
-            - $ref: '#/schemas/Auth Error'
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | InternalServerError    | The request failed due to an internal error |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#internalerror
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Something went wrong.
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 500
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - InternalServerError
   securitySchemes:
     OAuth_2.0:
       description: 'The following endpoints and scopes are used to authenticate.

@@ -227,50 +227,77 @@ paths:
       operationId: getAccountsByAccountIdIntegrationsByIntegrationId
       x-operation-id-source: derived
 components:
+  schemas:
+    Integrations:
+      type: object
+      properties:
+        entries:
+          description: A list of integration entries
+          type: array
+          items:
+            $ref: '#/definitions/Integration'
+        next_collection_link:
+          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/custom_fields?ws.start=0&ws.size=10
+        prev_collection_link:
+          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/custom_fields?ws.start=0
+        resource_type_link:
+          description: A link that identifies the type of resource that this collection represents
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/#integrations-page-resource
+        start:
+          description: The starting offset for the page of entries to retrieve
+          type: integer
+          minimum: 0
+        total_size:
+          description: The total number of entries
+          type: integer
+          minimum: 0
+          example: 100
+    Integration:
+      type: object
+      properties:
+        http_etag:
+          description: The ETag HTTP header
+          type: string
+          example: 902ba3cda1883801594b6e1b452790cc53948fda-f83cb0ac22a8d5f792417f9b3dc0e9dc7558aa32
+        id:
+          description: The unique ID for the integration
+          type: integer
+          example: 123
+        login:
+          description: The integration user name
+          type: string
+          example: twitter
+        service_name:
+          description: The integration name
+          type: string
+          example: facebook
+        resource_type_link:
+          description: The link to the integration type
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/#integration
+        self_link:
+          description: The link to this resource
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/account/123/integrations/456
   responses:
-    InternalServerError:
-      description: The request failed due to an internal error in the code or because of an external dependency failure
+    UnauthorizedError:
+      description: The request could not be completed due to an authentication error
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | InternalServerError    | The request failed due to an internal error |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#internalerror
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Something went wrong.
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 500
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - InternalServerError
+            oneOf:
+            - $ref: '#/schemas/Endpoint Error'
+            - $ref: '#/schemas/Auth Error'
     BlockedError:
       description: The request has been blocked
       content:
@@ -314,49 +341,6 @@ components:
                     type: string
                     enum:
                     - BlockedError
-    ServiceUnavailable:
-      description: The server is currently unavailable
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | ServiceUnavailableError | The server is unavailable |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#serviceunavailable
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Failed to communicate with endpoint
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 503
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - ServiceUnavailableError
     NotFound:
       description: The requested resource could not be found
       content:
@@ -400,6 +384,92 @@ components:
                     type: string
                     enum:
                     - NotFoundError
+    ServiceUnavailable:
+      description: The server is currently unavailable
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | ServiceUnavailableError | The server is unavailable |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#serviceunavailable
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Failed to communicate with endpoint
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 503
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - ServiceUnavailableError
+    InternalServerError:
+      description: The request failed due to an internal error in the code or because of an external dependency failure
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | InternalServerError    | The request failed due to an internal error |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#internalerror
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Something went wrong.
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 500
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - InternalServerError
     ForbiddenError:
       description: The request could not be completed due to a rate limit error
       content:
@@ -443,15 +513,23 @@ components:
                     type: string
                     enum:
                     - ForbiddenError
-    UnauthorizedError:
-      description: The request could not be completed due to an authentication error
-      content:
-        application/json:
-          schema:
-            oneOf:
-            - $ref: '#/schemas/Endpoint Error'
-            - $ref: '#/schemas/Auth Error'
   parameters:
+    accountId:
+      name: accountId
+      in: path
+      description: The account ID
+      required: true
+      schema:
+        type: integer
+        format: int32
+    integrationId:
+      name: integrationId
+      in: path
+      description: The integration ID
+      required: true
+      schema:
+        type: integer
+        format: int32
     wsStart:
       name: ws.start
       in: query
@@ -461,14 +539,6 @@ components:
         format: int32
         minimum: 0
         default: 0
-    accountId:
-      name: accountId
-      in: path
-      description: The account ID
-      required: true
-      schema:
-        type: integer
-        format: int32
     wsSize:
       name: ws.size
       in: query
@@ -479,76 +549,6 @@ components:
         minimum: 1
         maximum: 100
         default: 100
-    integrationId:
-      name: integrationId
-      in: path
-      description: The integration ID
-      required: true
-      schema:
-        type: integer
-        format: int32
-  schemas:
-    Integration:
-      type: object
-      properties:
-        http_etag:
-          description: The ETag HTTP header
-          type: string
-          example: 902ba3cda1883801594b6e1b452790cc53948fda-f83cb0ac22a8d5f792417f9b3dc0e9dc7558aa32
-        id:
-          description: The unique ID for the integration
-          type: integer
-          example: 123
-        login:
-          description: The integration user name
-          type: string
-          example: twitter
-        service_name:
-          description: The integration name
-          type: string
-          example: facebook
-        resource_type_link:
-          description: The link to the integration type
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/#integration
-        self_link:
-          description: The link to this resource
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/account/123/integrations/456
-    Integrations:
-      type: object
-      properties:
-        entries:
-          description: A list of integration entries
-          type: array
-          items:
-            $ref: '#/definitions/Integration'
-        next_collection_link:
-          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/custom_fields?ws.start=0&ws.size=10
-        prev_collection_link:
-          description: A link to the previous page of entries if any exist. This attribute is omitted from the collection if ws.start is 0.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/custom_fields?ws.start=0
-        resource_type_link:
-          description: A link that identifies the type of resource that this collection represents
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/#integrations-page-resource
-        start:
-          description: The starting offset for the page of entries to retrieve
-          type: integer
-          minimum: 0
-        total_size:
-          description: The total number of entries
-          type: integer
-          minimum: 0
-          example: 100
   securitySchemes:
     OAuth_2.0:
       description: 'The following endpoints and scopes are used to authenticate.
