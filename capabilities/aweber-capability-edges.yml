@@ -1,0 +1,64 @@
+slug: aweber
+provider: AWeber
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 5
+edges:
+- tag: Broadcasts
+  spec_file: aweber-broadcasts-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.85
+  evidence: POST .../broadcasts Create broadcast; POST .../broadcasts/{broadcastId}/schedule Schedule
+    broadcast; GET .../broadcasts/{broadcastId}/opens Get broadcast opens
+  reason: Create, schedule, cancel and measure opens/clicks for email broadcasts sent to subscriber lists
+    — email marketing campaign execution and measurement, i.e. digital marketing management.
+- tag: Subscribers
+  spec_file: aweber-subscribers-api-openapi.yml
+  capability_id: BC-420.10
+  capability_id_l1: BC-420
+  capability_name: Customer Data Management
+  confidence: 0.75
+  evidence: '"Add subscriber", "Update subscriber by email", "Get subscriber activity"; schemas Subscriber,
+    Subscribers, Activity'
+  reason: Full CRUD and activity retrieval over subscriber (contact) records — management of marketing
+    contact master data.
+- tag: Campaigns
+  spec_file: aweber-campaigns-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.72
+  evidence: '"Get campaigns" / "Get broadcast statistics" on /accounts/{accountId}/lists/{listId}/campaigns;
+    vendor provides "email broadcasts, drip campaigns"'
+  reason: Operations read and report on email marketing campaigns (drip/broadcast) and their statistics
+    — email marketing automation, a digital marketing capability. Some ambiguity vs. demand generation.
+- tag: Segments
+  spec_file: aweber-segments-api-openapi.yml
+  capability_id: BC-420.20
+  capability_id_l1: BC-420
+  capability_name: Customer Segmentation Management
+  confidence: 0.72
+  evidence: '"Get segments" on /accounts/{accountId}/lists/{listId}/segments; schemas Segments, Segment'
+  reason: Segments of subscribers within a list correspond to audience/customer segmentation used for
+    targeted treatment.
+- tag: Landing Pages
+  spec_file: aweber-landing-pages-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.7
+  evidence: '"Get landing pages" on /accounts/{accountId}/lists/{listId}/landing_pages; schemas LandingPage,
+    LandingPages'
+  reason: Landing pages are web/digital marketing assets used for lead capture in this email marketing
+    platform, fitting Digital Marketing Management.

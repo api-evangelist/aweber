@@ -517,6 +517,9 @@ apis:
   - type: ChangeLog
     url: https://api.aweber.com/#tag/Developer-Changelog
 common:
+  - type: CapabilityMap
+    url: capabilities/aweber-capability-edges.yml
+    name: AWeber Business Capability Map
   - type: AgenticAccess
     url: agentic-access/aweber-agentic-access.yml
   - type: TrustCenter
