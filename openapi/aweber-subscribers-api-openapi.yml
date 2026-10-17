@@ -1868,24 +1868,25 @@ paths:
       x-operation-id-source: derived
 components:
   parameters:
-    findSubAreaCode:
-      name: area_code
+    findSubCity:
+      name: city
       in: query
-      description: The subscriber's area code
-      schema:
-        type: integer
-        format: int32
-        maximum: 999
-        minimum: 0
-        example: 555
-    wsShow:
-      name: ws.show
-      in: query
-      description: A flag to show the total size only - expecting \"total_size\", when added the response will be an integer
+      description: The subscriber's city
       schema:
         type: string
-        enum:
-        - total_size
+        minLength: 1
+        maxLength: 100
+        example: Chalfont
+    findSubLatitude:
+      name: latitude
+      in: query
+      description: The subscriber's geographical latitude
+      schema:
+        type: number
+        format: double
+        minimum: -90.0
+        maximum: 90.0
+        example: 37.751
     wsStart:
       name: ws.start
       in: query
@@ -1895,50 +1896,6 @@ components:
         format: int32
         minimum: 0
         default: 0
-    findSubUnsubscribedAfter:
-      name: unsubscribed_after
-      in: query
-      description: The day on or after the subscriber unsubscribed
-      schema:
-        type: string
-        format: date
-        example: '2017-10-13'
-    findSubPostalCode:
-      name: postal_code
-      in: query
-      description: The subscriber's postal or zip code
-      schema:
-        type: string
-        minLength: 1
-        maxLength: 100
-        example: 99999-9999
-    findSubStatus:
-      name: status
-      in: query
-      description: The subscriber's status
-      schema:
-        type: string
-        enum:
-        - subscribed
-        - unsubscribed
-        - unconfirmed
-    findSubEmail:
-      name: email
-      in: query
-      description: The subscriber's email address
-      schema:
-        type: string
-        minLength: 1
-        maxLength: 50
-        format: email
-    subscriberId:
-      name: subscriberId
-      in: path
-      description: The subscriber ID
-      required: true
-      schema:
-        type: integer
-        format: int32
     findSubTags:
       name: tags
       in: query
@@ -1946,29 +1903,26 @@ components:
       schema:
         type: string
         example: '["tag1", "tag2"]'
-    findSubCustomFields:
-      name: custom_fields
+    wsSize:
+      name: ws.size
       in: query
-      description: The JSON encoded custom field key value pairs
+      description: The pagination total entries to retrieve
       schema:
-        type: string
-        example: '{"apple": "fuji", "pear": "bosc"}'
-    findSubSubscribedAfter:
-      name: subscribed_after
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 100
+        default: 100
+    findSubLongitude:
+      name: longitude
       in: query
-      description: The day on or after the subscriber subscribed
+      description: The subscriber's geographical longitude
       schema:
-        type: string
-        format: date
-        example: '2017-07-16'
-    findSubUnsubscribedAt:
-      name: unsubscribed_at
-      in: query
-      description: The day in which the subscriber unsubscribed
-      schema:
-        type: string
-        format: date
-        example: '2017-10-13'
+        type: number
+        format: double
+        minimum: -180.0
+        maximum: 180.0
+        example: -97.822
     findSubVerifiedAt:
       name: verified_at
       in: query
@@ -1977,15 +1931,25 @@ components:
         type: string
         format: date
         example: '2017-07-18'
-    findSubRegion:
-      name: region
+    findSubName:
+      name: name
       in: query
-      description: The subscriber's state or region abbreviation
+      description: The subscriber's name
       schema:
         type: string
         minLength: 1
-        maxLength: 100
-        example: PA
+        maxLength: 60
+        example: John Doe
+    findSubLastMessageSentAt:
+      name: last_followup_message_sent_at
+      in: query
+      description: The day when the last followup message was sent to the subscriber
+      schema:
+        type: string
+        format: date
+        minLength: 1
+        maxLength: 10
+        example: '2017-11-28'
     findSubSubscribedAt:
       name: subscribed_at
       in: query
@@ -2006,42 +1970,20 @@ components:
         - undeliverable
         - 'api: unsubscribe'
         - 'api: move'
-    sortOrder:
-      name: sort_order
+    findSubNotTag:
+      name: tags_not_in
       in: query
-      description: The collection will be sorted by the order in which the subscribers were added to the list. To specify the order, use the value `asc` for ascending or `desc` for descending.
+      description: A string containing a JSON-formatted array of tags. Checks that all tags are not matched to a subscriber.
       schema:
         type: string
-        default: asc
-        enum:
-        - asc
-        - desc
-    findSubLastMessage:
-      name: last_followup_message_number_sent
+        example: '["tag1", "tag2"]'
+    findSubCustomFields:
+      name: custom_fields
       in: query
-      description: The sequence number of the last followup message sent to the subscriber
-      schema:
-        type: integer
-        format: int32
-        maximum: 1001
-    findSubMiscNotes:
-      name: misc_notes
-      in: query
-      description: Miscellaneous notes
+      description: The JSON encoded custom field key value pairs
       schema:
         type: string
-        maxLength: 60
-        example: ebook
-    subCollectionEmail:
-      name: subscriber_email
-      in: query
-      description: The subscriber's email address
-      required: true
-      schema:
-        type: string
-        minLength: 1
-        maxLength: 50
-        format: email
+        example: '{"apple": "fuji", "pear": "bosc"}'
     findSubCountry:
       name: country
       in: query
@@ -2051,85 +1993,6 @@ components:
         minLength: 1
         maxLength: 100
         example: United States
-    findSubAdTracking:
-      name: ad_tracking
-      in: query
-      description: The customer ad tracking field
-      schema:
-        type: string
-        minLength: 1
-        maxLength: 20
-        example: ebook
-    findSubUnsubscribedBefore:
-      name: unsubscribed_before
-      in: query
-      description: The day on or before the subscriber unsubscribed
-      schema:
-        type: string
-        format: date
-        example: '2017-10-13'
-    sortKey:
-      name: sort_key
-      in: query
-      description: The collection will be sorted by the field key specified. If no key is spcified the search will default to the order in which the subscribers were added to the list.
-      schema:
-        type: string
-        enum:
-        - subscribed_at
-        - unsubscribed_at
-    findSubDmaCode:
-      name: dma_code
-      in: query
-      description: The subscriber's designated market area code (usa and canada only)
-      schema:
-        type: integer
-        format: int32
-        maximum: 881
-        example: 504
-    findSubLastMessageSentAt:
-      name: last_followup_message_sent_at
-      in: query
-      description: The day when the last followup message was sent to the subscriber
-      schema:
-        type: string
-        format: date
-        minLength: 1
-        maxLength: 10
-        example: '2017-11-28'
-    findSubCity:
-      name: city
-      in: query
-      description: The subscriber's city
-      schema:
-        type: string
-        minLength: 1
-        maxLength: 100
-        example: Chalfont
-    wsSize:
-      name: ws.size
-      in: query
-      description: The pagination total entries to retrieve
-      schema:
-        type: integer
-        format: int32
-        minimum: 1
-        maximum: 100
-        default: 100
-    listId:
-      name: listId
-      in: path
-      description: The list ID
-      required: true
-      schema:
-        type: integer
-        format: int32
-    findSubNotTag:
-      name: tags_not_in
-      in: query
-      description: A string containing a JSON-formatted array of tags. Checks that all tags are not matched to a subscriber.
-      schema:
-        type: string
-        example: '["tag1", "tag2"]'
     sortOrderList:
       name: sort_order
       in: query
@@ -2140,15 +2003,138 @@ components:
         enum:
         - asc
         - desc
-    findSubName:
-      name: name
+    findSubAreaCode:
+      name: area_code
       in: query
-      description: The subscriber's name
+      description: The subscriber's area code
+      schema:
+        type: integer
+        format: int32
+        maximum: 999
+        minimum: 0
+        example: 555
+    findSubRegion:
+      name: region
+      in: query
+      description: The subscriber's state or region abbreviation
       schema:
         type: string
         minLength: 1
-        maxLength: 60
-        example: John Doe
+        maxLength: 100
+        example: PA
+    findSubAdTracking:
+      name: ad_tracking
+      in: query
+      description: The customer ad tracking field
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 20
+        example: ebook
+    sortOrder:
+      name: sort_order
+      in: query
+      description: The collection will be sorted by the order in which the subscribers were added to the list. To specify the order, use the value `asc` for ascending or `desc` for descending.
+      schema:
+        type: string
+        default: asc
+        enum:
+        - asc
+        - desc
+    findSubUnsubscribedAt:
+      name: unsubscribed_at
+      in: query
+      description: The day in which the subscriber unsubscribed
+      schema:
+        type: string
+        format: date
+        example: '2017-10-13'
+    findSubPostalCode:
+      name: postal_code
+      in: query
+      description: The subscriber's postal or zip code
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 100
+        example: 99999-9999
+    sortKey:
+      name: sort_key
+      in: query
+      description: The collection will be sorted by the field key specified. If no key is spcified the search will default to the order in which the subscribers were added to the list.
+      schema:
+        type: string
+        enum:
+        - subscribed_at
+        - unsubscribed_at
+    findSubEmail:
+      name: email
+      in: query
+      description: The subscriber's email address
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 50
+        format: email
+    listId:
+      name: listId
+      in: path
+      description: The list ID
+      required: true
+      schema:
+        type: integer
+        format: int32
+    findSubSubscribedBefore:
+      name: subscribed_before
+      in: query
+      description: The day on or before the subscriber subscribed
+      schema:
+        type: string
+        format: date
+        example: '2017-07-16'
+    findSubStatus:
+      name: status
+      in: query
+      description: The subscriber's status
+      schema:
+        type: string
+        enum:
+        - subscribed
+        - unsubscribed
+        - unconfirmed
+    findSubDmaCode:
+      name: dma_code
+      in: query
+      description: The subscriber's designated market area code (usa and canada only)
+      schema:
+        type: integer
+        format: int32
+        maximum: 881
+        example: 504
+    findSubSubscribedAfter:
+      name: subscribed_after
+      in: query
+      description: The day on or after the subscriber subscribed
+      schema:
+        type: string
+        format: date
+        example: '2017-07-16'
+    subscriberId:
+      name: subscriberId
+      in: path
+      description: The subscriber ID
+      required: true
+      schema:
+        type: integer
+        format: int32
+    wsShow:
+      name: ws.show
+      in: query
+      description: A flag to show the total size only - expecting \"total_size\", when added the response will be an integer
+      schema:
+        type: string
+        enum:
+        - total_size
     accountId:
       name: accountId
       in: path
@@ -2157,16 +2143,14 @@ components:
       schema:
         type: integer
         format: int32
-    findSubLatitude:
-      name: latitude
+    findSubMiscNotes:
+      name: misc_notes
       in: query
-      description: The subscriber's geographical latitude
+      description: Miscellaneous notes
       schema:
-        type: number
-        format: double
-        minimum: -90.0
-        maximum: 90.0
-        example: 37.751
+        type: string
+        maxLength: 60
+        example: ebook
     findSubSubscriptionMethod:
       name: subscription_method
       in: query
@@ -2178,25 +2162,114 @@ components:
         - email
         - import
         - webform
-    findSubSubscribedBefore:
-      name: subscribed_before
+    subCollectionEmail:
+      name: subscriber_email
       in: query
-      description: The day on or before the subscriber subscribed
+      description: The subscriber's email address
+      required: true
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 50
+        format: email
+    findSubLastMessage:
+      name: last_followup_message_number_sent
+      in: query
+      description: The sequence number of the last followup message sent to the subscriber
+      schema:
+        type: integer
+        format: int32
+        maximum: 1001
+    findSubUnsubscribedBefore:
+      name: unsubscribed_before
+      in: query
+      description: The day on or before the subscriber unsubscribed
       schema:
         type: string
         format: date
-        example: '2017-07-16'
-    findSubLongitude:
-      name: longitude
+        example: '2017-10-13'
+    findSubUnsubscribedAfter:
+      name: unsubscribed_after
       in: query
-      description: The subscriber's geographical longitude
+      description: The day on or after the subscriber unsubscribed
       schema:
-        type: number
-        format: double
-        minimum: -180.0
-        maximum: 180.0
-        example: -97.822
+        type: string
+        format: date
+        example: '2017-10-13'
   schemas:
+    AddSubscriberRequestBody:
+      type: object
+      required:
+      - email
+      properties:
+        ad_tracking:
+          description: The customer ad tracking field
+          type: string
+          minLength: 1
+          maxLength: 20
+          example: ebook
+        custom_fields:
+          description: The custom fields specified on the subscriber.  Note that the custom fields are required to already exist for the list. See [Custom Fields](#tag/Custom-Fields) for details.
+          type: object
+          additionalProperties:
+            type: string
+            minLength: 1
+          example:
+            apple: fuji
+            pear: bosc
+        email:
+          description: The subscriber's email address
+          type: string
+          minLength: 1
+          maxLength: 50
+          format: email
+        ip_address:
+          description: 'The subscriber''s IP address. This field is used to determine the following Geo Location fields: area_code, city, country, dma_code, latitude, longitude, postal_code, and region. IP address can only be specified when Subscribers are initially created. Internal, private, or reserved IP addresses are not acceptable.'
+          type: string
+          minLength: 1
+          maxLength: 60
+          format: ipv4
+        last_followup_message_number_sent:
+          description: The sequence number of the last followup message sent to the subscriber.  This field determines the next followup message to be sent to the Subscriber.  When set to 0 (default), the Subscriber should receive the 1st (autoresponse) Followup message.  Set the value of this field to 1001 if you do not want any Followups to be sent to this Subscriber.
+          type: integer
+          minimum: 0
+          maximum: 1001
+        misc_notes:
+          description: Miscellaneous notes
+          type: string
+          minLength: 1
+          maxLength: 60
+        name:
+          description: The subscriber's name
+          type: string
+          minLength: 1
+          maxLength: 60
+          example: John Doe
+        strict_custom_fields:
+          description: If this parameter is present and set to `true`, then custom field names are matched case sensitively.  Enabling this option also causes the operation to fail if a custom field is included that is not defined for the list.
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        update_existing:
+          description: 'If this parameter is present and set to `true`, then if a subscriber is already present on the list, the subscriber will be updated. <br><br> **Note:** <br>
+
+            - Only the fields defined in the <a href=''#tag/Subscribers/paths/~1accounts~1{accountId}~1lists~1{listId}~1subscribers~1{subscriberId}/patch''>patch</a> endpoint will be updated.
+
+            - Any tags in the request will be **appended** to the existing Subscriber.'
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        tags:
+          description: A list of tags added to the subscriber.  This field is used to apply a list of tags to a Subscriber. With Campaigns, you can trigger a series of messages based on what Tags have been applied to your subscribers.
+          type: array
+          items:
+            type: string
+          example:
+          - slow
+          - fast
+          - lightspeed
     FindSubscribersAccount:
       type: object
       properties:
@@ -2234,158 +2307,70 @@ components:
           type: string
           format: uri
           example: https://api.aweber.com/1.0/accounts/123?ws.op=findSubscribers&ws.show=total_size
-    Purchase:
-      type: object
-      properties:
-        event_time:
-          description: The timestamp of when the event occurred
-          type: string
-          example: 2015-07-31 11:36:34-04:00
-        currency:
-          type: string
-          description: Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html).
-        event_note:
-          description: A custom note associated with this specific tracked event
-          type: string
-        product_name:
-          description: A custom description for the page or event
-          type: string
-        value:
-          description: The monetary value associated with this tracked event.
-          type: number
-        vendor:
-          description: The sales tracking url profile for the web page
-          type: string
-        url:
-          description: The URL for the tracked event
-          type: string
-        ad_tracking:
-          description: The customer ad tracking field
-          type: string
-          minLength: 1
-          maxLength: 20
-          example: ebook
-        custom_fields:
-          description: The custom fields specified on the subscriber
-          type: object
-          additionalProperties:
-            type: string
-            minimum: 1
-          example:
-            apple: fuji
-            pear: bosc
-        email:
-          description: The subscriber's email address
-          type: string
-          minLength: 1
-          maxLength: 50
-          format: email
-        ip_address:
-          description: The subscriber's IP address. This must be a public IP address.
-          type: string
-          format: ipv4
-          minLength: 1
-          maxLength: 60
-          example: 204.194.222.28
-        misc_notes:
-          description: Miscellaneous notes
-          type: string
-          maxLength: 60
-          example: ebook
-        name:
-          description: The subscriber's name
-          type: string
-          minLength: 1
-          maxLength: 60
-          example: John Doe
-        tags:
-          description: A list of tags added to the subscriber
-          type: array
-          items:
-            type: string
-            minLength: 1
-          example:
-          - slow
-          - fast
-          - lightspeed
-      required:
-      - email
-      - ip_address
-      - vendor
-      - product_name
-      - event_note
-      - currency
-      - value
-      - event_time
-      - url
-      additionalProperties: false
-    Activity:
-      type: object
-      properties:
-        event_time:
-          description: The timestamp of when the event occurred
-          type: string
-        id:
-          description: Identifier for this subscriber activity.  This is set to the type if no reasonable identifier exists.
-          type: integer
-        resource_type_link:
-          description: The link to the event type
-          type: string
-          format: uri
-        self_link:
-          description: The link to the event resource (may be null)
-          type:
-          - string
-          - 'null'
-          format: uri
-        subscriber_link:
-          description: The link to the [Subscriber](#tag/Subscribers/paths/~1accounts~1{accountId}~1lists~1{listId}~1subscribers~1{subscriberId}/get) resource
-          type: string
-          format: uri
-        type:
-          description: The type of activity
-          type: string
-          enum:
-          - click
-          - link
-          - open
-          - sent_message
-          - subscribed
-          - tracked_event
-          - verified
-    SubscriberGetActivity:
+    Subscribers:
       type: object
       properties:
         entries:
-          description: The list of activity entries.  The contents of the entry varies, but will always have the following fields listed
+          description: The list of subscriber entries
           type: array
           items:
-            $ref: '#/components/schemas/Activity'
-          example:
-            event_time: 2015-07-31 11:36:34-04:00
-            http_etag: abd5e0fcbab9073cf861271845859008a7e1c750-ca5feee2b7fbb6febfca8af5541541ea960aaedb
-            id: 2701
-            resource_type_link: https://api.aweber.com/1.0/#subscriber_activity
-            self_link: https://api.aweber.com/1.0/accounts/123/lists/456/subscribers/789/subscribed
-            subscriber_link: https://api.aweber.com/1.0/accounts/123/lists/456/subscribers/789
-            type: subscribed
+            $ref: '#/definitions/Subscriber'
+        next_collection_link:
+          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/messages?ws.start=1&ws.size=100
+        prev_collection_link:
+          description: A link to the previous page of entries if previous entries exist. This attribute is omitted if this is the first page.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/messages?ws.start=1&ws.size=100
+        resource_type_link:
+          description: A link that identifies the type of resource that this collection represents
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/#subscribers-page-resource
+        self_link:
+          description: A link to the current page of entries.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/subscribers?ws.start=0&ws.size=100&account_id=123&list_id=456
+        start:
+          description: The starting offset for the page of entries to retrieve
+          type: integer
+          minimum: 0
+        total_size:
+          description: The total number of entries
+          type: integer
+          minimum: 0
+          example: 100
+    FindSubscribers:
+      type: object
+      properties:
+        entries:
+          description: The list of subscriber entries plus list information
+          type: array
+          items:
+            $ref: '#/definitions/SubscriberFind'
+        next_collection_link:
+          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/subscribers?ws.op=find&ws.start=1&ws.size=100
+        prev_collection_link:
+          description: A link to the previous page of entries if previous entries exist. This attribute is omitted if this is the first page.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/subscribers?ws.op=find&ws.start=1&ws.size=100
         start:
           description: The starting offset for the page of entries to retrieve
           type: integer
           minimum: 0
         total_size_link:
-          description: A link to check the total number of entries found for this resource
-          type: string
-        next_collection_link:
-          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
+          description: Link to the total number of entries
           type: string
           format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/subscribers/64787088?ws.op=getActivity&ws.start=3&ws.size=1
-        prev_collection_link:
-          description: A link to the previous page of entries if previous entries exist. This attribute is omitted if this is the first page.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/subscribers/64787088?ws.op=getActivity&ws.start=1&ws.size=1"
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/subscribers?ws.op=find&ws.show=total_size
     Subscriber:
       title: Subscriber
       type: object
@@ -2660,48 +2645,31 @@ components:
                 type: string
               example:
               - slow
-    Subscribers:
+    Purchase:
       type: object
       properties:
-        entries:
-          description: The list of subscriber entries
-          type: array
-          items:
-            $ref: '#/definitions/Subscriber'
-        next_collection_link:
-          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
+        event_time:
+          description: The timestamp of when the event occurred
           type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/messages?ws.start=1&ws.size=100
-        prev_collection_link:
-          description: A link to the previous page of entries if previous entries exist. This attribute is omitted if this is the first page.
+          example: 2015-07-31 11:36:34-04:00
+        currency:
           type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/messages?ws.start=1&ws.size=100
-        resource_type_link:
-          description: A link that identifies the type of resource that this collection represents
+          description: Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html).
+        event_note:
+          description: A custom note associated with this specific tracked event
           type: string
-          format: uri
-          example: https://api.aweber.com/1.0/#subscribers-page-resource
-        self_link:
-          description: A link to the current page of entries.
+        product_name:
+          description: A custom description for the page or event
           type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/subscribers?ws.start=0&ws.size=100&account_id=123&list_id=456
-        start:
-          description: The starting offset for the page of entries to retrieve
-          type: integer
-          minimum: 0
-        total_size:
-          description: The total number of entries
-          type: integer
-          minimum: 0
-          example: 100
-    AddSubscriberRequestBody:
-      type: object
-      required:
-      - email
-      properties:
+        value:
+          description: The monetary value associated with this tracked event.
+          type: number
+        vendor:
+          description: The sales tracking url profile for the web page
+          type: string
+        url:
+          description: The URL for the tracked event
+          type: string
         ad_tracking:
           description: The customer ad tracking field
           type: string
@@ -2709,11 +2677,11 @@ components:
           maxLength: 20
           example: ebook
         custom_fields:
-          description: The custom fields specified on the subscriber.  Note that the custom fields are required to already exist for the list. See [Custom Fields](#tag/Custom-Fields) for details.
+          description: The custom fields specified on the subscriber
           type: object
           additionalProperties:
             type: string
-            minLength: 1
+            minimum: 1
           example:
             apple: fuji
             pear: bosc
@@ -2724,79 +2692,44 @@ components:
           maxLength: 50
           format: email
         ip_address:
-          description: 'The subscriber''s IP address. This field is used to determine the following Geo Location fields: area_code, city, country, dma_code, latitude, longitude, postal_code, and region. IP address can only be specified when Subscribers are initially created. Internal, private, or reserved IP addresses are not acceptable.'
+          description: The subscriber's IP address. This must be a public IP address.
           type: string
+          format: ipv4
           minLength: 1
           maxLength: 60
-          format: ipv4
-        last_followup_message_number_sent:
-          description: The sequence number of the last followup message sent to the subscriber.  This field determines the next followup message to be sent to the Subscriber.  When set to 0 (default), the Subscriber should receive the 1st (autoresponse) Followup message.  Set the value of this field to 1001 if you do not want any Followups to be sent to this Subscriber.
-          type: integer
-          minimum: 0
-          maximum: 1001
+          example: 204.194.222.28
         misc_notes:
           description: Miscellaneous notes
           type: string
-          minLength: 1
           maxLength: 60
+          example: ebook
         name:
           description: The subscriber's name
           type: string
           minLength: 1
           maxLength: 60
           example: John Doe
-        strict_custom_fields:
-          description: If this parameter is present and set to `true`, then custom field names are matched case sensitively.  Enabling this option also causes the operation to fail if a custom field is included that is not defined for the list.
-          type: string
-          enum:
-          - 'true'
-          - 'false'
-        update_existing:
-          description: 'If this parameter is present and set to `true`, then if a subscriber is already present on the list, the subscriber will be updated. <br><br> **Note:** <br>
-
-            - Only the fields defined in the <a href=''#tag/Subscribers/paths/~1accounts~1{accountId}~1lists~1{listId}~1subscribers~1{subscriberId}/patch''>patch</a> endpoint will be updated.
-
-            - Any tags in the request will be **appended** to the existing Subscriber.'
-          type: string
-          enum:
-          - 'true'
-          - 'false'
         tags:
-          description: A list of tags added to the subscriber.  This field is used to apply a list of tags to a Subscriber. With Campaigns, you can trigger a series of messages based on what Tags have been applied to your subscribers.
+          description: A list of tags added to the subscriber
           type: array
           items:
             type: string
+            minLength: 1
           example:
           - slow
           - fast
           - lightspeed
-    FindSubscribers:
-      type: object
-      properties:
-        entries:
-          description: The list of subscriber entries plus list information
-          type: array
-          items:
-            $ref: '#/definitions/SubscriberFind'
-        next_collection_link:
-          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/subscribers?ws.op=find&ws.start=1&ws.size=100
-        prev_collection_link:
-          description: A link to the previous page of entries if previous entries exist. This attribute is omitted if this is the first page.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/subscribers?ws.op=find&ws.start=1&ws.size=100
-        start:
-          description: The starting offset for the page of entries to retrieve
-          type: integer
-          minimum: 0
-        total_size_link:
-          description: Link to the total number of entries
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/subscribers?ws.op=find&ws.show=total_size
+      required:
+      - email
+      - ip_address
+      - vendor
+      - product_name
+      - event_note
+      - currency
+      - value
+      - event_time
+      - url
+      additionalProperties: false
     MoveSubscriberRequestBody:
       type: object
       required:
@@ -2823,57 +2756,76 @@ components:
           type: string
           enum:
           - move
+    Activity:
+      type: object
+      properties:
+        event_time:
+          description: The timestamp of when the event occurred
+          type: string
+        id:
+          description: Identifier for this subscriber activity.  This is set to the type if no reasonable identifier exists.
+          type: integer
+        resource_type_link:
+          description: The link to the event type
+          type: string
+          format: uri
+        self_link:
+          description: The link to the event resource (may be null)
+          type:
+          - string
+          - 'null'
+          format: uri
+        subscriber_link:
+          description: The link to the [Subscriber](#tag/Subscribers/paths/~1accounts~1{accountId}~1lists~1{listId}~1subscribers~1{subscriberId}/get) resource
+          type: string
+          format: uri
+        type:
+          description: The type of activity
+          type: string
+          enum:
+          - click
+          - link
+          - open
+          - sent_message
+          - subscribed
+          - tracked_event
+          - verified
+    SubscriberGetActivity:
+      type: object
+      properties:
+        entries:
+          description: The list of activity entries.  The contents of the entry varies, but will always have the following fields listed
+          type: array
+          items:
+            $ref: '#/components/schemas/Activity'
+          example:
+            event_time: 2015-07-31 11:36:34-04:00
+            http_etag: abd5e0fcbab9073cf861271845859008a7e1c750-ca5feee2b7fbb6febfca8af5541541ea960aaedb
+            id: 2701
+            resource_type_link: https://api.aweber.com/1.0/#subscriber_activity
+            self_link: https://api.aweber.com/1.0/accounts/123/lists/456/subscribers/789/subscribed
+            subscriber_link: https://api.aweber.com/1.0/accounts/123/lists/456/subscribers/789
+            type: subscribed
+        start:
+          description: The starting offset for the page of entries to retrieve
+          type: integer
+          minimum: 0
+        total_size_link:
+          description: A link to check the total number of entries found for this resource
+          type: string
+        next_collection_link:
+          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/subscribers/64787088?ws.op=getActivity&ws.start=3&ws.size=1
+        prev_collection_link:
+          description: A link to the previous page of entries if previous entries exist. This attribute is omitted if this is the first page.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/subscribers/64787088?ws.op=getActivity&ws.start=1&ws.size=1"
   responses:
-    NotFormURLEncodedOrJSON:
-      description: 'The request entity has a media type that is not application/x-www-form-urlencoded or
-
-        application/json
-
-        '
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-
-                  The following error may be received:
-
-
-                  | Error Type         | Explanation                              |
-
-                  |--------------------|------------------------------------------|
-
-                  | InvalidContentType | An invalid content type was provided. Valid types are application/x-www-form-urlencoded and application/json |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#invalidcontent
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Content Type must be application/json or application/x-www-form-urlencoded
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 415
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - InvalidContentType
-    InternalServerError:
-      description: The request failed due to an internal error in the code or because of an external dependency failure
+    SubscriberNotFound:
+      description: The requested subscriber resource could not be found
       content:
         application/json:
           schema:
@@ -2885,11 +2837,11 @@ components:
                   The following error may be received:
 
 
-                  | Error Type           | Explanation                              |
+                  | Error Type           | Explanation                                          |
 
-                  |----------------------|------------------------------------------|
+                  |----------------------|------------------------------------------------------|
 
-                  | InternalServerError    | The request failed due to an internal error |
+                  | NotFoundError        | The requested subscriber resource could not be found |
 
 
                   Please see the message body for more details.
@@ -2900,23 +2852,23 @@ components:
                   documentation_url:
                     description: A link to the documentation that describes the error
                     type: string
-                    example: https://api.aweber.com#internalerror
+                    example: https://api.aweber.com#notfound
                   message:
                     description: A human friendly description of the error
                     type: string
-                    example: Something went wrong.
+                    example: 'Object: None, name: ''subscribers'''
                   status:
                     description: The HTTP status code
                     type: integer
                     enum:
-                    - 500
+                    - 404
                   type:
                     description: The API error type
                     type: string
                     enum:
-                    - InternalServerError
-    ServiceUnavailable:
-      description: The server is currently unavailable
+                    - NotFoundError
+    BlockedError:
+      description: The request has been blocked
       content:
         application/json:
           schema:
@@ -2932,7 +2884,7 @@ components:
 
                   |----------------------|------------------------------------------|
 
-                  | ServiceUnavailableError | The server is unavailable |
+                  | BlockedError         | This Request has been blocked            |
 
 
                   Please see the message body for more details.
@@ -2943,21 +2895,107 @@ components:
                   documentation_url:
                     description: A link to the documentation that describes the error
                     type: string
-                    example: https://api.aweber.com#serviceunavailable
+                    example: https://api.aweber.com/#blocked
                   message:
                     description: A human friendly description of the error
                     type: string
-                    example: Failed to communicate with endpoint
+                    example: Blocked Error
                   status:
                     description: The HTTP status code
                     type: integer
                     enum:
-                    - 503
+                    - 410
                   type:
                     description: The API error type
                     type: string
                     enum:
-                    - ServiceUnavailableError
+                    - BlockedError
+    RateLimitOrSubscriberPermission:
+      description: Forbidden due to rate limit or missing Request Subscriber Data permission
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | ForbiddenError       | Rate limit may be reached, account may be suspended, or the application does not have Request Subscriber Data permission |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#forbidden
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Rate Limit Error
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 403
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - ForbiddenError
+    NotFound:
+      description: The requested resource could not be found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | NotFoundError        | The requested resource could not be found |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#notfound
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: 'Object: None, name: '''''
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 404
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - NotFoundError
     BadOAuth1:
       description: The server cannot or will not process the request due to a client error
       content:
@@ -3007,6 +3045,54 @@ components:
                     type: string
                     enum:
                     - MissingOAuthParametersError
+    NotFormURLEncodedOrJSON:
+      description: 'The request entity has a media type that is not application/x-www-form-urlencoded or
+
+        application/json
+
+        '
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+
+                  The following error may be received:
+
+
+                  | Error Type         | Explanation                              |
+
+                  |--------------------|------------------------------------------|
+
+                  | InvalidContentType | An invalid content type was provided. Valid types are application/x-www-form-urlencoded and application/json |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#invalidcontent
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Content Type must be application/json or application/x-www-form-urlencoded
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 415
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - InvalidContentType
     ForbiddenError:
       description: The request could not be completed due to a rate limit error
       content:
@@ -3050,8 +3136,8 @@ components:
                     type: string
                     enum:
                     - ForbiddenError
-    SubscriberNotFound:
-      description: The requested subscriber resource could not be found
+    InternalServerError:
+      description: The request failed due to an internal error in the code or because of an external dependency failure
       content:
         application/json:
           schema:
@@ -3063,11 +3149,11 @@ components:
                   The following error may be received:
 
 
-                  | Error Type           | Explanation                                          |
+                  | Error Type           | Explanation                              |
 
-                  |----------------------|------------------------------------------------------|
+                  |----------------------|------------------------------------------|
 
-                  | NotFoundError        | The requested subscriber resource could not be found |
+                  | InternalServerError    | The request failed due to an internal error |
 
 
                   Please see the message body for more details.
@@ -3078,21 +3164,21 @@ components:
                   documentation_url:
                     description: A link to the documentation that describes the error
                     type: string
-                    example: https://api.aweber.com#notfound
+                    example: https://api.aweber.com#internalerror
                   message:
                     description: A human friendly description of the error
                     type: string
-                    example: 'Object: None, name: ''subscribers'''
+                    example: Something went wrong.
                   status:
                     description: The HTTP status code
                     type: integer
                     enum:
-                    - 404
+                    - 500
                   type:
                     description: The API error type
                     type: string
                     enum:
-                    - NotFoundError
+                    - InternalServerError
     SearchListBadRequest:
       description: The server cannot or will not process the request due to a client error
       content:
@@ -3148,49 +3234,6 @@ components:
                     - UnsupportedOAuthSignatureMethodError
                     - UnsupportedOAuthVersionError
                     - WebServiceError
-    BlockedError:
-      description: The request has been blocked
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | BlockedError         | This Request has been blocked            |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com/#blocked
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Blocked Error
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 410
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - BlockedError
     SubListNotFound:
       description: The requested list could not be found
       content:
@@ -3234,6 +3277,57 @@ components:
                     type: string
                     enum:
                     - NotFoundError
+    ServiceUnavailable:
+      description: The server is currently unavailable
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | ServiceUnavailableError | The server is unavailable |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#serviceunavailable
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Failed to communicate with endpoint
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 503
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - ServiceUnavailableError
+    UnauthorizedError:
+      description: The request could not be completed due to an authentication error
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/schemas/Endpoint Error'
+            - $ref: '#/schemas/Auth Error'
     SearchBadRequest:
       description: The server cannot or will not process the request due to a client error
       content:
@@ -3289,57 +3383,6 @@ components:
                     - UnsupportedOAuthSignatureMethodError
                     - UnsupportedOAuthVersionError
                     - WebServiceError
-    UnauthorizedError:
-      description: The request could not be completed due to an authentication error
-      content:
-        application/json:
-          schema:
-            oneOf:
-            - $ref: '#/schemas/Endpoint Error'
-            - $ref: '#/schemas/Auth Error'
-    NotFound:
-      description: The requested resource could not be found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | NotFoundError        | The requested resource could not be found |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#notfound
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: 'Object: None, name: '''''
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 404
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - NotFoundError
     BadOAuth1LessTypes:
       description: The server cannot or will not process the request due to a client error
       content:
@@ -3383,49 +3426,6 @@ components:
                     type: string
                     enum:
                     - BadRequestError
-    RateLimitOrSubscriberPermission:
-      description: Forbidden due to rate limit or missing Request Subscriber Data permission
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | ForbiddenError       | Rate limit may be reached, account may be suspended, or the application does not have Request Subscriber Data permission |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#forbidden
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Rate Limit Error
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 403
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - ForbiddenError
   securitySchemes:
     OAuth_2.0:
       description: 'The following endpoints and scopes are used to authenticate.

@@ -227,13 +227,13 @@ paths:
       x-operation-id-source: derived
 components:
   parameters:
-    oauth_signature_method:
-      name: oauth_signature_method
+    oauth_nonce:
+      name: oauth_nonce
       in: body
       required: true
-      description: The hashing algorithm that was used to generate the signature. AWeber only supports the HMAC-SHA1 hash, so that's what this parameter should always be.
+      description: A unique, randomly generated string. Each request should have a unique nonce.
       type: string
-      example: HMAC-SHA1
+      example: 510a6d6f0e4fb70b72096ce48cb22af8
     oauth_consumer_key:
       name: oauth_consumer_key
       in: body
@@ -241,6 +241,27 @@ components:
       description: The consumer key assigned to your application, available on the <a href="https://labs.aweber.com/apps" target="_blank">My Apps Page</a>
       type: string
       example: XXXXXXXXXXXXXX
+    oauth_signature_method:
+      name: oauth_signature_method
+      in: body
+      required: true
+      description: The hashing algorithm that was used to generate the signature. AWeber only supports the HMAC-SHA1 hash, so that's what this parameter should always be.
+      type: string
+      example: HMAC-SHA1
+    oauth_version:
+      name: oauth_version
+      in: body
+      required: true
+      description: This identifies which version of the OAuth protocol you are using, and should always be 1.0 when working with the AWeber API.
+      type: string
+      example: 1.0
+    oauth_timestamp:
+      name: oauth_timestamp
+      in: body
+      required: true
+      description: Timestamp for the request. This is in the format of a Unix timestamp, or seconds since January 1st, 1970.
+      type: string
+      example: 1285168264
     oauth_signature:
       name: oauth_signature
       in: body
@@ -254,26 +275,6 @@ components:
         '
       type: string
       example: uvNa27v1uyVES37VfsX2Tj1OUYU=
-    oauth_version:
-      name: oauth_version
-      in: body
-      required: true
-      description: This identifies which version of the OAuth protocol you are using, and should always be 1.0 when working with the AWeber API.
-      type: string
-      example: 1.0
-    oauth_callback:
-      name: oauth_callback
-      in: body
-      required: false
-      description: 'A url that will be sent the verifier token when authorizing the request token in a future step.
-
-        If you don''t have a callback, use `oob` as the value, this will indicate that the callback is ''out of band''
-
-        and will display an html page after authorization, containing the verifier token.
-
-        '
-      type: string
-      example: http://localhost/demo.php
     oauth_token:
       name: oauth_token
       in: body
@@ -287,72 +288,20 @@ components:
         '
       type: string
       example: null
-    oauth_nonce:
-      name: oauth_nonce
+    oauth_callback:
+      name: oauth_callback
       in: body
-      required: true
-      description: A unique, randomly generated string. Each request should have a unique nonce.
+      required: false
+      description: 'A url that will be sent the verifier token when authorizing the request token in a future step.
+
+        If you don''t have a callback, use `oob` as the value, this will indicate that the callback is ''out of band''
+
+        and will display an html page after authorization, containing the verifier token.
+
+        '
       type: string
-      example: 510a6d6f0e4fb70b72096ce48cb22af8
-    oauth_timestamp:
-      name: oauth_timestamp
-      in: body
-      required: true
-      description: Timestamp for the request. This is in the format of a Unix timestamp, or seconds since January 1st, 1970.
-      type: string
-      example: 1285168264
+      example: http://localhost/demo.php
   responses:
-    UnauthorizedError:
-      description: The request could not be completed due to an authentication error
-      content:
-        application/json:
-          schema:
-            oneOf:
-            - $ref: '#/schemas/Endpoint Error'
-            - $ref: '#/schemas/Auth Error'
-    BlockedError:
-      description: The request has been blocked
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | BlockedError         | This Request has been blocked            |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com/#blocked
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Blocked Error
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 410
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - BlockedError
     ServiceUnavailable:
       description: The server is currently unavailable
       content:
@@ -439,6 +388,57 @@ components:
                     type: string
                     enum:
                     - InternalServerError
+    UnauthorizedError:
+      description: The request could not be completed due to an authentication error
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/schemas/Endpoint Error'
+            - $ref: '#/schemas/Auth Error'
+    BlockedError:
+      description: The request has been blocked
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | BlockedError         | This Request has been blocked            |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com/#blocked
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Blocked Error
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 410
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BlockedError
   securitySchemes:
     OAuth_2.0:
       description: 'The following endpoints and scopes are used to authenticate.
