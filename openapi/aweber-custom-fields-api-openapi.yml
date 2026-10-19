@@ -26,7 +26,47 @@ servers:
   description: v1 API endpoints
 tags:
 - name: Custom Fields
-  description: '### What is it?'
+  description: '### What is it?
+
+
+    Represents the custom fields associated with a list.
+
+
+    Use this set of resources to retrieve, create, modify, and delete the custom fields that
+
+    are defined for subscribers on the list. The single collection response is sorted by the
+
+    generated custom field `id` and paginated using `next_collection_link` and
+
+    `prev_collection_link` properties. See How Collections are Represented
+
+    for details on collection traversal.
+
+
+    ### Warning about modifying Custom Fields
+
+
+    Modifying or deleting a custom field has a number of side-effects that need to be understood
+
+    *BEFORE* you change them. See
+
+    Why could changing my custom field names cause problems for more details.
+
+
+    ### Related endpoints
+
+
+    * Custom Fields
+
+    * Find subscribers within an account by custom field
+
+    * Find subscribers on a list by custom field
+
+
+    ### Related code samples
+
+
+    * Manage Custom Fields'
 paths:
   /accounts/{accountId}/lists/{listId}/custom_fields:
     get:
@@ -616,6 +656,50 @@ components:
           type: string
           format: uri
           example: https://api.aweber.com/1.0/accounts/123/lists/456/custom_fields/7
+  parameters:
+    wsSize:
+      name: ws.size
+      in: query
+      description: The pagination total entries to retrieve
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 100
+        default: 100
+    listId:
+      name: listId
+      in: path
+      description: The list ID
+      required: true
+      schema:
+        type: integer
+        format: int32
+    wsStart:
+      name: ws.start
+      in: query
+      description: The pagination starting offset
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        default: 0
+    accountId:
+      name: accountId
+      in: path
+      description: The account ID
+      required: true
+      schema:
+        type: integer
+        format: int32
+    customFieldId:
+      name: customFieldId
+      in: path
+      description: The custom field ID
+      required: true
+      schema:
+        type: integer
+        format: int32
   responses:
     ServiceUnavailable:
       description: The server is currently unavailable
@@ -660,6 +744,140 @@ components:
                     type: string
                     enum:
                     - ServiceUnavailableError
+    UnauthorizedError:
+      description: The request could not be completed due to an authentication error
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/schemas/Endpoint Error'
+            - $ref: '#/schemas/Auth Error'
+    BadRequest:
+      description: The server cannot or will not process the request due to a client error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type        | Explanation |
+
+                  |-------------------|-------------|
+
+                  | BadRequestError   | The request is malformed.  This can be caused by missing authorization credentials |
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#badrequest
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Missing required argument(s)
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 400
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BadRequestError
+    NotFound:
+      description: The requested resource could not be found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | NotFoundError        | The requested resource could not be found |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#notfound
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: 'Object: None, name: '''''
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 404
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - NotFoundError
+    BlockedError:
+      description: The request has been blocked
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | BlockedError         | This Request has been blocked            |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com/#blocked
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Blocked Error
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 410
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BlockedError
     InternalServerError:
       description: The request failed due to an internal error in the code or because of an external dependency failure
       content:
@@ -746,184 +964,6 @@ components:
                     type: string
                     enum:
                     - ForbiddenError
-    UnauthorizedError:
-      description: The request could not be completed due to an authentication error
-      content:
-        application/json:
-          schema:
-            oneOf:
-            - $ref: '#/schemas/Endpoint Error'
-            - $ref: '#/schemas/Auth Error'
-    BlockedError:
-      description: The request has been blocked
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | BlockedError         | This Request has been blocked            |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com/#blocked
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Blocked Error
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 410
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - BlockedError
-    BadRequest:
-      description: The server cannot or will not process the request due to a client error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type        | Explanation |
-
-                  |-------------------|-------------|
-
-                  | BadRequestError   | The request is malformed.  This can be caused by missing authorization credentials |
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#badrequest
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Missing required argument(s)
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 400
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - BadRequestError
-    NotFound:
-      description: The requested resource could not be found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | NotFoundError        | The requested resource could not be found |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#notfound
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: 'Object: None, name: '''''
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 404
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - NotFoundError
-  parameters:
-    wsStart:
-      name: ws.start
-      in: query
-      description: The pagination starting offset
-      schema:
-        type: integer
-        format: int32
-        minimum: 0
-        default: 0
-    listId:
-      name: listId
-      in: path
-      description: The list ID
-      required: true
-      schema:
-        type: integer
-        format: int32
-    accountId:
-      name: accountId
-      in: path
-      description: The account ID
-      required: true
-      schema:
-        type: integer
-        format: int32
-    wsSize:
-      name: ws.size
-      in: query
-      description: The pagination total entries to retrieve
-      schema:
-        type: integer
-        format: int32
-        minimum: 1
-        maximum: 100
-        default: 100
-    customFieldId:
-      name: customFieldId
-      in: path
-      description: The custom field ID
-      required: true
-      schema:
-        type: integer
-        format: int32
   securitySchemes:
     OAuth_2.0:
       description: 'The following endpoints and scopes are used to authenticate.

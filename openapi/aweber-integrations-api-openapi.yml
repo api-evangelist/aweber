@@ -26,7 +26,42 @@ servers:
   description: v1 API endpoints
 tags:
 - name: Integrations
-  description: '### What is it?'
+  description: '### What is it?
+
+
+    Represents the 3rd Party Services that are integrated with the AWeber Customer Account.
+
+
+    Use this set of resources to retrieve the integrations that are available for
+
+    use when creating broadcasts. For example, use the integration `self_link`
+
+    as a parameter when creating a broadcast to cross-post to Twitter and Facebook
+
+    when a broadcast is sent. The integrations returned include Facebook, Twitter,
+
+    PayPal and Shopify, if connected.
+
+
+    The collection response is sorted by the generated integration `id` and paginated using `next_collection_link` and `prev_collection_link` properties. See
+
+    How Collections are Represented for details on collection
+
+    traversal.
+
+
+    ### Related endpoints
+
+
+    * Integrations
+
+
+    ### Related code examples
+
+
+    * Create and Schedule a Broadcast
+
+    * Get Integrations List'
 paths:
   /accounts/{accountId}/integrations:
     get:
@@ -227,6 +262,42 @@ paths:
       operationId: getAccountsByAccountIdIntegrationsByIntegrationId
       x-operation-id-source: derived
 components:
+  parameters:
+    wsSize:
+      name: ws.size
+      in: query
+      description: The pagination total entries to retrieve
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 100
+        default: 100
+    integrationId:
+      name: integrationId
+      in: path
+      description: The integration ID
+      required: true
+      schema:
+        type: integer
+        format: int32
+    wsStart:
+      name: ws.start
+      in: query
+      description: The pagination starting offset
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        default: 0
+    accountId:
+      name: accountId
+      in: path
+      description: The account ID
+      required: true
+      schema:
+        type: integer
+        format: int32
   responses:
     ServiceUnavailable:
       description: The server is currently unavailable
@@ -271,49 +342,6 @@ components:
                     type: string
                     enum:
                     - ServiceUnavailableError
-    InternalServerError:
-      description: The request failed due to an internal error in the code or because of an external dependency failure
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | InternalServerError    | The request failed due to an internal error |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#internalerror
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Something went wrong.
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 500
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - InternalServerError
     UnauthorizedError:
       description: The request could not be completed due to an authentication error
       content:
@@ -322,92 +350,6 @@ components:
             oneOf:
             - $ref: '#/schemas/Endpoint Error'
             - $ref: '#/schemas/Auth Error'
-    BlockedError:
-      description: The request has been blocked
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | BlockedError         | This Request has been blocked            |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com/#blocked
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Blocked Error
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 410
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - BlockedError
-    ForbiddenError:
-      description: The request could not be completed due to a rate limit error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | ForbiddenError       | Rate limit may be reached or account may be suspended |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#forbidden
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Rate Limit Error
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 403
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - ForbiddenError
     NotFound:
       description: The requested resource could not be found
       content:
@@ -451,42 +393,135 @@ components:
                     type: string
                     enum:
                     - NotFoundError
-  parameters:
-    integrationId:
-      name: integrationId
-      in: path
-      description: The integration ID
-      required: true
-      schema:
-        type: integer
-        format: int32
-    wsStart:
-      name: ws.start
-      in: query
-      description: The pagination starting offset
-      schema:
-        type: integer
-        format: int32
-        minimum: 0
-        default: 0
-    accountId:
-      name: accountId
-      in: path
-      description: The account ID
-      required: true
-      schema:
-        type: integer
-        format: int32
-    wsSize:
-      name: ws.size
-      in: query
-      description: The pagination total entries to retrieve
-      schema:
-        type: integer
-        format: int32
-        minimum: 1
-        maximum: 100
-        default: 100
+    BlockedError:
+      description: The request has been blocked
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | BlockedError         | This Request has been blocked            |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com/#blocked
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Blocked Error
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 410
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BlockedError
+    InternalServerError:
+      description: The request failed due to an internal error in the code or because of an external dependency failure
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | InternalServerError    | The request failed due to an internal error |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#internalerror
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Something went wrong.
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 500
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - InternalServerError
+    ForbiddenError:
+      description: The request could not be completed due to a rate limit error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | ForbiddenError       | Rate limit may be reached or account may be suspended |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#forbidden
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Rate Limit Error
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 403
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - ForbiddenError
   schemas:
     Integration:
       type: object

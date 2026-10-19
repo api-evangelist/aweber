@@ -26,7 +26,64 @@ servers:
   description: v1 API endpoints
 tags:
 - name: Subscribers
-  description: '### What is it?'
+  description: '### What is it?
+
+
+    Represents a collection of subscribers.
+
+
+    Use this set of resources to add, remove, find, and update an AWeber Customer Account''s subscribers.
+
+    The collection responses are ordered and paginated using `next_collection_link` and
+
+    `prev_collection_link` properties. See How Collections are Represented
+
+    for details on collection traversal and the individual endpoint descriptions for ordering constraints.
+
+    Many of the subscriber-related endpoints support the `sort_order` query parameter to control the sorting
+
+    *direction* in the response collection.
+
+
+    Subscribers are one of the most important elements in the AWeber API so care must be taken before
+
+    adding a subscriber to a list. Read more about adding subscribers in AWeber Knowledge Base article
+
+
+    "Can I use this list?".
+
+
+    Although not required, it''s strongly recommended that you provide the IP address of the Subscriber if
+
+    it is known. For web based Apps, the `ip_address` that you should use is the REMOTE_ADDRESS of their
+
+    requests to your App server, not the server''s IP address. The IP address is used in the Geo Location
+
+    parameters and for send windows in the AWeber Control Panel. **The IP address can only be specified
+
+    when ADDING a new subscriber.**
+
+
+    ### Related endpoints
+
+
+    * Subscribers
+
+    * Get subcribers associated with a message
+
+    * Get susbcribers that opened a message
+
+
+    ### Related code examples
+
+
+    * Manage a Subscriber
+
+    * Find Subscribers Across Lists
+
+    * Move Subscriber to Another List
+
+    * Get Subscribers Who Opened or Clicked a Broadcast'
 paths:
   /accounts/{accountId}/lists/{listId}/subscribers:
     get:
@@ -1867,26 +1924,627 @@ paths:
       operationId: postAccountsByAccountIdListsByListIdPurchases
       x-operation-id-source: derived
 components:
+  responses:
+    SubscriberNotFound:
+      description: The requested subscriber resource could not be found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                                          |
+
+                  |----------------------|------------------------------------------------------|
+
+                  | NotFoundError        | The requested subscriber resource could not be found |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#notfound
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: 'Object: None, name: ''subscribers'''
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 404
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - NotFoundError
+    SubListNotFound:
+      description: The requested list could not be found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                               |
+
+                  |----------------------|-------------------------------------------|
+
+                  | NotFoundError        | The requested resource could not be found |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#notfound
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: List with given id not found
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 404
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - NotFoundError
+    BadOAuth1LessTypes:
+      description: The server cannot or will not process the request due to a client error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  One of the following errors may be received:
+
+
+                  | Error Type      | Explanation                              |
+
+                  |-----------------|------------------------------------------|
+
+                  | BadRequestError | Possible reasons include: an OAuth parameter is missing in the request or the OAuth signature method or version is unsupported |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#badrequest
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Required parameter 'oauth_nonce' missing
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 400
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BadRequestError
+    BlockedError:
+      description: The request has been blocked
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | BlockedError         | This Request has been blocked            |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com/#blocked
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Blocked Error
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 410
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BlockedError
+    ServiceUnavailable:
+      description: The server is currently unavailable
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | ServiceUnavailableError | The server is unavailable |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#serviceunavailable
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Failed to communicate with endpoint
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 503
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - ServiceUnavailableError
+    RateLimitOrSubscriberPermission:
+      description: Forbidden due to rate limit or missing Request Subscriber Data permission
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | ForbiddenError       | Rate limit may be reached, account may be suspended, or the application does not have Request Subscriber Data permission |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#forbidden
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Rate Limit Error
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 403
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - ForbiddenError
+    NotFormURLEncodedOrJSON:
+      description: 'The request entity has a media type that is not application/x-www-form-urlencoded or
+
+        application/json
+
+        '
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+
+                  The following error may be received:
+
+
+                  | Error Type         | Explanation                              |
+
+                  |--------------------|------------------------------------------|
+
+                  | InvalidContentType | An invalid content type was provided. Valid types are application/x-www-form-urlencoded and application/json |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#invalidcontent
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Content Type must be application/json or application/x-www-form-urlencoded
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 415
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - InvalidContentType
+    BadOAuth1:
+      description: The server cannot or will not process the request due to a client error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  One of the following errors may be received:
+
+
+                  | Error Type                           | Explanation                              |
+
+                  |--------------------------------------|------------------------------------------|
+
+                  | BadRequestError                      | There was an error decoding query parameters |
+
+                  | MissingOAuthParametersError          | An OAuth parameter is missing in the request |
+
+                  | UnsupportedOAuthSignatureMethodError | The provided OAuth 1 signature method is unsupported. Only HMAC-SHA1 is supported. |
+
+                  | UnsupportedOAuthVersionError         | The provided OAuth 1 version is unsupported. |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#badrequest
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: 'Missing oauth parameters: oauth_consumer_key'
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 400
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - MissingOAuthParametersError
+    UnauthorizedError:
+      description: The request could not be completed due to an authentication error
+      content:
+        application/json:
+          schema:
+            oneOf:
+            - $ref: '#/schemas/Endpoint Error'
+            - $ref: '#/schemas/Auth Error'
+    InternalServerError:
+      description: The request failed due to an internal error in the code or because of an external dependency failure
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | InternalServerError    | The request failed due to an internal error |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#internalerror
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Something went wrong.
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 500
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - InternalServerError
+    SearchBadRequest:
+      description: The server cannot or will not process the request due to a client error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  One of the following errors may be received:
+
+
+                  | Error Type                           | Explanation                              |
+
+                  |--------------------------------------|------------------------------------------|
+
+                  | BadRequestError                      | The search parameters or were invalid or the OAuth query string could not be parsed|
+
+                  | WebServiceError                      | `ws.start` or `ws.size` values are invalid |
+
+                  | MissingOAuthParametersError          | An OAuth parameter is missing in the request |
+
+                  | UnsupportedOAuthSignatureMethodError | The provided OAuth 1 signature method is unsupported. Only HMAC-SHA1 is supported. |
+
+                  | UnsupportedOAuthVersionError         | The provided OAuth 1 version is unsupported. |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#badrequest
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: 'Missing oauth parameters: oauth_consumer_key'
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 400
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BadRequestError
+                    - MissingOAuthParametersError
+                    - UnsupportedOAuthSignatureMethodError
+                    - UnsupportedOAuthVersionError
+                    - WebServiceError
+    SearchListBadRequest:
+      description: The server cannot or will not process the request due to a client error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  One of the following errors may be received:
+
+
+                  | Error Type                           | Explanation                              |
+
+                  |--------------------------------------|------------------------------------------|
+
+                  | BadRequestError                      | The search parameters or were invalid or the OAuth query string could not be parsed|
+
+                  | WebServiceError                      | `ws.start`, `ws.size`, `sort_order` or `sort_key` values are invalid |
+
+                  | MissingOAuthParametersError          | An OAuth parameter is missing in the request |
+
+                  | UnsupportedOAuthSignatureMethodError | The provided OAuth 1 signature method is unsupported. Only HMAC-SHA1 is supported. |
+
+                  | UnsupportedOAuthVersionError         | The provided OAuth 1 version is unsupported. |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#badrequest
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: 'Missing oauth parameters: oauth_consumer_key'
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 400
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - BadRequestError
+                    - MissingOAuthParametersError
+                    - UnsupportedOAuthSignatureMethodError
+                    - UnsupportedOAuthVersionError
+                    - WebServiceError
+    NotFound:
+      description: The requested resource could not be found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | NotFoundError        | The requested resource could not be found |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#notfound
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: 'Object: None, name: '''''
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 404
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - NotFoundError
+    ForbiddenError:
+      description: The request could not be completed due to a rate limit error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                description: 'An error object.
+
+                  The following error may be received:
+
+
+                  | Error Type           | Explanation                              |
+
+                  |----------------------|------------------------------------------|
+
+                  | ForbiddenError       | Rate limit may be reached or account may be suspended |
+
+
+                  Please see the message body for more details.
+
+                  '
+                type: object
+                properties:
+                  documentation_url:
+                    description: A link to the documentation that describes the error
+                    type: string
+                    example: https://api.aweber.com#forbidden
+                  message:
+                    description: A human friendly description of the error
+                    type: string
+                    example: Rate Limit Error
+                  status:
+                    description: The HTTP status code
+                    type: integer
+                    enum:
+                    - 403
+                  type:
+                    description: The API error type
+                    type: string
+                    enum:
+                    - ForbiddenError
   parameters:
-    findSubCity:
-      name: city
+    findSubPostalCode:
+      name: postal_code
       in: query
-      description: The subscriber's city
+      description: The subscriber's postal or zip code
       schema:
         type: string
         minLength: 1
         maxLength: 100
-        example: Chalfont
-    findSubLatitude:
-      name: latitude
+        example: 99999-9999
+    findSubUnsubscribedAt:
+      name: unsubscribed_at
       in: query
-      description: The subscriber's geographical latitude
+      description: The day in which the subscriber unsubscribed
       schema:
-        type: number
-        format: double
-        minimum: -90.0
-        maximum: 90.0
-        example: 37.751
+        type: string
+        format: date
+        example: '2017-10-13'
     wsStart:
       name: ws.start
       in: query
@@ -1896,23 +2554,41 @@ components:
         format: int32
         minimum: 0
         default: 0
-    findSubTags:
-      name: tags
+    sortOrderList:
+      name: sort_order
       in: query
-      description: A string containing a JSON-formatted array of tags. All tags must match for the subscriber to match.
+      description: The collection will be sorted in the order specified by the key entered for `sort_key`. To specify the order, use the value `asc` for ascending or `desc` for descending.
+      schema:
+        type: string
+        default: asc
+        enum:
+        - asc
+        - desc
+    findSubNotTag:
+      name: tags_not_in
+      in: query
+      description: A string containing a JSON-formatted array of tags. Checks that all tags are not matched to a subscriber.
       schema:
         type: string
         example: '["tag1", "tag2"]'
-    wsSize:
-      name: ws.size
+    findSubCountry:
+      name: country
       in: query
-      description: The pagination total entries to retrieve
+      description: The subscriber's country
       schema:
-        type: integer
-        format: int32
-        minimum: 1
-        maximum: 100
-        default: 100
+        type: string
+        minLength: 1
+        maxLength: 100
+        example: United States
+    sortKey:
+      name: sort_key
+      in: query
+      description: The collection will be sorted by the field key specified. If no key is spcified the search will default to the order in which the subscribers were added to the list.
+      schema:
+        type: string
+        enum:
+        - subscribed_at
+        - unsubscribed_at
     findSubLongitude:
       name: longitude
       in: query
@@ -1923,41 +2599,33 @@ components:
         minimum: -180.0
         maximum: 180.0
         example: -97.822
-    findSubVerifiedAt:
-      name: verified_at
+    findSubMiscNotes:
+      name: misc_notes
       in: query
-      description: The day in which the subscriber confirmed their email address
+      description: Miscellaneous notes
       schema:
         type: string
-        format: date
-        example: '2017-07-18'
-    findSubName:
-      name: name
-      in: query
-      description: The subscriber's name
-      schema:
-        type: string
-        minLength: 1
         maxLength: 60
-        example: John Doe
-    findSubLastMessageSentAt:
-      name: last_followup_message_sent_at
+        example: ebook
+    listId:
+      name: listId
+      in: path
+      description: The list ID
+      required: true
+      schema:
+        type: integer
+        format: int32
+    findSubSubscriptionMethod:
+      name: subscription_method
       in: query
-      description: The day when the last followup message was sent to the subscriber
+      description: How the subscriber was subscribed
       schema:
         type: string
-        format: date
-        minLength: 1
-        maxLength: 10
-        example: '2017-11-28'
-    findSubSubscribedAt:
-      name: subscribed_at
-      in: query
-      description: The day in which the subscriber subscribed
-      schema:
-        type: string
-        format: date
-        example: '2017-07-16'
+        enum:
+        - api
+        - email
+        - import
+        - webform
     findSubUnsubscribeMethod:
       name: unsubscribe_method
       in: query
@@ -1970,49 +2638,32 @@ components:
         - undeliverable
         - 'api: unsubscribe'
         - 'api: move'
-    findSubNotTag:
-      name: tags_not_in
+    findSubName:
+      name: name
       in: query
-      description: A string containing a JSON-formatted array of tags. Checks that all tags are not matched to a subscriber.
-      schema:
-        type: string
-        example: '["tag1", "tag2"]'
-    findSubCustomFields:
-      name: custom_fields
-      in: query
-      description: The JSON encoded custom field key value pairs
-      schema:
-        type: string
-        example: '{"apple": "fuji", "pear": "bosc"}'
-    findSubCountry:
-      name: country
-      in: query
-      description: The subscriber's country
+      description: The subscriber's name
       schema:
         type: string
         minLength: 1
-        maxLength: 100
-        example: United States
-    sortOrderList:
-      name: sort_order
+        maxLength: 60
+        example: John Doe
+    findSubTags:
+      name: tags
       in: query
-      description: The collection will be sorted in the order specified by the key entered for `sort_key`. To specify the order, use the value `asc` for ascending or `desc` for descending.
+      description: A string containing a JSON-formatted array of tags. All tags must match for the subscriber to match.
       schema:
         type: string
-        default: asc
-        enum:
-        - asc
-        - desc
-    findSubAreaCode:
-      name: area_code
+        example: '["tag1", "tag2"]'
+    findSubLastMessageSentAt:
+      name: last_followup_message_sent_at
       in: query
-      description: The subscriber's area code
+      description: The day when the last followup message was sent to the subscriber
       schema:
-        type: integer
-        format: int32
-        maximum: 999
-        minimum: 0
-        example: 555
+        type: string
+        format: date
+        minLength: 1
+        maxLength: 10
+        example: '2017-11-28'
     findSubRegion:
       name: region
       in: query
@@ -2022,76 +2673,6 @@ components:
         minLength: 1
         maxLength: 100
         example: PA
-    findSubAdTracking:
-      name: ad_tracking
-      in: query
-      description: The customer ad tracking field
-      schema:
-        type: string
-        minLength: 1
-        maxLength: 20
-        example: ebook
-    sortOrder:
-      name: sort_order
-      in: query
-      description: The collection will be sorted by the order in which the subscribers were added to the list. To specify the order, use the value `asc` for ascending or `desc` for descending.
-      schema:
-        type: string
-        default: asc
-        enum:
-        - asc
-        - desc
-    findSubUnsubscribedAt:
-      name: unsubscribed_at
-      in: query
-      description: The day in which the subscriber unsubscribed
-      schema:
-        type: string
-        format: date
-        example: '2017-10-13'
-    findSubPostalCode:
-      name: postal_code
-      in: query
-      description: The subscriber's postal or zip code
-      schema:
-        type: string
-        minLength: 1
-        maxLength: 100
-        example: 99999-9999
-    sortKey:
-      name: sort_key
-      in: query
-      description: The collection will be sorted by the field key specified. If no key is spcified the search will default to the order in which the subscribers were added to the list.
-      schema:
-        type: string
-        enum:
-        - subscribed_at
-        - unsubscribed_at
-    findSubEmail:
-      name: email
-      in: query
-      description: The subscriber's email address
-      schema:
-        type: string
-        minLength: 1
-        maxLength: 50
-        format: email
-    listId:
-      name: listId
-      in: path
-      description: The list ID
-      required: true
-      schema:
-        type: integer
-        format: int32
-    findSubSubscribedBefore:
-      name: subscribed_before
-      in: query
-      description: The day on or before the subscriber subscribed
-      schema:
-        type: string
-        format: date
-        example: '2017-07-16'
     findSubStatus:
       name: status
       in: query
@@ -2102,23 +2683,65 @@ components:
         - subscribed
         - unsubscribed
         - unconfirmed
-    findSubDmaCode:
-      name: dma_code
+    findSubAdTracking:
+      name: ad_tracking
       in: query
-      description: The subscriber's designated market area code (usa and canada only)
+      description: The customer ad tracking field
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 20
+        example: ebook
+    findSubCustomFields:
+      name: custom_fields
+      in: query
+      description: The JSON encoded custom field key value pairs
+      schema:
+        type: string
+        example: '{"apple": "fuji", "pear": "bosc"}'
+    findSubEmail:
+      name: email
+      in: query
+      description: The subscriber's email address
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 50
+        format: email
+    findSubVerifiedAt:
+      name: verified_at
+      in: query
+      description: The day in which the subscriber confirmed their email address
+      schema:
+        type: string
+        format: date
+        example: '2017-07-18'
+    wsSize:
+      name: ws.size
+      in: query
+      description: The pagination total entries to retrieve
       schema:
         type: integer
         format: int32
-        maximum: 881
-        example: 504
-    findSubSubscribedAfter:
-      name: subscribed_after
+        minimum: 1
+        maximum: 100
+        default: 100
+    findSubSubscribedBefore:
+      name: subscribed_before
       in: query
-      description: The day on or after the subscriber subscribed
+      description: The day on or before the subscriber subscribed
       schema:
         type: string
         format: date
         example: '2017-07-16'
+    findSubUnsubscribedBefore:
+      name: unsubscribed_before
+      in: query
+      description: The day on or before the subscriber unsubscribed
+      schema:
+        type: string
+        format: date
+        example: '2017-10-13'
     subscriberId:
       name: subscriberId
       in: path
@@ -2127,6 +2750,50 @@ components:
       schema:
         type: integer
         format: int32
+    findSubLatitude:
+      name: latitude
+      in: query
+      description: The subscriber's geographical latitude
+      schema:
+        type: number
+        format: double
+        minimum: -90.0
+        maximum: 90.0
+        example: 37.751
+    findSubUnsubscribedAfter:
+      name: unsubscribed_after
+      in: query
+      description: The day on or after the subscriber unsubscribed
+      schema:
+        type: string
+        format: date
+        example: '2017-10-13'
+    findSubSubscribedAt:
+      name: subscribed_at
+      in: query
+      description: The day in which the subscriber subscribed
+      schema:
+        type: string
+        format: date
+        example: '2017-07-16'
+    sortOrder:
+      name: sort_order
+      in: query
+      description: The collection will be sorted by the order in which the subscribers were added to the list. To specify the order, use the value `asc` for ascending or `desc` for descending.
+      schema:
+        type: string
+        default: asc
+        enum:
+        - asc
+        - desc
+    findSubLastMessage:
+      name: last_followup_message_number_sent
+      in: query
+      description: The sequence number of the last followup message sent to the subscriber
+      schema:
+        type: integer
+        format: int32
+        maximum: 1001
     wsShow:
       name: ws.show
       in: query
@@ -2135,33 +2802,6 @@ components:
         type: string
         enum:
         - total_size
-    accountId:
-      name: accountId
-      in: path
-      description: The account ID
-      required: true
-      schema:
-        type: integer
-        format: int32
-    findSubMiscNotes:
-      name: misc_notes
-      in: query
-      description: Miscellaneous notes
-      schema:
-        type: string
-        maxLength: 60
-        example: ebook
-    findSubSubscriptionMethod:
-      name: subscription_method
-      in: query
-      description: How the subscriber was subscribed
-      schema:
-        type: string
-        enum:
-        - api
-        - email
-        - import
-        - webform
     subCollectionEmail:
       name: subscriber_email
       in: query
@@ -2172,141 +2812,51 @@ components:
         minLength: 1
         maxLength: 50
         format: email
-    findSubLastMessage:
-      name: last_followup_message_number_sent
+    findSubDmaCode:
+      name: dma_code
       in: query
-      description: The sequence number of the last followup message sent to the subscriber
+      description: The subscriber's designated market area code (usa and canada only)
       schema:
         type: integer
         format: int32
-        maximum: 1001
-    findSubUnsubscribedBefore:
-      name: unsubscribed_before
+        maximum: 881
+        example: 504
+    accountId:
+      name: accountId
+      in: path
+      description: The account ID
+      required: true
+      schema:
+        type: integer
+        format: int32
+    findSubAreaCode:
+      name: area_code
       in: query
-      description: The day on or before the subscriber unsubscribed
+      description: The subscriber's area code
+      schema:
+        type: integer
+        format: int32
+        maximum: 999
+        minimum: 0
+        example: 555
+    findSubSubscribedAfter:
+      name: subscribed_after
+      in: query
+      description: The day on or after the subscriber subscribed
       schema:
         type: string
         format: date
-        example: '2017-10-13'
-    findSubUnsubscribedAfter:
-      name: unsubscribed_after
+        example: '2017-07-16'
+    findSubCity:
+      name: city
       in: query
-      description: The day on or after the subscriber unsubscribed
+      description: The subscriber's city
       schema:
         type: string
-        format: date
-        example: '2017-10-13'
+        minLength: 1
+        maxLength: 100
+        example: Chalfont
   schemas:
-    AddSubscriberRequestBody:
-      type: object
-      required:
-      - email
-      properties:
-        ad_tracking:
-          description: The customer ad tracking field
-          type: string
-          minLength: 1
-          maxLength: 20
-          example: ebook
-        custom_fields:
-          description: The custom fields specified on the subscriber.  Note that the custom fields are required to already exist for the list. See [Custom Fields](#tag/Custom-Fields) for details.
-          type: object
-          additionalProperties:
-            type: string
-            minLength: 1
-          example:
-            apple: fuji
-            pear: bosc
-        email:
-          description: The subscriber's email address
-          type: string
-          minLength: 1
-          maxLength: 50
-          format: email
-        ip_address:
-          description: 'The subscriber''s IP address. This field is used to determine the following Geo Location fields: area_code, city, country, dma_code, latitude, longitude, postal_code, and region. IP address can only be specified when Subscribers are initially created. Internal, private, or reserved IP addresses are not acceptable.'
-          type: string
-          minLength: 1
-          maxLength: 60
-          format: ipv4
-        last_followup_message_number_sent:
-          description: The sequence number of the last followup message sent to the subscriber.  This field determines the next followup message to be sent to the Subscriber.  When set to 0 (default), the Subscriber should receive the 1st (autoresponse) Followup message.  Set the value of this field to 1001 if you do not want any Followups to be sent to this Subscriber.
-          type: integer
-          minimum: 0
-          maximum: 1001
-        misc_notes:
-          description: Miscellaneous notes
-          type: string
-          minLength: 1
-          maxLength: 60
-        name:
-          description: The subscriber's name
-          type: string
-          minLength: 1
-          maxLength: 60
-          example: John Doe
-        strict_custom_fields:
-          description: If this parameter is present and set to `true`, then custom field names are matched case sensitively.  Enabling this option also causes the operation to fail if a custom field is included that is not defined for the list.
-          type: string
-          enum:
-          - 'true'
-          - 'false'
-        update_existing:
-          description: 'If this parameter is present and set to `true`, then if a subscriber is already present on the list, the subscriber will be updated. <br><br> **Note:** <br>
-
-            - Only the fields defined in the <a href=''#tag/Subscribers/paths/~1accounts~1{accountId}~1lists~1{listId}~1subscribers~1{subscriberId}/patch''>patch</a> endpoint will be updated.
-
-            - Any tags in the request will be **appended** to the existing Subscriber.'
-          type: string
-          enum:
-          - 'true'
-          - 'false'
-        tags:
-          description: A list of tags added to the subscriber.  This field is used to apply a list of tags to a Subscriber. With Campaigns, you can trigger a series of messages based on what Tags have been applied to your subscribers.
-          type: array
-          items:
-            type: string
-          example:
-          - slow
-          - fast
-          - lightspeed
-    FindSubscribersAccount:
-      type: object
-      properties:
-        entries:
-          description: The list of subscriber entries plus list information
-          type: array
-          items:
-            $ref: '#/definitions/SubscriberFind'
-        next_collection_link:
-          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/messages?ws.start=1&ws.size=100
-        prev_collection_link:
-          description: A link to the previous page of entries if previous entries exist. This attribute is omitted if this is the first page.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/messages?ws.start=1&ws.size=100
-        resource_type_link:
-          description: A link that identifies the type of resource that this collection represents
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/#subscribers-page-resource
-        self_link:
-          description: A link to the current page of entries.
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123/lists/456/subscribers?ws.start=0&ws.size=100&account_id=123&list_id=456
-        start:
-          description: The starting offset for the page of entries to retrieve
-          type: integer
-          minimum: 0
-        total_size_link:
-          description: Link to the total number of entries
-          type: string
-          format: uri
-          example: https://api.aweber.com/1.0/accounts/123?ws.op=findSubscribers&ws.show=total_size
     Subscribers:
       type: object
       properties:
@@ -2568,83 +3118,6 @@ components:
           type: string
           format: date-time
           example: '2015-10-13T16:19:53'
-    UpdateSubscriberRequestBody:
-      type: object
-      properties:
-        ad_tracking:
-          description: The customer ad tracking field
-          type: string
-          minLength: 1
-          maxLength: 20
-          example: ebook
-        custom_fields:
-          description: 'The custom fields specified on the subscriber.  Custom fields are represented as a sub-object where only the **values** can be modified. <br><br> **Note:** If updating custom field values, **all** fields must be included in the request. If all fields are not included, the omitted fields will be set to *null*. <br><br> In order to modify custom field values:
-
-            - Retrieve the custom fields and values for the subscriber.
-
-            - Add all fields and their values to the PATCH request.
-
-            - Modify the value **only** for the fields you wish to update.
-
-            - Submit the request containing all the custom fields and their respective values.'
-          type: object
-          additionalProperties:
-            type: string
-            minLength: 1
-          example:
-            apple: fuji
-            pear: bosc
-        email:
-          description: The subscriber's email address
-          type: string
-          maximum: 50
-          format: email
-        last_followup_message_number_sent:
-          description: The sequence number of the last followup message sent to the subscriber.  This field determines the next followup message to be sent to the Subscriber.  When set to 0, the Subscriber will receive the 1st (autoresponse) Followup message.  Set the value of this field to 1001 if you do not want any Followups to be sent to this Subscriber.
-          type: integer
-          minimum: 0
-          maximum: 1001
-        misc_notes:
-          description: Miscellaneous notes
-          type: string
-          example: Open House 2015
-        name:
-          description: The subscriber's name
-          type: string
-          minLength: 1
-          maxLength: 60
-          example: John Doe
-        status:
-          description: The subscriber's status.<br> **Note** you cannot set a subscriber's status to "unconfirmed".
-          type: string
-          enum:
-          - subscribed
-          - unsubscribed
-        strict_custom_fields:
-          description: If this parameter is present and set to `true`, then custom field names are matched case sensitively.  Enabling this option also causes the operation to fail if a custom field is included that is not defined for the list.
-          type: string
-          enum:
-          - 'true'
-          - 'false'
-        tags:
-          description: An object with the keys "add" and/or "remove" and values of lists of tags
-          type: object
-          properties:
-            add:
-              description: List of tags to add to the subscriber
-              type: array
-              items:
-                type: string
-              example:
-              - fast
-              - lightspeed
-            remove:
-              description: List of tags to remove from the subscriber
-              type: array
-              items:
-                type: string
-              example:
-              - slow
     Purchase:
       type: object
       properties:
@@ -2756,6 +3229,193 @@ components:
           type: string
           enum:
           - move
+    UpdateSubscriberRequestBody:
+      type: object
+      properties:
+        ad_tracking:
+          description: The customer ad tracking field
+          type: string
+          minLength: 1
+          maxLength: 20
+          example: ebook
+        custom_fields:
+          description: 'The custom fields specified on the subscriber.  Custom fields are represented as a sub-object where only the **values** can be modified. <br><br> **Note:** If updating custom field values, **all** fields must be included in the request. If all fields are not included, the omitted fields will be set to *null*. <br><br> In order to modify custom field values:
+
+            - Retrieve the custom fields and values for the subscriber.
+
+            - Add all fields and their values to the PATCH request.
+
+            - Modify the value **only** for the fields you wish to update.
+
+            - Submit the request containing all the custom fields and their respective values.'
+          type: object
+          additionalProperties:
+            type: string
+            minLength: 1
+          example:
+            apple: fuji
+            pear: bosc
+        email:
+          description: The subscriber's email address
+          type: string
+          maximum: 50
+          format: email
+        last_followup_message_number_sent:
+          description: The sequence number of the last followup message sent to the subscriber.  This field determines the next followup message to be sent to the Subscriber.  When set to 0, the Subscriber will receive the 1st (autoresponse) Followup message.  Set the value of this field to 1001 if you do not want any Followups to be sent to this Subscriber.
+          type: integer
+          minimum: 0
+          maximum: 1001
+        misc_notes:
+          description: Miscellaneous notes
+          type: string
+          example: Open House 2015
+        name:
+          description: The subscriber's name
+          type: string
+          minLength: 1
+          maxLength: 60
+          example: John Doe
+        status:
+          description: The subscriber's status.<br> **Note** you cannot set a subscriber's status to "unconfirmed".
+          type: string
+          enum:
+          - subscribed
+          - unsubscribed
+        strict_custom_fields:
+          description: If this parameter is present and set to `true`, then custom field names are matched case sensitively.  Enabling this option also causes the operation to fail if a custom field is included that is not defined for the list.
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        tags:
+          description: An object with the keys "add" and/or "remove" and values of lists of tags
+          type: object
+          properties:
+            add:
+              description: List of tags to add to the subscriber
+              type: array
+              items:
+                type: string
+              example:
+              - fast
+              - lightspeed
+            remove:
+              description: List of tags to remove from the subscriber
+              type: array
+              items:
+                type: string
+              example:
+              - slow
+    AddSubscriberRequestBody:
+      type: object
+      required:
+      - email
+      properties:
+        ad_tracking:
+          description: The customer ad tracking field
+          type: string
+          minLength: 1
+          maxLength: 20
+          example: ebook
+        custom_fields:
+          description: The custom fields specified on the subscriber.  Note that the custom fields are required to already exist for the list. See [Custom Fields](#tag/Custom-Fields) for details.
+          type: object
+          additionalProperties:
+            type: string
+            minLength: 1
+          example:
+            apple: fuji
+            pear: bosc
+        email:
+          description: The subscriber's email address
+          type: string
+          minLength: 1
+          maxLength: 50
+          format: email
+        ip_address:
+          description: 'The subscriber''s IP address. This field is used to determine the following Geo Location fields: area_code, city, country, dma_code, latitude, longitude, postal_code, and region. IP address can only be specified when Subscribers are initially created. Internal, private, or reserved IP addresses are not acceptable.'
+          type: string
+          minLength: 1
+          maxLength: 60
+          format: ipv4
+        last_followup_message_number_sent:
+          description: The sequence number of the last followup message sent to the subscriber.  This field determines the next followup message to be sent to the Subscriber.  When set to 0 (default), the Subscriber should receive the 1st (autoresponse) Followup message.  Set the value of this field to 1001 if you do not want any Followups to be sent to this Subscriber.
+          type: integer
+          minimum: 0
+          maximum: 1001
+        misc_notes:
+          description: Miscellaneous notes
+          type: string
+          minLength: 1
+          maxLength: 60
+        name:
+          description: The subscriber's name
+          type: string
+          minLength: 1
+          maxLength: 60
+          example: John Doe
+        strict_custom_fields:
+          description: If this parameter is present and set to `true`, then custom field names are matched case sensitively.  Enabling this option also causes the operation to fail if a custom field is included that is not defined for the list.
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        update_existing:
+          description: 'If this parameter is present and set to `true`, then if a subscriber is already present on the list, the subscriber will be updated. <br><br> **Note:** <br>
+
+            - Only the fields defined in the <a href=''#tag/Subscribers/paths/~1accounts~1{accountId}~1lists~1{listId}~1subscribers~1{subscriberId}/patch''>patch</a> endpoint will be updated.
+
+            - Any tags in the request will be **appended** to the existing Subscriber.'
+          type: string
+          enum:
+          - 'true'
+          - 'false'
+        tags:
+          description: A list of tags added to the subscriber.  This field is used to apply a list of tags to a Subscriber. With Campaigns, you can trigger a series of messages based on what Tags have been applied to your subscribers.
+          type: array
+          items:
+            type: string
+          example:
+          - slow
+          - fast
+          - lightspeed
+    FindSubscribersAccount:
+      type: object
+      properties:
+        entries:
+          description: The list of subscriber entries plus list information
+          type: array
+          items:
+            $ref: '#/definitions/SubscriberFind'
+        next_collection_link:
+          description: A link to the next page of entries if more entries exist. This attribute is omitted from the collection if there are no more entries.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/messages?ws.start=1&ws.size=100
+        prev_collection_link:
+          description: A link to the previous page of entries if previous entries exist. This attribute is omitted if this is the first page.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/campaigns/b789/messages?ws.start=1&ws.size=100
+        resource_type_link:
+          description: A link that identifies the type of resource that this collection represents
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/#subscribers-page-resource
+        self_link:
+          description: A link to the current page of entries.
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123/lists/456/subscribers?ws.start=0&ws.size=100&account_id=123&list_id=456
+        start:
+          description: The starting offset for the page of entries to retrieve
+          type: integer
+          minimum: 0
+        total_size_link:
+          description: Link to the total number of entries
+          type: string
+          format: uri
+          example: https://api.aweber.com/1.0/accounts/123?ws.op=findSubscribers&ws.show=total_size
     Activity:
       type: object
       properties:
@@ -2823,609 +3483,6 @@ components:
           type: string
           format: uri
           example: https://api.aweber.com/1.0/accounts/123/lists/456/subscribers/64787088?ws.op=getActivity&ws.start=1&ws.size=1"
-  responses:
-    SubscriberNotFound:
-      description: The requested subscriber resource could not be found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                                          |
-
-                  |----------------------|------------------------------------------------------|
-
-                  | NotFoundError        | The requested subscriber resource could not be found |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#notfound
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: 'Object: None, name: ''subscribers'''
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 404
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - NotFoundError
-    BlockedError:
-      description: The request has been blocked
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | BlockedError         | This Request has been blocked            |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com/#blocked
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Blocked Error
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 410
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - BlockedError
-    RateLimitOrSubscriberPermission:
-      description: Forbidden due to rate limit or missing Request Subscriber Data permission
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | ForbiddenError       | Rate limit may be reached, account may be suspended, or the application does not have Request Subscriber Data permission |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#forbidden
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Rate Limit Error
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 403
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - ForbiddenError
-    NotFound:
-      description: The requested resource could not be found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | NotFoundError        | The requested resource could not be found |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#notfound
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: 'Object: None, name: '''''
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 404
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - NotFoundError
-    BadOAuth1:
-      description: The server cannot or will not process the request due to a client error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  One of the following errors may be received:
-
-
-                  | Error Type                           | Explanation                              |
-
-                  |--------------------------------------|------------------------------------------|
-
-                  | BadRequestError                      | There was an error decoding query parameters |
-
-                  | MissingOAuthParametersError          | An OAuth parameter is missing in the request |
-
-                  | UnsupportedOAuthSignatureMethodError | The provided OAuth 1 signature method is unsupported. Only HMAC-SHA1 is supported. |
-
-                  | UnsupportedOAuthVersionError         | The provided OAuth 1 version is unsupported. |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#badrequest
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: 'Missing oauth parameters: oauth_consumer_key'
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 400
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - MissingOAuthParametersError
-    NotFormURLEncodedOrJSON:
-      description: 'The request entity has a media type that is not application/x-www-form-urlencoded or
-
-        application/json
-
-        '
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-
-                  The following error may be received:
-
-
-                  | Error Type         | Explanation                              |
-
-                  |--------------------|------------------------------------------|
-
-                  | InvalidContentType | An invalid content type was provided. Valid types are application/x-www-form-urlencoded and application/json |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#invalidcontent
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Content Type must be application/json or application/x-www-form-urlencoded
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 415
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - InvalidContentType
-    ForbiddenError:
-      description: The request could not be completed due to a rate limit error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | ForbiddenError       | Rate limit may be reached or account may be suspended |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#forbidden
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Rate Limit Error
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 403
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - ForbiddenError
-    InternalServerError:
-      description: The request failed due to an internal error in the code or because of an external dependency failure
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | InternalServerError    | The request failed due to an internal error |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#internalerror
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Something went wrong.
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 500
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - InternalServerError
-    SearchListBadRequest:
-      description: The server cannot or will not process the request due to a client error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  One of the following errors may be received:
-
-
-                  | Error Type                           | Explanation                              |
-
-                  |--------------------------------------|------------------------------------------|
-
-                  | BadRequestError                      | The search parameters or were invalid or the OAuth query string could not be parsed|
-
-                  | WebServiceError                      | `ws.start`, `ws.size`, `sort_order` or `sort_key` values are invalid |
-
-                  | MissingOAuthParametersError          | An OAuth parameter is missing in the request |
-
-                  | UnsupportedOAuthSignatureMethodError | The provided OAuth 1 signature method is unsupported. Only HMAC-SHA1 is supported. |
-
-                  | UnsupportedOAuthVersionError         | The provided OAuth 1 version is unsupported. |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#badrequest
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: 'Missing oauth parameters: oauth_consumer_key'
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 400
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - BadRequestError
-                    - MissingOAuthParametersError
-                    - UnsupportedOAuthSignatureMethodError
-                    - UnsupportedOAuthVersionError
-                    - WebServiceError
-    SubListNotFound:
-      description: The requested list could not be found
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                               |
-
-                  |----------------------|-------------------------------------------|
-
-                  | NotFoundError        | The requested resource could not be found |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#notfound
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: List with given id not found
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 404
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - NotFoundError
-    ServiceUnavailable:
-      description: The server is currently unavailable
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  The following error may be received:
-
-
-                  | Error Type           | Explanation                              |
-
-                  |----------------------|------------------------------------------|
-
-                  | ServiceUnavailableError | The server is unavailable |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#serviceunavailable
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Failed to communicate with endpoint
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 503
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - ServiceUnavailableError
-    UnauthorizedError:
-      description: The request could not be completed due to an authentication error
-      content:
-        application/json:
-          schema:
-            oneOf:
-            - $ref: '#/schemas/Endpoint Error'
-            - $ref: '#/schemas/Auth Error'
-    SearchBadRequest:
-      description: The server cannot or will not process the request due to a client error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  One of the following errors may be received:
-
-
-                  | Error Type                           | Explanation                              |
-
-                  |--------------------------------------|------------------------------------------|
-
-                  | BadRequestError                      | The search parameters or were invalid or the OAuth query string could not be parsed|
-
-                  | WebServiceError                      | `ws.start` or `ws.size` values are invalid |
-
-                  | MissingOAuthParametersError          | An OAuth parameter is missing in the request |
-
-                  | UnsupportedOAuthSignatureMethodError | The provided OAuth 1 signature method is unsupported. Only HMAC-SHA1 is supported. |
-
-                  | UnsupportedOAuthVersionError         | The provided OAuth 1 version is unsupported. |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#badrequest
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: 'Missing oauth parameters: oauth_consumer_key'
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 400
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - BadRequestError
-                    - MissingOAuthParametersError
-                    - UnsupportedOAuthSignatureMethodError
-                    - UnsupportedOAuthVersionError
-                    - WebServiceError
-    BadOAuth1LessTypes:
-      description: The server cannot or will not process the request due to a client error
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              error:
-                description: 'An error object.
-
-                  One of the following errors may be received:
-
-
-                  | Error Type      | Explanation                              |
-
-                  |-----------------|------------------------------------------|
-
-                  | BadRequestError | Possible reasons include: an OAuth parameter is missing in the request or the OAuth signature method or version is unsupported |
-
-
-                  Please see the message body for more details.
-
-                  '
-                type: object
-                properties:
-                  documentation_url:
-                    description: A link to the documentation that describes the error
-                    type: string
-                    example: https://api.aweber.com#badrequest
-                  message:
-                    description: A human friendly description of the error
-                    type: string
-                    example: Required parameter 'oauth_nonce' missing
-                  status:
-                    description: The HTTP status code
-                    type: integer
-                    enum:
-                    - 400
-                  type:
-                    description: The API error type
-                    type: string
-                    enum:
-                    - BadRequestError
   securitySchemes:
     OAuth_2.0:
       description: 'The following endpoints and scopes are used to authenticate.

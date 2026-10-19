@@ -1,7 +1,8 @@
 {
   "provider": "aweber",
   "sources": [
-    "_original/aweber-api-openapi.yml"
+    "_original/aweber-api-openapi.yml",
+    "_original/aweber-openapi.yml"
   ],
   "outputs": [
     "aweber-accounts-api-openapi.yml",
@@ -37,9 +38,10 @@
   "warnings": [],
   "notes": [
     "3 archived document(s) dropped as subsets of other archived documents",
-    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "aweber-api-openapi.yml: upgraded openapi 3.0.2 -> OpenAPI 3.2.0; renamed 1 component key(s) illegal in 3.x (e.g. OAuth 2.0)",
     "aweber-api-openapi.yml: declared missing tag: OAuth 1.0a Reference",
+    "aweber-openapi.yml: upgraded openapi 3.0.2 -> OpenAPI 3.2.0; renamed 4 component key(s) illegal in 3.x (e.g. $ref)",
     "apis.yml register: already-registered"
   ],
   "skipped": [
