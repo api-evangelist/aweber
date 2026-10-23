@@ -142,3 +142,35 @@
     builder: Pipedream repo (component)
   status: not-a-workflow
   arazzo: null
+- slug: aweber-packagist
+  label: Packagist
+  partner: packagist
+  partner_name: Packagist
+  category: official SDK (PHP)
+  type: register
+  channel: package-registry
+  evidence: https://packagist.org/packages/aweber/aweber
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: Packagist (public registry JSON)
+    spec_file: null
+    language: PHP
+    packages:
+    - name: aweber/aweber
+      version: v1.1.18
+      released: '2017-09-13'
+      released_field: time
+      lapsed: true
+      page: https://packagist.org/packages/aweber/aweber
+      repo_leg: github-org:aweber
+      publisher_leg: org:aweber
+      matched_by: github-org
+      abandoned: true
+    current: false
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  status: not-a-workflow
+  arazzo: null
